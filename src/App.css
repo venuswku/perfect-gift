@@ -14,6 +14,24 @@
 }
 
 .App-header {
+
+  /* CSS from Figma */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+
+  background: radial-gradient(78.17% 133.85% at 104.12% 0%, #FFFFFF 0%, rgba(255, 255, 255, 0.791667) 68.15%, rgba(255, 255, 255, 0) 100%), linear-gradient(0deg, #FFEBD3, #FFEBD3);
+  
+  
+  /* Original CSS */
+  /*
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -22,6 +40,11 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  */
+  min-height: 100vh;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+
 }
 
 .App-link {
