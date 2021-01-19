@@ -94,6 +94,9 @@
   color: blue;
 }
 
+.giveGiftPic {
+  height: 400px;
+}
 /* additional styles */
 html {
   box-sizing: border-box;
