@@ -141,3 +141,7 @@ p {
 .row {
   display: inline;
 }
+
+.giveGiftPic {
+  height: 400px;
+}

@@ -1,5 +1,6 @@
 import logo from './logo.svg';
-import giveGift from './homepage_image.JPG';
+import giveGift from './images/homepage_image.png';
+import loginImage from './images/login_image.png';
 import React from 'react';
 import './App.css';
 
@@ -25,7 +26,7 @@ function Home() {
             
           {/* dat pic */} 
           <div class="centered">
-            <img src={giveGift} alt="give a Gift" />
+            <img src={giveGift} alt="give a Gift" className='giveGiftPic' />
             {/* <img src="https://www.seekpng.com/ipng/u2t4i1o0w7u2u2q8_logo-gift-giving-icon-png/" alt="Give a Gift"></img> */}
             {/* <a href="https://www.seekpng.com/ipng/u2t4i1o0w7u2u2q8_logo-gift-giving-icon-png/" target="_blank" rel="noreferrer">Logo - Gift Giving Icon Png @seekpng.com</a> */}
           </div>
@@ -72,7 +73,7 @@ function Mission() {
           <Link to="/about"><p className="row">About Us</p>{' '}</Link>
           <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
         </div>
-      <h1>About Me</h1>
+      <h1>About Us</h1>
       <p>Ipsum dolor dolorem consectetur est velit fugiat. Dolorem provident corporis fuga saepe distinctio ipsam? Et quos harum excepturi dolorum molestias?</p>
       <p>Ipsum dolor dolorem consectetur est velit fugiat. Dolorem provident corporis fuga saepe distinctio ipsam? Et quos harum excepturi dolorum molestias?</p> 
       </header>
@@ -104,6 +105,9 @@ function Login() {
           <Link to="/mission"><p className="row">Mission</p> {' '}</Link>
           <Link to="/about"><p className="row">About Us</p>{' '}</Link>
           <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
+        </div>
+        <div class="split left">
+            <img src={loginImage} alt="connect with others" className='giveGiftPic' />
         </div>
       <h1>Sign In</h1>
       <p>Get personalized gift suggestions and share your own gift wishlist!</p>
