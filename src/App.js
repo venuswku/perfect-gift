@@ -67,6 +67,11 @@ function Mission() {
   return (
     <div className="App">
       <header className="App-header">
+        <div class="split right">
+          <Link to="/mission"><p className="row">Mission</p> {' '}</Link>
+          <Link to="/about"><p className="row">About Us</p>{' '}</Link>
+          <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
+        </div>
       <h1>About Me</h1>
       <p>Ipsum dolor dolorem consectetur est velit fugiat. Dolorem provident corporis fuga saepe distinctio ipsam? Et quos harum excepturi dolorum molestias?</p>
       <p>Ipsum dolor dolorem consectetur est velit fugiat. Dolorem provident corporis fuga saepe distinctio ipsam? Et quos harum excepturi dolorum molestias?</p> 
@@ -79,6 +84,11 @@ function About() {
   return (
     <div className="App">
       <header className="App-header">
+        <div class="split right">
+          <Link to="/mission"><p className="row">Mission</p> {' '}</Link>
+          <Link to="/about"><p className="row">About Us</p>{' '}</Link>
+          <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
+        </div>
       <h1>Contact Me</h1>
       <p>You can reach me via email: <strong>hello@example.com</strong></p>
       </header>
@@ -90,8 +100,13 @@ function Login() {
   return (
     <div className="App">
       <header className="App-header">
-      <h1>Login to Perfect Gift Here</h1>
-      <p>You can reach me via email: <strong>hello@example.com</strong></p>
+        <div class="split right">
+          <Link to="/mission"><p className="row">Mission</p> {' '}</Link>
+          <Link to="/about"><p className="row">About Us</p>{' '}</Link>
+          <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
+        </div>
+      <h1>Sign In</h1>
+      <p>Get personalized gift suggestions and share your own gift wishlist!</p>
       </header>
     </div>
   );
