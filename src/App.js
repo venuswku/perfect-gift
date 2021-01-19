@@ -13,7 +13,7 @@ const App = () => (
 );
 
 
-// import { NavLink, Switch, Route } from 'react-router-dom'
+
 function Home() {
   return (
     <div className="App">
@@ -21,9 +21,12 @@ function Home() {
         {/* for the top buttons */}
         <div>
           <div class="split right">
-            <p>Mission</p>
-            <p>About Us</p>
-            <p>Sign In</p>
+            <div>
+              <p className="row">Mission</p> {' '}
+              <p className="row">About Us</p>{' '}
+              <p className="row">Sign In</p>{' '}
+            </div>
+            
           </div>
         </div>
 
@@ -31,7 +34,7 @@ function Home() {
           {/* for homepage? description */}
           <div class="split left">
             <div class="centered">
-              <p className="blueText">Simple and Swift, we are <strong>Perfect Gift</strong></p>
+              <p className="blueText">Simple and Swift, we are <br></br><strong>Perfect Gift</strong></p>
               {/* <p className="blueText">Simple and Swift, we are</p>
               <strong className="blueText">Perfect Gift</strong> */}
               <body>Surprise your family, friends, and loved ones with ideal gifts from their wishlist.</body>
@@ -42,7 +45,7 @@ function Home() {
           {/* give a gift pic on the right */} 
           <div class="split right">
             <div class="centered">
-              <img src={giveGift} alt="give a Gift" />
+              <img src={giveGift} alt="give a Gift" className="giveGiftPic" />
               {/* <img src="https://www.seekpng.com/ipng/u2t4i1o0w7u2u2q8_logo-gift-giving-icon-png/" alt="Give a Gift"></img> */}
               {/* <a href="https://www.seekpng.com/ipng/u2t4i1o0w7u2u2q8_logo-gift-giving-icon-png/" target="_blank" rel="noreferrer">Logo - Gift Giving Icon Png @seekpng.com</a> */}
             </div>

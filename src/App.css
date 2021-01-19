@@ -90,6 +90,10 @@
   text-align: center;
 }
 
+.row {
+    display: inline;
+ }
+
 .blueText {
   color: blue;
 }
