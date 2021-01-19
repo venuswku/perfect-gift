@@ -32,7 +32,6 @@
 
   background: radial-gradient(78.17% 133.85% at 104.12% 0%, #FFFFFF 0%, rgba(255, 255, 255, 0.791667) 68.15%, rgba(255, 255, 255, 0) 100%), linear-gradient(0deg, #FFEBD3, #FFEBD3);
   
-  
   /* Original CSS */
   /*
   background-color: #282c34;
@@ -144,4 +143,8 @@ h1 {
 
 p {
   margin-bottom: 15px;
+}
+
+.row {
+  display: inline;
 }
