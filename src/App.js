@@ -1,3 +1,4 @@
+import { ReactComponent as PerfectGiftLogo } from './images/website_logo.svg';
 import logo from './logo.svg';
 import giveGift from './images/homepage_image.png';
 import loginImage from './images/login_image.png';
@@ -31,7 +32,7 @@ function Home() {
             {/* <a href="https://www.seekpng.com/ipng/u2t4i1o0w7u2u2q8_logo-gift-giving-icon-png/" target="_blank" rel="noreferrer">Logo - Gift Giving Icon Png @seekpng.com</a> */}
           </div>
         </div>
-
+        <PerfectGiftLogo className="logo" />
         <div>
           {/* for homepage? description */}
           <div class="split left">
