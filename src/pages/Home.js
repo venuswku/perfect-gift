@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import giveGift from '../images/homepage_image.png';
+import { ReactComponent as PerfectGiftLogo } from '../images/website_logo.svg';
+
 
 function Home() {
     return (
@@ -20,7 +22,7 @@ function Home() {
                         {/* <a href="https://www.seekpng.com/ipng/u2t4i1o0w7u2u2q8_logo-gift-giving-icon-png/" target="_blank" rel="noreferrer">Logo - Gift Giving Icon Png @seekpng.com</a> */}
                     </div>
                 </div>
-
+                <PerfectGiftLogo className="logo" />
                 <div>
                     {/* for homepage? description */}
                     <div class="split left">

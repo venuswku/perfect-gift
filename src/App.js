@@ -1,11 +1,11 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import About from "./pages/About";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Mission from "./pages/Mission";
 
-import { Switch, Route } from 'react-router-dom';
 
 const App = () => (
   <div className='app'>

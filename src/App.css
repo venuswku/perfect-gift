@@ -1,6 +1,13 @@
 /* make the class type here to be used in App.js
    <div class="App"></div> */
 
+.logo {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  transform: scale(0.8);
+}
+
 .App {
   text-align: center;
 }
