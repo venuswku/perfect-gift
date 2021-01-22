@@ -11,9 +11,9 @@ function Home() {
             <header className="App-header">
                 {/* for the top buttons */}
                 <div class="split right">
-                    <Link to="/mission"><p className="row">Mission</p> {' '}</Link>
-                    <Link to="/about"><p className="row">About Us</p>{' '}</Link>
-                    <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
+                    <Link to="/mission"><p className="row">Mission &nbsp; &nbsp;</p></Link>
+                    <Link to="/about"><p className="row">About Us &nbsp; &nbsp;</p></Link>
+                    <Link to="/login"><p className="row">Sign In &nbsp; &nbsp;</p></Link>
 
                     {/* dat pic */}
                     <div class="centered">

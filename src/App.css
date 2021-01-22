@@ -39,17 +39,6 @@
 
   background: radial-gradient(78.17% 133.85% at 104.12% 0%, #FFFFFF 0%, rgba(255, 255, 255, 0.791667) 68.15%, rgba(255, 255, 255, 0) 100%), linear-gradient(0deg, #FFEBD3, #FFEBD3);
   
-  /* Original CSS */
-  /*
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  */
   min-height: 100vh;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -158,4 +147,13 @@ p {
 
 .giveGiftPic {
   height: 400px;
+}
+
+a {
+  color: rgba(114, 214, 201, 1);
+  text-decoration: None;
+  
+}
+a:hover {
+   color: rgba(114, 214, 201, 1);
 }
