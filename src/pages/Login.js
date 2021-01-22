@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 import './Login.css';
 import loginImage from '../images/login_image.png';
-import { ReactComponent as PerfectGiftLogo } from '../images/website_logo.svg';
-
+import PerfectGiftLogo  from '../images/website_logo.svg';
 
 
 function Login() {
@@ -32,8 +31,10 @@ function Login() {
                     </div>
                 </div>
                 {/* logo + login image */}
-                <PerfectGiftLogo className="logo" />
+                
                 <div class="split left">
+                    {/* <PerfectGiftLogo className="logo" /> */}
+                    <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
                     <div class="centered">
                         <img src={loginImage} alt="connect with others" className='loginPic' />
                     </div>
