@@ -11,9 +11,9 @@ function Home() {
             <header className="App-header">
                 {/* for the top buttons */}
                 <div class="split right">
-                    <Link to="/mission"><p className="row">Mission</p> {' '}</Link>
-                    <Link to="/about"><p className="row">About Us</p>{' '}</Link>
-                    <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
+                    <Link to="/mission"><p className="row">Mission &nbsp; &nbsp;</p></Link>
+                    <Link to="/about"><p className="row">About Us &nbsp; &nbsp;</p></Link>
+                    <Link to="/login"><p className="row">Sign In &nbsp; &nbsp;</p></Link>
 
                     {/* dat pic */}
                     <div class="centered">
@@ -31,7 +31,7 @@ function Home() {
                             {/* <p className="blueText">Simple and Swift, we are</p>
               <strong className="blueText">Perfect Gift</strong> */}
                             <body>Surprise your family, friends, and loved ones with ideal gifts from their wishlist.</body>
-                            <Link to="/login"><button type="button">Get Started!</button></Link>
+                            <Link to="/login"><button className='bigButton'>Get Started!</button></Link>
 
                         </div>
                     </div>
@@ -41,6 +41,7 @@ function Home() {
         </div>
     );
 }
+
 
 
 export default Home;
