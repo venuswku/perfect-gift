@@ -92,7 +92,9 @@
 .blueText {
   font-size: 48px;
   font-family: 'Varela Round';
-  color: rgb(58, 58, 255) ;
+  color: rgba(41, 112, 250, 1);
+  margin-bottom: 100px;
+  ;
 }
 
 .giveGiftPic {
@@ -141,7 +143,8 @@ h1 {
 
 p {
   margin-bottom: 15px;
-  font-family: Didact Gothic;
+  font-size: 36px;
+  font-family: 'Didact Gothic';
 }
 
 .row {
@@ -168,6 +171,8 @@ a:hover {
   background: #72D6C9;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 50px;
+  white-space: nowrap;
   font-size: 20px;
-  padding: 15px 75px;
+  padding: 15px 200px;
+  margin-top: 100px;
 }

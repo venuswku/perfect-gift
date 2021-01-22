@@ -27,7 +27,7 @@ function Home() {
                     {/* for homepage? description */}
                     <div class="split left">
                         <div class="centered">
-                            <p className="blueText">Simple and Swift, we are <br></br><strong>Perfect Gift</strong></p>
+                            <p className="blueText">Simple and Swift, we're <br></br><strong>Perfect Gift</strong></p>
                             {/* <p className="blueText">Simple and Swift, we are</p>
               <strong className="blueText">Perfect Gift</strong> */}
                             <body>Surprise your family, friends, and loved ones with ideal gifts from their wishlist.</body>
