@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'Varela Round';
+  src: local('Varela Round'), url(./fonts/VarelaRound-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Didact Gothic';
+  src: local('Didact Gothic'), url(./fonts/DidactGothic-Regular.ttf) format('truetype');
+}

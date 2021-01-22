@@ -11,9 +11,9 @@ function Home() {
             <header className="App-header">
                 {/* for the top buttons */}
                 <div class="split right">
-                    <Link to="/mission"><p className="row">Mission</p> {' '}</Link>
-                    <Link to="/about"><p className="row">About Us</p>{' '}</Link>
-                    <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
+                    <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
+                    <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
+                    <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
 
                     {/* dat pic */}
                     <div class="centered">
@@ -27,33 +27,21 @@ function Home() {
                     {/* for homepage? description */}
                     <div class="split left">
                         <div class="centered">
-                            <p className="blueText">Simple and Swift, we are <br></br><strong>Perfect Gift</strong></p>
+                            <p className="blueText">Simple and Swift, we're <br></br><strong>Perfect Gift</strong></p>
                             {/* <p className="blueText">Simple and Swift, we are</p>
               <strong className="blueText">Perfect Gift</strong> */}
                             <body>Surprise your family, friends, and loved ones with ideal gifts from their wishlist.</body>
-                            <button type="button">Get Started!</button>
+                            <Link to="/login"><button className='bigButton'>Get Started!</button></Link>
+
                         </div>
                     </div>
                 </div>
-
-                {/* everything below is from example */}
-                {/* 
-          <p>
-            Edit <code>src/App.js</code> and save to reload. Test: Sean was here. Can updaet by re
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a> */}
-                {/* end of example */}
             </header>
 
         </div>
     );
 }
+
+
 
 export default Home;
