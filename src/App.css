@@ -92,7 +92,8 @@
 .blueText {
   font-size: 48px;
   font-family: 'Varela Round';
-  color: rgb(58, 58, 255) ;
+  color: rgba(41, 112, 250, 1);
+  ;
 }
 
 .giveGiftPic {
@@ -141,7 +142,8 @@ h1 {
 
 p {
   margin-bottom: 15px;
-  font-family: Didact Gothic;
+  font-size: 36px;
+  font-family: 'Didact Gothic';
 }
 
 .row {
