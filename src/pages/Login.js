@@ -13,11 +13,9 @@ function Login() {
             <header className="App-header">
                 {/* right half of the screen */}
                 <div class="split right">
-                    {/* navigation bar */}
-                    <Link to="/mission"><p className="row">Mission</p> {' '}</Link>
-                    <Link to="/about"><p className="row">About Us</p>{' '}</Link>
-                    <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
-                    {/* login box */}
+                    <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
+                    <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
+                    <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
                     <div class="centered">
                         <div class="box">
                             <h2 class="blueText">Sign In</h2>

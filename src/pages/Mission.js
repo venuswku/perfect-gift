@@ -7,9 +7,9 @@ function Mission() {
         <div className="App">
             <header className="App-header">
                 <div class="split right">
-                    <Link to="/mission"><p className="row">Mission</p> {' '}</Link>
-                    <Link to="/about"><p className="row">About Us</p>{' '}</Link>
-                    <Link to="/login"><p className="row">Sign In</p>{' '}</Link>
+                    <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
+                    <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
+                    <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
                 </div>
                 <h1>About Us</h1>
                 <p>Ipsum dolor dolorem consectetur est velit fugiat. Dolorem provident corporis fuga saepe distinctio ipsam? Et quos harum excepturi dolorum molestias?</p>

@@ -90,6 +90,8 @@
  }
 
 .blueText {
+  font-size: 48px;
+  font-family: 'Varela Round';
   color: rgb(58, 58, 255) ;
 }
 
@@ -139,6 +141,7 @@ h1 {
 
 p {
   margin-bottom: 15px;
+  font-family: Didact Gothic;
 }
 
 .row {
@@ -152,6 +155,7 @@ p {
 a {
   color: rgba(114, 214, 201, 1);
   text-decoration: None;
+  font-family: 'Varela Round'
   
 }
 a:hover {
