@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../App.css'; 
+import PerfectGiftLogo from '../images/website_logo.svg';
 
 function About() {
     return (
         <div className="App">
             <header className="App-header">
+                <div class="split left">
+                    <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
+                </div>
                 <div class="split right">
                     <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
                     <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>

@@ -1,5 +1,6 @@
 
 .box {
+    position: relative;
     width: 500 px;
     padding: 10px;
     border: 1px #dbdbdb;
@@ -9,4 +10,21 @@
 
 .loginPic {
   height: 350px;
+}
+
+.loginFont {
+  font-size: 12 px;
+  font-family: 'Varela Round';
+  color: rgb(58, 58, 255) ;
+}
+
+.loginTextbox {
+  font-size:14pt;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 0; 
+    width: 100%; 
+    height: 50px;
 }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 import './Login.css';
 import loginImage from '../images/login_image.png';
-import PerfectGiftLogo  from '../images/website_logo.svg';
+import PerfectGiftLogo from '../images/website_logo.svg';
 
 
 function Login() {
@@ -19,19 +19,24 @@ function Login() {
                         <div class="box">
                             <h2 class="blueText">Sign In</h2>
                             <h5>Get personalized gift suggestions and share your own gift wishlist!</h5>
+                            
                             <form>
-                                <label for='username'>Username:</label> <br></br>
+                                <label for='username' class='loginFont'>Username:</label> 
                                 <input type='text' name='username'></input> <br></br>
-                                <label for='password'>Password:</label> <br></br>
-                                <input type='text' name='password'></input> <br></br> <br></br>
-                                <input type='submit' value='Submit'></input> <br></br> 
+                                <label for='password' class='loginFont'>Password:</label> <br></br>
+                                <input type='text' name='password' class='loginTextbox'></input> <br></br> <br></br>
+                                 <br></br>
                             </form>
-                        </div>
+                            <div class='split left'>new user?</div>
+                            <div class='split right'><input type='submit' value='Submit'></input></div>
                         
+                                
+                        </div>
+
                     </div>
                 </div>
                 {/* logo + login image */}
-                
+
                 <div class="split left">
                     {/* <PerfectGiftLogo className="logo" /> */}
                     <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
@@ -39,7 +44,7 @@ function Login() {
                         <img src={loginImage} alt="connect with others" className='loginPic' />
                     </div>
                 </div>
-                
+
             </header>
         </div>
     );
