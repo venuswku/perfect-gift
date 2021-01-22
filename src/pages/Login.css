@@ -1,0 +1,12 @@
+
+.box {
+    width: 500 px;
+    padding: 10px;
+    border: 1px #dbdbdb;
+    background-color: #dbdbdb;
+    margin: 0;
+}
+
+.loginPic {
+  height: 350px;
+}

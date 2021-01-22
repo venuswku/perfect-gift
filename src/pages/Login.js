@@ -37,7 +37,7 @@ function Login() {
                 <PerfectGiftLogo className="logo" />
                 <div class="split left">
                     <div class="centered">
-                        <img src={loginImage} alt="connect with others" className='giveGiftPic' />
+                        <img src={loginImage} alt="connect with others" className='loginPic' />
                     </div>
                 </div>
                 
