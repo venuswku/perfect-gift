@@ -90,9 +90,9 @@
  }
 
 .blueText {
-  color: blue;
   font-size: 48px;
   font-family: 'Varela Round';
+  color: rgb(58, 58, 255) ;
 }
 
 .giveGiftPic {
