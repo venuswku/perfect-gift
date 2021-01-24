@@ -16,6 +16,34 @@
   background: linear-gradient(180deg, #C1DEFF 0%, rgba(255, 255, 255, 0) 100%), #FFFFFF;
 }
 
+/* split the screen in half (dunno how this works. more research) */
+.split {
+  height: 20%;
+  width: 50%;
+  position: absolute;
+  z-index: 1;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+/* left half */
+.left {
+  left: 0;
+}
+
+/* right half */
+.right {
+  right: 0;
+}
+
+/* centered in the area */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
 .loginFont {
   font-size: 12 px;
   font-family: 'Varela Round';
@@ -28,4 +56,10 @@
 
 .createAccountPic {
   transform: scale(0.8);
+}
+
+.blueText {
+  font-size: 48px;
+  font-family: 'Varela Round';
+  color: rgba(41, 112, 250, 1);
 }

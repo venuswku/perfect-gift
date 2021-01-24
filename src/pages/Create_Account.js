@@ -22,16 +22,18 @@ function Create_Account() {
                     <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
                 </div>
                 
-                <div class='centered'>
-                    <p className="blueText">Create an Account </p>
-                    <img src={createAccountImage} alt="the gifters" className='createAccountPic' />
-                    
-                    <form>
+                <form>
+                    <div class='centered'>
+                        <p className="blueText">Create an Account </p>
+                        <img src={createAccountImage} alt="the gifters" className='createAccountPic' />
                         <label for='first_name' class='loginFont'>First Name</label>
                         <input type='text' name='first_name' class='loginTextbox'></input>
                         <br />
                         <label for='last_name' class='loginFont'>Last Name</label>
                         <input type='text' name='last_name' class='loginTextbox'></input>
+                        <br/>
+                        <label for='email' class='loginFont'>Email</label>
+                        <input type='text' name='email' class='loginTextbox'></input>
                         <br/>
                         <label for='username' class='loginFont'>Username</label>
                         <input type='text' name='username' class='loginTextbox'></input>
@@ -43,8 +45,8 @@ function Create_Account() {
                         <input type='text' name='verify_password' class='loginTextbox'></input>
                         <br/>
                         <input type='submit' value='Submit'></input>
-                    </form>
-                </div>
+                        </div>
+                </form>
 
 
 
