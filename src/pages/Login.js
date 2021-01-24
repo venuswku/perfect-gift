@@ -20,17 +20,19 @@ function Login() {
                             <h2 class="blueText">Sign In</h2>
                             <h5>Get personalized gift suggestions and share your own gift wishlist!</h5>
                             
-                            <form>
-                                <label for='username' class='loginFont'>Username:</label> 
-                                <input type='text' name='username'></input> <br></br>
-                                <label for='password' class='loginFont'>Password:</label> <br></br>
-                                <input type='text' name='password' class='loginTextbox'></input> <br></br> <br></br>
-                                 <br></br>
-                            </form>
-                            <div class='split left'>new user?</div>
-                            <div class='split right'><input type='submit' value='Submit'></input></div>
-                        
-                                
+                                <form>
+                                    <label for='username' class='loginFont'>Username:</label>
+                                    <input type='text' name='username' class='loginTextbox'></input>
+                                    <label for='password' class='loginFont'>Password:</label>
+                                    <input type='text' name='password' class='loginTextbox'></input>
+                                    <br/>
+                                    new user? &emsp;
+                                    <input type='submit' value='Submit'></input>
+                                </form>
+
+
+
+
                         </div>
 
                     </div>

@@ -5,7 +5,7 @@ import About from "./pages/About";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Mission from "./pages/Mission";
-
+import Profile from "./pages/Profile";
 
 const App = () => (
   <div className='app'>
@@ -21,6 +21,7 @@ const Main = () => (
     <Route exact path='/mission' component={Mission}></Route>
     <Route exact path='/about' component={About}></Route>
     <Route exact path='/login' component={Login}></Route>
+    <Route exact path='/profile' component={Profile}></Route>
   </Switch>
 );
 
