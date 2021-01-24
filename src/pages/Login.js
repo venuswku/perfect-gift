@@ -26,7 +26,7 @@ function Login() {
                                     <label for='password' class='loginFont'>Password:</label>
                                     <input type='text' name='password' class='loginTextbox'></input>
                                     <br/>
-                                    new user? &emsp;
+                                    <Link to="/create_account">New User? &emsp;</Link>
                                     <input type='submit' value='Submit'></input>
                                 </form>
 
