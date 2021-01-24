@@ -22,12 +22,11 @@ function Home() {
                         {/* <a href="https://www.seekpng.com/ipng/u2t4i1o0w7u2u2q8_logo-gift-giving-icon-png/" target="_blank" rel="noreferrer">Logo - Gift Giving Icon Png @seekpng.com</a> */}
                     </div>
                 </div>
-                <PerfectGiftLogo className="logo" />
                 <div>
                     {/* for homepage? description */}
                     <div class="split left">
                         <div class="centered">
-                            <p className="blueText">Simple and Swift, we're <br></br><strong>Perfect Gift</strong></p>
+                            <p className="blueText">Simple and Swift, choose<br /> <PerfectGiftLogo className="logo_homepage" />!</p>
                             {/* <p className="blueText">Simple and Swift, we are</p>
               <strong className="blueText">Perfect Gift</strong> */}
                             <body>Surprise your family, friends, and loved ones with ideal gifts from their wishlist.</body>
