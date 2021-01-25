@@ -15,3 +15,11 @@
     /* put navbar on top of all pages */
     z-index: 100;
 }
+
+/* styling for links that scroll down to its section on the landing page */
+.scroll-links {
+    color: rgba(114, 214, 201, 1);
+    text-decoration: none;
+    cursor: pointer;
+    font-family: 'Varela Round';
+}

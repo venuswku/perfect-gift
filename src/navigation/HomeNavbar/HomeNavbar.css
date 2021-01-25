@@ -31,4 +31,9 @@
     /* put some space between navigation links */
     width: 40%;
     justify-content: space-between;
+
+    /* text styling for navbar links */
+    color: rgba(114, 214, 201, 1);
+    text-decoration: none;
+    font-family: 'Varela Round';
 }
