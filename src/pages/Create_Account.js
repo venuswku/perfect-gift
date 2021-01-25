@@ -49,6 +49,9 @@ function Create_Account() {
 
                         
                         <p>Please take your time to answer our interest questions below. <br /> We will take note and share them with other gifters on your profile!</p>
+
+                        <p>It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile.</p>
+                        <input type='submit' value='Continue' className='casubmit'></input>
                     </div>
                 </form>
 
