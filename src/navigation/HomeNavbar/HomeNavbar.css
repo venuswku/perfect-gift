@@ -1,0 +1,34 @@
+.home-navbar {
+    position: absolute;
+    padding: 30px 50px 0px 0px;
+
+    /* display navbar elements in a row */
+    display: flex;
+    flex-direction: row;
+
+    /* align navbar elements by their (vertical) center */
+    height: 100px;
+    align-items: center;
+
+    /* put space between logo and navigation links */
+    width: 100%;
+    justify-content: space-between;
+
+    /* put navbar on top of all pages */
+    z-index: 100;
+}
+
+.home-navbar-logo {
+    /* resize logo */
+    transform: scale(0.8);
+}
+
+.links {
+    /* display navigation links in a row */
+    display: flex;
+    flex-direction: row;
+    
+    /* put some space between navigation links */
+    width: 40%;
+    justify-content: space-between;
+}
