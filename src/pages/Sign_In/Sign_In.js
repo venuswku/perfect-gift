@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
-import './SignIn.css';
-import LogoNavbar from '../navigation/LogoNavbar/LogoNavbar';
-import loginImage from '../images/login_image.png';
+import '../../App.css';
+import './Sign_In.css';
+import LogoNavbar from '../../navigation/LogoNavbar/LogoNavbar';
+import loginImage from '../../images/login_image.png';
 
 function Login() {
     return (

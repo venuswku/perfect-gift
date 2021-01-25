@@ -1,7 +1,7 @@
 import React from 'react';
-import '../App.css'; 
+import '../../App.css'; 
 import './Profile.css';
-import Navbar from '../navigation/HomeNavbar/HomeNavbar';
+import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
 
 function Profile() {
     return (

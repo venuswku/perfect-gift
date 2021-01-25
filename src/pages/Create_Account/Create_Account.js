@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import '../App.css';
+import '../../App.css';
 import './Create_Account.css';
-import LogoNavbar from '../navigation/LogoNavbar/LogoNavbar';
-import createAccountImage from '../images/create_account_image.png';
+import LogoNavbar from '../../navigation/LogoNavbar/LogoNavbar';
+import createAccountImage from '../../images/create_account_image.png';
 
 function Create_Account() {
     return (

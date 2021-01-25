@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Landing.css';
-import '../App.css';
-import Navbar from '../navigation/LandingNavbar/LandingNavbar';
-import giveGift from '../images/homepage_image.png';
-import { ReactComponent as PerfectGiftLogo } from '../images/website_logo.svg';
+import '../../App.css';
+import Navbar from '../../navigation/LandingNavbar/LandingNavbar';
+import giveGift from '../../images/homepage_image.png';
+import { ReactComponent as PerfectGiftLogo } from '../../images/website_logo.svg';
 
 function Landing() {
     return (
