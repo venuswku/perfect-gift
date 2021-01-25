@@ -16,11 +16,20 @@
   background: linear-gradient(180deg, #C1DEFF 0%, rgba(255, 255, 255, 0) 100%), #FFFFFF;
 }
 
+.casubmit {
+  background: #72D6C9;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
+  color: white;
+  font-size: 36px;
+  padding: 10px 20px;
+}
+
 /* split the screen in half (dunno how this works. more research) */
-.split {
+.casplit {
   height: 20%;
   width: 50%;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   overflow-x: hidden;
   padding-top: 20px;
@@ -36,11 +45,11 @@
 }
 
 /* centered in the area */
-.centered {
+.cacentered {
   position: absolute;
-  top: 50%;
+  top: 20%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   text-align: center;
 }
 
@@ -55,11 +64,12 @@
 }
 
 .createAccountPic {
-  transform: scale(0.8);
+  transform: scale(.9);
 }
 
 .blueText {
   font-size: 48px;
   font-family: 'Varela Round';
   color: rgba(41, 112, 250, 1);
+  margin-bottom: 0px;
 }
