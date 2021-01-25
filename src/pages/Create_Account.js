@@ -11,41 +11,45 @@ function Create_Account() {
         <div className="App">
             <header className="create_account-header">
                 {/* right half of the screen */}     
-                <div class="split right">
+                <div className="split right">
                     <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
                     <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
                     <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
 
                 </div>
 
-                <div class="split left">
+                <div className="split left">
                     <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
                 </div>
                 
                 <form>
-                    <div class='centered'>
+                    <div className='centered'>
                         <p className="blueText">Create an Account </p>
                         <img src={createAccountImage} alt="the gifters" className='createAccountPic' />
-                        <label for='first_name' class='loginFont'>First Name</label>
-                        <input type='text' name='first_name' class='loginTextbox'></input>
+
+                        <label for='first_name' className='loginFont'>First Name</label>
+                        <input type='text' name='first_name' className='loginTextbox'></input>
                         <br />
-                        <label for='last_name' class='loginFont'>Last Name</label>
-                        <input type='text' name='last_name' class='loginTextbox'></input>
+                        <label for='last_name' className='loginFont'>Last Name</label>
+                        <input type='text' name='last_name' className='loginTextbox'></input>
                         <br/>
-                        <label for='email' class='loginFont'>Email</label>
-                        <input type='text' name='email' class='loginTextbox'></input>
+                        <label for='email' className='loginFont'>Email</label>
+                        <input type='text' name='email' className='loginTextbox'></input>
                         <br/>
-                        <label for='username' class='loginFont'>Username</label>
-                        <input type='text' name='username' class='loginTextbox'></input>
+                        <label for='username' className='loginFont'>Username</label>
+                        <input type='text' name='username' className='loginTextbox'></input>
                         <br/>
-                        <label for='password' class='loginFont'>Password</label>
-                        <input type='text' name='password' class='loginTextbox'></input>
+                        <label for='password' className='loginFont'>Password</label>
+                        <input type='text' name='password' className='loginTextbox'></input>
                         <br/>
-                        <label for='verify_password' class='loginFont'>Retype Password</label>
-                        <input type='text' name='verify_password' class='loginTextbox'></input>
+                        <label for='verify_password' className='loginFont'>Retype Password</label>
+                        <input type='text' name='verify_password' className='loginTextbox'></input>
                         <br/>
                         <input type='submit' value='Submit'></input>
-                        </div>
+
+                        
+                        <p>Please take your time to answer our interest questions below. <br /> We will take note and share them with other gifters on your profile!</p>
+                    </div>
                 </form>
 
 
