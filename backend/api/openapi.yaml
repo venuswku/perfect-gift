@@ -1,4 +1,3 @@
-
 openapi: '3.0.3'
 
 info:
@@ -14,7 +13,7 @@ paths:
       description: Dummy Endpoint
       responses:
         200:
-          description: Succesful
+          description: Successful
           content:
             application/json:
               schema:
@@ -45,3 +44,30 @@ components:
       properties:
         message:
           type: string
+
+    User:
+      description: A user and its data
+      type: array
+      items:
+        type: object
+        properties:
+          firstname:
+            type: string
+          lastname:
+            type: string
+          useremail:
+            type: string
+            format: email
+          username:
+            type: string
+          userpassword:
+            type: string
+          avatarurl:
+            type: string
+          showavatar:
+            type: boolean
+        required:
+          - firstname
+          - lastname
+          - useremail
+          - username
