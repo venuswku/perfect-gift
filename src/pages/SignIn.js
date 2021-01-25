@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import './SignIn.css';
+import LogoNavbar from '../navigation/LogoNavbar/LogoNavbar';
 import loginImage from '../images/login_image.png';
-import PerfectGiftLogo from '../images/website_logo.svg';
-
 
 function Login() {
     return (
         <div className="App">
+            <LogoNavbar/>
             <header className="App-header">
                 {/* right half of the screen */}
                 <div class="split right">
@@ -37,8 +37,6 @@ function Login() {
                 {/* logo + login image */}
 
                 <div class="split left">
-                    {/* <PerfectGiftLogo className="logo" /> */}
-                    <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
                     <div class="centered">
                         <img src={loginImage} alt="connect with others" className='loginPic' />
                     </div>

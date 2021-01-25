@@ -2,18 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import './Create_Account.css';
+import LogoNavbar from '../navigation/LogoNavbar/LogoNavbar';
 import createAccountImage from '../images/create_account_image.png';
-import PerfectGiftLogo from '../images/website_logo.svg';
-
 
 function Create_Account() {
     return (
         <div className="App">
+            <LogoNavbar/>
             <header className="create_account-header">
-                <div className="casplit left">
-                    <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
-                </div>
-                
                 <form>
                     <div className='cacentered'>
                         <p className="blueText">Create an Account </p>
