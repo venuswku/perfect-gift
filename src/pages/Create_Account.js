@@ -15,7 +15,6 @@ function Create_Account() {
                     <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
                     <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
                     <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
-
                 </div>
 
                 <div className="casplit left">
