@@ -1,22 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../App.css'; 
 import './Profile.css';
-import PerfectGiftLogo from '../images/website_logo.svg';
-// import { ReactComponent as PerfectGiftLogo } from '../images/website_logo.svg';
-
+import Navbar from '../navigation/HomeNavbar/HomeNavbar';
 
 function Profile() {
     return (
         <div className="App">
+            <Navbar/>
             <div className="App-header">
-                <Link to="/"><img src={PerfectGiftLogo} alt="Logo" class='logo' /></Link>
-                {/* navigation bar */}
-                <div class='split right'>
-                    <div class="row Nav-link">Find Gift &nbsp; &nbsp;</div>
-                    <div class="row Nav-link">My Profile &nbsp; &nbsp;</div>
-                    <div class="row Nav-link">Sign Out &nbsp; &nbsp;</div>
-                </div>
                 {/* profile pic/header thing */}
                 {/* find a better profile pic thing. maybe actual image? */}
                 <p className='header-image'>Rounded rectangle</p>
