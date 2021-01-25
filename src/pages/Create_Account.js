@@ -11,19 +11,19 @@ function Create_Account() {
         <div className="App">
             <header className="create_account-header">
                 {/* right half of the screen */}     
-                <div className="split right">
+                <div className="casplit right">
                     <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
                     <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
                     <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
 
                 </div>
 
-                <div className="split left">
+                <div className="casplit left">
                     <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
                 </div>
                 
                 <form>
-                    <div className='centered'>
+                    <div className='cacentered'>
                         <p className="blueText">Create an Account </p>
                         <img src={createAccountImage} alt="the gifters" className='createAccountPic' />
 

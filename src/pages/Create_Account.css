@@ -17,7 +17,7 @@
 }
 
 /* split the screen in half (dunno how this works. more research) */
-.split {
+.casplit {
   height: 20%;
   width: 50%;
   position: fixed;
@@ -36,7 +36,7 @@
 }
 
 /* centered in the area */
-.centered {
+.cacentered {
   position: absolute;
   top: 20%;
   left: 50%;
