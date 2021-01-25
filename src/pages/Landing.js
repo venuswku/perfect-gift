@@ -27,7 +27,7 @@ function Landing() {
                             {/* <p className="blueText">Simple and Swift, we are</p>
               <strong className="blueText">Perfect Gift</strong> */}
                             <body>Surprise your family, friends, and loved ones with ideal gifts from their wishlist.</body>
-                            <Link to="/login"><button className='bigButton'>Get Started!</button></Link>
+                            <Link exact to="/sign_in"><button className='bigButton'>Get Started!</button></Link>
                         </div>
                     </div>
                 </div>

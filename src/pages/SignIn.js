@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
-import './Login.css';
+import './SignIn.css';
 import loginImage from '../images/login_image.png';
 import PerfectGiftLogo from '../images/website_logo.svg';
 
@@ -12,9 +12,6 @@ function Login() {
             <header className="App-header">
                 {/* right half of the screen */}
                 <div class="split right">
-                    <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
-                    <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
-                    <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
                     <div class="centered">
                         <div class="box">
                             <h2 class="blueText">Sign In</h2>

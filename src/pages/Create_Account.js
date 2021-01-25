@@ -10,13 +10,6 @@ function Create_Account() {
     return (
         <div className="App">
             <header className="create_account-header">
-                {/* right half of the screen */}     
-                <div className="casplit right">
-                    <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
-                    <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
-                    <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
-                </div>
-
                 <div className="casplit left">
                     <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
                 </div>
