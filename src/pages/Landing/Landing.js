@@ -1,20 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
-import giveGift from '../images/homepage_image.png';
-import { ReactComponent as PerfectGiftLogo } from '../images/website_logo.svg';
+import './Landing.css';
+import '../../App.css';
+import Navbar from '../../navigation/LandingNavbar/LandingNavbar';
+import giveGift from '../../images/homepage_image.png';
+import { ReactComponent as PerfectGiftLogo } from '../../images/website_logo.svg';
 
-
-function Home() {
+function Landing() {
     return (
         <div className="App">
+            <Navbar/>
             <header className="App-header">
-                {/* for the top buttons */}
                 <div class="split right">
-                    <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
-                    <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
-                    <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
-
                     {/* dat pic */}
                     <div class="centered">
                         <img src={giveGift} alt="give a Gift" className='giveGiftPic' />
@@ -30,17 +27,13 @@ function Home() {
                             {/* <p className="blueText">Simple and Swift, we are</p>
               <strong className="blueText">Perfect Gift</strong> */}
                             <body>Surprise your family, friends, and loved ones with ideal gifts from their wishlist.</body>
-                            <Link to="/login"><button className='bigButton'>Get Started!</button></Link>
-
+                            <Link exact to="/sign_in"><button className='bigButton'>Get Started!</button></Link>
                         </div>
                     </div>
                 </div>
             </header>
-
         </div>
     );
 }
 
-
-
-export default Home;
+export default Landing;

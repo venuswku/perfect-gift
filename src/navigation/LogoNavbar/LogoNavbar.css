@@ -1,0 +1,21 @@
+.logo-navbar {
+    position: absolute;
+    height: 100px;
+    padding-top: 19px;
+    
+    /* display navigation links in a row */
+    display: flex;
+    flex-direction: row;
+    
+    /* put some space between navigation links */
+    width: 40%;
+    justify-content: space-between;
+
+    /* put navbar on top of all pages */
+    z-index: 100;
+}
+
+.logo-navbar-logo {
+    /* resize logo */
+    transform: scale(0.8);
+}

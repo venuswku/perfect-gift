@@ -1,20 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
-import './Login.css';
-import loginImage from '../images/login_image.png';
-import PerfectGiftLogo from '../images/website_logo.svg';
-
+import '../../App.css';
+import './Sign_In.css';
+import LogoNavbar from '../../navigation/LogoNavbar/LogoNavbar';
+import loginImage from '../../images/login_image.png';
 
 function Login() {
     return (
         <div className="App">
+            <LogoNavbar/>
             <header className="App-header">
                 {/* right half of the screen */}
                 <div class="split right">
-                    <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
-                    <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
-                    <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
                     <div class="centered">
                         <div class="box">
                             <h2 class="blueText">Sign In</h2>
@@ -40,8 +37,6 @@ function Login() {
                 {/* logo + login image */}
 
                 <div class="split left">
-                    {/* <PerfectGiftLogo className="logo" /> */}
-                    <Link to="/"><img src={PerfectGiftLogo} alt="Logo" /></Link>
                     <div class="centered">
                         <img src={loginImage} alt="connect with others" className='loginPic' />
                     </div>

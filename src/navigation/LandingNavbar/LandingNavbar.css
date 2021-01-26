@@ -1,0 +1,25 @@
+.landing-navbar {
+    position: absolute;
+    height: 100px;
+    padding: 48px 50px 0px 0px;
+    right: 0;
+    
+    /* display navigation links in a row */
+    display: flex;
+    flex-direction: row;
+    
+    /* put some space between navigation links */
+    width: 40%;
+    justify-content: space-between;
+
+    /* put navbar on top of all pages */
+    z-index: 100;
+}
+
+/* styling for links that scroll down to its section on the landing page */
+.scroll-links {
+    color: rgba(114, 214, 201, 1);
+    text-decoration: none;
+    cursor: pointer;
+    font-family: 'Varela Round';
+}
