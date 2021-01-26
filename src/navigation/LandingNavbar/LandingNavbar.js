@@ -5,9 +5,9 @@ import './LandingNavbar.css';
 function LandingNavbar() {
     return (
         <div className="landing-navbar">
-            <p className="scroll-links">Mission</p>
-            <p className="scroll-links">About Us</p>
-            <p><Link exact to="/sign_in">Sign In</Link></p>
+            <p className="link">Mission</p>
+            <p className="link">About Us</p>
+            <Link exact to="/sign_in" className="link">Sign In</Link>
         </div>
     );
 }
