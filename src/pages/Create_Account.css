@@ -29,3 +29,14 @@
 .createAccountPic {
   transform: scale(0.8);
 }
+
+.navBar {
+  height: 15%;
+  width: 50%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}

@@ -1,3 +1,41 @@
+.App-header {
+  /* CSS from Figma */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+
+  background: radial-gradient(78.17% 133.85% at 104.12% 0%, #FFFFFF 0%, rgba(255, 255, 255, 0.791667) 68.15%, rgba(255, 255, 255, 0) 100%), linear-gradient(0deg, #FFEBD3, #FFEBD3);
+  
+  min-height: 100vh;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+
+}
+
+.App {
+  text-align: left;
+}
+
+
+
+.navBar {
+  height: 10%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
 .header-image {
     position: relative;
     border-radius: 25px;
@@ -8,7 +46,7 @@
 
 .offset {
     position: relative;
-    left: -25%;
+    left: -5%;
 }
 
 .offsetText {

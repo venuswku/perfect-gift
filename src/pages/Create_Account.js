@@ -11,7 +11,7 @@ function Create_Account() {
         <div className="App">
             <header className="create_account-header">
                 {/* right half of the screen */}     
-                <div class="split right">
+                <div class="navBar">
                     <p className="row"><Link to="/mission">Mission &nbsp; &nbsp;</Link></p>
                     <p className="row"><Link to="/about">About Us &nbsp; &nbsp;</Link></p>
                     <p className="row"><Link to="/login">Sign In &nbsp; &nbsp;</Link></p>
