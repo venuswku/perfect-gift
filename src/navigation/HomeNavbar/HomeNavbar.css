@@ -23,7 +23,7 @@
     transform: scale(0.8);
 }
 
-.links {
+.navigation-links {
     /* display navigation links in a row */
     display: flex;
     flex-direction: row;
@@ -31,9 +31,12 @@
     /* put some space between navigation links */
     width: 40%;
     justify-content: space-between;
+}
 
-    /* text styling for navbar links */
+/* text styling for navbar links */
+.link {
     color: rgba(114, 214, 201, 1);
     text-decoration: none;
+    font-size: 24px;
     font-family: 'Varela Round';
 }
