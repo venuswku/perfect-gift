@@ -1,29 +1,99 @@
-.header-image {
-    position: relative;
-    border-radius: 25px;
-    background: cornflowerblue;
-    padding: 20px;
-    width: 75%;
+/* for the whole page */
+.profile-header {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  
+  background: linear-gradient(180deg, rgb(203,208,255,1) 0%, rgba(255, 255, 255, 0) 100%), #FFFFFF;
 }
 
-.offset {
-    position: relative;
-    left: -25%;
+/* for the profile pic + background */
+.profile-background {
+  position: relative;
+  width: 1000px;
+  height: 150px;
+  top: 20%;
+  background: url(../../images/profile_pic_background.png);
+  border-radius: 25px;
 }
 
-.offsetText {
-    position: absolute;
-    /* left: 0%; */
-    padding: 20px;
+/* name + interests + wishlist */
+.profile-info {
+  position: relative;
+  top: 160px;
+  /* left: -10%; */
+  width: 800px;
+  text-align: left;
+
+}
+.profile-center {
+  text-align: center;
 }
 
+.tab { 
+  margin-left: 60px; 
+}
+
+
+ul.no-bullets {
+  list-style-type: none; /* Remove bullets */
+  font-family: "Varela Round";
+  font-size: 16px;
+}
+
+ 
 .topicFont {
-  font-size: 12 px;
+  font-size: 18 px;
   font-family: 'Varela Round';
   color: rgb(58, 58, 255) ;
 }
 
-/* temp while they aren't links yet */
-.Nav-link {
-  color: #61dafb;
+span{
+  font-family: "Varela Round";
+  font-size: 16px;
 }
+
+.textBubble {
+    border-radius: 25px; /* rounded edges */
+    width: auto; /* Making auto-sizable width */
+    height: auto; /* Making auto-sizable height */
+    padding: 2px 10px 5px 10px; /* Making space around letters */
+    font-family: "Varela Round";
+    font-size: 16px;
+}
+
+.orange {
+  background-color: #fbb861;
+}
+
+.teal {
+  background-color:rgb(83, 235, 255);
+}
+
+.red {
+  background-color: rgb(255, 104, 104);
+}
+
+.purple {
+  background-color: rgb(187, 187, 255);
+}
+
+.green {
+  background-color: lightgreen;
+}
+
+.yellow {
+  background-color: lemonchiffon;
+}
+
+
+
+
+
