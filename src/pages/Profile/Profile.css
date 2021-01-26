@@ -1,68 +1,74 @@
-.App-header {
-  /* CSS from Figma */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-
+/* for the whole page */
+.profile-header {
   position: absolute;
   left: 0%;
   right: 0%;
   top: 0%;
   bottom: 0%;
-
-  background: linear-gradient(323.35deg, #CBD0FF -25.25%, rgba(212, 217, 255, 0.81776) 26.17%, rgba(255, 255, 255, 0) 79.11%), #FFFFFF;  
-  min-height: 100vh;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  
+  background: linear-gradient(180deg, rgb(203,208,255,1) 0%, rgba(255, 255, 255, 0) 100%), #FFFFFF;
 }
 
-.App {
-  text-align: left;
-}
-
-
-
-.navBar {
-  height: 10%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.header-image {
-  position: absolute;
-  left: 18.91%;
-  right: 11.82%;
-  top: 16.11%;
-  bottom: 56.85%;
+/* for the profile pic + background */
+.profile-background {
+  position: relative;
+  width: 1000px;
+  height: 150px;
+  top: 20%;
   background: url(../../images/profile_pic_background.png);
-  border-radius: 50px;
-  text-align: center;
+  border-radius: 25px;
 }
-.header-location {
-  position: absolute;
-  border-radius: 50px;
+
+/* name + interests + wishlist */
+.profile-info {
+  position: relative;
+  top: 160px;
+  /* left: -10%; */
+  width: 800px;
+  text-align: left;
+
+}
+.profile-center {
   text-align: center;
 }
 
-.offset {
-    position: relative;
-    left: -5%;
+.tab { 
+  margin-left: 60px; 
 }
 
+
+ul.no-bullets {
+  list-style-type: none; /* Remove bullets */
+  font-family: "Varela Round";
+  font-size: 16px;
+}
+
+ 
 .topicFont {
-  font-size: 12 px;
+  font-size: 18 px;
   font-family: 'Varela Round';
   color: rgb(58, 58, 255) ;
 }
 
-/* temp while they aren't links yet */
+span{
+  font-family: "Varela Round";
+  font-size: 16px;
+}
+
+.textBubble {
+    border-radius: 25px; /* rounded edges */
+    width: auto; /* Making auto-sizable width */
+    height: auto; /* Making auto-sizable height */
+    padding: 2px 10px 5px 10px; /* Making space around letters */
+    font-family: "Varela Round";
+    font-size: 16px;
+}
+
 .orange {
   background-color: #fbb861;
 }
@@ -83,9 +89,11 @@
   background-color: lightgreen;
 }
 
-.textBubble {
-    border-radius: 25px; /* rounded edges */
-    width: auto; /* Making auto-sizable width */
-    height: auto; /* Making auto-sizable height */
-    padding: 2px 10px 5px 10px; /* Making space around letters */
+.yellow {
+  background-color: lemonchiffon;
 }
+
+
+
+
+
