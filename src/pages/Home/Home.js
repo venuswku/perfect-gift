@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../App.css';
 import './Home.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
 import HomeImage from '../../images/create_account_image.png';
@@ -41,7 +40,7 @@ function SearchBar () {
 
 function Home() {
     return (
-        <div className="App">
+        <div className="Home">
             <Navbar />
             
             <div className="home">

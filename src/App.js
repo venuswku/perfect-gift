@@ -8,7 +8,7 @@ import Profile from "./pages/Profile/Profile";
 import Create_Account from "./pages/Create_Account/Create_Account";
 
 const App = () => (
-  <div className='app'>
+  <div className="App">
     <Switch>
       <Route exact path='/' component={Landing}></Route>
       <Route exact path='/sign_in' component={Sign_In}></Route>

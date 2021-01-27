@@ -121,11 +121,6 @@
   top: 50px;
 }
 
-.App {
-  background-color: rgba(128, 0, 255, 0.616);
-  font-size: 100px;
-}
-
 .mag {
   background-color: #fff;
   display: block;
@@ -133,7 +128,7 @@
   width: 15px;
   height: 15px;
   transform: translate(-980%, 2220%);
-  z-index: 1111;
+  /* z-index: 1111; */
 }
 
 .center-text {
