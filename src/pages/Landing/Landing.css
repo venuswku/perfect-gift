@@ -1,8 +1,55 @@
 .Landing {
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
     text-align: center;
     background: radial-gradient(78.17% 133.85% at 104.12% 0%, #FFFFFF 0%, rgba(255, 255, 255, 0.791667) 68.15%, rgba(255, 255, 255, 0) 100%), linear-gradient(0deg, #FFEBD3, #FFEBD3);
+}
+
+.first-impression {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.about {
+    width: 40%;
+    padding: 5% 5% 0;
+}
+
+.catchphrase {
+    font-size: 48px;
+    font-family: 'Varela Round';
+    color: rgba(41, 112, 250, 1);
+    margin-bottom: 100px;
+}
+
+.description {
+    font-size: 24px;
+}
+
+.giveGiftPic {
+    /* transform: scale(0.8); */
+    width: 40%;
+    padding-right: 5%;
+}
+
+.logo_homepage {
+    position: relative;
+    top: 20px;
+}
+
+.get-started {
+    color: white;
+    background: #72D6C9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50px;
+    border: none;
+    white-space: nowrap;
+    font-size: 20px;
+    padding: 15px 200px;
+    margin-top: 100px;
 }
 
 /* split the screen in half (dunno how this works. more reasearch) */
@@ -37,25 +84,4 @@
     font-family: 'Varela Round';
     color: rgba(41, 112, 250, 1);
     margin-bottom: 100px;
-}
-
-.logo_homepage {
-    position: relative;
-    top: 20px;
-}
-
-.giveGiftPic {
-    height: 400px;
-}
-
-.bigButton {
-    color: white;
-    background: #72D6C9;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 50px;
-    border: none;
-    white-space: nowrap;
-    font-size: 20px;
-    padding: 15px 200px;
-    margin-top: 100px;
 }
