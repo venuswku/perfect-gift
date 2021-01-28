@@ -13,15 +13,11 @@ function Sign_In() {
                 <div class="signInForm">
                     <p class="signInTitle">Sign In</p>
                     <p class="signInBenefits">Get personalized gift suggestions and share your own gift wishlist!</p>
-                    <form>
-                        <div className="signInField">
-                            <label for='username' class='signInLabel'>Username</label>
-                            <input type='text' name='username' class='signInTextbox'></input>
-                        </div>
-                        <div className="signInField">
-                            <label for='password' class='signInLabel'>Password</label>
-                            <input type='text' name='password' class='signInTextbox'></input>
-                        </div>
+                    <form className="userInfo">
+                        <label for='username' class='signInLabel'>Username</label>
+                        <input type='text' name='username' class='signInTextbox'></input>
+                        <label for='password' class='signInLabel'>Password</label>
+                        <input type='text' name='password' class='signInTextbox'></input>
                         <br/>
                         <div className="createAccountOrContinue">
                             <div className="firstTime">
