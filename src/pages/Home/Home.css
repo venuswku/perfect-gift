@@ -1,4 +1,5 @@
-.home {
+/*Has the background color from Figma */
+.home-parent {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,129 +20,115 @@
     #ffffff;
 }
 
-.greeting {
-  text-align: center;
-  color: #2970fa;
-  font-family: "Varela Round";
-  font-size: 35px;
-  position: relative;
-  top: 50px;
+/*Using flexbox to space items in a column */
+.home-greeting {
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  /* For debugging 
-  background-color: yellow;
-  border: 2px solid black;
+/*This is the sky blue bar */
+.home-searchbar-background {
+  align-items: center;
+  background-color: #BAD1FF;
+  border-radius: 25px;
+  display: flex;
+  width: 1000px;
+  height: 50px;
+  justify-content: center;
+  /*
+  background-color: #32ffff;
+  border: 5px solid blue;
   */
 }
 
-.homePic {
-  /* centered in the area */
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translate(-50%, 30%);
-  text-align: center;
-  width: 300px;
-  height: auto;
-}
-
-.dg {
-  font-family: "Didact Gothic";
-  font-size: 30px;
-}
-
-.search-background {
-  border-radius: 25px;
-  background: #bad1ff;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translate(-50%, 800%);
-  text-align: center;
-  width: 750px;
-  height: 40px;
-}
-
-.inner {
-  background: #ffffff;
+/* This is the search bar where you can type in text */
+.white-searchbar {
+  background-color: white;
   width: 300px;
   height: 25px;
-  transform: translate(-62%, 1310%);
+  border-radius: 25px;
+  color: #989898;
+  justify-content: right;
   font-size: 20px;
-  text-align: justify;
-  position: absolute;
-}
-
-.drop-down {
-  width: 150px;
-  position: absolute;
-  background: rgb(255, 255, 255);
-  text-align: left;
-  transform: translate(-225%, 1310%);
-  border-radius: 5px;
-  border-color: #007eff;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
-  border: 1.5px solid #007eff;
-  font-size: 13px;
-  font-family: "Varela Round";
-  line-height: 20px;
-  box-sizing: border-box;
-}
-
-.search-bar {
-  background-color: aqua;
-  color: blue;
-}
-
-.search-button {
-  background: #007eff;
-  width: 40px;
-  /* Dropdown Toggle */
-
-  position: absolute;
-  transform: translate(-575%, 1650%);
-  /* Primary / 100 */
-  border-width: 0px 0px;
-  height: 20px;
-}
-
-.click:active {
-  background-color: aqua;
-}
-
-.wrapper1 {
-  background-color: blueviolet;
-  border: 5px solid red;
-  z-index: 1000;
   text-align: center;
-  color: #2970fa;
-  font-family: "Varela Round";
-  font-size: 35px;
-  position: relative;
-  top: 50px;
+  /* border: 4px solid lavender; */
 }
 
+/* The magnifying glass picture next to the search bar */
 .mag {
-  background-color: #fff;
-  display: block;
-  background-size: 10px;
+ /* background-color: khaki;
+ border: 4px solid green; */
+ position: absolute;
+ text-align: left;
+ justify-content: left;
+ left: 275px;
+ width: 20px;
+ height: 20px;
+ 
+}
+
+.dropDown {
+  position: absolute;
+  text-align: left;
+  
+  left: 50px;
+  width: 175px;
+  height: 25px;
+
+  background-color: #FFF;
+  border-radius: 5px; 
+  border: 1px solid #007EFF; 
+  font-size: 17px;
+  text-indent: 15px;
+  line-height: 1.5;
+}
+
+.dd-icon {
   width: 15px;
   height: 15px;
-  transform: translate(-980%, 2220%);
-  /* z-index: 1111; */
+  left: 200px;
+  border: 0px solid white;
 }
 
-.center-text {
-  display: inline-flexbox;
+/* A flex item that has no margin (used for greeting) */
+.flex-item {
+  margin: 0 5px;
 }
 
-.centered {
+/* A picture of all 5 of us */
+.homePic {
+  width: 300px;
+  height: auto;
+  
+}
+
+/* Starting flex-box below navbar */
+.home-main {
+  position: relative;
+  top: 100px;
+  width: 800px;
   text-align: center;
-  color: #989898;
+  padding: 0;
 }
 
-/**/
+/* Blue color */
+.blue {
+  color: #2970fa;
+}
 
+/*Varela font */
+.varela {
+  font-family: "Varela Round";
+}
+
+/* Gothic font */
+.gothic {
+  font-family: 'Didact Gothic';
+}
+
+/* Styling for the search bar input */
 input {
   width: 120px;
   height: 60px;
@@ -151,4 +138,140 @@ input {
   color: white;
   border: none;
   outline: none;
+}
+
+option {
+  background-color: white;
+  border: 5px solid red;
+}
+
+select {
+  background-color: white;
+  border: 1px solid #007EFF;
+  border-radius: 5px;
+  width: 150px;
+  height: 30px;
+  color: #007EFF;
+  outline: none;
+}
+
+
+.small-text {
+  font-size: 15px;
+}
+.dropDown1 {
+  position: absolute;
+  text-align: left;
+  
+  left: 50px;
+  width: 175px;
+  height: 25px;
+
+  
+  border-radius: 5px; 
+  
+  font-size: 17px;
+  text-indent: 15px;
+  line-height: 1.5;
+}
+
+/* The main container that holds all the information about the gift */
+.gift-main {
+  background-color:#E5F0FF;
+  border-radius: 25px;
+  height: 180px;
+  width: 600px;
+  margin-top: 45px;
+  position: relative;
+}
+
+/*This displays the name of the gift */
+.gift-name {
+  position: absolute;
+  right: 210px;
+  font-size: 25px;
+  /*border: 2px solid red;*/
+}
+
+/* This displays the image of the gift */
+.gift-img {
+  width: 100px;
+  height: 100px;
+  /*border: 2px solid purple;*/
+  position: absolute;
+  left: 0;
+  margin: 30px;
+  
+}
+
+/* This displays a white background behind the gift */
+.gift-background {
+  width: 160px;
+  height: 160px;
+  background-color: white;
+  border-radius: 25px;
+  margin: 10px;
+  position: relative;
+  left: 3%;
+}
+
+.gift-interest-text {
+    position: absolute;
+    top: 5%;
+    
+    left: 20%;
+    font-size: 15px;
+    /*border: 2px solid red; */
+}
+
+.gift-interest-topic {
+  background-color: #FBB4A5;
+  
+  position: absolute;
+
+  top: 25%;
+  
+  left: 16%;
+  font-size: 15px;
+  /*border: 2px solid red; */
+  font-size: 15px;
+
+  border-radius: 25px;
+  width: 80px; /*Check out auto later */
+}
+
+.grey {
+  color: #5A5858;
+
+}
+
+.gift-heart-pic {
+  position: absolute;
+  top: 33%;
+  left: 50%;
+  
+}
+
+.gift-right {
+  position: absolute;
+  /*
+  background-color: lightseagreen;
+  opacity: 0.3;
+  border: 2px solid orange;
+  */
+  width: 400px;
+  height: 100px;
+  top: 30%;
+  left: 30%;
+  bottom: 0;
+  right: 10;
+  
+}
+
+.gift-wishlist-text {
+    position: absolute;
+    top: 22%;
+    left: 60%;
+    
+  
 }
