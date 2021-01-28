@@ -80,7 +80,7 @@ function Create_Account() {
                         <table>
                             <tr>
                                 <td>
-                                    <div className='box indoors'>
+                                    <div className='cabox indoors'>
                                     <p className="blueText"><img src={indoors1Image} alt="food" className='createAccountPic'/>&nbsp;&nbsp;Indoors&nbsp;&nbsp;<img src={indoors2Image} alt="camera" className='createAccountPic'/></p>
                                     <input type='text' name='indoor_activity' className='caTextbox' placeholder='Favorite indoor activity?'></input>
                                     <br/>
@@ -91,7 +91,7 @@ function Create_Account() {
                                     </div>
                                 </td>
                                 <td>
-                                    <div className='box outdoors'>
+                                    <div className='cabox outdoors'>
                                     <p className="blueText"><img src={outdoors1Image} alt="amusement park" className='createAccountPic'/>&nbsp;&nbsp;Outdoors&nbsp;&nbsp;<img src={outdoors2Image} alt="tree" className='createAccountPic'/></p>
                                     <input type='text' name='outdoor_activity' className='caTextbox' placeholder='Favorite outdoor activity?'></input>
                                     <br/>
@@ -104,7 +104,7 @@ function Create_Account() {
                             </tr>
                             <tr>
                                 <td>
-                                    <div className='box sports'>
+                                    <div className='cabox sports'>
                                     <p className="blueText"><img src={sports1Image} alt="weightlifter" className='createAccountPic'/>&nbsp;&nbsp;Sports&nbsp;&nbsp;<img src={sports2Image} alt="basketball" className='createAccountPic'/></p>
                                     <input type='text' name='sport_sport' className='caTextbox' placeholder='Favorite sport?'></input>
                                     <br/>
@@ -115,7 +115,7 @@ function Create_Account() {
                                     </div>
                                 </td>
                                 <td>
-                                <div className='box music'>
+                                <div className='cabox music'>
                                 <p className="blueText"><img src={music1Image} alt="keyboard" className='createAccountPic'/>&nbsp;&nbsp;Music&nbsp;&nbsp;<img src={music2Image} alt="music note" className='createAccountPic'/></p>
                                 <input type='text' name='music_genre' className='caTextbox' placeholder='Favorite genre?'></input>
                                 <br/>
