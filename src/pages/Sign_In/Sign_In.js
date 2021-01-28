@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../App.css';
 import './Sign_In.css';
-import LogoNavbar from '../../navigation/LogoNavbar/LogoNavbar';
-import loginImage from '../../images/login_image.png';
+import Navbar from '../../navigation/LogoNavbar/LogoNavbar';
+import SignInImage from '../../images/sign_in_image.png';
 
 function Login() {
     return (
         <div className="App">
-            <LogoNavbar/>
+            <Navbar/>
             <header className="App-header">
                 {/* right half of the screen */}
                 <div class="split right">
@@ -38,7 +37,7 @@ function Login() {
 
                 <div class="split left">
                     <div class="centered">
-                        <img src={loginImage} alt="connect with others" className='loginPic' />
+                        <img src={SignInImage} alt="connect with others" className='signInPic' />
                     </div>
                 </div>
 
