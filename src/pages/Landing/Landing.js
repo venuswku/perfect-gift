@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Landing.css';
 import Navbar from '../../navigation/LandingNavbar/LandingNavbar';
 import { ReactComponent as PerfectGiftLogo } from '../../images/website_logo.svg';
-import giveGift from '../../images/homepage_image.png';
+import giveGift from '../../images/landing_image.png';
 
 function Landing() {
     return (
