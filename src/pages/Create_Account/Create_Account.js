@@ -31,7 +31,7 @@ function Create_Account() {
                                         <label for='first_name' className='blueText'>First Name</label>
                                     </td>
                                     <td>
-                                        <input type='text' name='first_name' className='caTextbox'></input>
+                                        <input type='text' name='first_name' className='caTextbox' required></input>
                                     </td>
                                 </tr>
                                 <tr>
@@ -39,7 +39,7 @@ function Create_Account() {
                                         <label for='last_name' className='blueText'>Last Name</label>
                                     </td>
                                     <td>
-                                        <input type='text' name='last_name' className='caTextbox'></input>
+                                        <input type='text' name='last_name' className='caTextbox' required></input>
                                     </td>
                                 </tr>
                                 <tr>
@@ -47,7 +47,7 @@ function Create_Account() {
                                         <label for='email' className='blueText'>Email</label>
                                     </td>
                                     <td>
-                                        <input type='text' name='email' className='caTextbox'></input>
+                                        <input type='email' name='email' className='caTextbox' required></input>
                                     </td>
                                 </tr>
                                 <tr>
@@ -55,7 +55,7 @@ function Create_Account() {
                                         <label for='username' className='blueText'>Username</label>
                                     </td>
                                     <td>
-                                        <input type='text' name='username' className='caTextbox'></input>
+                                        <input type='text' name='username' className='caTextbox' required></input>
                                     </td>
                                 </tr>
                                 <tr>
@@ -63,7 +63,7 @@ function Create_Account() {
                                         <label for='password' className='blueText'>Password</label>
                                     </td>
                                     <td>
-                                        <input type='password' name='password' className='caTextbox'></input>
+                                        <input type='password' name='password' className='caTextbox' required></input>
                                     </td>
                                 </tr>
                                 <tr>
@@ -71,7 +71,7 @@ function Create_Account() {
                                         <label for='verify_password' className='blueText'>Retype Password</label>
                                     </td>
                                     <td>
-                                        <input type='password' name='verify_password' className='caTextbox'></input>
+                                        <input type='password' name='verify_password' className='caTextbox' required></input>
                                     </td>
                                 </tr>
                             </table>
