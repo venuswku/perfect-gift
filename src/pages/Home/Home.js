@@ -54,7 +54,7 @@ class Home extends React.Component {
                 <p></p>
                 <input
                   type="search"
-                  className="white-searchbar gothic"
+                  className="white-searchbar gothic "
                   placeholder={this.state.search1}
                 ></input>
                 <MagnifyGlass className="mag" />

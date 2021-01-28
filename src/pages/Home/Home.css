@@ -129,6 +129,7 @@
 }
 
 /* Styling for the search bar input */
+/*
 input {
   width: 120px;
   height: 60px;
@@ -154,6 +155,7 @@ select {
   color: #007EFF;
   outline: none;
 }
+*/
 
 
 .small-text {
