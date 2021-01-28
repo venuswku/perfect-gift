@@ -12,6 +12,9 @@
   padding: 10px;
   
   background: linear-gradient(180deg, rgb(203,208,255,1) 0%, rgba(255, 255, 255, 0) 100%), #FFFFFF;
+
+  font-family: "Varela Round";
+  font-size: 20px;
 }
 
 /* for the profile pic + background */
@@ -28,7 +31,6 @@
 .profile-info {
   position: relative;
   top: 160px;
-  /* left: -10%; */
   width: 800px;
   text-align: left;
 
@@ -44,20 +46,19 @@
 
 ul.no-bullets {
   list-style-type: none; /* Remove bullets */
-  font-family: "Varela Round";
-  font-size: 16px;
+  column-count: 2;
 }
 
  
 .topicFont {
   font-size: 18 px;
-  font-family: 'Varela Round';
   color: rgb(58, 58, 255) ;
 }
 
-span{
-  font-family: "Varela Round";
-  font-size: 16px;
+.editTextbox {
+  font-size:20pt;
+  height: 18px;
+  width: 150px
 }
 
 .textBubble {
@@ -65,8 +66,7 @@ span{
     width: auto; /* Making auto-sizable width */
     height: auto; /* Making auto-sizable height */
     padding: 2px 10px 5px 10px; /* Making space around letters */
-    font-family: "Varela Round";
-    font-size: 16px;
+    
 }
 
 .orange {
