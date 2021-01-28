@@ -1,7 +1,7 @@
 .logo-navbar {
     position: absolute;
     height: 100px;
-    padding-top: 7px;
+    padding-top: 35px;
     
     /* display navigation links in a row */
     display: flex;
