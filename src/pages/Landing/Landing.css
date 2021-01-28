@@ -7,7 +7,7 @@
     background: radial-gradient(78.17% 133.85% at 104.12% 0%, #FFFFFF 0%, rgba(255, 255, 255, 0.791667) 68.15%, rgba(255, 255, 255, 0) 100%), linear-gradient(0deg, #FFEBD3, #FFEBD3);
 }
 
-.landing-content {
+.landingContent {
     display: flex;
     flex-direction: row;
     padding-top: 150px;
@@ -29,14 +29,14 @@
     margin: 0;
 }
 
-.perfect-gift {
+.perfectGift {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-top: -5%;
 }
 
-.logo-homepage {
+.logoHomepage {
     transform: scale(0.8);
     margin-left: -1%;
 }
@@ -58,7 +58,7 @@
     width: 50%;
 }
 
-.get-started {
+.getStarted {
     color: white;
     font-size: 24px;
     font-family: 'Varela Round';
@@ -73,6 +73,6 @@
     cursor: pointer;
 }
 
-.get-started:hover {
+.getStarted:hover {
     background: rgba(114, 214, 201, 1);
 }
