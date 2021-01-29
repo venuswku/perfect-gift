@@ -27,6 +27,11 @@ p {
   color: white;
   font-size: 36px;
   padding: 10px 20px;
+  border: none;
+  outline: none;
+  margin: 0 auto;
+  width: auto;
+  height: auto;
 }
 
 /* split the screen in half (dunno how this works. more research) */
@@ -60,7 +65,7 @@ p {
 /* centered in the area */
 .cacentered {
   position: relative;
-  top: 20%;
+  top: 5%;
   left: 50%;
   transform: translate(-50%, 0%);
   text-align: center;
@@ -69,7 +74,16 @@ p {
 .loginTextbox {
   font-size:20pt;
   height: 58px;
-  width: 509px
+  width: 509px;
+}
+
+.caTextbox {
+  font-size:20pt;
+  height: 58px;
+  width: 509px;
+  background-color: #eee;
+  color: black;
+  box-shadow: 5px 10px #888888;
 }
 
 .createAccountPic {
@@ -83,13 +97,13 @@ p {
   margin-bottom: 0px;
 }
 
-.box {
+.cabox {
   position: relative;
   width: 500 px;
   padding: 10px;
   border: 1px #dbdbdb;
-  background-color: #dbdbdb;
   margin: 0;
+  border-radius: 25px;
 }
 
 .indoors{
@@ -106,4 +120,9 @@ p {
 
 .music{
   background-color: rgba(254, 219, 128, 1);
+}
+
+table {
+  margin: 0 auto; /* or margin: 0 auto 0 auto */
+  border-spacing: 80px 40px;
 }

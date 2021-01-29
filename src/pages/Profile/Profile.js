@@ -47,7 +47,7 @@ class Profile extends Component {
                     <input
                         onChange={this.handleChange}
                         value={this.state.editName}
-                        class='editTextbox'
+                        className='editTextbox'
                     />
                 </span>
             );
@@ -75,35 +75,35 @@ class Profile extends Component {
         return (
             <div className="App">
                 <Navbar />
-                <header class='profile-header'>
+                <header className='profile-header'>
                     {/* profile background + pic */}
-                    <div class='profile-background'>
+                    <div className='profile-background'>
                         <ProfilePic />
                     </div>
-                    <div class='profile-info'>
-                        <h3 class='profile-center'>{this.state.name}</h3>
+                    <div className='profile-info'>
+                        <h3 className='profile-center'>{this.state.name}</h3>
                         <br></br>
                         {/* username */}
                         <div>
-                            <span class='topicFont'>Username &nbsp; </span>
+                            <span className='topicFont'>Username &nbsp; </span>
                             <span>{this.renderInputField()} &nbsp; {this.renderButton()}</span>
                             
                         </div>
                         <br></br>
                         {/* interests */}
                         <div>
-                            <span class='topicFont'>Interests &nbsp; </span>
-                            <span class='textBubble purple'>topic1 &nbsp; <DeleteButton /></span>
-                            <span class='textBubble green'>topic2 &nbsp; <DeleteButton /></span>
-                            <span class='textBubble red'>topic3 &nbsp; <DeleteButton /></span>
-                            <span class='textBubble yellow'>topic4 &nbsp; <DeleteButton /></span>
-                            <span class='textBubble teal'>topic5 &nbsp; <DeleteButton /></span>
+                            <span className='topicFont'>Interests &nbsp; </span>
+                            <span className='textBubble purple'>topic1 &nbsp; <DeleteButton /></span>
+                            <span className='textBubble green'>topic2 &nbsp; <DeleteButton /></span>
+                            <span className='textBubble red'>topic3 &nbsp; <DeleteButton /></span>
+                            <span className='textBubble yellow'>topic4 &nbsp; <DeleteButton /></span>
+                            <span className='textBubble teal'>topic5 &nbsp; <DeleteButton /></span>
                         </div>
                         <br></br>
                         {/* wishlist */}
                         <div>
-                            <span class='topicFont'>Wishlist</span>
-                            <ul class='tab no-bullets'>
+                            <span className='topicFont'>Wishlist</span>
+                            <ul className='tab no-bullets'>
                                 <li>hockey stick &nbsp; <DeleteButton /></li>
                                 <li>hockey shin guard &nbsp; <DeleteButton /></li>
                                 <li>Harry Potter wand &nbsp; <DeleteButton /></li>
@@ -115,7 +115,7 @@ class Profile extends Component {
                                 <li>Harry Potter wand &nbsp; <DeleteButton /></li>
                             </ul>
                             <br></br>
-                            <span class='tab'> <AddButton /> Add to wishlist</span>
+                            <span className='tab'> <AddButton /> Add to wishlist</span>
                         </div>
 
                     </div>
