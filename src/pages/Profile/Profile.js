@@ -5,7 +5,7 @@ import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
-import { ReactComponent as ProfilePic } from '../../images/profile_pic.svg';
+import { ReactComponent as ProfilePic }  from '../../images/profile_pic.svg';
 
 class Profile extends Component {
 
