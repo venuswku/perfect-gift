@@ -71,3 +71,38 @@ components:
           - lastname
           - useremail
           - username
+
+    QuestionnaireResponses:
+      description: User's responses to interest questionnaire
+      type: array
+      items:
+        type: object
+        properties:
+          username:
+            type: string
+          outdooractivity:
+            type: string
+          place:
+            type: string
+          store:
+            type: string
+          musicgenre:
+            type: string
+          musician:
+            type: string
+          band:
+            type: string
+          indooractivity:
+            type: string
+          movietvshow:
+            type: string
+          videogame:
+            type: string
+          sport:
+            type: string
+          sportteam:
+            type: string
+          exercise:
+            type: string
+        required:
+          - username
