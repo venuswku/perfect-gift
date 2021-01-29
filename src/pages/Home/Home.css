@@ -23,7 +23,7 @@
 /*Using flexbox to space items in a column */
 .home-greeting {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
@@ -31,7 +31,7 @@
 /*This is the sky blue bar */
 .home-searchbar-background {
   align-items: center;
-  background-color: #BAD1FF;
+  background-color: #bad1ff;
   border-radius: 25px;
   display: flex;
   width: 1000px;
@@ -58,28 +58,27 @@
 
 /* The magnifying glass picture next to the search bar */
 .mag {
- /* background-color: khaki;
+  /* background-color: khaki;
  border: 4px solid green; */
- position: absolute;
- text-align: left;
- justify-content: left;
- left: 275px;
- width: 20px;
- height: 20px;
- 
+  position: absolute;
+  text-align: left;
+  justify-content: left;
+  left: 275px;
+  width: 20px;
+  height: 20px;
 }
 
 .dropDown {
   position: absolute;
   text-align: left;
-  
+
   left: 50px;
   width: 175px;
   height: 25px;
 
-  background-color: #FFF;
-  border-radius: 5px; 
-  border: 1px solid #007EFF; 
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #007eff;
   font-size: 17px;
   text-indent: 15px;
   line-height: 1.5;
@@ -101,7 +100,6 @@
 .homePic {
   width: 300px;
   height: auto;
-  
 }
 
 /* Starting flex-box below navbar */
@@ -125,7 +123,7 @@
 
 /* Gothic font */
 .gothic {
-  font-family: 'Didact Gothic';
+  font-family: "Didact Gothic";
 }
 
 /* Styling for the search bar input */
@@ -157,6 +155,31 @@ select {
 }
 */
 
+.home-input {
+  width: 300px;
+  height: 30px;
+  margin-left: 35px;
+  display: block;
+  background-color: white;
+  color: gray;
+  border: none;
+  outline: none;
+}
+
+.home-option {
+  background-color: white;
+  border: 5px solid red;
+}
+
+.home-select {
+  background-color: white;
+  border: 1px solid #007eff;
+  border-radius: 5px;
+  width: 150px;
+  height: 30px;
+  color: #007eff;
+  outline: none;
+}
 
 .small-text {
   font-size: 15px;
@@ -164,14 +187,13 @@ select {
 .dropDown1 {
   position: absolute;
   text-align: left;
-  
+
   left: 50px;
   width: 175px;
   height: 25px;
 
-  
-  border-radius: 5px; 
-  
+  border-radius: 5px;
+
   font-size: 17px;
   text-indent: 15px;
   line-height: 1.5;
@@ -179,7 +201,7 @@ select {
 
 /* The main container that holds all the information about the gift */
 .gift-main {
-  background-color:#E5F0FF;
+  background-color: #e5f0ff;
   border-radius: 25px;
   height: 180px;
   width: 600px;
@@ -203,7 +225,6 @@ select {
   position: absolute;
   left: 0;
   margin: 30px;
-  
 }
 
 /* This displays a white background behind the gift */
@@ -218,21 +239,21 @@ select {
 }
 
 .gift-interest-text {
-    position: absolute;
-    top: 5%;
-    
-    left: 20%;
-    font-size: 15px;
-    /*border: 2px solid red; */
+  position: absolute;
+  top: 5%;
+
+  left: 20%;
+  font-size: 15px;
+  /*border: 2px solid red; */
 }
 
 .gift-interest-topic {
-  background-color: #FBB4A5;
-  
+  background-color: #fbb4a5;
+
   position: absolute;
 
   top: 25%;
-  
+
   left: 16%;
   font-size: 15px;
   /*border: 2px solid red; */
@@ -243,15 +264,13 @@ select {
 }
 
 .grey {
-  color: #5A5858;
-
+  color: #5a5858;
 }
 
 .gift-heart-pic {
   position: absolute;
   top: 33%;
   left: 50%;
-  
 }
 
 .gift-right {
@@ -267,13 +286,10 @@ select {
   left: 30%;
   bottom: 0;
   right: 10;
-  
 }
 
 .gift-wishlist-text {
-    position: absolute;
-    top: 22%;
-    left: 60%;
-    
-  
+  position: absolute;
+  top: 22%;
+  left: 60%;
 }

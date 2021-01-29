@@ -5,7 +5,7 @@ import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass_grey.svg";
 import { ReactComponent as Hockey } from "../../images/hockey.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
-
+/* */
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -35,6 +35,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="Home">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <Navbar />
         <div className="home-parent">
           {/*The greeting and picture*/}
@@ -54,7 +55,7 @@ class Home extends React.Component {
                 <p></p>
                 <input
                   type="search"
-                  className="white-searchbar gothic "
+                  className="white-searchbar gothic home-input"
                   placeholder={this.state.search1}
                 ></input>
                 <MagnifyGlass className="mag" />
@@ -62,11 +63,11 @@ class Home extends React.Component {
                     <select
                       value={this.state.value}
                       onChange={this.handleChange}
-                      className = "varela"
+                      className = "varela home-select"
                     >
-                      <option value="Select a way to search">Search by..</option>
-                      <option value="Search for username">Username</option>
-                      <option value="Search for a gift">Gift</option>
+                      <option className = "home-option" value="Select a way to search">Search by..</option>
+                      <option className = "home-option" value="Search for username">Username</option>
+                      <option className = "home-option" value="Search for a gift">Gift</option>
                     </select>
                   </label>
               </div >
