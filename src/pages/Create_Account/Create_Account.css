@@ -27,6 +27,8 @@ p {
   color: white;
   font-size: 36px;
   padding: 10px 20px;
+  border: none;
+  outline: none;
   margin: 0 auto;
   width: auto;
   height: auto;

@@ -9,8 +9,8 @@ function Landing() {
     return (
         <div className="Landing">
             <Navbar/>
-            <div class="landingContent">
-                <div class="about">
+            <div className="landingContent">
+                <div className="about">
                     <p className="catchphrase">Simple and Swift, choose</p>
                     <div className="perfectGift"><PerfectGiftLogo className="logoHomepage" /><p className="exclamation">!</p></div>
                     <p className="description">Surprise your family, friends, and loved ones with ideal gifts from their wishlist.</p>
