@@ -5,3 +5,4 @@
 
 # files
 package-lock.json
+.vscode/*
