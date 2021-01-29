@@ -14,11 +14,14 @@ function Sign_In() {
                     <p className="signInTitle">Sign In</p>
                     <p className="signInBenefits">Get personalized gift suggestions and share your own gift wishlist!</p>
                     <form className="userInfo">
-                        <label for='username' className='signInLabel'>Username</label>
-                        <input type='text' name='username' className='signInTextbox'></input>
-                        <label for='password' className='signInLabel'>Password</label>
-                        <input type='text' name='password' className='signInTextbox'></input>
-                        <br/>
+                        <div className="usernamePassword">
+                            <label for='username' className='signInLabel'>Username</label>
+                            <input type='text' name='username' className='signInTextbox'></input>
+                        </div>
+                        <div className="usernamePassword">
+                            <label for='password' className='signInLabel'>Password</label>
+                            <input type='text' name='password' className='signInTextbox'></input>
+                        </div>
                         <div className="createAccountOrContinue">
                             <div className="firstTime">
                                 Is this your first time?

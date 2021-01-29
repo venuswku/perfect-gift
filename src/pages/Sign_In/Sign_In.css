@@ -5,7 +5,7 @@
 }
 
 .signInContent {
-  padding-top: 160px;
+  padding-top: 150px;
   padding-left: 2%;
   width: 95vw;
   display: flex;
@@ -15,9 +15,8 @@
 }
 
 .signInPic {
-  width: 50%;
-  height: 50%;
-  margin-left: -5%;
+  width: 40%;
+  height: 40%;
 }
 
 .signInForm {
@@ -54,6 +53,12 @@
   width: 80%;
 }
 
+.usernamePassword {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
 .signInLabel {
   font-size: 20px;
   font-family: 'Varela Round';
@@ -62,9 +67,8 @@
 }
 
 .signInTextbox {
-  font-size: 20px;
+  font-size: 25px;
   font-family: 'Didact Gothic';
-  width: 80%;
   border-radius: 8px;
   outline: none;
   margin: 0;
