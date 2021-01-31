@@ -14,3 +14,5 @@ INSERT INTO questionnaireresponses(
     username, outdooractivity, place, store, musicgenre, musician,band, 
     indooractivity, movietvshow, videogame, sport, sportteam, exercise)
     VALUES ('klee128', 'walk', '', '', 'pop', '', '', 'sleeping', 'True Beauty', 'Tetris', '', '', 'walk');
+
+    
