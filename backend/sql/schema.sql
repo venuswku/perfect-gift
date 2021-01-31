@@ -1,12 +1,8 @@
 -- Database schema goes here --
 DROP TABLE IF EXISTS giftuser;
--- Dummy table --
-DROP TABLE IF EXISTS dummy;
-CREATE TABLE dummy(created TIMESTAMP WITH TIME ZONE);
+CREATE TABLE giftuser(username VARCHAR(32), userpassword VARCHAR(60), firstname VARCHAR(32), lastname VARCHAR(32), useremail VARCHAR(32), avatar TEXT, showavatar BOOLEAN);
 
--- Your database schema goes here --
-CREATE TABLE giftuser(firstname VARCHAR(32), lastname VARCHAR(32), useremail VARCHAR(32), username VARCHAR(32), userpassword VARCHAR(60), avatar TEXT, showavatar BOOLEAN);
-
+DROP TABLE IF EXISTS questionnaireresponses;
 CREATE TABLE questionnaireresponses(
     username VARCHAR(32),
     outdooractivity VARCHAR(50),
@@ -22,3 +18,4 @@ CREATE TABLE questionnaireresponses(
     sportteam VARCHAR(50),
     exercise VARCHAR(50),
 );
+

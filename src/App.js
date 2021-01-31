@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import Sign_In from "./pages/Sign_In/Sign_In";
 import Profile from "./pages/Profile/Profile";
 import Create_Account from "./pages/Create_Account/Create_Account";
+import TestUser_Authentication from "./pages/TestUser_Authentication/TestUser_Authentication";
 
 const App = () => (
   <div className="App">
@@ -15,6 +16,7 @@ const App = () => (
       <Route exact path='/create_account' component={Create_Account}></Route>
       <Route exact path='/profile' component={Profile}></Route>
       <Route exact path='/home' component={Home}></Route>
+      <Route exact path='/ua' component={TestUser_Authentication}></Route>
     </Switch>
   </div>
 );
