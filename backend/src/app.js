@@ -6,9 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const OpenApiValidator = require('express-openapi-validator');
 
-const dummy = require('./dummy');
 const gift = require('./gift');
-
 
 const app = express();
 app.use(cors());
@@ -28,7 +26,6 @@ app.use(
     }),
 );
 
-app.get('/v0/dummy', dummy.get);
 app.get('/v0/giftuser', gift.getUsers);
 
 
