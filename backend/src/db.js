@@ -8,9 +8,22 @@ const pool = new Pool({
     password: process.env.POSTGRES_PASSWORD,
 });
 
-// Returns all of the users and all of their data, used in getUsers
-exports.selectUsers = async (useremail) => {
-    let select = 'SELECT firstname, lastname, useremail, username, userpassword, avatar, showavatar FROM giftuser';
+// Returns one user and its data or all users and their data, used in getUsers
+exports.selectUsers = async (username) => {
+    let select = 'SELECT username, userpassword, firstname, lastname, useremail, avatar, showavatar FROM giftuser';
+    if (username) {
+        select += ` WHERE username ~* $1`;
+    }
+    const query = {
+        text: select,
+        values: [username ? `${username}` : []],
+    };
+    const { rows } = await pool.query(query);
+    const allUsers = [];
+    for (const row of rows) {
+        allUsers.push({ username: row.username, userpassword: row.userpassword, firstname: row.firstname, lastname: row.lastname, useremail: row.useremail, avatar: row.avatar, showavatar: row.showavatar });
+    }
+    return allUsers;
 };
 
 console.log(`Connected to database '${process.env.POSTGRES_DB}'`);

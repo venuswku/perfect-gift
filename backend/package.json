@@ -2,6 +2,7 @@
   "name": "perfect-gift",
   "version": "0.1.0",
   "devDependencies": {
+    "docker-compose": "^0.23.5",
     "eslint": "^7.12.1",
     "eslint-config-google": "^0.14.0",
     "jest": "^26.5.3",
@@ -22,8 +23,11 @@
     "swagger-ui-express": "^4.1.4"
   },
   "scripts": {
+    "prestart": "docker-compose up -d",
     "start": "nodemon src/server.js",
+    "pretest": "docker-compose up -d",
     "test": "jest --runInBand --testTimeout=2000 --coverage --forceExit",
+    "posttest": "docker-compose down",
     "lint": "./node_modules/.bin/eslint . --ext .js"
   }
 }
