@@ -1,0 +1,78 @@
+.Landing {
+    width: 90%;
+    padding: 0% 5% 5%;
+    overflow-x: hidden;
+    min-height: 100vh;
+    text-align: center;
+    background: radial-gradient(78.17% 133.85% at 104.12% 0%, #FFFFFF 0%, rgba(255, 255, 255, 0.791667) 68.15%, rgba(255, 255, 255, 0) 100%), linear-gradient(0deg, #FFEBD3, #FFEBD3);
+}
+
+.landingContent {
+    display: flex;
+    flex-direction: row;
+    padding-top: 150px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.about {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.catchphrase {
+    font-size: 36px;
+    font-family: 'Varela Round';
+    color: rgba(41, 112, 250, 1);
+    margin: 0;
+}
+
+.perfectGift {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: -5%;
+}
+
+.logoHomepage {
+    transform: scale(0.8);
+    margin-left: -1%;
+}
+
+.exclamation {
+    font-size: 45px;
+    font-family: 'Varela Round';
+    color: rgba(41, 112, 250, 1);
+    margin-left: -8%;
+}
+
+.description {
+    width: 75%; /* 75% of parent = about class */
+    font-size: 24px;
+    margin: 5% 0 15%;
+}
+
+.giveGiftPic {
+    width: 50%;
+}
+
+.getStarted {
+    color: white;
+    font-size: 24px;
+    font-family: 'Varela Round';
+    background: rgba(114, 214, 201, 0.8);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    outline: none;  /* removes black border around button when it's clicked */
+    border-radius: 50px;
+    border: none;
+    display: inline-block;
+    white-space: nowrap;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+.getStarted:hover {
+    background: rgba(114, 214, 201, 1);
+}

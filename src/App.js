@@ -1,30 +1,24 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import About from "./pages/About";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Mission from "./pages/Mission";
-import Profile from "./pages/Profile";
-import Create_Account from "./pages/Create_Account";
+import Landing from "./pages/Landing/Landing"
+import Home from "./pages/Home/Home";
+import Sign_In from "./pages/Sign_In/Sign_In";
+import Profile from "./pages/Profile/Profile";
+import Create_Account from "./pages/Create_Account/Create_Account";
+import TestUser_Authentication from "./pages/TestUser_Authentication/TestUser_Authentication";
 
 const App = () => (
-  <div className='app'>
-    <h1>React Router Demo</h1>
-    <Main />
+  <div className="App">
+    <Switch>
+      <Route exact path='/' component={Landing}></Route>
+      <Route exact path='/sign_in' component={Sign_In}></Route>
+      <Route exact path='/create_account' component={Create_Account}></Route>
+      <Route exact path='/profile' component={Profile}></Route>
+      <Route exact path='/home' component={Home}></Route>
+      <Route exact path='/ua' component={TestUser_Authentication}></Route>
+    </Switch>
   </div>
-);
-
-//give each page a url
-const Main = () => (
-  <Switch>
-    <Route exact path='/' component={Home}></Route>
-    <Route exact path='/mission' component={Mission}></Route>
-    <Route exact path='/about' component={About}></Route>
-    <Route exact path='/login' component={Login}></Route>
-    <Route exact path='/profile' component={Profile}></Route>
-    <Route exact path='/create_account' component={Create_Account}></Route>
-  </Switch>
 );
 
 export default App;

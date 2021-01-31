@@ -1,0 +1,8 @@
+# Ignores these files when committing.
+
+# dependencies
+/node_modules
+
+# files
+package-lock.json
+.vscode/*
