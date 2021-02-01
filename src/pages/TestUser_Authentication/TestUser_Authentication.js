@@ -45,7 +45,7 @@ submitHandler = (e) => {
   e.preventDefault()
   console.log(this.state)
   console.log("We are submitting a user to either autheticate, or create")
-  axios.post('http://localhost:3001/authenticate', this.state)
+  axios.post('http://localhost:3010/v0/authenticate', this.state)
   .then(response => {
     console.log(response)
   })

@@ -21,4 +21,17 @@ exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
     console.log("The frontend has given us:")
     console.log(req.body.username, req.body.password)
+
+    // If a username is passed into query param (name of query is username, in openapi.yaml)
+    if (req.body.username) {
+        console.log("Entered IF")
+        // Get the single user's data if the user is selected
+        const oneUser = await db.authenticateUser(req.body.username);
+        console.log("Exited DB function")
+        if (oneUser) {
+            res.status(200).json(oneUser);
+        } else {
+            res.status(404).send();
+        }
+    }
 }
