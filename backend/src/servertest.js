@@ -30,8 +30,6 @@ app.post('/authenticate', (req,res) => {
   console.log("The frontend has give us:")
   console.log(req.body.username, req.body.password)
   
-  
-  
 })
 
 //Used for server to keep running
