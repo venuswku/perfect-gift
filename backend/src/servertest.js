@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 //This lets the user post to the login page and potentially sign in
 app.post('/authenticate', (req,res) => {
   console.log("We are going to authenticate the request that the frontend has given us")
-  console.log("The frontend has give us:")
+  console.log("The frontend has given us:")
   console.log(req.body.username, req.body.password)
   
 })
