@@ -5,21 +5,30 @@ info:
   title: Perfect Gift Backend
 
 servers:
-  - url: http://localhost:3010/v0
+  - url: http://localhost:3010
 
 paths:
-  /dummy:
+  /v0/giftuser:
     get:
-      description: Dummy Endpoint
+      description: Returns all users
+      parameters:
+      - name: username
+        in: query
+        required: false
+        description: User's username
+        schema:
+          type: string
       responses:
         200:
-          description: Successful
+          description: User response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DummyResponse'
+                $ref: '#/components/schemas/User'
+        404:
+          description: Unknown user
         default:
-          description: unexpected error
+          description: Unexpected Error
           content:
             application/json:
               schema:
@@ -38,19 +47,16 @@ components:
         message:
           type: string
 
-    DummyResponse:
-      required:
-        - message
-      properties:
-        message:
-          type: string
-
     User:
       description: A user and its data
       type: array
       items:
         type: object
         properties:
+          username:
+            type: string
+          userpassword:
+            type: string
           firstname:
             type: string
           lastname:
@@ -58,19 +64,15 @@ components:
           useremail:
             type: string
             format: email
-          username:
-            type: string
-          userpassword:
-            type: string
-          avatarurl:
+          avatar:
             type: string
           showavatar:
             type: boolean
         required:
+          - username
           - firstname
           - lastname
           - useremail
-          - username
 
     QuestionnaireResponses:
       description: User's responses to interest questionnaire

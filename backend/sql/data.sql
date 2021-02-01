@@ -1,16 +1,14 @@
 -- Populates User Table Here --
 
 DELETE FROM giftuser;
-INSERT INTO giftuser(firstname, lastname, useremail, username, userpassword, avatar, showavatar) VALUES ('Claire', 'Ruffing', 'claireruffing@mail.com', 'cmruffin', '', '', TRUE);
-INSERT INTO giftuser(firstname, lastname, useremail, username, userpassword, avatar, showavatar) VALUES ('Venus', 'Ku' , 'venus345@mail.com', 'vku', '', '', TRUE);
-INSERT INTO giftuser(firstname, lastname, useremail, username, userpassword, avatar, showavatar) VALUES ('Carlos', 'Viche', 'carlosviche@mail.com', 'cviche', '', '', TRUE);
-INSERT INTO giftuser(firstname, lastname, useremail, username, userpassword, avatar, showavatar) VALUES ('Kelsy', 'Lee', 'klee128@ucsc.edu', 'klee128', '', '', TRUE);
-INSERT INTO giftuser(firstname, lastname, useremail, username, userpassword, avatar, showavatar) VALUES ('', '', '', '', '', '', '');
-INSERT INTO giftuser(firstname, lastname, useremail, username, userpassword, avatar, showavatar) VALUES ('', '', '', '', '', '', '');
+INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES ('cmruffin', '', 'Claire', 'Ruffing', 'claireruffin@gmail.com', '', TRUE);
+INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES ('vwku', '', 'Venus', 'Ku' , 'venus345@mail.com', '', TRUE);
+INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES ('cviche', '', 'Carlos', 'Viche', 'carlosviche@mail.com', '', FALSE);
+INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES ('sobyrne', '', 'Sean', 'OByrne', 'sean234@mail.com', '', FALSE);
+INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES ('klee128', '', 'Kelsy', 'Lee', 'kelsylee@mail.com', '', FALSE);
 
-INSERT INTO dummy (created) VALUES (current_timestamp);
-
+DELETE FROM questionnaireresponses;
 INSERT INTO questionnaireresponses(
-    username, outdooractivity, place, store, musicgenre, musician,band, 
+    username, outdooractivity, place, store, musicgenre, musician, band,
     indooractivity, movietvshow, videogame, sport, sportteam, exercise)
     VALUES ('klee128', 'walk', '', '', 'pop', '', '', 'sleeping', 'True Beauty', 'Tetris', '', '', 'walk');
