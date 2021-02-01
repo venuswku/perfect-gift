@@ -108,4 +108,3 @@ components:
             type: string
         required:
           - username
-          - useremail
