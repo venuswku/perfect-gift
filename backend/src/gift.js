@@ -16,3 +16,9 @@ exports.getUsers = async (req, res) => {
         res.status(200).json(allUsers);
     }
 };
+
+exports.login = async (req, res) => {
+    console.log("We are going to authenticate the request that the frontend has given us")
+    console.log("The frontend has given us:")
+    console.log(req.body.username, req.body.password)
+}

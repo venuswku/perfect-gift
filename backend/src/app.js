@@ -28,6 +28,10 @@ app.use(
 
 app.get('/v0/giftuser', gift.getUsers);
 
+//TODO:Try and catch
+//This lets the user post to the login page and potentially sign in
+app.post('/authenticate', gift.login);
+
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
