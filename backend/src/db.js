@@ -26,6 +26,24 @@ exports.selectUsers = async (username) => {
     return allUsers;
 };
 
+// gift.js sends username to db.js. if username is found, it returns all parameters of that row
+exports.selectQResponses = async (username) => {
+    let select = 'SELECT * FROM questionnaireresponses';
+    if (username) {
+        select += ` WHERE username ~* $1`;
+    }
+    const query = {
+        text: select,
+        values: [username ? `${username}` : []],
+    };
+    const { rows } = await pool.query(query);
+    const allUsers = [];
+    for (const row of rows) {
+        allUsers.push({ username: row.username, outdooractivity: row.outdooractivity, place: row.place, store: row.store, musicgenre: row.musicgenre, musician: row.musician, band: row.band, indooractivity: row.indooractivity, movietvshow: row.movietvshow, videogame: row.videogame, sport: row.sport, sportteam: row.sportteam, exercise: row.exercise });
+    }
+    return allUsers;
+};
+
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username, hash_pass) => {
     let select = 'SELECT username FROM giftuser';
