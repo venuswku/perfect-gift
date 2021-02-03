@@ -7,6 +7,9 @@ const path = require('path');
 const OpenApiValidator = require('express-openapi-validator');
 const gift = require('./gift');
 const app = express();
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 // Used for letting the frontend communicate with the server
 app.use(cors({
