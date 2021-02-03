@@ -38,26 +38,29 @@ exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
     console.log("The frontend has given us:")
     console.log(req.body.username, req.body.password)
-    var oneUser = false
-    //res.status(200).send()
+    const oneUser = await db.authenticateUser(req.body.username);
+    const stored_pass = oneUser[0]['userpassword'];
+    console.log(oneUser)
+    console.log(stored_pass)
 
-    // If a username is passed into query param (name of query is username, in openapi.yaml)
-    if (req.body.username) {
-        console.log("Entered IF")
-        // Get the single user's data if the user is selected
-        await bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
-            oneUser = await db.authenticateUser(req.body.username, hash);
-            console.log(hash)
-            //console.log(oneUser)
+    // bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+    //     console.log(hash);
+    // });
+
+    if (stored_pass.length > 0) {
+
+        bcrypt.compare(req.body.password, stored_pass, (err, result) => {
+            if (result){
+                console.log("AUTHENTICATED")
+                res.status(200).send();
+            } else{
+                // Send JWT or Cookie
+                console.log("NOT AUTHENTICATED")
+                res.status(500).send();
+            }
         })
-        console.log("Exited DB function")
-        if (oneUser) {
-            console.log("One User True")
-            res.status(200).json(oneUser);
-        } else {
-            console.log("One User False")
-            console.log(oneUser)
-            res.status(404).send();
-        }
+    } else {
+        console.log("Result too small")
+        res.status(500).send();
     }
 };

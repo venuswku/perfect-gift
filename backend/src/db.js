@@ -45,8 +45,8 @@ exports.selectQResponses = async (username) => {
 };
 
 // Returns one user and its data or all users and their data, used in getUsers
-exports.authenticateUser = async (username, hash_pass) => {
-    let select = 'SELECT username FROM giftuser';
+exports.authenticateUser = async (username) => {
+    let select = 'SELECT username, userpassword FROM giftuser';
     if (username) {
         select += ` WHERE username ~* $1`;
     }
