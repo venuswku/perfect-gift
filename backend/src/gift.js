@@ -50,9 +50,23 @@ exports.postQResponse = async (req, res) => {
     const sportsteam = req.body.sportsteam;
     const exercise = req.body.exercise;
 
+    console.log('username entered:', username);
     // send response to post request
+    db.query(
+        "INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise],
+        (err, result) => {
+            console.log(err);
+        },
+    );
+    
+    // check if post request was successful
     if (username) {
-
+        const userResponses = await db.selectQResponses(username);
+        res.status(200).json("Gifter's questionnaire responses are stored!", userResponses);
+    }
+    else {
+        res.status(404).send();
     }
 };
 

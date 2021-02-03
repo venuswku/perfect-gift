@@ -39,7 +39,7 @@ exports.selectQResponses = async (username) => {
     const { rows } = await pool.query(query);
     const allUsers = [];
     for (const row of rows) {
-        allUsers.push({ username: row.username, outdooractivity: row.outdooractivity, place: row.place, store: row.store, musicgenre: row.musicgenre, musician: row.musician, band: row.band, indooractivity: row.indooractivity, movietvshow: row.movietvshow, videogame: row.videogame, sport: row.sport, sportteam: row.sportteam, exercise: row.exercise });
+        allUsers.push({ username: row.username, outdooractivity: row.outdooractivity, place: row.place, store: row.store, musicgenre: row.musicgenre, musician: row.musician, band: row.band, indooractivity: row.indooractivity, movietvshow: row.movietvshow, videogame: row.videogame, sport: row.sport, sportsteam: row.sportsteam, exercise: row.exercise });
     }
     return allUsers;
 };
