@@ -1,6 +1,9 @@
 const db = require('./db');
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 // gets a single user or all of the users from the giftusers table
 exports.getUsers = async (req, res) => {

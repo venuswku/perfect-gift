@@ -5,11 +5,29 @@ const swaggerUi = require('swagger-ui-express');
 const fs = require('fs');
 const path = require('path');
 const OpenApiValidator = require('express-openapi-validator');
-
 const gift = require('./gift');
-
 const app = express();
-app.use(cors());
+
+// Used for letting the frontend communicate with the server
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST"],
+  credentials: true,
+}));
+//Used for cookie session
+app.use(cookieParser());
+app.use(bodyParser.urlencoded( {extended: true}));
+app.use(session({
+  key : "userId",
+  secret: "hello",
+  resave: false,
+  saveUninitialized: false,
+  cookie : {
+    expires : 60 * 60 * 24
+  }
+}))
+
+//Json stuff. Not too sure
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
