@@ -55,6 +55,8 @@ exports.login = async (req, res) => {
         bcrypt.compare(req.body.password, stored_pass, (err, result) => {
             if (result){
                 console.log("AUTHENTICATED")
+                req.session.user = oneUser[0]
+                console.log(req.session.user)
                 res.status(200).send();
             } else{
                 // Send JWT or Cookie

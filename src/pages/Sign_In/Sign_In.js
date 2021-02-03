@@ -7,6 +7,7 @@ import SignInImage from '../../images/sign_in_image.png';
 import axios from 'axios';
 
 
+axios.defaults.withCredentials = true;
 
 class Sign_In extends Component {
     constructor(props) {
