@@ -27,7 +27,10 @@ app.use(
 );
 
 app.get('/v0/giftuser', gift.getUsers);
+
 app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
+app.post('/v0/postqresponse', gift.postQResponse);  // might need to somehow combine this with posting a giftuser sicne they're both from Create Account page
+
 //TODO:Try and catch
 //This lets the user post to the login page and potentially sign in
 app.post('/v0/authenticate', gift.login);

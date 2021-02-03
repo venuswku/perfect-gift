@@ -10,5 +10,5 @@ INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, ava
 DELETE FROM questionnaireresponses;
 INSERT INTO questionnaireresponses(
     username, outdooractivity, place, store, musicgenre, musician, band,
-    indooractivity, movietvshow, videogame, sport, sportteam, exercise)
+    indooractivity, movietvshow, videogame, sport, sportsteam, exercise)
     VALUES ('klee128', 'walk', '', '', 'pop', '', '', 'sleeping', 'True Beauty', 'Tetris', '', '', 'walk');
