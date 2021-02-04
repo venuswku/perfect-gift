@@ -32,6 +32,7 @@ p {
   margin: 0 auto;
   width: auto;
   height: auto;
+  cursor: pointer;
 }
 
 /* split the screen in half (dunno how this works. more research) */

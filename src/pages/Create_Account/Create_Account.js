@@ -22,7 +22,7 @@ class Create_Account extends Component {
     // hold the variables
     constructor(props) {
         super(props)
-        //These are the items that we will be able to send to the server
+        // items that we will be able to send to the server
         this.state = {
             firstname: '',
             lastname: '',
@@ -46,7 +46,7 @@ class Create_Account extends Component {
 
     // if changed, update appropriately
     changeHandler = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     //submitHandler
@@ -65,7 +65,7 @@ class Create_Account extends Component {
         //     showavatar,
         // });
 
-        let data = JSON.stringify()
+        let data = JSON.stringify();
         axios.post('http://localhost:3010/v0/postqresponse', this.state)
         .then(response => {
             console.log('success');
@@ -75,7 +75,7 @@ class Create_Account extends Component {
             console.log("failed");
             console.log(this.state);
             console.log(error);
-        })
+        });
     };
     render() {
         // store input values locally into the following values
