@@ -69,6 +69,22 @@ class Profile extends Component {
             );
         }
     }
+/*
+    useEffect(() => {
+        axios.get("http:localhost:3010/v0/authenticate").then((response) =>{
+            console.loge(response.data)
+                };
+*/
+componentDidMount() {
+  axios.get('http://localhost:3010/v0/authenticate') //The port of the server
+  .then(response => response.json())
+  .then(res => {
+    if (res && res.data) {
+      console.log(res.data)
+      this.setState({users: [...this.state.users, ...res.data]})
+    }
+  })
+}
     
     
     render() {
