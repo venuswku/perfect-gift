@@ -38,8 +38,9 @@ exports.getQResponse = async (req, res) => {
 };
 
 exports.postQResponse = async (req, res) => {
-    console.log('username entered:', req.body.username);
-    // get input from Create Account page
+    console.log('gift.js: postQResponse called');
+
+    // get user input from Create Account page
     const username = req.body.username;
     const outdooractivity = req.body.outdooractivity;
     const place = req.body.place;
@@ -54,27 +55,19 @@ exports.postQResponse = async (req, res) => {
     const sportsteam = req.body.sportsteam;
     const exercise = req.body.exercise;
 
+    // insert questionnaire responses in questionnareresponses table
     db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
-    console.log("done insert");
-    // send response to post request
-    // db.query(
-    //     "INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    //     [username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise],
-    //     (err, result) => {
-    //         console.log(err);
-    //     },
-    // );
 
     // check if post request was successful
-    // if (username) {
-    //     const userResponses = await db.selectQResponses(username);
-    //     console.log("successful input");
-    //     res.status(200).json("Gifter's questionnaire responses are stored!", userResponses);
-    // }
-    // else {
-    //     console.log("failz");
-    //     res.status(404).send();
-    // }
+    if (username) {
+        const userResponses = await db.selectQResponses(username);
+        console.log("successful input");
+        res.status(200).json("Gifter's questionnaire responses are stored!", userResponses);
+    }
+    else {
+        console.log("failz");
+        res.status(404).send();
+    }
 };
 
 // Checks if login credentials are valid
