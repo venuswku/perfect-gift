@@ -83,7 +83,7 @@ componentDidMount() {
   .then(res => {
       console.log("Got a response with GET")
       console.log(res.data)
-      if (res.data[0].username != ""){
+      if (res.data[0].username !== ""){
 
       } else {
         this.props.history.push('/sign_in')
