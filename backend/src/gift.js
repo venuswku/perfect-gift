@@ -55,17 +55,17 @@ exports.login = async (req, res) => {
         bcrypt.compare(req.body.password, stored_pass, (err, result) => {
             if (result){
                 console.log("AUTHENTICATED")
-                req.session.user = oneUser[0]
+                req.session.user = oneUser[0]['username']
                 console.log(req.session.user)
-                res.status(200).send();
+                res.send(oneUser[0]['username']);
             } else{
                 // Send JWT or Cookie
                 console.log("NOT AUTHENTICATED")
-                res.status(500).send();
+                res.send("");
             }
         })
     } else {
         console.log("Result too small")
-        res.status(500).send();
+        res.send("");
     }
 };

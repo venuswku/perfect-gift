@@ -6,6 +6,9 @@ import SignInImage from '../../images/sign_in_image.png';
 //import { render } from '@testing-library/react';
 import axios from 'axios';
 
+import { Redirect } from "react-router-dom";
+
+
 
 axios.defaults.withCredentials = true;
 
@@ -33,7 +36,13 @@ class Sign_In extends Component {
     console.log("We are submitting a user to either autheticate, or create")
     axios.post('http://localhost:3010/v0/authenticate', this.state)
     .then(response => {
-      console.log(response)
+      if (response.data === ""){
+        console.log("Not Logged In")
+      }
+      else {
+        console.log("Logged In")
+        this.props.history.push('/profile')
+      }
     })
     .catch(error => {
       console.log(error)
