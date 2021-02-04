@@ -113,3 +113,7 @@
 .continue:hover {
   background: rgba(114, 214, 201, 1);
 }
+
+.wrongPassword {
+  background-color: chocolate;
+}

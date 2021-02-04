@@ -49,20 +49,13 @@ app.use(
 
 app.get('/v0/giftuser', gift.getUsers);
 app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
-//TODO:Try and catch
-//This lets the user post to the login page and potentially sign in
+
+
+// This authenticates and authorizes a user to be able to log in.
 app.post('/v0/authenticate', gift.login);
 
-app.get('/v0/authenticate', (req, res)=> {
-  console.log("Recieved Request")
-  console.log(req.session.user)
-  if (req.session.user){
-    console.log("Enters IF")
-    res.send([{ username: req.session.user, userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
-  } else {
-    res.send([{ username: "", userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
-  }
-})
+//This check if the user has the authorization to be on the website
+app.get('/v0/authenticate', gift.checkLogin)
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

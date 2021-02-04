@@ -17,7 +17,7 @@ class Profile extends Component {
         // Here we initialize our components state
         this.state = {
             showForm: false,
-            name: 'Marvin Steep',
+            name: '',
             username: 'msteep',
             editName: 'msteep',
             mode: 'view',
@@ -83,9 +83,12 @@ componentDidMount() {
       console.log("Got a response with GET")
       console.log(res.data)
       if (res.data[0].username !== ""){
-
+          console.log(res.data[0].username )
+          const userFullName = res.data[0].firstname + " " + res.data[0].lastname 
+             this.setState({name: userFullName}) 
       } else {
         this.props.history.push('/sign_in')
+        console.log("Redirected to sign in page")
       }
 
   }).catch(res => {
