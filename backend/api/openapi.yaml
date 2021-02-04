@@ -216,7 +216,7 @@ components:
             type: string
           sport:
             type: string
-          sportteam:
+          sportsteam:
             type: string
           exercise:
             type: string
