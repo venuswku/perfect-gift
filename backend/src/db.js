@@ -44,6 +44,23 @@ exports.selectQResponses = async (username) => {
     return allUsers;
 };
 
+exports.insertQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
+    // let insert = 'INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('+username+', '+outdooractivity+', '+place+', '+store+', '+musicgenre+', '+musician+', '+band+', '+indooractivity+', '+movietvshow+', '+videogame+', '+sport+', '+sportsteam+', '+exercise+')';
+    // let theValue = [username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise];
+    // let insert = 'INSERT INTO questionnaireresponses(username) VALUES(  "'+ username +'" )';
+    // console.log(insert);
+    // // pool.query(insert);
+    // pool.query(insert, (err, res) => {
+    //     if (err) {
+    //         console.log("error")
+    //         console.error(err);
+    //         return;
+    //     }
+    //     console.log('Table is successfully created');
+    // });
+}
+
+
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username, hash_pass) => {
     let select = 'SELECT username FROM giftuser';

@@ -36,23 +36,23 @@ exports.getQResponse = async (req, res) => {
 
 exports.postQResponse = async (req, res) => {
     console.log('username entered:', req.body.username);
-    res.status(200).json("oneUser");
     // get input from Create Account page
-    // const username = req.body.username;
-    // const outdooractivity = req.body.outdooractivity;
-    // const place = req.body.place;
-    // const store = req.body.store;
-    // const musicgenre = req.body.musicgenre;
-    // const musician = req.body.musician;
-    // const band = req.body.band;
-    // const indooractivity = req.body.indooractivity;
-    // const movietvshow = req.body.movietvshow;
-    // const videogame = req.body.videogame;
-    // const sport = req.body.sport;
-    // const sportsteam = req.body.sportsteam;
-    // const exercise = req.body.exercise;
+    const username = req.body.username;
+    const outdooractivity = req.body.outdooractivity;
+    const place = req.body.place;
+    const store = req.body.store;
+    const musicgenre = req.body.musicgenre;
+    const musician = req.body.musician;
+    const band = req.body.band;
+    const indooractivity = req.body.indooractivity;
+    const movietvshow = req.body.movietvshow;
+    const videogame = req.body.videogame;
+    const sport = req.body.sport;
+    const sportsteam = req.body.sportsteam;
+    const exercise = req.body.exercise;
 
-    
+    db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
+    console.log("done insert");
     // send response to post request
     // db.query(
     //     "INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -61,13 +61,15 @@ exports.postQResponse = async (req, res) => {
     //         console.log(err);
     //     },
     // );
-    
+
     // check if post request was successful
     // if (username) {
     //     const userResponses = await db.selectQResponses(username);
+    //     console.log("successful input");
     //     res.status(200).json("Gifter's questionnaire responses are stored!", userResponses);
     // }
     // else {
+    //     console.log("failz");
     //     res.status(404).send();
     // }
 };

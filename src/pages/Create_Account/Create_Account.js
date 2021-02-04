@@ -63,21 +63,9 @@ class Create_Account extends Component {
         //     avatar,
         //     showavatar,
         // });
-        axios.post('http://localhost:3010/v0/postqresponse', {
-            username: e.username,
-            outdooractivity: e.outdooractivity,
-            place: e.place,
-            store: e.store,
-            musicgenre: e.musicgenre,
-            musician: e.musician,
-            band: e.band,
-            indooractivity: e.indooractivity,
-            movietvshow: e.movietvshow,
-            videogame: e.videogame,
-            sport: e.sport,
-            sportsteam: e.sportsteam,
-            exercise: e.exercise
-        })
+
+        let data = JSON.stringify()
+        axios.post('http://localhost:3010/v0/postqresponse', this.state)
         .then(response => {
             console.log('success');
             console.log(response);
