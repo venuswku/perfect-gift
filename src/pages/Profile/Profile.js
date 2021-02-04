@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../App.css';
 import './Profile.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
@@ -97,7 +96,7 @@ componentDidMount() {
     
     render() {
         return (
-            <div className="App">
+            <div className="Profile">
                 <Navbar />
                 <header className='profile-header'>
                     {/* profile background + pic */}
