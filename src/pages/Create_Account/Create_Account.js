@@ -43,6 +43,7 @@ class Create_Account extends Component {
             exercise: '',
         }
     }
+
     // if changed, update appropriately
     changeHandler = (e) => {
         this.setState({ [e.target.name]: e.target.value })
@@ -77,7 +78,8 @@ class Create_Account extends Component {
         })
     };
     render() {
-        const { firstname, lastname, username, email, password, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state
+        // store input values locally into the following values
+        const { firstname, lastname, username, email, password, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
         return (
             <div className="App">
                 <LogoNavbar />
@@ -89,14 +91,14 @@ class Create_Account extends Component {
                             <table>
                                 <tr>
                                     <td>
-                                        <label for='first_name' className='blueText'>First Name</label>
+                                        <label for='firstname' className='blueText'>First Name</label>
                                     </td>
                                     <td>
                                         <input
                                             type='text'
                                             onChange={this.changeHandler}
                                             value={firstname}
-                                            name='first_name'
+                                            name='firstname'
                                             className='caTextbox'
                                             required
                                         />
@@ -104,14 +106,14 @@ class Create_Account extends Component {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for='last_name' className='blueText'>Last Name</label>
+                                        <label for='lastname' className='blueText'>Last Name</label>
                                     </td>
                                     <td>
                                         <input
                                             type='text'
                                             onChange={this.changeHandler}
                                             value={lastname}
-                                            name='last_name'
+                                            name='lastname'
                                             className='caTextbox'
                                             required
                                         />
@@ -164,10 +166,10 @@ class Create_Account extends Component {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for='verify_password' className='blueText'>Retype Password</label>
+                                        <label for='verifypassword' className='blueText'>Retype Password</label>
                                     </td>
                                     <td>
-                                        <input type='password' name='verify_password' className='caTextbox' required></input>
+                                        <input type='password' name='verifypassword' className='caTextbox' required></input>
                                     </td>
                                 </tr>
                             </table>
@@ -182,7 +184,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={indooractivity}
-                                                name='indoor_activity'
+                                                name='indooractivity'
                                                 className='caTextbox'
                                                 placeholder='Favorite indoor activity?'
                                             />
@@ -191,7 +193,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={movietvshow}
-                                                name='indoor_media'
+                                                name='movietvshow'
                                                 className='caTextbox'
                                                 placeholder='Favorite movie/TV show?'
                                             />
@@ -200,7 +202,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={videogame}
-                                                name='indoor_game'
+                                                name='videogame'
                                                 className='caTextbox'
                                                 placeholder='Favorite video game?'
                                             />
@@ -214,7 +216,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={outdooractivity}
-                                                name='outdoor_activity'
+                                                name='outdooractivity'
                                                 className='caTextbox'
                                                 placeholder='Favorite outdoor activity?'
                                             />
@@ -223,7 +225,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={place}
-                                                name='outdoor_place'
+                                                name='place'
                                                 className='caTextbox'
                                                 placeholder='Favorite place to visit?'
                                             />
@@ -232,7 +234,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={store}
-                                                name='outdoor_store'
+                                                name='store'
                                                 className='caTextbox'
                                                 placeholder='Favorite store?'
                                             />
@@ -248,7 +250,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={sport}
-                                                name='sport_sport'
+                                                name='sport'
                                                 className='caTextbox'
                                                 placeholder='Favorite sport?'
                                             />
@@ -257,7 +259,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={sportsteam}
-                                                name='sport_team'
+                                                name='sportsteam'
                                                 className='caTextbox'
                                                 placeholder='Favorite sports team?'
                                             />
@@ -266,7 +268,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={exercise}
-                                                name='sport_exercise'
+                                                name='exercise'
                                                 className='caTextbox'
                                                 placeholder='Favorite exercise?'
                                             />
@@ -280,7 +282,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={musicgenre}
-                                                name='music_genre'
+                                                name='musicgenre'
                                                 className='caTextbox'
                                                 placeholder='Favorite genre?'
                                             />
@@ -289,7 +291,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={musician}
-                                                name='music_musician'
+                                                name='musician'
                                                 className='caTextbox'
                                                 placeholder='Favorite musician?'
                                             />
@@ -298,7 +300,7 @@ class Create_Account extends Component {
                                                 type='text'
                                                 onChange={this.changeHandler}
                                                 value={band}
-                                                name='music_band'
+                                                name='band'
                                                 className='caTextbox'
                                                 placeholder='Favorite band?'
                                             />
@@ -314,9 +316,6 @@ class Create_Account extends Component {
                             </div>
                         </div>
                     </form>
-
-
-
                 </header>
             </div>
         );
