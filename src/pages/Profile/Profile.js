@@ -6,6 +6,9 @@ import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
 import { ReactComponent as ProfilePic }  from '../../images/profile_pic.svg';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 class Profile extends Component {
 
@@ -76,13 +79,18 @@ class Profile extends Component {
                 };
 */
 componentDidMount() {
-  axios.get('http://localhost:3010/v0/authenticate') //The port of the server
-  .then(response => response.json())
+  axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
   .then(res => {
-    if (res && res.data) {
+      console.log("Got a response with GET")
       console.log(res.data)
-      this.setState({users: [...this.state.users, ...res.data]})
-    }
+      if (res.data[0].username != ""){
+
+      } else {
+        this.props.history.push('/sign_in')
+      }
+
+  }).catch(res => {
+      console.log(res)
   })
 }
     

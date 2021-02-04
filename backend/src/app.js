@@ -52,11 +52,15 @@ app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gi
 //TODO:Try and catch
 //This lets the user post to the login page and potentially sign in
 app.post('/v0/authenticate', gift.login);
+
 app.get('/v0/authenticate', (req, res)=> {
-  if (req.session.user) {
-    res.send({loggedIn: true, user: req.session.user})
+  console.log("Recieved Request")
+  console.log(req.session.user)
+  if (req.session.user){
+    console.log("Enters IF")
+    res.send([{ username: req.session.user, userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
   } else {
-    res.send({loggedIn: false})
+    res.send([{ username: "", userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
   }
 })
 
