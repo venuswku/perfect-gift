@@ -5,11 +5,32 @@ const swaggerUi = require('swagger-ui-express');
 const fs = require('fs');
 const path = require('path');
 const OpenApiValidator = require('express-openapi-validator');
-
 const gift = require('./gift');
-
 const app = express();
-app.use(cors());
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
+// Used for letting the frontend communicate with the server
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST"],
+  credentials: true,
+}));
+//Used for cookie session
+app.use(cookieParser());
+app.use(bodyParser.urlencoded( {extended: true}));
+app.use(session({
+  key : "userId",
+  secret: "hello",
+  resave: false,
+  saveUninitialized: false,
+  cookie : {
+    expires : 60 * 60 * 24
+  }
+}))
+
+//Json stuff. Not too sure
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -31,10 +52,11 @@ app.get('/v0/giftuser', gift.getUsers);
 app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
 app.post('/v0/postqresponse', gift.postQResponse);  // might need to somehow combine this with posting a giftuser sicne they're both from Create Account page
 
-//TODO:Try and catch
-//This lets the user post to the login page and potentially sign in
+// This authenticates and authorizes a user to be able to log in.
 app.post('/v0/authenticate', gift.login);
 
+//This check if the user has the authorization to be on the website
+app.get('/v0/authenticate', gift.checkLogin)
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

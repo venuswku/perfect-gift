@@ -1,6 +1,6 @@
 .home-navbar {
     position: absolute;
-    padding: 30px 0px 0px 0px;
+    padding: 30px 50px 0px 0px;
 
     /* display navbar elements in a row */
     display: flex;
@@ -11,7 +11,7 @@
     align-items: center;
 
     /* put space between logo and navigation links */
-    width: 100%;
+    width: 95%;
     justify-content: space-between;
 
     /* put navbar on top of all pages */

@@ -24,8 +24,8 @@ class Create_Account extends Component {
         super(props)
         //These are the items that we will be able to send to the server
         this.state = {
-            firstName: '',
-            lastName: '',
+            firstname: '',
+            lastname: '',
             username: '',
             email: '',
             password: '',
@@ -181,8 +181,7 @@ class Create_Account extends Component {
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
-                                                // value={indooractivity}
-                                                // value={this.state.indooractivity}
+                                                value={indooractivity}
                                                 name='indoor_activity'
                                                 className='caTextbox'
                                                 placeholder='Favorite indoor activity?'
