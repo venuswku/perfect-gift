@@ -5,6 +5,7 @@ import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass_grey.svg";
 import { ReactComponent as Hockey } from "../../images/hockey.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
+import axios from 'axios';
 /* */
 class Home extends React.Component {
   constructor(props) {
@@ -29,6 +30,19 @@ class Home extends React.Component {
   handleSubmit(event) {
     alert("Your favorite flavor is: " + this.state.value);
     event.preventDefault();
+  }
+
+  componentDidMount() {
+    axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
+    .then(res => {
+        if (res.data[0].username !== ""){
+          //PlaceHolders
+        } else {
+          this.props.history.push('/sign_in')
+        }
+    }).catch(res => {
+        console.log(res)
+    })
   }
 
   /*Renders the whole Home page */

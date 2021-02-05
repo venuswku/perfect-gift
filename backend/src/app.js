@@ -7,6 +7,9 @@ const path = require('path');
 const OpenApiValidator = require('express-openapi-validator');
 const gift = require('./gift');
 const app = express();
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 // Used for letting the frontend communicate with the server
 app.use(cors({
@@ -45,11 +48,17 @@ app.use(
 );
 
 app.get('/v0/giftuser', gift.getUsers);
+
 app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
-//TODO:Try and catch
-//This lets the user post to the login page and potentially sign in
+
+// Saves user responses from interest questionnaire on Create Account page.
+app.post('/v0/postqresponse', gift.postQResponse);  // might need to somehow combine this with posting a giftuser sicne they're both from Create Account page
+
+// This authenticates and authorizes a user to be able to log in.
 app.post('/v0/authenticate', gift.login);
 
+//This check if the user has the authorization to be on the website
+app.get('/v0/authenticate', gift.checkLogin)
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

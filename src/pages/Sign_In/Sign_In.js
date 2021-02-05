@@ -6,7 +6,11 @@ import SignInImage from '../../images/sign_in_image.png';
 //import { render } from '@testing-library/react';
 import axios from 'axios';
 
+import { Redirect } from "react-router-dom";
 
+
+
+axios.defaults.withCredentials = true;
 
 class Sign_In extends Component {
     constructor(props) {
@@ -15,6 +19,7 @@ class Sign_In extends Component {
         this.state = {
           username:'',
           password:'',
+          wrongPassword:"",
         }
       }
 
@@ -23,6 +28,17 @@ class Sign_In extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
   
+  componentDidMount() {
+    axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
+    .then(res => {
+        if (res.data[0].username !== ""){
+          this.props.history.push('/profile')
+        }
+    }).catch(res => {
+        console.log(res)
+    })
+  }
+
   // This is called when you press the submit button,
   // The react app sends all its data in this.state to the server
   // and the server can process it however it wants to (query, store, etc)
@@ -32,12 +48,22 @@ class Sign_In extends Component {
     console.log("We are submitting a user to either autheticate, or create")
     axios.post('http://localhost:3010/v0/authenticate', this.state)
     .then(response => {
-      console.log(response)
+      if (response.data === ""){
+        console.log("Not Logged In")
+        this.setState({wrongPassword: "The password/username combination you entered is incorrect. Try again"})
+      }
+      else {
+        console.log("Logged In")
+        this.props.history.push('/profile')
+      }
     })
     .catch(error => {
       console.log(error)
+      console.log("You inputted a wrong username/password combination")
     })
   }
+
+  wrongPassword
     
     render() {
     const {username, password} = this.state
@@ -50,13 +76,14 @@ class Sign_In extends Component {
                     <p className="signInTitle">Sign In</p>
                     <p className="signInBenefits">Get personalized gift suggestions and share your own gift wishlist!</p>
                     <form className="userInfo" onSubmit={this.submitHandler}>
+                      <div className="wrongPassword">{this.state.wrongPassword}</div>
                         <div className="usernamePassword">
                             <label for='username' className='signInLabel'>Username</label>
                             <input type='text' name='username' value={username} className='signInTextbox' onChange={this.changeHandler}></input>
                         </div>
                         <div className="usernamePassword">
                             <label for='password' className='signInLabel'>Password</label>
-                            <input type='text' name='password' value={password} className='signInTextbox' onChange={this.changeHandler}></input>
+                            <input type='password' name='password' value={password} className='signInTextbox' onChange={this.changeHandler}></input>
                         </div>
                         <div className="createAccountOrContinue">
                             <div className="firstTime">

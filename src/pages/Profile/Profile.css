@@ -1,3 +1,9 @@
+.Profile {
+  width: 90%;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
 /* for the whole page */
 .profile-header {
   position: absolute;

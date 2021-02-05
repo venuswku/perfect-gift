@@ -39,10 +39,28 @@ exports.selectQResponses = async (username) => {
     const { rows } = await pool.query(query);
     const allUsers = [];
     for (const row of rows) {
-        allUsers.push({ username: row.username, outdooractivity: row.outdooractivity, place: row.place, store: row.store, musicgenre: row.musicgenre, musician: row.musician, band: row.band, indooractivity: row.indooractivity, movietvshow: row.movietvshow, videogame: row.videogame, sport: row.sport, sportteam: row.sportteam, exercise: row.exercise });
+        allUsers.push({ username: row.username, outdooractivity: row.outdooractivity, place: row.place, store: row.store, musicgenre: row.musicgenre, musician: row.musician, band: row.band, indooractivity: row.indooractivity, movietvshow: row.movietvshow, videogame: row.videogame, sport: row.sport, sportsteam: row.sportsteam, exercise: row.exercise });
     }
     return allUsers;
 };
+
+// Inserts questionnaire responses in questionnareresponses table.
+exports.insertQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
+    console.log('db.js: insertQResponses called');
+    // let insert = 'INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('+username+', '+outdooractivity+', '+place+', '+store+', '+musicgenre+', '+musician+', '+band+', '+indooractivity+', '+movietvshow+', '+videogame+', '+sport+', '+sportsteam+', '+exercise+')';
+    let insert = `INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('${username}', '${outdooractivity}', '${place}', '${store}', '${musicgenre}', '${musician}', '${band}', '${indooractivity}', '${movietvshow}', '${videogame}', '${sport}', '${sportsteam}', '${exercise}')`;
+    console.log(insert);
+    
+    pool.query(insert, (err, res) => {
+        if (err) {
+            console.log("error!")
+            console.error(err);
+            return;
+        }
+        console.log("responses inserted into questionnaireresponses table!");
+    });
+}
+
 
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username) => {

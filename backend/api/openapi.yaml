@@ -60,9 +60,65 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /v0/postqresponse:
+      post:
+        description: Post user's questionnaire responses from Create Account page
+        parameters:
+        - name: username
+          in: query
+          required: false
+          description: User's username
+          schema:
+            type: string
+        responses:
+          200:
+            description: Stored questionnaire responses
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/QuestionnaireResponses'
+          404:
+            description: Unable to store questionnaire responses
+          default:
+            description: Unexpected Error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
   /v0/authenticate:
     post:
       description: Authenticate user given username and password
+      parameters:
+      - name: username
+        in: query
+        required: false
+        description: User's username
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: false
+        description: User's password
+        schema:
+          type: string
+      responses:
+        200:
+          description: User response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: Unable to authenticate
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      description: Check if user is logged in
       parameters:
       - name: username
         in: query
@@ -160,7 +216,7 @@ components:
             type: string
           sport:
             type: string
-          sportteam:
+          sportsteam:
             type: string
           exercise:
             type: string
