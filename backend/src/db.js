@@ -80,4 +80,14 @@ exports.authenticateUser = async (username) => {
     return allUsers;
 };
 
+// Insert the newly created user into giftuser table
+exports.insertUser = async () => {
+    const select = `INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES ($1, $2, $3, $4, $5, '', FALSE) RETURNING *`;
+    const query = {
+        text: select,
+    };
+    const { rows } = await pool.query(query);
+    return rows.length == 1;
+};
+
 console.log(`Connected to database '${process.env.POSTGRES_DB}'`);

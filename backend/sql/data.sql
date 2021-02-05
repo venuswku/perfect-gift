@@ -7,6 +7,7 @@ INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, ava
 INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES ('sobyrne', '$2b$10$WKbjP0A30l6CtJge.ycZYelIGLMEY2iOK0a8W7KuOkDd0Naa4lW7K', 'Sean', 'OByrne', 'sean234@mail.com', '', FALSE);
 INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES ('klee128', '', 'Kelsy', 'Lee', 'kelsylee@mail.com', '', FALSE);
 
+
 DELETE FROM questionnaireresponses;
 INSERT INTO questionnaireresponses(
     username, outdooractivity, place, store, musicgenre, musician, band,

@@ -22,10 +22,21 @@ exports.getUsers = async (req, res) => {
     }
 };
 
+exports.postUsers = async (req, res) => {
+    if (req.body) {
+        console.log("Hello this is the request body" + req.body);
+        const newUser = await db.insertUser();
+
+        res.status(201).json(newUser);
+    } else {
+        res.status(400).send();
+    }
+};
+
 exports.getQResponse = async (req, res) => {
     // app.js passes username to gift.js
     if (req.query.username) {
-        // gift.js sends username to db.js. 
+        // gift.js sends username to db.js.
         const oneUser = await db.selectQResponses(req.query.username);
         // if db.js returns q response, send 200 and the response attached
         if (oneUser) {
