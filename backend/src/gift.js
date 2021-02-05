@@ -135,3 +135,44 @@ exports.checkLogin = async (req, res) => {
         }
       
 };
+
+
+exports.logout = async (req,res) => {
+    console.log("The server has receive your logout request.")
+    console.log("We are going to authenticate the request that the frontend has given us")
+    
+    try {
+        console.log("The frontend has given us:")
+        //console.log(req.body.username, req.body.password)
+        //const oneUser = await db.authenticateUser(req.body.username);
+        const stored_pass = oneUser[0]['userpassword'];
+        console.log(oneUser)
+        console.log(stored_pass)
+    
+        // bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+        //     console.log(hash);
+        // });
+    
+        if (stored_pass.length > 0) {
+    
+            bcrypt.compare(req.body.password, stored_pass, (err, result) => {
+                if (result){
+                    console.log("AUTHENTICATED")
+                    req.session.user = oneUser[0]['username']
+                    console.log(req.session.user)
+                    res.send(oneUser[0]['username']);
+                } else{
+                    // Send JWT or Cookie
+                    console.log("NOT AUTHENTICATED")
+                    res.send("");
+                }
+            })
+        } else {
+            console.log("Result too small")
+            res.send("");
+        }
+    }catch {
+        console.log("There was an error")
+        res.send("");
+    } 
+};
