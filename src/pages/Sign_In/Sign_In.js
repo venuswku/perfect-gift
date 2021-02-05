@@ -83,7 +83,7 @@ class Sign_In extends Component {
                         </div>
                         <div className="usernamePassword">
                             <label for='password' className='signInLabel'>Password</label>
-                            <input type='text' name='password' value={password} className='signInTextbox' onChange={this.changeHandler}></input>
+                            <input type='password' name='password' value={password} className='signInTextbox' onChange={this.changeHandler}></input>
                         </div>
                         <div className="createAccountOrContinue">
                             <div className="firstTime">
