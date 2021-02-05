@@ -38,35 +38,39 @@ exports.getQResponse = async (req, res) => {
 };
 
 exports.postQResponse = async (req, res) => {
-    console.log('gift.js: postQResponse called');
+    try {
+        console.log('gift.js: postQResponse called');
 
-    // get user input from Create Account page
-    const username = req.body.username;
-    const outdooractivity = req.body.outdooractivity;
-    const place = req.body.place;
-    const store = req.body.store;
-    const musicgenre = req.body.musicgenre;
-    const musician = req.body.musician;
-    const band = req.body.band;
-    const indooractivity = req.body.indooractivity;
-    const movietvshow = req.body.movietvshow;
-    const videogame = req.body.videogame;
-    const sport = req.body.sport;
-    const sportsteam = req.body.sportsteam;
-    const exercise = req.body.exercise;
+        // get user input from Create Account page
+        const username = req.body[0].username;
+        const outdooractivity = req.body[0].outdooractivity;
+        const place = req.body[0].place;
+        const store = req.body[0].store;
+        const musicgenre = req.body[0].musicgenre;
+        const musician = req.body[0].musician;
+        const band = req.body[0].band;
+        const indooractivity = req.body[0].indooractivity;
+        const movietvshow = req.body[0].movietvshow;
+        const videogame = req.body[0].videogame;
+        const sport = req.body[0].sport;
+        const sportsteam = req.body[0].sportsteam;
+        const exercise = req.body[0].exercise;
 
-    // insert questionnaire responses in questionnareresponses table
-    db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
+        // insert questionnaire responses in questionnareresponses table
+        db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
 
-    // check if post request was successful
-    if (username) {
-        const userResponses = await db.selectQResponses(username);
-        console.log("successful input");
-        res.status(200).json("Gifter's questionnaire responses are stored!", userResponses);
+        // check if post request was successful
+        if (username) {
+            const userResponses = await db.selectQResponses(username);
+            console.log("successful input");
+            res.send(userResponses);
+            res.status(201).json("Gifter's questionnaire responses are stored!", userResponses);
+        }
     }
-    else {
+    catch {
         console.log("failz");
         res.status(404).send();
+        res.send("");
     }
 };
 

@@ -24,11 +24,11 @@ class Create_Account extends Component {
         super(props)
         // items that we will be able to send to the server
         this.state = {
-            firstname: '',
-            lastname: '',
+            //firstname: '',
+            //lastname: '',
             username: '',
-            email: '',
-            password: '',
+            //email: '',
+            //password: '',
             outdooractivity: '',
             place: '',
             store: '',
@@ -65,8 +65,7 @@ class Create_Account extends Component {
         //     showavatar,
         // });
 
-        let data = JSON.stringify();
-        axios.post('http://localhost:3010/v0/postqresponse', this.state)
+        axios.post('http://localhost:3010/v0/postqresponse', [this.state])
         .then(response => {
             console.log('success');
             console.log(response);

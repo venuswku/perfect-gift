@@ -63,15 +63,15 @@ paths:
   /v0/postqresponse:
       post:
         description: Post user's questionnaire responses from Create Account page
-        parameters:
-        - name: username
-          in: query
-          required: false
+        requestBody:
+          required: true
           description: User's username
-          schema:
-            type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionnaireResponses'
         responses:
-          200:
+          201:
             description: Stored questionnaire responses
             content:
               application/json:
