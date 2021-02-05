@@ -28,6 +28,17 @@ class Sign_In extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
   
+  componentDidMount() {
+    axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
+    .then(res => {
+        if (res.data[0].username !== ""){
+          this.props.history.push('/profile')
+        }
+    }).catch(res => {
+        console.log(res)
+    })
+  }
+
   // This is called when you press the submit button,
   // The react app sends all its data in this.state to the server
   // and the server can process it however it wants to (query, store, etc)
