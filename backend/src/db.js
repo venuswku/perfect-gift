@@ -44,6 +44,24 @@ exports.selectQResponses = async (username) => {
     return allUsers;
 };
 
+// Inserts questionnaire responses in questionnareresponses table.
+exports.insertQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
+    console.log('db.js: insertQResponses called');
+    // let insert = 'INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('+username+', '+outdooractivity+', '+place+', '+store+', '+musicgenre+', '+musician+', '+band+', '+indooractivity+', '+movietvshow+', '+videogame+', '+sport+', '+sportsteam+', '+exercise+')';
+    let insert = `INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('${username}', '${outdooractivity}', '${place}', '${store}', '${musicgenre}', '${musician}', '${band}', '${indooractivity}', '${movietvshow}', '${videogame}', '${sport}', '${sportsteam}', '${exercise}')`;
+    console.log(insert);
+
+    pool.query(insert, (err, res) => {
+        if (err) {
+            console.log("error!")
+            console.error(err);
+            return;
+        }
+        console.log("responses inserted into questionnaireresponses table!");
+    });
+}
+
+
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username) => {
     let select = 'SELECT username, userpassword FROM giftuser';
