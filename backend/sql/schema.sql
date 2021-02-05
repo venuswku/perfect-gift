@@ -15,7 +15,7 @@ CREATE TABLE questionnaireresponses(
     movietvshow VARCHAR(50),
     videogame VARCHAR(50),
     sport VARCHAR(50),
-    sportteam VARCHAR(50),
+    sportsteam VARCHAR(50),
     exercise VARCHAR(50)
 );
 

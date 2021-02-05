@@ -28,6 +28,17 @@ class Sign_In extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
   
+  componentDidMount() {
+    axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
+    .then(res => {
+        if (res.data[0].username !== ""){
+          this.props.history.push('/profile')
+        }
+    }).catch(res => {
+        console.log(res)
+    })
+  }
+
   // This is called when you press the submit button,
   // The react app sends all its data in this.state to the server
   // and the server can process it however it wants to (query, store, etc)
@@ -72,7 +83,7 @@ class Sign_In extends Component {
                         </div>
                         <div className="usernamePassword">
                             <label for='password' className='signInLabel'>Password</label>
-                            <input type='text' name='password' value={password} className='signInTextbox' onChange={this.changeHandler}></input>
+                            <input type='password' name='password' value={password} className='signInTextbox' onChange={this.changeHandler}></input>
                         </div>
                         <div className="createAccountOrContinue">
                             <div className="firstTime">
