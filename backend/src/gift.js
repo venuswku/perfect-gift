@@ -62,13 +62,13 @@ exports.postQResponse = async (req, res) => {
         // check if post request was successful
         if (username) {
             const userResponses = await db.selectQResponses(username);
-            console.log("successful input");
+            console.log("gift.js: successful input");
             res.send(userResponses);
             res.status(201).json("Gifter's questionnaire responses are stored!", userResponses);
         }
     }
     catch {
-        console.log("failz");
+        console.log("gift.js: failz");
         res.status(404).send();
         res.send("");
     }

@@ -52,11 +52,11 @@ exports.insertQResponses = async (username, outdooractivity, place, store, music
     console.log(insert);
     pool.query(insert, (err, res) => {
         if (err) {
-            console.log("error!")
+            console.log("db.js: error!")
             console.error(err);
             return;
         }
-        console.log("responses inserted into questionnaireresponses table!");
+        console.log("db.js: responses inserted into questionnaireresponses table!");
     });
 }
 
