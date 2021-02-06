@@ -1,101 +1,62 @@
-/* background */
-
-/* Auto Layout */
-.create_account-header{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-
-  position: absolute;
-  left: 0%;
-  right: 0%;
-  top: 0%;
-  bottom: 0%;
-  
+.CreateAccount {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 5%;
   background: linear-gradient(180deg, #C1DEFF 0%, rgba(255, 255, 255, 0) 100%), #FFFFFF;
 }
 
-p {
-  font-size: 36px;
-}
-
-.casubmit {
-  background: #72D6C9;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 50px;
-  color: white;
-  font-size: 36px;
-  padding: 10px 20px;
-  border: none;
-  outline: none;
-  margin: 0 auto;
-  width: auto;
-  height: auto;
-  cursor: pointer;
-}
-
-/* split the screen in half (dunno how this works. more research) */
-.casplit {
-  height: 50%;
-  width: 50%;
-  position: relative;
-  z-index: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-/* left half */
-.left {
-  float:left;
-}
-
-/* right half */
-.right {
-  float:right;
-}
-
-.ralign {
-  text-align: right;
-}
-
-.lalign {
-  text-align: left;
-}
-
-
-/* centered in the area */
-.cacentered {
-  position: relative;
-  top: 5%;
-  left: 50%;
-  transform: translate(-50%, 0%);
+.createAccountContent{
+  padding-top: 100px;
   text-align: center;
 }
 
-.loginTextbox {
-  font-size:20pt;
-  height: 58px;
-  width: 509px;
-}
-
-.caTextbox {
-  font-size:20pt;
-  height: 58px;
-  width: 509px;
-  background-color: #eee;
-  color: black;
-  box-shadow: 5px 10px #888888;
+.createAccountTitle {
+  font-size: 36px;
+  font-family: 'Varela Round';
+  color: rgba(41, 112, 250, 1);
 }
 
 .createAccountPic {
-  transform: scale(.9);
+  margin-top: -5%;
+  width: 50%;
+}
+
+.userForm {
+  margin-top: -2%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.userInfo {
+  width: 70%;
+  margin: 0 auto;
 }
 
 .blueText {
-  font-size: 48px;
+  font-size: 24px;
   font-family: 'Varela Round';
   color: rgba(41, 112, 250, 1);
   margin-bottom: 0px;
+}
+
+.caTextbox {
+  font-size: 24px;
+  font-family: 'Didact Gothic';
+  height: 40px;
+  width: 500px;
+  border-radius: 8px;
+  margin: 10px 0;
+  background-color: #eee;
+  color: black;
+  outline: none;
+  text-align: center;
+}
+
+.createAccountInstructions {
+  font-size: 24px;
+  font-family: 'Didact Gothic';
 }
 
 .cabox {
@@ -123,7 +84,17 @@ p {
   background-color: rgba(254, 219, 128, 1);
 }
 
-table {
-  margin: 0 auto; /* or margin: 0 auto 0 auto */
-  border-spacing: 80px 40px;
+.createAccountSubmit {
+  background: #72D6C9;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
+  color: white;
+  font-size: 36px;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  margin: 0 auto;
+  width: auto;
+  height: auto;
+  cursor: pointer;
 }

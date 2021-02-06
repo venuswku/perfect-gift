@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../../App.css';
 import './Create_Account.css';
 import LogoNavbar from '../../navigation/LogoNavbar/LogoNavbar';
 import createAccountImage from '../../images/create_account_image.png';
@@ -49,7 +48,6 @@ class Create_Account extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    //submitHandler
     // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
     createAccount = (e) => {
         e.preventDefault()
@@ -80,101 +78,43 @@ class Create_Account extends Component {
         // store input values locally into the following values
         const { firstname, lastname, username, email, password, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
         return (
-            <div className="App">
+            <div className="CreateAccount">
                 <LogoNavbar />
-                <header className="create_account-header">
-                    <form onSubmit={this.createAccount}>
-                        <div className='cacentered'>
-                            <p className="blueText">Create an Account </p>
-                            <img src={createAccountImage} alt="the gifters" className='createAccountPic' />
-                            <table>
+                <div className="createAccountContent">
+                    <p className="createAccountTitle">Create an Account</p>
+                    <img className='createAccountPic' src={createAccountImage} alt="the gifters" />
+                    <form className="userForm" onSubmit={this.createAccount}>
+                        <table className="userInfo">
+                            <tbody>
                                 <tr>
-                                    <td>
-                                        <label for='firstname' className='blueText'>First Name</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='text'
-                                            onChange={this.changeHandler}
-                                            value={firstname}
-                                            name='firstname'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='firstname' className='blueText'>First Name</label></td>
+                                    <td><input type='text' onChange={this.changeHandler} value={firstname} name='firstname' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='lastname' className='blueText'>Last Name</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='text'
-                                            onChange={this.changeHandler}
-                                            value={lastname}
-                                            name='lastname'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='lastname' className='blueText'>Last Name</label></td>
+                                    <td><input type='text' onChange={this.changeHandler} value={lastname} name='lastname' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='email' className='blueText'>Email</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='email'
-                                            onChange={this.changeHandler}
-                                            value={email}
-                                            name='email'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='email' className='blueText'>Email</label></td>
+                                    <td><input type='email' onChange={this.changeHandler} value={email} name='email' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='username' className='blueText'>Username</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='text'
-                                            onChange={this.changeHandler}
-                                            value={username}
-                                            name='username'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='username' className='blueText'>Username</label></td>
+                                    <td><input type='text' onChange={this.changeHandler} value={username} name='username' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='password' className='blueText'>Password</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='password'
-                                            onChange={this.changeHandler}
-                                            value={password}
-                                            name='password'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='password' className='blueText'>Password</label></td>
+                                    <td><input type='password' onChange={this.changeHandler} value={password} name='password' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='verifypassword' className='blueText'>Retype Password</label>
-                                    </td>
-                                    <td>
-                                        <input type='password' name='verifypassword' className='caTextbox' required></input>
-                                    </td>
+                                    <td><label htmlFor='verifypassword' className='blueText'>Retype Password</label></td>
+                                    <td><input type='password' name='verifypassword' className='caTextbox' required></input></td>
                                 </tr>
-                            </table>
-
-                            <p>Please take your time to answer our interest questions below. <br /> We will take note and share them with other gifters on your profile!</p>
-                            <table>
+                            </tbody>
+                        </table>
+                        <p className="createAccountInstructions">Please take your time to answer our interest questions below. <br /> We will take note and share them with other gifters on your profile!</p>
+                        <table>
+                            <tbody>
                                 <tr>
                                     <td>
                                         <div className='cabox indoors'>
@@ -307,19 +247,15 @@ class Create_Account extends Component {
                                         </div>
                                     </td>
                                 </tr>
-                            </table>
-                            <div className="cacenterd">
-                                <p>It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile.</p>
-                                <br />
-                                <input type='submit' value='Continue' className='casubmit' ></input>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
+                        <p className="createAccountInstructions">It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile.</p><br />
+                        <input type='submit' value='Continue' className='createAccountSubmit' ></input>
                     </form>
-                </header>
+                </div>
             </div>
         );
     }
-
 }
 
 export default Create_Account;
