@@ -38,14 +38,16 @@
   font-size: 24px;
   font-family: 'Varela Round';
   color: rgba(41, 112, 250, 1);
-  margin-bottom: 0px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .caTextbox {
   font-size: 24px;
   font-family: 'Didact Gothic';
   height: 40px;
-  width: 500px;
+  width: 450px;
   border-radius: 8px;
   margin: 10px 0;
   background-color: #eee;
@@ -59,28 +61,32 @@
   font-family: 'Didact Gothic';
 }
 
-.cabox {
+.questionnaire {
+  margin: 0 auto;
+}
+
+.interest {
   position: relative;
-  width: 500 px;
+  width: 500px;
   padding: 10px;
   border: 1px #dbdbdb;
   margin: 0;
   border-radius: 25px;
 }
 
-.indoors{
+.indoors {
   background-color: rgba(255, 252, 189, 1);
 }
 
-.outdoors{
+.outdoors {
   background-color: rgba(211, 255, 210, 1);
 }
 
-.sports{
+.sports {
   background-color: rgba(251, 180, 165, 1);
 }
 
-.music{
+.music {
   background-color: rgba(254, 219, 128, 1);
 }
 

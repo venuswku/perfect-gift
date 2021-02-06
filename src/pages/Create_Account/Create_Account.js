@@ -113,12 +113,12 @@ class Create_Account extends Component {
                             </tbody>
                         </table>
                         <p className="createAccountInstructions">Please take your time to answer our interest questions below. <br /> We will take note and share them with other gifters on your profile!</p>
-                        <table>
+                        <table className="questionnaire">
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div className='cabox indoors'>
-                                            <p className="blueText"><img src={indoors1Image} alt="food" className='createAccountPic' />&nbsp;&nbsp;Indoors&nbsp;&nbsp;<img src={indoors2Image} alt="camera" className='createAccountPic' /></p>
+                                        <div className='interest indoors'>
+                                            <p className="blueText"><img src={indoors1Image} alt="food" />&nbsp;&nbsp;Indoors&nbsp;&nbsp;<img src={indoors2Image} alt="camera" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -149,8 +149,8 @@ class Create_Account extends Component {
                                         </div>
                                     </td>
                                     <td>
-                                        <div className='cabox outdoors'>
-                                            <p className="blueText"><img src={outdoors1Image} alt="amusement park" className='createAccountPic' />&nbsp;&nbsp;Outdoors&nbsp;&nbsp;<img src={outdoors2Image} alt="tree" className='createAccountPic' /></p>
+                                        <div className='interest outdoors'>
+                                            <p className="blueText"><img src={outdoors1Image} alt="amusement park" />&nbsp;&nbsp;Outdoors&nbsp;&nbsp;<img src={outdoors2Image} alt="tree" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -183,8 +183,8 @@ class Create_Account extends Component {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div className='cabox sports'>
-                                            <p className="blueText"><img src={sports1Image} alt="weightlifter" className='createAccountPic' />&nbsp;&nbsp;Sports&nbsp;&nbsp;<img src={sports2Image} alt="basketball" className='createAccountPic' /></p>
+                                        <div className='interest sports'>
+                                            <p className="blueText"><img src={sports1Image} alt="weightlifter" />&nbsp;&nbsp;Sports&nbsp;&nbsp;<img src={sports2Image} alt="basketball" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -215,8 +215,8 @@ class Create_Account extends Component {
                                         </div>
                                     </td>
                                     <td>
-                                        <div className='cabox music'>
-                                            <p className="blueText"><img src={music1Image} alt="keyboard" className='createAccountPic' />&nbsp;&nbsp;Music&nbsp;&nbsp;<img src={music2Image} alt="music note" className='createAccountPic' /></p>
+                                        <div className='interest music'>
+                                            <p className="blueText"><img src={music1Image} alt="keyboard" />&nbsp;&nbsp;Music&nbsp;&nbsp;<img src={music2Image} alt="music note" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
