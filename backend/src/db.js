@@ -26,6 +26,21 @@ exports.selectUsers = async (username) => {
     return allUsers;
 };
 
+// Inserts user data in giftusers table.
+exports.insertUser = async (username, userpassword, firstname, lastname, useremail, avatar, showavatar) => {
+    console.log('db.js: insertUsers called');
+    let insert = `INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES('${username}', '${userpassword}', '${firstname}', '${lastname}', '${useremail}', '${avatar}', '${showavatar}')`;
+    console.log(insert);
+    pool.query(insert, (err, res) => {
+        if (err) {
+            console.log("db.js: error!")
+            console.error(err);
+            return;
+        }
+        console.log("db.js: user info inserted into giftusers table!");
+    });
+}
+
 // gift.js sends username to db.js. if username is found, it returns all parameters of that row
 exports.selectQResponses = async (username) => {
     let select = 'SELECT * FROM questionnaireresponses';
@@ -50,14 +65,13 @@ exports.insertQResponses = async (username, outdooractivity, place, store, music
     // let insert = 'INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('+username+', '+outdooractivity+', '+place+', '+store+', '+musicgenre+', '+musician+', '+band+', '+indooractivity+', '+movietvshow+', '+videogame+', '+sport+', '+sportsteam+', '+exercise+')';
     let insert = `INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('${username}', '${outdooractivity}', '${place}', '${store}', '${musicgenre}', '${musician}', '${band}', '${indooractivity}', '${movietvshow}', '${videogame}', '${sport}', '${sportsteam}', '${exercise}')`;
     console.log(insert);
-    
     pool.query(insert, (err, res) => {
         if (err) {
-            console.log("error!")
+            console.log("db.js: error!")
             console.error(err);
             return;
         }
-        console.log("responses inserted into questionnaireresponses table!");
+        console.log("db.js: responses inserted into questionnaireresponses table!");
     });
 }
 

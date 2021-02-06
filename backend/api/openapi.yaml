@@ -63,15 +63,15 @@ paths:
   /v0/postqresponse:
       post:
         description: Post user's questionnaire responses from Create Account page
-        parameters:
-        - name: username
-          in: query
-          required: false
+        requestBody:
+          required: true
           description: User's username
-          schema:
-            type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionnaireResponses'
         responses:
-          200:
+          201:
             description: Stored questionnaire responses
             content:
               application/json:
@@ -79,6 +79,32 @@ paths:
                   $ref: '#/components/schemas/QuestionnaireResponses'
           404:
             description: Unable to store questionnaire responses
+          default:
+            description: Unexpected Error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+  /v0/postuser:
+      post:
+        description: Post user's data from Create Account page
+        requestBody:
+          required: true
+          description: User's information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        responses:
+          201:
+            description: Stored user data
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          404:
+            description: Unable to store user data
           default:
             description: Unexpected Error
             content:
