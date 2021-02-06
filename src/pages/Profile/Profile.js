@@ -4,7 +4,7 @@ import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
-import { ReactComponent as ProfilePic }  from '../../images/profile_pic.svg';
+import { ReactComponent as ProfilePic } from '../../images/profile_pic.svg';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -18,8 +18,8 @@ class Profile extends Component {
         this.state = {
             showForm: false,
             name: '',
-            username: 'msteep',
-            editName: 'msteep',
+            username: '',
+            newUsername: '',
             mode: 'view',
         };
 
@@ -29,11 +29,16 @@ class Profile extends Component {
     }
 
     handleChange(e) {
-        this.setState({ editName: e.target.value });
+        this.setState({ newUsername: e.target.value });
     }
 
     handleSave() {
-        this.setState({ username: this.state.editName, mode: 'view' });
+        if (this.state.newUsername === "") {
+            this.setState({ username: this.state.username, mode: 'view' });
+        }
+        else {
+            this.setState({ username: this.state.newUsername, mode: 'view' });
+        }
     }
 
     handleEdit() {
@@ -48,7 +53,7 @@ class Profile extends Component {
                 <span>
                     <input
                         onChange={this.handleChange}
-                        value={this.state.editName}
+                        value={this.state.newUsername}
                         className='editTextbox'
                     />
                 </span>
@@ -71,32 +76,35 @@ class Profile extends Component {
             );
         }
     }
-/*
-    useEffect(() => {
-        axios.get("http:localhost:3010/v0/authenticate").then((response) =>{
-            console.loge(response.data)
-                };
-*/
-componentDidMount() {
-  axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
-  .then(res => {
-      console.log("Got a response with GET")
-      console.log(res.data)
-      if (res.data[0].username !== ""){
-          console.log(res.data[0].username )
-          const userFullName = res.data[0].firstname + " " + res.data[0].lastname 
-             this.setState({name: userFullName}) 
-      } else {
-        this.props.history.push('/sign_in')
-        console.log("Redirected to sign in page")
-      }
+    /*
+        useEffect(() => {
+            axios.get("http:localhost:3010/v0/authenticate").then((response) =>{
+                console.loge(response.data)
+                    };
+    */
+    componentDidMount() {
+        axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
+            .then(res => {
+                console.log("Got a response with GET")
+                console.log(res.data)
+                if (res.data[0].username !== "") {
+                    console.log(res.data[0].username);
+                    const userFullName = res.data[0].firstname + " " + res.data[0].lastname
+                    this.setState({ name: userFullName });
+                    this.setState({ username: res.data[0].username });
+                    this.setState({ newUsername: res.data[0].username });
 
-  }).catch(res => {
-      console.log(res)
-  })
-}
-    
-    
+                } else {
+                    this.props.history.push('/sign_in')
+                    console.log("Redirected to sign in page")
+                }
+
+            }).catch(res => {
+                console.log(res)
+            })
+    }
+
+
     render() {
         return (
             <div className="Profile">
@@ -113,7 +121,7 @@ componentDidMount() {
                         <div>
                             <span className='topicFont'>Username &nbsp; </span>
                             <span>{this.renderInputField()} &nbsp; {this.renderButton()}</span>
-                            
+
                         </div>
                         <br></br>
                         {/* interests */}

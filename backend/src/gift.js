@@ -146,18 +146,20 @@ exports.login = async (req, res) => {
 // Else, they will be redirected to the login page (done in the frontend)
 // Note to self: Make sure to remove the password when sending back the data to frontend
 exports.checkLogin = async (req, res) => {
-        console.log("Recieved Request")
-        console.log(req.body.user)
+        console.log("Recieved Request");
+        console.log(req.body.user);
 
-        console.log(req.session.user)
+        console.log(req.session.user);
         if (req.session.user){
           console.log("Enters IF")
-          const userInfo = await db.selectUsers(req.session.user)
-          const firstName = userInfo[0]['firstname']
-          const lastName = userInfo[0]['lastname']
+          const userInfo = await db.selectUsers(req.session.user);
+          const firstName = userInfo[0]['firstname'];
+          const lastName = userInfo[0]['lastname'];
+          const userName = userInfo[0]['username'];
           console.log("bug below")
-          console.log(firstName)
-          console.log(lastName)
+          console.log(firstName);
+          console.log(lastName);
+          console.log(userName);
           console.log("bug above")
           console.log(userInfo)
           res.send([{ username: req.session.user, userpassword: "null", firstname: firstName, lastname: lastName, useremail: "null@null.com", avatar: "null", showavatar: false }])
