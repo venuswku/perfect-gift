@@ -23,11 +23,13 @@ class Create_Account extends Component {
         super(props)
         // items that we will be able to send to the server
         this.state = {
-            //firstname: '',
-            //lastname: '',
+            firstname: '',
+            lastname: '',
             username: '',
-            //email: '',
-            //password: '',
+            useremail: '',
+            userpassword: '',
+            avatar: '',
+            showavatar: false,
             outdooractivity: '',
             place: '',
             store: '',
@@ -53,30 +55,41 @@ class Create_Account extends Component {
         e.preventDefault()
         console.log('Create_Account.js: createAccount called');
         console.log(this.state);
-        // axios.post('http://localhost:3010/v0/postgiftuser', {
-        //     username: username,
-        //     userpassword: password,
-        //     firstname: firstName,
-        //     lastname: lastName,
-        //     useremail: email,
-        //     avatar,
-        //     showavatar,
-        // });
-
-        axios.post('http://localhost:3010/v0/postqresponse', [this.state])
+        // axios.post('http://localhost:3010/v0/postuser', [{
+        //     // left side is backend variables, right side is frontend
+        //     username: e.username,
+        //     userpassword: e.password,
+        //     firstname: e.firstName,
+        //     lastname: e.lastName,
+        //     useremail: e.email,
+        //     avatar: e.avatar,
+        //     showavatar: e.showavatar,
+        // }])
+        axios.post('http://localhost:3010/v0/postuser', [this.state])
         .then(response => {
-            console.log('Create_Account.js: success');
+            console.log('Create_Account.js: success for users');
             console.log(response);
+            axios.post('http://localhost:3010/v0/postqresponse', [this.state])
+                .then(response => {
+                    console.log('Create_Account.js: success for qr');
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log("Create_Account.js: failed for qr");
+                    console.log(this.state);
+                    console.log(error);
+                });
         })
         .catch(error => {
-            console.log("Create_Account.js: failed");
+            console.log("Create_Account.js: failed for users");
             console.log(this.state);
             console.log(error);
         });
+        this.props.history.push('/profile')
     };
     render() {
         // store input values locally into the following values
-        const { firstname, lastname, username, email, password, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
+        const { firstname, lastname, username, useremail, userpassword, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
         return (
             <div className="CreateAccount">
                 <LogoNavbar />
@@ -96,7 +109,7 @@ class Create_Account extends Component {
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='email' className='blueText'>Email</label></td>
-                                    <td><input type='email' onChange={this.changeHandler} value={email} name='email' className='caTextbox' required/></td>
+                                    <td><input type='email' onChange={this.changeHandler} value={useremail} name='useremail' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='username' className='blueText'>Username</label></td>
@@ -104,7 +117,7 @@ class Create_Account extends Component {
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='password' className='blueText'>Password</label></td>
-                                    <td><input type='password' onChange={this.changeHandler} value={password} name='password' className='caTextbox' required/></td>
+                                    <td><input type='password' onChange={this.changeHandler} value={userpassword} name='userpassword' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='verifypassword' className='blueText'>Retype Password</label></td>
