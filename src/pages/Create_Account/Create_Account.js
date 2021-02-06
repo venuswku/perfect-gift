@@ -118,7 +118,7 @@ class Create_Account extends Component {
                                 <tr>
                                     <td>
                                         <div className='interest indoors'>
-                                            <p className="blueText"><img src={indoors1Image} alt="food" />&nbsp;&nbsp;Indoors&nbsp;&nbsp;<img src={indoors2Image} alt="camera" /></p>
+                                            <p className="blueText interestTopic"><img src={indoors1Image} alt="food" />&nbsp;&nbsp;Indoors&nbsp;&nbsp;<img src={indoors2Image} alt="camera" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -150,7 +150,7 @@ class Create_Account extends Component {
                                     </td>
                                     <td>
                                         <div className='interest outdoors'>
-                                            <p className="blueText"><img src={outdoors1Image} alt="amusement park" />&nbsp;&nbsp;Outdoors&nbsp;&nbsp;<img src={outdoors2Image} alt="tree" /></p>
+                                            <p className="blueText interestTopic"><img src={outdoors1Image} alt="amusement park" />&nbsp;&nbsp;Outdoors&nbsp;&nbsp;<img src={outdoors2Image} alt="tree" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -184,7 +184,7 @@ class Create_Account extends Component {
                                 <tr>
                                     <td>
                                         <div className='interest sports'>
-                                            <p className="blueText"><img src={sports1Image} alt="weightlifter" />&nbsp;&nbsp;Sports&nbsp;&nbsp;<img src={sports2Image} alt="basketball" /></p>
+                                            <p className="blueText interestTopic"><img src={sports1Image} alt="weightlifter" />&nbsp;&nbsp;Sports&nbsp;&nbsp;<img src={sports2Image} alt="basketball" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -216,7 +216,7 @@ class Create_Account extends Component {
                                     </td>
                                     <td>
                                         <div className='interest music'>
-                                            <p className="blueText"><img src={music1Image} alt="keyboard" />&nbsp;&nbsp;Music&nbsp;&nbsp;<img src={music2Image} alt="music note" /></p>
+                                            <p className="blueText interestTopic"><img src={music1Image} alt="keyboard" />&nbsp;&nbsp;Music&nbsp;&nbsp;<img src={music2Image} alt="music note" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
