@@ -7,11 +7,11 @@ import { ReactComponent as MagnifyGlass } from '../../images/magnify_glass.svg';
 function HomeNavbar() {
     return (
         <div className="home-navbar">
-            <Link exact to="/home" className="home-navbar-logo"><PerfectGiftLogo/></Link>
+            <Link to="/home" className="home-navbar-logo"><PerfectGiftLogo/></Link>
             <div className="navigation-links">
-                <Link exact to="/home" className="link"><MagnifyGlass/> Find Gift</Link>
-                <Link exact to="/profile" className="link">My Profile</Link>
-                <Link exact to="/" className="link">Sign Out</Link>
+                <Link to="/home" className="link"><MagnifyGlass/> Find Gift</Link>
+                <Link to="/profile" className="link">My Profile</Link>
+                <Link to="/" className="link">Sign Out</Link>
             </div>
         </div>
     );

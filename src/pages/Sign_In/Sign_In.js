@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './Sign_In.css';
 import Navbar from '../../navigation/LogoNavbar/LogoNavbar';
 import SignInImage from '../../images/sign_in_image.png';
-//import { render } from '@testing-library/react';
 import axios from 'axios';
 
 import { Redirect } from "react-router-dom";
