@@ -7,7 +7,7 @@ function LandingNavbar() {
         <div className="landing-navbar">
             <p className="link">Mission</p>
             <p className="link">About Us</p>
-            <Link exact to="/sign_in" className="link">Sign In</Link>
+            <Link to="/sign_in" className="link">Sign In</Link>
         </div>
     );
 }
