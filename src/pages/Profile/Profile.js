@@ -33,9 +33,11 @@ class Profile extends Component {
     }
 
     handleSave() {
+        // don't save new username if it's empty (set it back to original username)
         if (this.state.newUsername === "") {
             this.setState({ username: this.state.username, mode: 'view' });
         }
+        // save new username
         else {
             this.setState({ username: this.state.newUsername, mode: 'view' });
         }
@@ -44,11 +46,13 @@ class Profile extends Component {
     handleEdit() {
         this.setState({ mode: 'edit' });
     }
+
     // show/hide textbox to edit username
     renderInputField() {
         if (this.state.mode === 'view') {
             return this.state.username;
         } else {
+            // display newUsername as user is editing it
             return (
                 <span>
                     <input
@@ -60,6 +64,7 @@ class Profile extends Component {
             );
         }
     }
+
     //show edit/save button
     renderButton() {
         if (this.state.mode === 'view') {
@@ -93,7 +98,6 @@ class Profile extends Component {
                     this.setState({ name: userFullName });
                     this.setState({ username: res.data[0].username });
                     this.setState({ newUsername: res.data[0].username });
-
                 } else {
                     this.props.history.push('/sign_in')
                     console.log("Redirected to sign in page")

@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
 import './Sign_In.css';
 import Navbar from '../../navigation/LogoNavbar/LogoNavbar';
 import SignInImage from '../../images/sign_in_image.png';
-import axios from 'axios';
-
-import { Redirect } from "react-router-dom";
-
-
 
 axios.defaults.withCredentials = true;
 

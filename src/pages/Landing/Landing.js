@@ -14,7 +14,7 @@ function Landing() {
                     <p className="catchphrase">Simple and Swift, choose</p>
                     <div className="perfectGift"><PerfectGiftLogo className="logoHomepage" /><p className="exclamation">!</p></div>
                     <p className="description">Surprise your family, friends, and loved ones with ideal gifts from their wishlist.</p>
-                    <Link exact to="/sign_in"><button className='getStarted'>Get Started!</button></Link>
+                    <Link to="/sign_in"><button className='getStarted'>Get Started!</button></Link>
                 </div>
                 <img className="giveGiftPic" src={giveGift} alt="give great gifts" />
             </div>
