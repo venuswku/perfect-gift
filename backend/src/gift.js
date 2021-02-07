@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+
 // gets a single user or all of the users from the giftusers table
 exports.getUsers = async (req, res) => {
     // If a username is passed into query param (name of query is username, in openapi.yaml)
@@ -102,6 +103,22 @@ exports.postUser = async (req, res) => {
     }
 };
 
+// exports.putUser = async (req, res) => {
+//     if (req.query.username) {
+//         // const newUsername = req.query.username;
+//         const newUsername = req.body.username;
+//         const email = req.body.useremail;
+//         const user = await db.updateUsername(newUsername, email);
+//         // const user = await db.updateUsername(req.query.username, req.body.username);
+//         console.log("User data is" + user);
+//         if (user.rowCount === 1) {
+//             res.status(204).send();
+//         } else {
+//             res.status(404).send();
+//         }
+//     }
+// };
+
 // Checks if login credentials are valid
 exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
@@ -147,7 +164,7 @@ exports.login = async (req, res) => {
 // Else, they will be redirected to the login page (done in the frontend)
 // Note to self: Make sure to remove the password when sending back the data to frontend
 exports.checkLogin = async (req, res) => {
-        console.log("Recieved Request");
+        console.log("Request: Check if user is logged in");
         console.log(req.body.user);
 
         console.log(req.session.user);
@@ -168,4 +185,27 @@ exports.checkLogin = async (req, res) => {
           res.send([{ username: "", userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
         }
 
+};
+
+
+// Logs out a user
+exports.logout = async (req,res) => {
+    console.log("Request: Logout")
+
+    // Try to see if everything is working as expected
+    try {
+
+        console.log(req.session.user)
+        if(req.session.user) { // Check to see if the user has a cookie
+            req.session.user = "" //We delete the cookie from the user's computer
+            res.send("Successfully logged out") //Sends the ok to the frontend that the cookie that lets a user stay logged in has been deleted
+        } else {
+            res.send("Error when deleting users cookies") // In deleting the cookie fails.
+        }
+    }
+    // Otherwise, we catch an error and send it back to the frontend
+    catch {
+        console.log("There was an error")
+        res.send("Failed to logout");
+    }
 };

@@ -34,6 +34,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  # /v0/giftuser/{useremail}:
+  #   put:
+  #     description: Updates a username
+  #     parameters:
+  #     - in: query
+  #       name: username
+  #       description: User's username
+  #       required: false
+  #       schema:
+  #         type: string
+  #     - in: path
+  #       name: useremail
+  #       description: User's email
+  #       required: true
+  #       schema:
+  #         type: string
+  #         format: email
+  #     requestBody:
+  #       description: Update a username that was changed
+  #       required: false
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/User'
+  #     responses:
+  #       204:
+  #         description: Username updated
+  #       409:
+  #         description: Username was not updated and saved
+  #       default:
+  #         description: Unexpected Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Error'
+
   /v0/getqresponse:
     get:
       description: Return user's questionnaire responses
@@ -167,6 +203,32 @@ paths:
                 $ref: '#/components/schemas/User'
         404:
           description: Unable to authenticate
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /v0/logout:
+    get:
+      description: Logs out a user when the button ("Sign out") is clicked
+      parameters:
+      - name: signOut
+        in: query
+        required: false
+        description: Boolean value to see if user is logged in or out
+        schema:
+          type: boolean
+      responses:
+        200:
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: Unable to logout
         default:
           description: Unexpected Error
           content:
