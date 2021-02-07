@@ -62,6 +62,9 @@ app.post('/v0/authenticate', gift.login);
 //This check if the user has the authorization to be on the website
 app.get('/v0/authenticate', gift.checkLogin)
 
+// Logs out a user
+app.get('/v0/logout', gift.logout)
+
 app.use((err, req, res, next) => {
   res.status(err.status).json({
     message: err.message,

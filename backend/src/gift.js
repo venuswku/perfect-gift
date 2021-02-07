@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+
 // gets a single user or all of the users from the giftusers table
 exports.getUsers = async (req, res) => {
     // If a username is passed into query param (name of query is username, in openapi.yaml)
@@ -146,7 +147,7 @@ exports.login = async (req, res) => {
 // Else, they will be redirected to the login page (done in the frontend)
 // Note to self: Make sure to remove the password when sending back the data to frontend
 exports.checkLogin = async (req, res) => {
-        console.log("Recieved Request");
+        console.log("Request: Check if user is logged in");
         console.log(req.body.user);
 
         console.log(req.session.user);
@@ -170,42 +171,24 @@ exports.checkLogin = async (req, res) => {
 };
 
 
+// Logs out a user
 exports.logout = async (req,res) => {
-    console.log("The server has receive your logout request.")
-    console.log("We are going to authenticate the request that the frontend has given us")
+    console.log("Request: Logout")
     
+    // Try to see if everything is working as expected
     try {
-        console.log("The frontend has given us:")
-        //console.log(req.body.username, req.body.password)
-        //const oneUser = await db.authenticateUser(req.body.username);
-        const stored_pass = oneUser[0]['userpassword'];
-        console.log(oneUser)
-        console.log(stored_pass)
-    
-        // bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-        //     console.log(hash);
-        // });
-    
-        if (stored_pass.length > 0) {
-    
-            bcrypt.compare(req.body.password, stored_pass, (err, result) => {
-                if (result){
-                    console.log("AUTHENTICATED")
-                    req.session.user = oneUser[0]['username']
-                    console.log(req.session.user)
-                    res.send(oneUser[0]['username']);
-                } else{
-                    // Send JWT or Cookie
-                    console.log("NOT AUTHENTICATED")
-                    res.send("");
-                }
-            })
+        
+        console.log(req.session.user) 
+        if(req.session.user) { // Check to see if the user has a cookie
+            req.session.user = "" //We delete the cookie from the user's computer
+            res.send("Successfully logged out") //Sends the ok to the frontend that the cookie that lets a user stay logged in has been deleted
         } else {
-            console.log("Result too small")
-            res.send("");
-        }
-    }catch {
+            res.send("Error when deleting users cookies") // In deleting the cookie fails.
+        }        
+    }
+    // Otherwise, we catch an error and send it back to the frontend
+    catch {
         console.log("There was an error")
-        res.send("");
+        res.send("Failed to logout");
     } 
 };
