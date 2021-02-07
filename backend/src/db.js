@@ -75,6 +75,17 @@ exports.insertQResponses = async (username, outdooractivity, place, store, music
     });
 }
 
+exports.updateUsername = async (username, useremail) => {
+    const select = `UPDATE giftuser SET username = $1 WHERE useremail = $2`;
+    // eslint-disable-next-line max-len
+    // const select = `UPDATE mail SET mail = jsonb_set(mail, '{mail,star}', 'true') WHERE id = $1`;
+    const query = {
+        text: select,
+        values: [username],
+    };
+    const t = await pool.query(query);
+    return t;
+};
 
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username) => {

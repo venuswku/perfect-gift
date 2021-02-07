@@ -102,6 +102,22 @@ exports.postUser = async (req, res) => {
     }
 };
 
+exports.putUser = async (req, res) => {
+    if (req.query.username) {
+        // const newUsername = req.query.username;
+        const newUsername = req.body.username;
+        const email = req.body.useremail;
+        const user = await db.updateUsername(newUsername, email);
+        // const user = await db.updateUsername(req.query.username, req.body.username);
+        console.log("User data is" + user);
+        if (user.rowCount === 1) {
+            res.status(204).send();
+        } else {
+            res.status(404).send();
+        }
+    }
+};
+
 // Checks if login credentials are valid
 exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
