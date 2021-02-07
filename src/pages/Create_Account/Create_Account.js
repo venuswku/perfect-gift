@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../../App.css';
 import './Create_Account.css';
 import LogoNavbar from '../../navigation/LogoNavbar/LogoNavbar';
 import createAccountImage from '../../images/create_account_image.png';
@@ -24,11 +23,13 @@ class Create_Account extends Component {
         super(props)
         // items that we will be able to send to the server
         this.state = {
-            //firstname: '',
-            //lastname: '',
+            firstname: '',
+            lastname: '',
             username: '',
-            //email: '',
-            //password: '',
+            useremail: '',
+            userpassword: '',
+            avatar: '',
+            showavatar: false,
             outdooractivity: '',
             place: '',
             store: '',
@@ -49,136 +50,88 @@ class Create_Account extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    //submitHandler
     // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
     createAccount = (e) => {
         e.preventDefault()
-        console.log('createAccount called');
+        console.log('Create_Account.js: createAccount called');
         console.log(this.state);
-        // axios.post('http://localhost:3010/v0/postgiftuser', {
-        //     username: username,
-        //     userpassword: password,
-        //     firstname: firstName,
-        //     lastname: lastName,
-        //     useremail: email,
-        //     avatar,
-        //     showavatar,
-        // });
-
-        axios.post('http://localhost:3010/v0/postqresponse', [this.state])
+        // axios.post('http://localhost:3010/v0/postuser', [{
+        //     // left side is backend variables, right side is frontend
+        //     username: e.username,
+        //     userpassword: e.password,
+        //     firstname: e.firstName,
+        //     lastname: e.lastName,
+        //     useremail: e.email,
+        //     avatar: e.avatar,
+        //     showavatar: e.showavatar,
+        // }])
+        axios.post('http://localhost:3010/v0/postuser', [this.state])
         .then(response => {
-            console.log('success');
+            console.log('Create_Account.js: success for users');
             console.log(response);
+            axios.post('http://localhost:3010/v0/postqresponse', [this.state])
+                .then(response => {
+                    console.log('Create_Account.js: success for qr');
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log("Create_Account.js: failed for qr");
+                    console.log(this.state);
+                    console.log(error);
+                });
         })
         .catch(error => {
-            console.log("failed");
+            console.log("Create_Account.js: failed for users");
             console.log(this.state);
             console.log(error);
         });
+        this.props.history.push('/profile')
     };
     render() {
         // store input values locally into the following values
-        const { firstname, lastname, username, email, password, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
+        const { firstname, lastname, username, useremail, userpassword, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
         return (
-            <div className="App">
+            <div className="CreateAccount">
                 <LogoNavbar />
-                <header className="create_account-header">
-                    <form onSubmit={this.createAccount}>
-                        <div className='cacentered'>
-                            <p className="blueText">Create an Account </p>
-                            <img src={createAccountImage} alt="the gifters" className='createAccountPic' />
-                            <table>
+                <div className="createAccountContent">
+                    <p className="createAccountTitle">Create an Account</p>
+                    <img className='createAccountPic' src={createAccountImage} alt="the gifters" />
+                    <form className="userForm" onSubmit={this.createAccount}>
+                        <table className="userInfo">
+                            <tbody>
                                 <tr>
-                                    <td>
-                                        <label for='firstname' className='blueText'>First Name</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='text'
-                                            onChange={this.changeHandler}
-                                            value={firstname}
-                                            name='firstname'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='firstname' className='blueText'>First Name</label></td>
+                                    <td><input type='text' onChange={this.changeHandler} value={firstname} name='firstname' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='lastname' className='blueText'>Last Name</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='text'
-                                            onChange={this.changeHandler}
-                                            value={lastname}
-                                            name='lastname'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='lastname' className='blueText'>Last Name</label></td>
+                                    <td><input type='text' onChange={this.changeHandler} value={lastname} name='lastname' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='email' className='blueText'>Email</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='email'
-                                            onChange={this.changeHandler}
-                                            value={email}
-                                            name='email'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='email' className='blueText'>Email</label></td>
+                                    <td><input type='email' onChange={this.changeHandler} value={useremail} name='useremail' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='username' className='blueText'>Username</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='text'
-                                            onChange={this.changeHandler}
-                                            value={username}
-                                            name='username'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='username' className='blueText'>Username</label></td>
+                                    <td><input type='text' onChange={this.changeHandler} value={username} name='username' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='password' className='blueText'>Password</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type='password'
-                                            onChange={this.changeHandler}
-                                            value={password}
-                                            name='password'
-                                            className='caTextbox'
-                                            required
-                                        />
-                                    </td>
+                                    <td><label htmlFor='password' className='blueText'>Password</label></td>
+                                    <td><input type='password' onChange={this.changeHandler} value={userpassword} name='userpassword' className='caTextbox' required/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <label for='verifypassword' className='blueText'>Retype Password</label>
-                                    </td>
-                                    <td>
-                                        <input type='password' name='verifypassword' className='caTextbox' required></input>
-                                    </td>
+                                    <td><label htmlFor='verifypassword' className='blueText'>Retype Password</label></td>
+                                    <td><input type='password' name='verifypassword' className='caTextbox' required></input></td>
                                 </tr>
-                            </table>
-
-                            <p>Please take your time to answer our interest questions below. <br /> We will take note and share them with other gifters on your profile!</p>
-                            <table>
+                            </tbody>
+                        </table>
+                        <p className="createAccountInstructions">Please take your time to answer our interest questions below. <br /> We will take note and share them with other gifters on your profile!</p>
+                        <table className="questionnaire">
+                            <tbody>
                                 <tr>
                                     <td>
-                                        <div className='cabox indoors'>
-                                            <p className="blueText"><img src={indoors1Image} alt="food" className='createAccountPic' />&nbsp;&nbsp;Indoors&nbsp;&nbsp;<img src={indoors2Image} alt="camera" className='createAccountPic' /></p>
+                                        <div className='interest indoors'>
+                                            <p className="blueText interestTopic"><img src={indoors1Image} alt="food" />&nbsp;&nbsp;Indoors&nbsp;&nbsp;<img src={indoors2Image} alt="camera" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -209,8 +162,8 @@ class Create_Account extends Component {
                                         </div>
                                     </td>
                                     <td>
-                                        <div className='cabox outdoors'>
-                                            <p className="blueText"><img src={outdoors1Image} alt="amusement park" className='createAccountPic' />&nbsp;&nbsp;Outdoors&nbsp;&nbsp;<img src={outdoors2Image} alt="tree" className='createAccountPic' /></p>
+                                        <div className='interest outdoors'>
+                                            <p className="blueText interestTopic"><img src={outdoors1Image} alt="amusement park" />&nbsp;&nbsp;Outdoors&nbsp;&nbsp;<img src={outdoors2Image} alt="tree" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -243,8 +196,8 @@ class Create_Account extends Component {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div className='cabox sports'>
-                                            <p className="blueText"><img src={sports1Image} alt="weightlifter" className='createAccountPic' />&nbsp;&nbsp;Sports&nbsp;&nbsp;<img src={sports2Image} alt="basketball" className='createAccountPic' /></p>
+                                        <div className='interest sports'>
+                                            <p className="blueText interestTopic"><img src={sports1Image} alt="weightlifter" />&nbsp;&nbsp;Sports&nbsp;&nbsp;<img src={sports2Image} alt="basketball" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -275,8 +228,8 @@ class Create_Account extends Component {
                                         </div>
                                     </td>
                                     <td>
-                                        <div className='cabox music'>
-                                            <p className="blueText"><img src={music1Image} alt="keyboard" className='createAccountPic' />&nbsp;&nbsp;Music&nbsp;&nbsp;<img src={music2Image} alt="music note" className='createAccountPic' /></p>
+                                        <div className='interest music'>
+                                            <p className="blueText interestTopic"><img src={music1Image} alt="keyboard" />&nbsp;&nbsp;Music&nbsp;&nbsp;<img src={music2Image} alt="music note" /></p>
                                             <input
                                                 type='text'
                                                 onChange={this.changeHandler}
@@ -307,19 +260,15 @@ class Create_Account extends Component {
                                         </div>
                                     </td>
                                 </tr>
-                            </table>
-                            <div className="cacenterd">
-                                <p>It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile.</p>
-                                <br />
-                                <input type='submit' value='Continue' className='casubmit' ></input>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
+                        <p className="createAccountInstructions">It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile.</p><br />
+                        <input type='submit' value='Continue' className='createAccountSubmit' ></input>
                     </form>
-                </header>
+                </div>
             </div>
         );
     }
-
 }
 
 export default Create_Account;

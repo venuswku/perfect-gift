@@ -25,7 +25,7 @@ exports.getUsers = async (req, res) => {
 exports.getQResponse = async (req, res) => {
     // app.js passes username to gift.js
     if (req.query.username) {
-        // gift.js sends username to db.js. 
+        // gift.js sends username to db.js.
         const oneUser = await db.selectQResponses(req.query.username);
         // if db.js returns q response, send 200 and the response attached
         if (oneUser) {
@@ -62,15 +62,42 @@ exports.postQResponse = async (req, res) => {
         // check if post request was successful
         if (username) {
             const userResponses = await db.selectQResponses(username);
-            console.log("successful input");
-            res.send(userResponses);
-            res.status(201).json("Gifter's questionnaire responses are stored!", userResponses);
+            console.log("Gifter's questionnaire responses are stored!");
+            res.status(201).json(userResponses);
+            console.log("we are getting 201 success");
         }
-    }
-    catch {
-        console.log("failz");
+    }catch {
+        console.log("gift.js: qr failz");
         res.status(404).send();
-        res.send("");
+    }
+};
+
+exports.postUser = async (req, res) => {
+    try {
+        console.log('gift.js: giftusers called');
+
+        // get user input from Create Account page
+        const username = req.body[0].username;
+        const userpassword = req.body[0].userpassword;
+        const firstname = req.body[0].firstname;
+        const lastname = req.body[0].lastname;
+        const useremail = req.body[0].useremail;
+        const avatar = req.body[0].avatar;
+        const showavatar = req.body[0].showavatar;
+
+        // insert questionnaire responses in questionnareresponses table
+        db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
+
+        // check if post request was successful
+        if (username) {
+            const user = await db.selectUsers(username);
+            console.log("Gifter's user data are stored!");
+            res.status(201).json(user);
+            console.log("we are getting 201 success");
+        }
+    }catch {
+        console.log("gift.js: user failz");
+        res.status(404).send();
     }
 };
 
@@ -84,13 +111,13 @@ exports.login = async (req, res) => {
         const stored_pass = oneUser[0]['userpassword'];
         console.log(oneUser)
         console.log(stored_pass)
-    
+
         // bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
         //     console.log(hash);
         // });
-    
+
         if (stored_pass.length > 0) {
-    
+
             bcrypt.compare(req.body.password, stored_pass, (err, result) => {
                 if (result){
                     console.log("AUTHENTICATED")
@@ -110,8 +137,8 @@ exports.login = async (req, res) => {
     }catch {
         console.log("There was an error")
         res.send("");
-    } 
-    
+    }
+
 };
 
 // This function check is the user has a cookie.
@@ -119,25 +146,27 @@ exports.login = async (req, res) => {
 // Else, they will be redirected to the login page (done in the frontend)
 // Note to self: Make sure to remove the password when sending back the data to frontend
 exports.checkLogin = async (req, res) => {
-        console.log("Recieved Request")
-        console.log(req.body.user)
+        console.log("Recieved Request");
+        console.log(req.body.user);
 
-        console.log(req.session.user)
+        console.log(req.session.user);
         if (req.session.user){
           console.log("Enters IF")
-          const userInfo = await db.selectUsers(req.session.user)
-          const firstName = userInfo[0]['firstname']
-          const lastName = userInfo[0]['lastname']
+          const userInfo = await db.selectUsers(req.session.user);
+          const firstName = userInfo[0]['firstname'];
+          const lastName = userInfo[0]['lastname'];
+          const userName = userInfo[0]['username'];
           console.log("bug below")
-          console.log(firstName)
-          console.log(lastName)
+          console.log(firstName);
+          console.log(lastName);
+          console.log(userName);
           console.log("bug above")
           console.log(userInfo)
           res.send([{ username: req.session.user, userpassword: "null", firstname: firstName, lastname: lastName, useremail: "null@null.com", avatar: "null", showavatar: false }])
         } else {
           res.send([{ username: "", userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
         }
-      
+
 };
 
 
