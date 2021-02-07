@@ -102,21 +102,21 @@ exports.postUser = async (req, res) => {
     }
 };
 
-exports.putUser = async (req, res) => {
-    if (req.query.username) {
-        // const newUsername = req.query.username;
-        const newUsername = req.body.username;
-        const email = req.body.useremail;
-        const user = await db.updateUsername(newUsername, email);
-        // const user = await db.updateUsername(req.query.username, req.body.username);
-        console.log("User data is" + user);
-        if (user.rowCount === 1) {
-            res.status(204).send();
-        } else {
-            res.status(404).send();
-        }
-    }
-};
+// exports.putUser = async (req, res) => {
+//     if (req.query.username) {
+//         // const newUsername = req.query.username;
+//         const newUsername = req.body.username;
+//         const email = req.body.useremail;
+//         const user = await db.updateUsername(newUsername, email);
+//         // const user = await db.updateUsername(req.query.username, req.body.username);
+//         console.log("User data is" + user);
+//         if (user.rowCount === 1) {
+//             res.status(204).send();
+//         } else {
+//             res.status(404).send();
+//         }
+//     }
+// };
 
 // Checks if login credentials are valid
 exports.login = async (req, res) => {
@@ -190,21 +190,21 @@ exports.checkLogin = async (req, res) => {
 // Logs out a user
 exports.logout = async (req,res) => {
     console.log("Request: Logout")
-    
+
     // Try to see if everything is working as expected
     try {
-        
-        console.log(req.session.user) 
+
+        console.log(req.session.user)
         if(req.session.user) { // Check to see if the user has a cookie
             req.session.user = "" //We delete the cookie from the user's computer
             res.send("Successfully logged out") //Sends the ok to the frontend that the cookie that lets a user stay logged in has been deleted
         } else {
             res.send("Error when deleting users cookies") // In deleting the cookie fails.
-        }        
+        }
     }
     // Otherwise, we catch an error and send it back to the frontend
     catch {
         console.log("There was an error")
         res.send("Failed to logout");
-    } 
+    }
 };
