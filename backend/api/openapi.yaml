@@ -213,7 +213,7 @@ components:
           - firstname
           - lastname
           - useremail
-
+    
     QuestionnaireResponses:
       description: User's responses to interest questionnaire
       type: array

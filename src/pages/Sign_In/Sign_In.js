@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Sign_In.css';
 import Navbar from '../../navigation/LogoNavbar/LogoNavbar';
@@ -73,11 +73,11 @@ class Sign_In extends Component {
                     <form className="userInfo" onSubmit={this.submitHandler}>
                       <div className="wrongPassword">{this.state.wrongPassword}</div>
                         <div className="usernamePassword">
-                            <label for='username' className='signInLabel'>Username</label>
+                            <label htmlFor='username' className='signInLabel'>Username</label>
                             <input type='text' name='username' value={username} className='signInTextbox' onChange={this.changeHandler}></input>
                         </div>
                         <div className="usernamePassword">
-                            <label for='password' className='signInLabel'>Password</label>
+                            <label htmlFor='password' className='signInLabel'>Password</label>
                             <input type='password' name='password' value={password} className='signInTextbox' onChange={this.changeHandler}></input>
                         </div>
                         <div className="createAccountOrContinue">

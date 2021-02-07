@@ -105,7 +105,7 @@ class Profile extends Component {
 
             }).catch(res => {
                 console.log(res)
-            })
+            })       
     }
 
 
