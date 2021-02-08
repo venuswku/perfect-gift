@@ -21,6 +21,7 @@ class Profile extends Component {
             username: '',
             newUsername: '',
             mode: 'view',
+            wishlist: []
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -104,6 +105,17 @@ class Profile extends Component {
                 }
 
             }).catch(res => {
+                console.log(res)
+            })
+
+        // Making a get request to get the user's wishlist
+        axios.get('http://localhost:3010/v0/getUserWishlist', [this.state])
+            .then(res => {
+                console.log("Frontend: Gimme wishlist")
+                console.log(res.data)
+
+            }).catch(res => {
+                console.log("Frontend: There was an error when trying to get a user's wishlist")
                 console.log(res)
             })
     }

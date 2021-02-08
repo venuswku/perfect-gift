@@ -26,7 +26,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie : {
-    expires : 60 * 60 * 24
+    expires : 60 * 60 * 24 * 5 // Found out that this is in miliseconds. Currently rounds about 7 minutes. To make a user stay logged in longer, multiply by a bigger number
   }
 }))
 
@@ -64,6 +64,9 @@ app.get('/v0/authenticate', gift.checkLogin)
 
 // Logs out a user
 app.get('/v0/logout', gift.logout)
+
+// Gets the user's wishlist
+app.get('/v0/getUserWishlist', gift.getUserWishlist)
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

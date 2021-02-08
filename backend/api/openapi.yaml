@@ -236,6 +236,38 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /v0/getUserWishlist:
+    get:
+      description: Return a user's wishlist
+      parameters:
+      - name: username
+        in: query
+        required: false
+        description: User's username
+        schema:
+          type: string
+      - name: wishlist
+        in: query
+        required: false
+        description: User's username
+        schema:
+          type: string
+      responses:
+        200:
+          description: User response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionnaireResponses'
+        404:
+          description: Unknown user
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Error:
@@ -307,6 +339,37 @@ components:
           sportsteam:
             type: string
           exercise:
+            type: string
+        required:
+          - username
+
+    Wishlist:
+      description: User's wishlist
+      type: array
+      items:
+        type: object
+        properties:
+          username:
+            type: string
+          gift1:
+            type: string
+          gift2:
+            type: string
+          gift3:
+            type: string
+          gift4:
+            type: string
+          gift5:
+            type: string
+          gift6:
+            type: string
+          gift7:
+            type: string
+          gift8:
+            type: string
+          gift9:
+            type: string
+          gift10:
             type: string
         required:
           - username
