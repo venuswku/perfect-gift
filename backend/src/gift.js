@@ -68,7 +68,7 @@ exports.postQResponse = async (req, res) => {
             res.status(201).json(userResponses);
             console.log("we are getting 201 success");
         }
-    }catch {
+    } catch {
         console.log("gift.js: qr failz");
         res.status(404).send();
     }
@@ -80,7 +80,12 @@ exports.postUser = async (req, res) => {
 
         // get user input from Create Account page
         const username = req.body[0].username;
-        const userpassword = req.body[0].userpassword;
+        let userpassword = '';
+        bcrypt.hash(req.body[0].userpassword, saltRounds, function (err, hashPassword) {
+            // Store hash
+            userpassword = hashPassword;
+            console.log("hashed password :))))", hashPassword);
+        });
         const firstname = req.body[0].firstname;
         const lastname = req.body[0].lastname;
         const useremail = req.body[0].useremail;
@@ -97,7 +102,7 @@ exports.postUser = async (req, res) => {
             res.status(201).json(user);
             console.log("we are getting 201 success");
         }
-    }catch {
+    } catch {
         console.log("gift.js: user failz");
         res.status(404).send();
     }
@@ -137,12 +142,12 @@ exports.login = async (req, res) => {
         if (stored_pass.length > 0) {
 
             bcrypt.compare(req.body.password, stored_pass, (err, result) => {
-                if (result){
+                if (result) {
                     console.log("AUTHENTICATED")
                     req.session.user = oneUser[0]['username']
                     console.log(req.session.user)
                     res.send(oneUser[0]['username']);
-                } else{
+                } else {
                     // Send JWT or Cookie
                     console.log("NOT AUTHENTICATED")
                     res.send("");
@@ -152,7 +157,7 @@ exports.login = async (req, res) => {
             console.log("Result too small")
             res.send("");
         }
-    }catch {
+    } catch {
         console.log("There was an error")
         res.send("");
     }
@@ -164,39 +169,39 @@ exports.login = async (req, res) => {
 // Else, they will be redirected to the login page (done in the frontend)
 // Note to self: Make sure to remove the password when sending back the data to frontend
 exports.checkLogin = async (req, res) => {
-        console.log("Request: Check if user is logged in");
-        console.log(req.body.user);
+    console.log("Request: Check if user is logged in");
+    console.log(req.body.user);
 
-        console.log(req.session.user);
-        if (req.session.user){
-          console.log("Enters IF")
-          const userInfo = await db.selectUsers(req.session.user);
-          const firstName = userInfo[0]['firstname'];
-          const lastName = userInfo[0]['lastname'];
-          const userName = userInfo[0]['username'];
-          console.log("bug below")
-          console.log(firstName);
-          console.log(lastName);
-          console.log(userName);
-          console.log("bug above")
-          console.log(userInfo)
-          res.send([{ username: req.session.user, userpassword: "null", firstname: firstName, lastname: lastName, useremail: "null@null.com", avatar: "null", showavatar: false }])
-        } else {
-          res.send([{ username: "", userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
-        }
+    console.log(req.session.user);
+    if (req.session.user) {
+        console.log("Enters IF")
+        const userInfo = await db.selectUsers(req.session.user);
+        const firstName = userInfo[0]['firstname'];
+        const lastName = userInfo[0]['lastname'];
+        const userName = userInfo[0]['username'];
+        console.log("bug below")
+        console.log(firstName);
+        console.log(lastName);
+        console.log(userName);
+        console.log("bug above")
+        console.log(userInfo)
+        res.send([{ username: req.session.user, userpassword: "null", firstname: firstName, lastname: lastName, useremail: "null@null.com", avatar: "null", showavatar: false }])
+    } else {
+        res.send([{ username: "", userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
+    }
 
 };
 
 
 // Logs out a user
-exports.logout = async (req,res) => {
+exports.logout = async (req, res) => {
     console.log("Request: Logout")
 
     // Try to see if everything is working as expected
     try {
 
         console.log(req.session.user)
-        if(req.session.user) { // Check to see if the user has a cookie
+        if (req.session.user) { // Check to see if the user has a cookie
             req.session.user = "" //We delete the cookie from the user's computer
             res.send("Successfully logged out") //Sends the ok to the frontend that the cookie that lets a user stay logged in has been deleted
         } else {

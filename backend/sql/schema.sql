@@ -1,6 +1,7 @@
 -- Database schema goes here --
 DROP TABLE IF EXISTS giftuser;
-CREATE TABLE giftuser(username VARCHAR(32) PRIMARY KEY, userpassword VARCHAR(60), firstname VARCHAR(32), lastname VARCHAR(32), useremail VARCHAR(32), avatar TEXT, showavatar BOOLEAN);
+CREATE TABLE giftuser(username VARCHAR(32) PRIMARY KEY, userpassword VARCHAR(100), firstname VARCHAR(32), lastname VARCHAR(32), useremail VARCHAR(32), avatar TEXT, showavatar BOOLEAN);
+
 
 DROP TABLE IF EXISTS questionnaireresponses;
 CREATE TABLE questionnaireresponses(

@@ -31,6 +31,11 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
     console.log('db.js: insertUsers called');
     let insert = `INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES('${username}', '${userpassword}', '${firstname}', '${lastname}', '${useremail}', '${avatar}', '${showavatar}')`;
     console.log(insert);
+    // const { rows } = await pool.query(query);
+    // if (rows.length == 1) {
+    //     rows[0].userpassword = userpassword;
+    // }
+
     pool.query(insert, (err, res) => {
         if (err) {
             console.log("db.js: error!")
