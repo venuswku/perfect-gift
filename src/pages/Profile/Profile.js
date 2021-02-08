@@ -128,7 +128,7 @@ class Profile extends Component {
 
                         </div>
                         <br></br>
-                        {/* interests */}
+                        {/* interests/questionnaire responses */}
                         <div>
                             <span className='topicFont'>Interests &nbsp; </span>
                             <span className='textBubble purple'>topic1 &nbsp; <DeleteButton /></span>
@@ -136,6 +136,7 @@ class Profile extends Component {
                             <span className='textBubble red'>topic3 &nbsp; <DeleteButton /></span>
                             <span className='textBubble yellow'>topic4 &nbsp; <DeleteButton /></span>
                             <span className='textBubble teal'>topic5 &nbsp; <DeleteButton /></span>
+                            <AddButton />
                         </div>
                         <br></br>
                         {/* wishlist */}
