@@ -19,3 +19,18 @@ CREATE TABLE questionnaireresponses(
     exercise VARCHAR(50)
 );
 
+-- For now, we can only let a user have 10 items on their wishlist.
+-- Not sure how to add attributes to a table once they're been initialzed
+CREATE TABLE wishlist(
+    username VARCHAR(32) PRIMARY KEY,
+    gift1 VARCHAR(50),
+    gift2 VARCHAR(50),
+    gift3 VARCHAR(50),
+    gift4 VARCHAR(50),
+    gift5 VARCHAR(50),
+    gift6 VARCHAR(50),
+    gift7 VARCHAR(50),
+    gift8 VARCHAR(50),
+    gift9 VARCHAR(50),
+    gift10 VARCHAR(50)
+);
