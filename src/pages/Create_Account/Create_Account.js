@@ -65,27 +65,34 @@ class Create_Account extends Component {
         //     avatar: e.avatar,
         //     showavatar: e.showavatar,
         // }])
-        axios.post('http://localhost:3010/v0/postuser', [this.state])
+        axios.get('http://localhost:3010/v0/giftuser?username=' + this.state.username)
         .then(response => {
-            console.log('Create_Account.js: success for users');
-            console.log(response);
-            axios.post('http://localhost:3010/v0/postqresponse', [this.state])
+            if (response.data.length == 0){
+                axios.post('http://localhost:3010/v0/postuser', [this.state])
                 .then(response => {
-                    console.log('Create_Account.js: success for qr');
+                    console.log('Create_Account.js: success for users');
                     console.log(response);
+                    axios.post('http://localhost:3010/v0/postqresponse', [this.state])
+                        .then(response => {
+                            console.log('Create_Account.js: success for qr');
+                            console.log(response);
+                            this.props.history.push('/profile')
+                        })
+                        .catch(error => {
+                            console.log("Create_Account.js: failed for qr");
+                            console.log(this.state);
+                            console.log(error);
+                        });
                 })
                 .catch(error => {
-                    console.log("Create_Account.js: failed for qr");
+                    console.log("Create_Account.js: failed for users");
                     console.log(this.state);
                     console.log(error);
                 });
-        })
-        .catch(error => {
-            console.log("Create_Account.js: failed for users");
-            console.log(this.state);
-            console.log(error);
+            } else{
+                window.alert("Username already taken!")
+            }
         });
-        this.props.history.push('/profile')
     };
     render() {
         // store input values locally into the following values
