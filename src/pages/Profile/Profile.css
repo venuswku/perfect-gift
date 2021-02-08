@@ -68,6 +68,10 @@ ul.no-bullets {
   width: 150px
 }
 
+.editInterests {
+  cursor: pointer;
+}
+
 .textBubble {
     border-radius: 25px; /* rounded edges */
     width: auto; /* Making auto-sizable width */

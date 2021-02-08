@@ -148,7 +148,7 @@ class Profile extends Component {
                             <span className='textBubble red'>topic3 &nbsp; <DeleteButton /></span>
                             <span className='textBubble yellow'>topic4 &nbsp; <DeleteButton /></span>
                             <span className='textBubble teal'>topic5 &nbsp; <DeleteButton /></span>
-                            <AddButton />
+                            <EditButton className='editInterests' />
                         </div>
                         <br></br>
                         {/* wishlist */}
