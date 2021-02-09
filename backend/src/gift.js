@@ -67,10 +67,10 @@ exports.postQResponse = async (req, res) => {
         const exercise = req.body[0].exercise;
 
         // insert questionnaire responses in questionnareresponses table
-        db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
+        const yesInsert = await db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
 
         // check if post request was successful
-        if (username) {
+        if (yesInsert) {
             const userResponses = await db.selectQResponses(username);
             console.log("gift.js: postQResponse: Gifter's questionnaire responses are stored!");
             res.status(201).json(userResponses);
@@ -84,7 +84,7 @@ exports.postQResponse = async (req, res) => {
 
 exports.postUser = async (req, res) => {
     try {
-        console.log('gift.js: giftusers called');
+        console.log('gift.js: postUser called');
 
         // get user input from Create Account page
         const username = req.body[0].username;

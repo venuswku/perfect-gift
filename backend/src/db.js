@@ -59,24 +59,11 @@ exports.selectQResponses = async (username) => {
         }
         if (res) {
             console.log("db.js: selectQResponse: is chosen successfully!");
-            // console.log(res);
+            console.log(username);
+            // console.log(res.rows[0]);
             // console.log(res.rows[0].username);
-            oneUser.push({
-                username: res.rows[0].username,
-                outdooractivity: res.rows[0].outdooractivity,
-                place: res.rows[0].place,
-                store: res.rows[0].store,
-                musicgenre: res.rows[0].musicgenre,
-                musician: res.rows[0].musician,
-                band: res.rows[0].band,
-                indooractivity: res.rows[0].indooractivity,
-                movietvshow: res.rows[0].movietvshow,
-                videogame: res.rows[0].videogame,
-                sport: res.rows[0].sport,
-                sportsteam: res.rows[0].sportsteam,
-                exercise: res.rows[0].exercise
-            });
-            // console.log(oneUser);
+            oneUser.push({ username: res.rows[0].username, outdooractivity: res.rows[0].outdooractivity, place: res.rows[0].place, store: res.rows[0].store, musicgenre: res.rows[0].musicgenre, musician: res.rows[0].musician, band: res.rows[0].band, indooractivity: res.rows[0].indooractivity, movietvshow: res.rows[0].movietvshow, videogame: res.rows[0].videogame, sport: res.rows[0].sport, sportsteam: res.rows[0].sportsteam, exercise: res.rows[0].exercise });
+            console.log(oneUser);
             return oneUser;
         }
         
