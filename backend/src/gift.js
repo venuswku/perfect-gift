@@ -65,12 +65,9 @@ exports.postQResponse = async (req, res) => {
         db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
 
         // check if post request was successful
-        if (username) {
-            const userResponses = await db.selectQResponses(username);
-            console.log("Gifter's questionnaire responses are stored!");
-            res.status(201).json(userResponses);
-            console.log("we are getting 201 success");
-        }
+        const userResponses = await db.selectQResponses(username);
+        console.log("gift.js: Gifter's questionnaire responses are stored!", userResponses);
+        res.status(201).json(userResponses);
     } catch {
         console.log("gift.js: qr failz");
         res.status(404).send();
@@ -101,9 +98,8 @@ exports.postUser = async (req, res) => {
         // check if post request was successful
         if (username) {
             const user = await db.selectUsers(username);
-            console.log("Gifter's user data are stored!");
+            console.log("gift.js: Gifter's user data is stored!", user);
             res.status(201).json(user);
-            console.log("we are getting 201 success");
         }
     } catch {
         console.log("gift.js: user failz");

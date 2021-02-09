@@ -51,7 +51,6 @@ class Create_Account extends Component {
     }
 
     // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
-    // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
     createAccount = (e) => {
         e.preventDefault()
         console.log('Create_Account.js: createAccount called');
