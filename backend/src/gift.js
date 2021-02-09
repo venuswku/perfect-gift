@@ -84,6 +84,7 @@ exports.postUser = async (req, res) => {
         bcrypt.hash(req.body[0].userpassword, saltRounds, function (err, hashPassword) {
             // Store hash
             userpassword = hashPassword;
+            db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
             console.log("hashed password :))))", hashPassword);
         });
         const firstname = req.body[0].firstname;
@@ -93,7 +94,7 @@ exports.postUser = async (req, res) => {
         const showavatar = req.body[0].showavatar;
 
         // insert questionnaire responses in questionnareresponses table
-        db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
+        // db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
 
         // check if post request was successful
         if (username) {
