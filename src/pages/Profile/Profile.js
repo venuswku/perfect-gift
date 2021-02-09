@@ -20,6 +20,7 @@ class Profile extends Component {
             name: '',
             username: '',
             newUsername: '',
+            outdoorActivity: '',
             mode: 'view',
         };
 
@@ -98,6 +99,13 @@ class Profile extends Component {
                     this.setState({ name: userFullName });
                     this.setState({ username: res.data[0].username });
                     this.setState({ newUsername: res.data[0].username });
+
+                    // console.log('doing get q response', res.data[0].username);
+                    // const resp = axios.get('http://localhost:3010/v0/getqresponse', {params: {username: res.data[0].username}});
+                    // console.log(resp);
+                        
+                        
+
                 } else {
                     this.props.history.push('/sign_in')
                     console.log("Redirected to sign in page")
@@ -125,7 +133,6 @@ class Profile extends Component {
                         <div>
                             <span className='topicFont'>Username &nbsp; </span>
                             <span>{this.renderInputField()} &nbsp; {this.renderButton()}</span>
-
                         </div>
                         <br></br>
                         {/* interests */}

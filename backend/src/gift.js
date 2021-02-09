@@ -26,13 +26,16 @@ exports.getUsers = async (req, res) => {
 exports.getQResponse = async (req, res) => {
     // app.js passes username to gift.js
     if (req.query.username) {
+        console.log('in getQResponse backend');
         // gift.js sends username to db.js.
         const oneUser = await db.selectQResponses(req.query.username);
         // if db.js returns q response, send 200 and the response attached
         if (oneUser) {
             // res.status(200).json(oneUser);
+            console.log('getQResponse :)');
             res.send([oneUser]);
         } else {
+            console.log('failzzz getQResponse');
             res.status(404).send();
         }
     }
