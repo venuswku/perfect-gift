@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './Profile.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
+import EditQuestionnaireResponsesPopup from './EditQuestionnaireResponsesPopup';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
 import { ReactComponent as ProfilePic } from '../../images/profile_pic.svg';
-import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
@@ -20,15 +21,22 @@ class Profile extends Component {
             name: '',
             username: '',
             newUsername: '',
-            outdoorActivity: '',
             mode: 'view',
-            wishlist: []
+            wishlist: [],
+            showPopup: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
     }
+
+    /* Opens or closes popup for editing questionnaire responses (Interests section). */
+    togglePopup = () => {
+        this.setState({
+         showPopup: !this.state.showPopup
+        });
+    };
 
     handleChange(e) {
         this.setState({ newUsername: e.target.value });
@@ -83,12 +91,7 @@ class Profile extends Component {
             );
         }
     }
-    /*
-        useEffect(() => {
-            axios.get("http:localhost:3010/v0/authenticate").then((response) =>{
-                console.loge(response.data)
-                    };
-    */
+
     componentDidMount() {
         axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
             .then(res => {
@@ -100,13 +103,6 @@ class Profile extends Component {
                     this.setState({ name: userFullName });
                     this.setState({ username: res.data[0].username });
                     this.setState({ newUsername: res.data[0].username });
-
-                    // console.log('doing get q response', res.data[0].username);
-                    // const resp = axios.get('http://localhost:3010/v0/getqresponse', [this.state]);
-                    // console.log(resp);
-                        
-                        
-
                 } else {
                     this.props.history.push('/sign_in')
                     console.log("Redirected to sign in page")
@@ -128,11 +124,11 @@ class Profile extends Component {
             })
     }
 
-
     render() {
         return (
             <div className="Profile">
                 <Navbar />
+                {this.state.showPopup ? <EditQuestionnaireResponsesPopup toggle={this.togglePopup} /> : null} 
                 <header className='profile-header'>
                     {/* profile background + pic */}
                     <div className='profile-background'>
@@ -155,7 +151,7 @@ class Profile extends Component {
                             <span className='textBubble red'>topic3 &nbsp; <DeleteButton /></span>
                             <span className='textBubble yellow'>topic4 &nbsp; <DeleteButton /></span>
                             <span className='textBubble teal'>topic5 &nbsp; <DeleteButton /></span>
-                            <EditButton className='editInterests' />
+                            <EditButton className='editInterests' onClick={this.togglePopup} />
                         </div>
                         <br></br>
                         {/* wishlist */}
