@@ -84,21 +84,20 @@ exports.postUser = async (req, res) => {
         // get user input from Create Account page
         const username = req.body[0].username;
         let userpassword = '';
-        bcrypt.hash(req.body[0].userpassword, saltRounds, function (err, hashPassword) {
-            // Store hash
-            userpassword = hashPassword;
-            db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
-            console.log("hashed password :))))", hashPassword);
-        });
         const firstname = req.body[0].firstname;
         const lastname = req.body[0].lastname;
         const useremail = req.body[0].useremail;
         const avatar = req.body[0].avatar;
         const showavatar = req.body[0].showavatar;
 
-        // insert questionnaire responses in questionnareresponses table
-        // db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
-
+        bcrypt.hash(req.body[0].userpassword, saltRounds, function (err, hashPassword) {
+            // Store hash
+            userpassword = hashPassword;
+            // insert questionnaire responses in questionnareresponses table
+            db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
+            console.log("hashed password :))))", hashPassword);
+        });
+        
         // check if post request was successful
         if (username) {
             const user = await db.selectUsers(username);

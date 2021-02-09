@@ -31,10 +31,6 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
     console.log('db.js: insertUsers called');
     let insert = `INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES('${username}', '${userpassword}', '${firstname}', '${lastname}', '${useremail}', '${avatar}', '${showavatar}')`;
     console.log(insert);
-    // const { rows } = await pool.query(query);
-    // if (rows.length == 1) {
-    //     rows[0].userpassword = userpassword;
-    // }
 
     pool.query(insert, (err, res) => {
         if (err) {
@@ -67,7 +63,6 @@ exports.selectQResponses = async (username) => {
 // Inserts questionnaire responses in questionnareresponses table.
 exports.insertQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
     console.log('db.js: insertQResponses called');
-    // let insert = 'INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('+username+', '+outdooractivity+', '+place+', '+store+', '+musicgenre+', '+musician+', '+band+', '+indooractivity+', '+movietvshow+', '+videogame+', '+sport+', '+sportsteam+', '+exercise+')';
     let insert = `INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('${username}', '${outdooractivity}', '${place}', '${store}', '${musicgenre}', '${musician}', '${band}', '${indooractivity}', '${movietvshow}', '${videogame}', '${sport}', '${sportsteam}', '${exercise}')`;
     console.log(insert);
     pool.query(insert, (err, res) => {
