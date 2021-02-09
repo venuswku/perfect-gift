@@ -48,7 +48,7 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
 
 // gift.js sends username to db.js. if username is found, it returns all parameters of that row
 exports.selectQResponses = async (username) => {
-    let select = `SELECT * FROM questionnaireresponses WHERE username = '${username}'`;
+    let select = `SELECT * FROM questionnaireresponses WHERE username ~* '${username}'`;
     console.log('db.js: selectQResponse: ', select);
     const oneUser = [];
     pool.query(select, (err, res) => {

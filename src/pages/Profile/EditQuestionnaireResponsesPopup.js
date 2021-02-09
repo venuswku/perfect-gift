@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import './EditQuestionnaireResponsesPopup.css';
 import '../../pages/Create_Account/Create_Account.css';
 
@@ -20,7 +22,7 @@ class EditQuestionnaireResponsesPopup extends Component {
         super(props)
         // items that we will be able to send to the server
         this.state = {
-            username: '',
+            username: this.props.username,
             outdooractivity: '',
             place: '',
             store: '',
@@ -36,6 +38,28 @@ class EditQuestionnaireResponsesPopup extends Component {
         }
     }
 
+    // load user's original questionnaire responses
+    componentDidMount() {
+        axios.get('http://localhost:3010/v0/getqresponse', this.state)
+        .then(res => {
+            console.log("Got questionnaire responses for", res.data[0].username, ":", res.data);
+            this.setState({ outdooractivity: res.data[0].outdooractivity });
+            this.setState({ place: res.data[0].place });
+            this.setState({ store: res.data[0].store });
+            this.setState({ musicgenre: res.data[0].musicgenre });
+            this.setState({ musician: res.data[0].musician });
+            this.setState({ band: res.data[0].band });
+            this.setState({ indooractivity: res.data[0].indooractivity });
+            this.setState({ movietvshow: res.data[0].movietvshow });
+            this.setState({ videogame: res.data[0].videogame });
+            this.setState({ sport: res.data[0].sport });
+            this.setState({ sportsteam: res.data[0].sportsteam });
+            this.setState({ exercise: res.data[0].exercise });
+        }).catch(res => {
+            console.log(res)
+        })
+    }
+
     // if questionnaire field is changed, update appropriately
     changeHandler = (e) => {
         this.setState({ [e.target.name]: e.target.value });
@@ -46,15 +70,20 @@ class EditQuestionnaireResponsesPopup extends Component {
         this.props.toggle();
     };
 
+    // saves changes to questionnaire responses
+    saveChanges = () => {
+        this.props.toggle();
+    };
+
     render() {
         // store input values locally into the following values
-        const { username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
+        const { outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
 
         return (
             <div className="questionnairePopupBackground" onClick={this.closePopup}>
                 <div className="questionnairePopupContent">
                     <span className="close" onClick={this.closePopup}>&times;</span>
-                    <p className="createAccountInstructions">If you want to update your interests, edit them here!<br/>Scroll to the bottom to save your changes.</p>
+                    <p className="createAccountInstructions">If you want to update your interests, edit them here!<br/>Make sure to save your changes at the bottom of this popup.</p>
                     <table className="questionnaire">
                         <tbody>
                             <tr>
@@ -191,7 +220,7 @@ class EditQuestionnaireResponsesPopup extends Component {
                             </tr>
                         </tbody>
                     </table>
-                    <input type='submit' value='Save' className='saveQuestionnaireChanges' ></input>
+                    <input type='submit' value='Save' className='saveQuestionnaireChanges' onClick={this.saveChanges} ></input>
                 </div>
             </div>
         );

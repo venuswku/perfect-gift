@@ -23,7 +23,7 @@ class Profile extends Component {
             newUsername: '',
             mode: 'view',
             wishlist: [],
-            showPopup: false
+            showQuestionnairePopup: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -34,7 +34,7 @@ class Profile extends Component {
     /* Opens or closes popup for editing questionnaire responses (Interests section). */
     togglePopup = () => {
         this.setState({
-         showPopup: !this.state.showPopup
+         showQuestionnairePopup: !this.state.showQuestionnairePopup
         });
     };
 
@@ -128,7 +128,7 @@ class Profile extends Component {
         return (
             <div className="Profile">
                 <Navbar />
-                {this.state.showPopup ? <EditQuestionnaireResponsesPopup toggle={this.togglePopup} /> : null} 
+                {this.state.showQuestionnairePopup ? <EditQuestionnaireResponsesPopup toggle={this.togglePopup} username={this.state.username} /> : null} 
                 <header className='profile-header'>
                     {/* profile background + pic */}
                     <div className='profile-background'>
