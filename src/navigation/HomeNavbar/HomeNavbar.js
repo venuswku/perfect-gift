@@ -46,7 +46,7 @@ class HomeNavbar extends Component {
     render() {
     return (
         <div className="home-navbar">
-            <Link exact to="/home" className="home-navbar-logo" ><PerfectGiftLogo/></Link>
+            <Link to="/home" className="home-navbar-logo" ><PerfectGiftLogo/></Link>
             <div className="navigation-links">
                 <Link to="/home" className="link"><MagnifyGlass/> Find Gift</Link>
                 <Link to="/profile" className="link">My Profile</Link>

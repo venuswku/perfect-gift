@@ -51,21 +51,10 @@ class Create_Account extends Component {
     }
 
     // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
-    // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
     createAccount = (e) => {
         e.preventDefault()
         console.log('Create_Account.js: createAccount called');
         console.log(this.state);
-        // axios.post('http://localhost:3010/v0/postuser', [{
-        //     // left side is backend variables, right side is frontend
-        //     username: e.username,
-        //     userpassword: e.password,
-        //     firstname: e.firstName,
-        //     lastname: e.lastName,
-        //     useremail: e.email,
-        //     avatar: e.avatar,
-        //     showavatar: e.showavatar,
-        // }])
         axios.get('http://localhost:3010/v0/giftuser?username=' + this.state.username)
             .then(response => {
                 if (response.data.length === 0) {

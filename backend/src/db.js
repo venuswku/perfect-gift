@@ -98,7 +98,6 @@ exports.selectQResponses = async (username) => {
 // Inserts questionnaire responses in questionnareresponses table.
 exports.insertQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
     console.log('db.js: insertQResponses called');
-    // let insert = 'INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('+username+', '+outdooractivity+', '+place+', '+store+', '+musicgenre+', '+musician+', '+band+', '+indooractivity+', '+movietvshow+', '+videogame+', '+sport+', '+sportsteam+', '+exercise+')';
     let insert = `INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('${username}', '${outdooractivity}', '${place}', '${store}', '${musicgenre}', '${musician}', '${band}', '${indooractivity}', '${movietvshow}', '${videogame}', '${sport}', '${sportsteam}', '${exercise}')`;
     console.log(insert);
     pool.query(insert, (err, res) => {
