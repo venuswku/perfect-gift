@@ -18,13 +18,12 @@ CREATE TABLE questionnaireresponses(
     sportsteam VARCHAR(50),
     exercise VARCHAR(50),
     FOREIGN KEY (username) REFERENCES giftuser(username)
-
 );
 
 -- For now, we can only let a user have 10 items on their wishlist.
 -- Not sure how to add attributes to a table once they're been initialzed
 CREATE TABLE wishlist(
-    username VARCHAR(32) PRIMARY KEY,
+    username VARCHAR(32),
     gift1 VARCHAR(50),
     gift2 VARCHAR(50),
     gift3 VARCHAR(50),
@@ -34,5 +33,6 @@ CREATE TABLE wishlist(
     gift7 VARCHAR(50),
     gift8 VARCHAR(50),
     gift9 VARCHAR(50),
-    gift10 VARCHAR(50)
+    gift10 VARCHAR(50),
+    FOREIGN KEY (username) REFERENCES giftuser(username)
 );
