@@ -51,6 +51,7 @@ class Create_Account extends Component {
     }
 
     // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
+    // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
     createAccount = (e) => {
         e.preventDefault()
         console.log('Create_Account.js: createAccount called');
@@ -65,27 +66,34 @@ class Create_Account extends Component {
         //     avatar: e.avatar,
         //     showavatar: e.showavatar,
         // }])
-        axios.post('http://localhost:3010/v0/postuser', [this.state])
-        .then(response => {
-            console.log('Create_Account.js: success for users');
-            console.log(response);
-            axios.post('http://localhost:3010/v0/postqresponse', [this.state])
-                .then(response => {
-                    console.log('Create_Account.js: success for qr');
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.log("Create_Account.js: failed for qr");
-                    console.log(this.state);
-                    console.log(error);
-                });
-        })
-        .catch(error => {
-            console.log("Create_Account.js: failed for users");
-            console.log(this.state);
-            console.log(error);
-        });
-        this.props.history.push('/profile')
+        axios.get('http://localhost:3010/v0/giftuser?username=' + this.state.username)
+            .then(response => {
+                if (response.data.length == 0) {
+                    axios.post('http://localhost:3010/v0/postuser', [this.state])
+                        .then(response => {
+                            console.log('Create_Account.js: success for users');
+                            console.log(response);
+                            axios.post('http://localhost:3010/v0/postqresponse', [this.state])
+                                .then(response => {
+                                    console.log('Create_Account.js: success for qr');
+                                    console.log(response);
+                                    this.props.history.push('/profile')
+                                })
+                                .catch(error => {
+                                    console.log("Create_Account.js: failed for qr");
+                                    console.log(this.state);
+                                    console.log(error);
+                                });
+                        })
+                        .catch(error => {
+                            console.log("Create_Account.js: failed for users");
+                            console.log(this.state);
+                            console.log(error);
+                        });
+                } else {
+                    window.alert("Username already taken!")
+                }
+            });
     };
     render() {
         // store input values locally into the following values

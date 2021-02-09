@@ -209,3 +209,23 @@ exports.logout = async (req,res) => {
         res.send("Failed to logout");
     }
 };
+
+// Gets a user's wish list
+// Temporarily postponed to work on gift API
+exports.getUserWishlist = async (req, res) => {
+    console.log("Server: I got your response to fetch the user's wishlist")
+    try {
+        console.log(`Server: The user I received from you is: ${req.session.user}`)
+        if(req.session.user) {
+            console.log(`Server: The user is : ${req.session.user}`)
+            res.send("Approved")
+        }
+        else {
+            console.log(`Server: The user you gave us is invalid`)
+        }
+    }
+    catch {
+        console.log(`Server: Sorry, something in the server has occured.`)
+        res.send(`Server: User does not exist or isn't logged in; Failed to get wishlist from database`)
+    }
+}
