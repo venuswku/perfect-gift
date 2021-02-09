@@ -68,7 +68,7 @@ class Create_Account extends Component {
         // }])
         axios.get('http://localhost:3010/v0/giftuser?username=' + this.state.username)
             .then(response => {
-                if (response.data.length == 0) {
+                if (response.data.length === 0) {
                     axios.post('http://localhost:3010/v0/postuser', [this.state])
                         .then(response => {
                             console.log('Create_Account.js: success for users');

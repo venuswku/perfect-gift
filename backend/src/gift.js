@@ -24,18 +24,23 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.getQResponse = async (req, res) => {
+    
+    console.log('gift.js: getQResponse: backend');
+    console.log(`${ req.session.user }`);
     // app.js passes username to gift.js
-    if (req.query.username) {
-        console.log('in getQResponse backend');
-        // gift.js sends username to db.js.
-        const oneUser = await db.selectQResponses(req.query.username);
-        // if db.js returns q response, send 200 and the response attached
+    if (req.session.user) {
+        console.log('gift.js: getQResponse: in if statemen');
+    //     // gift.js sends username to db.js.
+        const oneUser = await db.selectQResponses(req.session.user);
+        console.log('gift.js getQResponse: ', oneUser);
+    //     // if db.js returns q response, send 200 and the response attached
         if (oneUser) {
             // res.status(200).json(oneUser);
-            console.log('getQResponse :)');
+            console.log('gift.js: getQResponse: successful GET q response :)');
+            console.log(oneUser);
             res.send([oneUser]);
         } else {
-            console.log('failzzz getQResponse');
+            console.log('gift.js: getQResponse: failzzz getQResponse');
             res.status(404).send();
         }
     }
@@ -44,7 +49,7 @@ exports.getQResponse = async (req, res) => {
 
 exports.postQResponse = async (req, res) => {
     try {
-        console.log('gift.js: postQResponse called');
+        console.log('gift.js: postQResponse: is called');
 
         // get user input from Create Account page
         const username = req.body[0].username;
@@ -67,12 +72,12 @@ exports.postQResponse = async (req, res) => {
         // check if post request was successful
         if (username) {
             const userResponses = await db.selectQResponses(username);
-            console.log("Gifter's questionnaire responses are stored!");
+            console.log("gift.js: postQResponse: Gifter's questionnaire responses are stored!");
             res.status(201).json(userResponses);
-            console.log("we are getting 201 success");
+            console.log("gift.js: postQResponse: we are getting 201 success");
         }
     } catch {
-        console.log("gift.js: qr failz");
+        console.log("gift.js: postQResponse: qr failz");
         res.status(404).send();
     }
 };
@@ -83,13 +88,7 @@ exports.postUser = async (req, res) => {
 
         // get user input from Create Account page
         const username = req.body[0].username;
-        let userpassword = '';
-        bcrypt.hash(req.body[0].userpassword, saltRounds, function (err, hashPassword) {
-            // Store hash
-            userpassword = hashPassword;
-            db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
-            console.log("hashed password :))))", hashPassword);
-        });
+        let userpassword = bcrypt.hashSync(req.body[0].userpassword, 10);
         const firstname = req.body[0].firstname;
         const lastname = req.body[0].lastname;
         const useremail = req.body[0].useremail;
@@ -97,17 +96,17 @@ exports.postUser = async (req, res) => {
         const showavatar = req.body[0].showavatar;
 
         // insert questionnaire responses in questionnareresponses table
-        // db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
+        db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
 
         // check if post request was successful
         if (username) {
             const user = await db.selectUsers(username);
-            console.log("Gifter's user data are stored!");
+            console.log("gift.js: postUser: Gifter's user data are stored!");
             res.status(201).json(user);
-            console.log("we are getting 201 success");
+            console.log("gift.js: postUser: we are getting 201 success");
         }
     } catch {
-        console.log("gift.js: user failz");
+        console.log("gift.js: postUser: user failz");
         res.status(404).send();
     }
 };
