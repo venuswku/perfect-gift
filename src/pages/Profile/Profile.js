@@ -102,7 +102,16 @@ class Profile extends Component {
                     this.setState({ newUsername: res.data[0].username });
 
                     console.log('doing get q response', res.data[0].username);
-                    axios.get('http://localhost:3010/v0/getqresponse', [this.state]);
+                    axios.get('http://localhost:3010/v0/getqresponse', [this.state])
+                        .then(res => {
+                            console.log('successful get q response');
+                            console.log(res);
+                            console.log(res.data[0].username);
+                            //info in res.data[0]
+                        })
+                        .catch(res => {
+                            console.log('failed get q response');
+                        });
                     // console.log(resp);
                         
                         
