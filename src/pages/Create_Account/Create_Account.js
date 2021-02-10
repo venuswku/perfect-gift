@@ -66,7 +66,6 @@ class Create_Account extends Component {
                                 .then(response => {
                                     console.log('Create_Account.js: success for qr');
                                     console.log(response);
-                                    this.props.history.push('/profile');
                                 })
                                 .catch(error => {
                                     console.log("Create_Account.js: failed for qr");
@@ -79,6 +78,7 @@ class Create_Account extends Component {
                             console.log(this.state);
                             console.log(error);
                         });
+                        this.props.history.push('/profile');
                 } else {
                     window.alert("Username already taken!")
                 }

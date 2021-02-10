@@ -63,7 +63,7 @@ exports.selectQResponses = async (username) => {
             // console.log(res.rows[0]);
             // console.log(res.rows[0].username);
             oneUser.push({ username: res.rows[0].username, outdooractivity: res.rows[0].outdooractivity, place: res.rows[0].place, store: res.rows[0].store, musicgenre: res.rows[0].musicgenre, musician: res.rows[0].musician, band: res.rows[0].band, indooractivity: res.rows[0].indooractivity, movietvshow: res.rows[0].movietvshow, videogame: res.rows[0].videogame, sport: res.rows[0].sport, sportsteam: res.rows[0].sportsteam, exercise: res.rows[0].exercise });
-            console.log(oneUser);
+            console.log('in db.js return: ', oneUser[0]);
             return oneUser;
         }
         
@@ -86,7 +86,7 @@ exports.selectQResponses = async (username) => {
 exports.insertQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
     console.log('db.js: insertQResponses called');
     let insert = `INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('${username}', '${outdooractivity}', '${place}', '${store}', '${musicgenre}', '${musician}', '${band}', '${indooractivity}', '${movietvshow}', '${videogame}', '${sport}', '${sportsteam}', '${exercise}')`;
-    console.log(insert);
+    // console.log(insert);
     pool.query(insert, (err, res) => {
         if (err) {
             console.log("db.js: error!")

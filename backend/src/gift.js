@@ -32,13 +32,13 @@ exports.getQResponse = async (req, res) => {
         console.log('gift.js: getQResponse: in if statemen');
     //     // gift.js sends username to db.js.
         const oneUser = await db.selectQResponses(req.session.user);
-        console.log('gift.js getQResponse: ', oneUser);
+        console.log('gift.js getQResponse: oneUser is ', oneUser);
     //     // if db.js returns q response, send 200 and the response attached
         if (oneUser) {
             // res.status(200).json(oneUser);
             console.log('gift.js: getQResponse: successful GET q response :)');
             console.log(oneUser);
-            res.send([oneUser]);
+            res.send(oneUser[0]);
         } else {
             console.log('gift.js: getQResponse: failzzz getQResponse');
             res.status(404).send();
