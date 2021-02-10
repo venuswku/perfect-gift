@@ -122,6 +122,8 @@ paths:
                 schema:
                   $ref: '#/components/schemas/Error'
 
+  # /v0/putqresponse:
+
   /v0/postuser:
       post:
         description: Post user's data from Create Account page
