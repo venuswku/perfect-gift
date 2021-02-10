@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './Profile.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
-import EditQuestionnaireResponsesPopup from './EditQuestionnaireResponsesPopup';
+import EditInterestsPopup from './EditInterestsPopup';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
@@ -128,7 +128,7 @@ class Profile extends Component {
         return (
             <div className="Profile">
                 <Navbar />
-                {this.state.showQuestionnairePopup ? <EditQuestionnaireResponsesPopup toggle={this.togglePopup} username={this.state.username} /> : null} 
+                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null} 
                 <header className='profile-header'>
                     {/* profile background + pic */}
                     <div className='profile-background'>

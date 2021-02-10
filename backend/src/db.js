@@ -12,7 +12,7 @@ const pool = new Pool({
 exports.selectUsers = async (username) => {
     let select = 'SELECT username, userpassword, firstname, lastname, useremail, avatar, showavatar FROM giftuser';
     if (username) {
-        select += ` WHERE username ~* $1`;
+        select += ` WHERE username = $1`;
     }
     const query = {
         text: select,

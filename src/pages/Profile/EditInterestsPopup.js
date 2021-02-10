@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import './EditQuestionnaireResponsesPopup.css';
+import './EditInterestsPopup.css';
 import '../../pages/Create_Account/Create_Account.css';
 
 import indoors1Image from '../../images/create_account_indoors1.svg';
