@@ -14,8 +14,7 @@
     position: absolute;
     width: 80%;
     height: 80%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: auto;
     padding: 2%;
     border-radius: 10px;
     background-color: #eee;
@@ -32,6 +31,19 @@
 
 .close:hover {
     color: rgba(41, 112, 250, 1);
+}
+
+.updateInterestsTitle {
+    font-size: 36px;
+    font-family: 'Varela Round';
+    color: rgba(41, 112, 250, 1);
+    margin: 2% 0 1%;
+}
+
+.updateInterestsInstructions {
+    font-size: 24px;
+    font-family: 'Didact Gothic';
+    margin: 0;
 }
 
 .saveQuestionnaireChanges {

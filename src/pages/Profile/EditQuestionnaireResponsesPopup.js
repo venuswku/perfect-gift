@@ -83,7 +83,8 @@ class EditQuestionnaireResponsesPopup extends Component {
             <div className="questionnairePopupBackground" onClick={this.closePopup}>
                 <div className="questionnairePopupContent">
                     <span className="close" onClick={this.closePopup}>&times;</span>
-                    <p className="createAccountInstructions">If you want to update your interests, edit them here!<br/>Make sure to save your changes at the bottom of this popup.</p>
+                    <div className="updateInterestsTitle">Update your Interests</div>
+                    <p className="updateInterestsInstructions">Make sure to save your changes at the bottom of this popup!</p>
                     <table className="questionnaire">
                         <tbody>
                             <tr>
