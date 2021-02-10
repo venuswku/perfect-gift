@@ -79,6 +79,7 @@ class Create_Account extends Component {
                             console.log(this.state);
                             console.log(error);
                         });
+                        this.props.history.push('/profile');
                 } else {
                     window.alert("Username already taken!")
                 }
