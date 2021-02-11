@@ -12,7 +12,7 @@ const pool = new Pool({
 exports.selectUsers = async (username) => {
     let select = 'SELECT username, userpassword, firstname, lastname, useremail, avatar, showavatar FROM giftuser';
     if (username) {
-        select += ` WHERE username ~* $1`;
+        select += ` WHERE username = $1`;
     }
     const query = {
         text: select,
@@ -46,6 +46,19 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
     });
 }
 
+// Updates user data in giftusers table.
+// exports.updateUsername = async (username, useremail) => {
+//     const select = `UPDATE giftuser SET username = $1 WHERE useremail = $2`;
+//     // eslint-disable-next-line max-len
+//     // const select = `UPDATE mail SET mail = jsonb_set(mail, '{mail,star}', 'true') WHERE id = $1`;
+//     const query = {
+//         text: select,
+//         values: [username],
+//     };
+//     const t = await pool.query(query);
+//     return t;
+// };
+
 // gift.js sends username to db.js. if username is found, it returns all parameters of that row
 exports.selectQResponses = async (username) => {
     let select = `SELECT * FROM questionnaireresponses WHERE username = '${username}'`;
@@ -64,7 +77,7 @@ exports.selectQResponses = async (username) => {
     }
 };
 
-// Inserts questionnaire responses in questionnareresponses table.
+// Inserts questionnaire responses in questionnaireresponses table.
 exports.insertQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
     console.log('db.js: insertQResponses called');
     let insert = `INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('${username}', '${outdooractivity}', '${place}', '${store}', '${musicgenre}', '${musician}', '${band}', '${indooractivity}', '${movietvshow}', '${videogame}', '${sport}', '${sportsteam}', '${exercise}')`;
@@ -79,23 +92,31 @@ exports.insertQResponses = async (username, outdooractivity, place, store, music
     });
 }
 
-// exports.updateUsername = async (username, useremail) => {
-//     const select = `UPDATE giftuser SET username = $1 WHERE useremail = $2`;
-//     // eslint-disable-next-line max-len
-//     // const select = `UPDATE mail SET mail = jsonb_set(mail, '{mail,star}', 'true') WHERE id = $1`;
-//     const query = {
-//         text: select,
-//         values: [username],
-//     };
-//     const t = await pool.query(query);
-//     return t;
-// };
+// Updates questionnaire responses in questionnaireresponses table.
+exports.updateQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
+    console.log('db.js: updateQResponses called');
+
+    let update = 'UPDATE questionnaireresponses ';
+    update += `SET outdooractivity = '${outdooractivity}', place = '${place}', store = '${store}', musicgenre = '${musicgenre}', musician = '${musician}', band = '${band}', indooractivity = '${indooractivity}', movietvshow = '${movietvshow}', videogame = '${videogame}', sport = '${sport}', sportsteam = '${sportsteam}', exercise = '${exercise}' `;
+    update += `WHERE username = '${username}'`;
+    // console.log(update);
+
+    pool.query(update, (err, res) => {
+        if (err) {
+            console.log("db.js: error!")
+            console.error(err);
+            return;
+        }
+        console.log("db.js: updateQResponse: responses updated in questionnaireresponses table!");
+        return;
+    });
+}
 
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username) => {
     let select = 'SELECT username, userpassword FROM giftuser';
     if (username) {
-        select += ` WHERE username ~* $1`;
+        select += ` WHERE username = $1`;
     }
     const query = {
         text: select,

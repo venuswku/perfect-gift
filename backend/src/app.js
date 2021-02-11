@@ -14,7 +14,7 @@ const session = require('express-session');
 // Used for letting the frontend communicate with the server
 app.use(cors({
   origin: ["http://localhost:3000"],
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "PUT"],
   credentials: true,
 }));
 //Used for cookie session
@@ -54,7 +54,10 @@ app.post('/v0/postuser', gift.postUser);
 app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
 
 // Saves user responses from interest questionnaire on Create Account page.
-app.post('/v0/postqresponse', gift.postQResponse);  // might need to somehow combine this with posting a giftuser sicne they're both from Create Account page
+app.post('/v0/postqresponse', gift.postQResponse);
+
+// Puts changes for questionnaire responses from Profile page's Edit Interests popup.
+app.put('/v0/putqresponse/:username', gift.putQResponse);
 
 // This authenticates and authorizes a user to be able to log in.
 app.post('/v0/authenticate', gift.login);
