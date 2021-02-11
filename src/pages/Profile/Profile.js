@@ -192,7 +192,7 @@ class Profile extends Component {
                         <div>
                             {displayresponse}
                             &nbsp;
-                            <EditButton className='editInterests' onClick={this.togglePopup} />
+                            <button className='editInterests' onClick={this.togglePopup}><EditButton/></button>
                         </div>
                         <br></br>
                         {/* wishlist */}
