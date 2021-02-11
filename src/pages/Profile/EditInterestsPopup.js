@@ -42,7 +42,6 @@ class EditQuestionnaireResponsesPopup extends Component {
     componentDidMount() {
         axios.get('http://localhost:3010/v0/getqresponse', this.state)
         .then(res => {
-            console.log("Got questionnaire responses for", res.data[0].username, ":", res.data);
             this.setState({ outdooractivity: res.data[0].outdooractivity });
             this.setState({ place: res.data[0].place });
             this.setState({ store: res.data[0].store });
@@ -56,7 +55,7 @@ class EditQuestionnaireResponsesPopup extends Component {
             this.setState({ sportsteam: res.data[0].sportsteam });
             this.setState({ exercise: res.data[0].exercise });
         }).catch(res => {
-            console.log(res)
+            console.log(res);
         })
     }
 
@@ -73,16 +72,16 @@ class EditQuestionnaireResponsesPopup extends Component {
     // saves changes to questionnaire responses
     saveChanges = () => {
         this.props.toggle();
-        // axios.put('http://localhost:3010/v0/putqresponse', [this.state])
-        // .then(response => {
-        //     console.log('EditQuestionnaireResponsesPopup.js: success updating qr');
-        //     console.log(response);
-        // })
-        // .catch(error => {
-        //     console.log("EditQuestionnaireResponsesPopup.js: failed updating qr");
-        //     console.log(this.state);
-        //     console.log(error);
-        // });
+        axios.put('http://localhost:3010/v0/putqresponse/' + this.state.username, [this.state])
+        .then(response => {
+            console.log('EditInterestsPopup.js: success updating qr');
+            console.log(response);
+        })
+        .catch(error => {
+            console.log("EditInterestsPopup.js: failed updating qr");
+            console.log(this.state);
+            console.log(error);
+        });
     };
 
     render() {
@@ -94,7 +93,7 @@ class EditQuestionnaireResponsesPopup extends Component {
                 <div className="questionnairePopupBackground" onClick={this.closePopup}></div>
                 <div className="questionnairePopupContent">
                     <span className="close" onClick={this.closePopup}>&times;</span>
-                    <div className="updateInterestsTitle">Update your Interests</div>
+                    <div className="updateInterestsTitle">Edit your Interests</div>
                     <p className="updateInterestsInstructions">Make sure to save your changes at the bottom of this popup!</p>
                     <table className="questionnaire">
                         <tbody>

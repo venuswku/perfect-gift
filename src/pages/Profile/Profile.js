@@ -93,15 +93,8 @@ class Profile extends Component {
         }
     }
     
-    /*
-        useEffect(() => {
-            axios.get("http:localhost:3010/v0/authenticate").then((response) =>{
-                console.loge(response.data)
-                    };
-    */
-    
     displayQResponses() {
-        console.log('qresponse lenght', this.state.qresponse.length);
+        console.log('qresponse length', this.state.qresponse.length);
         for (var i = 0; i < this.state.qresponse.length; i++){
             if (this.state.qresponse[i] !== '') {
                 console.log('qresponse[', i, '] = ', this.state.qresponse[i]);
@@ -116,7 +109,7 @@ class Profile extends Component {
                 console.log(res.data)
                 if (res.data[0].username !== "") {
                     console.log(res.data[0].username);
-                    const userFullName = res.data[0].firstname + " " + res.data[0].lastname
+                    const userFullName = res.data[0].firstname + " " + res.data[0].lastname;
                     this.setState({ name: userFullName });
                     this.setState({ username: res.data[0].username });
                     this.setState({ newUsername: res.data[0].username });

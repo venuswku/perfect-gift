@@ -5,8 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-
-// gets a single user or all of the users from the giftusers table
+/* Gets a single user or all of the users from the giftusers table. */
 exports.getUsers = async (req, res) => {
     // If a username is passed into query param (name of query is username, in openapi.yaml)
     if (req.query.username) {
@@ -23,8 +22,55 @@ exports.getUsers = async (req, res) => {
     }
 };
 
+/* Posts new user's login info. */
+exports.postUser = async (req, res) => {
+    try {
+        console.log('gift.js: postUser called');
+
+        // get user input from Create Account page
+        const username = req.body[0].username;
+        let userpassword = bcrypt.hashSync(req.body[0].userpassword, 10);
+        const firstname = req.body[0].firstname;
+        const lastname = req.body[0].lastname;
+        const useremail = req.body[0].useremail;
+        const avatar = req.body[0].avatar;
+        const showavatar = req.body[0].showavatar;
+
+        // insert questionnaire responses in questionnareresponses table
+        db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
+
+        // check if post request was successful
+        if (username) {
+            const user = await db.selectUsers(username);
+            console.log("gift.js: postUser: Gifter's user data are stored!");
+            res.status(201).json(user);
+            console.log("gift.js: postUser: we are getting 201 success");
+        }
+    } catch {
+        console.log("gift.js: postUser: user failz");
+        res.status(404).send();
+    }
+};
+
+/* Puts user's updated login info. */
+// exports.putUser = async (req, res) => {
+//     if (req.query.username) {
+//         // const newUsername = req.query.username;
+//         const newUsername = req.body.username;
+//         const email = req.body.useremail;
+//         const user = await db.updateUsername(newUsername, email);
+//         // const user = await db.updateUsername(req.query.username, req.body.username);
+//         console.log("User data is" + user);
+//         if (user.rowCount === 1) {
+//             res.status(204).send();
+//         } else {
+//             res.status(404).send();
+//         }
+//     }
+// };
+
+/* Gets user's questionnaire responses/interests. */
 exports.getQResponse = async (req, res) => {
-    
     console.log('gift.js: getQResponse: start function');
     const username = req.session.user;
     if (username) {
@@ -42,6 +88,7 @@ exports.getQResponse = async (req, res) => {
     console.log('gift.js: getQResponse: end function');
 };
 
+/* Posts new user's questionnaire responses/interests. */
 exports.postQResponse = async (req, res) => {
     try {
         console.log('gift.js: postQResponse: is called');
@@ -77,52 +124,43 @@ exports.postQResponse = async (req, res) => {
     }
 };
 
-exports.postUser = async (req, res) => {
+/* Puts user's updated questionnaire responses/interests. */
+exports.putQResponse = async (req, res) => {
     try {
-        console.log('gift.js: postUser called');
+        console.log('gift.js: putQResponse: is called');
 
-        // get user input from Create Account page
+        // get user input from Edit Interests Popup
         const username = req.body[0].username;
-        let userpassword = bcrypt.hashSync(req.body[0].userpassword, 10);
-        const firstname = req.body[0].firstname;
-        const lastname = req.body[0].lastname;
-        const useremail = req.body[0].useremail;
-        const avatar = req.body[0].avatar;
-        const showavatar = req.body[0].showavatar;
+        const outdooractivity = req.body[0].outdooractivity;
+        const place = req.body[0].place;
+        const store = req.body[0].store;
+        const musicgenre = req.body[0].musicgenre;
+        const musician = req.body[0].musician;
+        const band = req.body[0].band;
+        const indooractivity = req.body[0].indooractivity;
+        const movietvshow = req.body[0].movietvshow;
+        const videogame = req.body[0].videogame;
+        const sport = req.body[0].sport;
+        const sportsteam = req.body[0].sportsteam;
+        const exercise = req.body[0].exercise;
 
-        // insert questionnaire responses in questionnareresponses table
-        db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
+        // update questionnaire responses in questionnareresponses table
+        const update = await db.updateQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
 
-        // check if post request was successful
-        if (username) {
-            const user = await db.selectUsers(username);
-            console.log("gift.js: postUser: Gifter's user data are stored!");
-            res.status(201).json(user);
-            console.log("gift.js: postUser: we are getting 201 success");
+        // check if put request was successful
+        if (update) {
+            const userResponses = await db.selectQResponses(username);
+            console.log("gift.js: putQResponse: Gifter's questionnaire responses are updated!");
+            res.status(201).json(userResponses);
+            console.log("gift.js: putQResponse: we are getting 201 success");
         }
     } catch {
-        console.log("gift.js: postUser: user failz");
+        console.log("gift.js: putQResponse: qr failz");
         res.status(404).send();
     }
 };
 
-// exports.putUser = async (req, res) => {
-//     if (req.query.username) {
-//         // const newUsername = req.query.username;
-//         const newUsername = req.body.username;
-//         const email = req.body.useremail;
-//         const user = await db.updateUsername(newUsername, email);
-//         // const user = await db.updateUsername(req.query.username, req.body.username);
-//         console.log("User data is" + user);
-//         if (user.rowCount === 1) {
-//             res.status(204).send();
-//         } else {
-//             res.status(404).send();
-//         }
-//     }
-// };
-
-// Checks if login credentials are valid
+/* Checks if login credentials are valid. */
 exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
     console.log("The frontend has given us:")
@@ -162,10 +200,12 @@ exports.login = async (req, res) => {
 
 };
 
-// This function check is the user has a cookie.
-// If they do, they are allowed to be on the website
-// Else, they will be redirected to the login page (done in the frontend)
-// Note to self: Make sure to remove the password when sending back the data to frontend
+/*
+ * This function check is the user has a cookie.
+ * If they do, they are allowed to be on the website.
+ * Else, they will be redirected to the login page (done in the frontend).
+ * Note to self: Make sure to remove the password when sending back the data to frontend.
+*/
 exports.checkLogin = async (req, res) => {
     console.log("Request: Check if user is logged in");
     console.log(req.body.user);
@@ -190,11 +230,9 @@ exports.checkLogin = async (req, res) => {
 
 };
 
-
-// Logs out a user
+/* Logs out a user. */
 exports.logout = async (req, res) => {
     console.log("Request: Logout")
-
     // Try to see if everything is working as expected
     try {
 
@@ -213,7 +251,7 @@ exports.logout = async (req, res) => {
     }
 };
 
-// Gets a user's wish list
+/* Gets a user's wish list. */
 // Temporarily postponed to work on gift API
 exports.getUserWishlist = async (req, res) => {
     console.log("Server: I got your response to fetch the user's wishlist")
