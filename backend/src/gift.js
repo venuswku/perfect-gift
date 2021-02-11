@@ -25,28 +25,21 @@ exports.getUsers = async (req, res) => {
 
 exports.getQResponse = async (req, res) => {
     
-    console.log('gift.js: getQResponse: backend');
-    console.log(req.session.user);
-    // app.js passes username to gift.js
-    if (req.session.user) {
+    console.log('gift.js: getQResponse: start function');
+    const username = req.session.user;
+    if (username) {
         console.log('gift.js: getQResponse: in if statement');
-        try {
-            // gift.js sends username to db.js.
-            const oneUser = await db.selectQResponses(req.session.user);
-            console.log('gift.js getQResponse: ', oneUser);
-            // if db.js returns q response, send 200 and the response attached
-            if (oneUser) {
-                // res.status(200).json(oneUser);
-                console.log('gift.js: getQResponse: successful GET q response :)');
-                console.log(oneUser);
-                res.send([oneUser]);
-            }
-        } catch {
-            console.log('gift.js: getQResponse: failzzz getQResponse');
+        const oneUser = await db.selectQResponses(username);
+        if (oneUser) {
+            console.log('gift.js: getQResponse: oneUser is', [oneUser]);
+            res.send([oneUser]);
+            // res.status(200).json(oneUser);
+        } else {
+            console.log('gift.js: getQResponse: wasnt returned row');
             res.status(404).send();
         }
     }
-    //if no info found, sends []
+    console.log('gift.js: getQResponse: end function');
 };
 
 exports.postQResponse = async (req, res) => {

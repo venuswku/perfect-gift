@@ -4,7 +4,7 @@ CREATE TABLE giftuser(username VARCHAR(32) PRIMARY KEY, userpassword VARCHAR(100
 
 DROP TABLE IF EXISTS questionnaireresponses;
 CREATE TABLE questionnaireresponses(
-    username VARCHAR(32),
+    username VARCHAR(32) PRIMARY KEY,
     outdooractivity VARCHAR(50),
     place VARCHAR(50),
     store VARCHAR(50),
@@ -23,7 +23,7 @@ CREATE TABLE questionnaireresponses(
 -- For now, we can only let a user have 10 items on their wishlist.
 -- Not sure how to add attributes to a table once they're been initialzed
 CREATE TABLE wishlist(
-    username VARCHAR(32),
+    username VARCHAR(32) PRIMARY KEY,
     gift1 VARCHAR(50),
     gift2 VARCHAR(50),
     gift3 VARCHAR(50),

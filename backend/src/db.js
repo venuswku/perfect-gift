@@ -48,41 +48,27 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
 
 // gift.js sends username to db.js. if username is found, it returns all parameters of that row
 exports.selectQResponses = async (username) => {
-    let select = `SELECT * FROM questionnaireresponses WHERE username ~* '${username}'`;
-    console.log('db.js: selectQResponse: ', select);
-    const oneUser = [];
-    pool.query(select, (err, res) => {
-        if (err) {
-            console.log("db.js: error!")
-            console.error(err);
-            return;
+    let select = `SELECT * FROM questionnaireresponses WHERE username = '${username}'`;
+    console.log('db.js: selectQResponse: start selectQResponse');
+    try {
+        const result =  await pool.query(select);
+        console.log(result.rowCount);
+        console.log(result.rows[0]);
+        if (result) {
+            console.log('db.js: selectQResponse: finish selectQResponse');
+            return result.rows[0];
         }
-        if (res) {
-            console.log("db.js: selectQResponse: is chosen successfully!");
-            // console.log(username);
-            oneUser.push({ username: res.rows[0].username, outdooractivity: res.rows[0].outdooractivity, place: res.rows[0].place, store: res.rows[0].store, musicgenre: res.rows[0].musicgenre, musician: res.rows[0].musician, band: res.rows[0].band, indooractivity: res.rows[0].indooractivity, movietvshow: res.rows[0].movietvshow, videogame: res.rows[0].videogame, sport: res.rows[0].sport, sportsteam: res.rows[0].sportsteam, exercise: res.rows[0].exercise });
-            console.log(oneUser);
-            return oneUser;
-        }
-    });
-    // const row = await pool.query(select);
-    // console.log("gift.js: getQResponse: ", row.username);
-    // const { rows } = await pool.query(query);
-    // console.log("roes", rows);
-    // const allUsers = [];
-    // for (const row of rows) {
-    //     console.log(row.username);
-    //     allUsers.push({ username: row.username, outdooractivity: row.outdooractivity, place: row.place, store: row.store, musicgenre: row.musicgenre, musician: row.musician, band: row.band, indooractivity: row.indooractivity, movietvshow: row.movietvshow, videogame: row.videogame, sport: row.sport, sportsteam: row.sportsteam, exercise: row.exercise });
-    // }
-    // console.log('db.js: selectQResponse: ', allUsers);
-    // return allUsers;
+    } catch (err) {
+        console.log(err.stack)
+        return;
+    }
 };
 
 // Inserts questionnaire responses in questionnareresponses table.
 exports.insertQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
     console.log('db.js: insertQResponses called');
     let insert = `INSERT INTO questionnaireresponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) VALUES('${username}', '${outdooractivity}', '${place}', '${store}', '${musicgenre}', '${musician}', '${band}', '${indooractivity}', '${movietvshow}', '${videogame}', '${sport}', '${sportsteam}', '${exercise}')`;
-    console.log(insert);
+    // console.log(insert);
     pool.query(insert, (err, res) => {
         if (err) {
             console.log("db.js: error!")

@@ -23,7 +23,8 @@ class Profile extends Component {
             newUsername: '',
             mode: 'view',
             wishlist: [],
-            showQuestionnairePopup: false
+            showQuestionnairePopup: false,
+            qresponse: []
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -91,6 +92,22 @@ class Profile extends Component {
             );
         }
     }
+    
+    /*
+        useEffect(() => {
+            axios.get("http:localhost:3010/v0/authenticate").then((response) =>{
+                console.loge(response.data)
+                    };
+    */
+    
+    displayQResponses() {
+        console.log('qresponse lenght', this.state.qresponse.length);
+        for (var i = 0; i < this.state.qresponse.length; i++){
+            if (this.state.qresponse[i] !== '') {
+                console.log('qresponse[', i, '] = ', this.state.qresponse[i]);
+            }
+        }
+    }
 
     componentDidMount() {
         axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
@@ -103,6 +120,21 @@ class Profile extends Component {
                     this.setState({ name: userFullName });
                     this.setState({ username: res.data[0].username });
                     this.setState({ newUsername: res.data[0].username });
+
+                    console.log('doing get q response', res.data[0].username);
+                    axios.get('http://localhost:3010/v0/getqresponse', [this.state])
+                        .then(res => {
+                            console.log('successful get q response');
+                            this.setState({
+                                qresponse: [...this.state.qresponse, res.data[0].outdooractivity, res.data[0].place, res.data[0].store, res.data[0].musicgenre,
+                                    res.data[0].musician, res.data[0].band, res.data[0].indooractivity, res.data[0].movietvshow, res.data[0].videogame,
+                                    res.data[0].sport, res.data[0].sportsteam, res.data[0].exercise]  
+                            });
+                            console.log('qresponse is: ', this.state.qresponse);
+                        });
+                        // .catch(res => {
+                        //     console.log('failed get q response');
+                        // });
                 } else {
                     this.props.history.push('/sign_in')
                     console.log("Redirected to sign in page")
@@ -125,6 +157,26 @@ class Profile extends Component {
     }
 
     render() {
+        //this stuff is to display questionnaire responses
+        const qresponse = this.state.qresponse;
+        const displayresponse = [];
+        for (const [index, value] of qresponse.entries()) {
+            if (value !== '') {
+                console.log('index is ', index);
+                var color = '';
+                if (index === 0 || index === 1 || index === 2) {
+                    color = 'textBubble indoors';
+                } else if (index === 3 || index === 4 || index === 5) {
+                    color = 'textBubble outdoors';
+                } else if (index === 6 || index === 7 || index === 8) {
+                    color = 'textBubble sports';
+                } else if (index === 9 || index === 10 || index === 11) {
+                    color = 'textBubble music';
+                }
+                displayresponse.push(<span className={color}>{value} &nbsp; <DeleteButton /></span>);
+            }
+        }
+        
         return (
             <div className="Profile">
                 <Navbar />
@@ -145,12 +197,8 @@ class Profile extends Component {
                         <br></br>
                         {/* interests/questionnaire responses */}
                         <div>
-                            <span className='topicFont'>Interests &nbsp; </span>
-                            <span className='textBubble purple'>topic1 &nbsp; <DeleteButton /></span>
-                            <span className='textBubble green'>topic2 &nbsp; <DeleteButton /></span>
-                            <span className='textBubble red'>topic3 &nbsp; <DeleteButton /></span>
-                            <span className='textBubble yellow'>topic4 &nbsp; <DeleteButton /></span>
-                            <span className='textBubble teal'>topic5 &nbsp; <DeleteButton /></span>
+                            {displayresponse}
+                            &nbsp;
                             <EditButton className='editInterests' onClick={this.togglePopup} />
                         </div>
                         <br></br>
