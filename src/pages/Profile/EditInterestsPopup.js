@@ -90,7 +90,8 @@ class EditQuestionnaireResponsesPopup extends Component {
         const { outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
 
         return (
-            <div className="questionnairePopupBackground" onClick={this.closePopup}>
+            <div className="EditInterestsPopup">
+                <div className="questionnairePopupBackground" onClick={this.closePopup}></div>
                 <div className="questionnairePopupContent">
                     <span className="close" onClick={this.closePopup}>&times;</span>
                     <div className="updateInterestsTitle">Update your Interests</div>
