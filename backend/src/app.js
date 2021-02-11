@@ -14,7 +14,7 @@ const session = require('express-session');
 // Used for letting the frontend communicate with the server
 app.use(cors({
   origin: ["http://localhost:3000"],
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "PUT"],
   credentials: true,
 }));
 //Used for cookie session

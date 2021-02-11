@@ -165,8 +165,12 @@ paths:
             schema:
               $ref: '#/components/schemas/QuestionnaireResponses'
       responses:
-        204:
+        200:
           description: Questionnaire responses/interests updated
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/QuestionnaireResponses'
         409:
           description: Questionnaire responses/interests were not updated and saved
         default:

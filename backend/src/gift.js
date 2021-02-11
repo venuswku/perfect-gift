@@ -151,12 +151,12 @@ exports.putQResponse = async (req, res) => {
         if (update) {
             const userResponses = await db.selectQResponses(username);
             console.log("gift.js: putQResponse: Gifter's questionnaire responses are updated!");
-            res.status(201).json(userResponses);
+            res.status(200).json(userResponses);
             console.log("gift.js: putQResponse: we are getting 201 success");
         }
     } catch {
         console.log("gift.js: putQResponse: qr failz");
-        res.status(404).send();
+        res.status(409).send();
     }
 };
 
