@@ -55,34 +55,39 @@ class Create_Account extends Component {
         e.preventDefault()
         console.log('Create_Account.js: createAccount called');
         console.log(this.state);
-        axios.get('http://localhost:3010/v0/giftuser?username=' + this.state.username)
-            .then(response => {
-                if (response.data.length === 0) {
-                    axios.post('http://localhost:3010/v0/postuser', [this.state])
-                        .then(response => {
-                            console.log('Create_Account.js: success for users');
-                            console.log(response);
-                            axios.post('http://localhost:3010/v0/postqresponse', [this.state])
-                                .then(response => {
-                                    console.log('Create_Account.js: success for qr');
-                                    console.log(response);
-                                })
-                                .catch(error => {
-                                    console.log("Create_Account.js: failed for qr");
-                                    console.log(this.state);
-                                    console.log(error);
-                                });
-                        })
-                        .catch(error => {
-                            console.log("Create_Account.js: failed for users");
-                            console.log(this.state);
-                            console.log(error);
-                        });
-                        this.props.history.push('/profile');
-                } else {
-                    window.alert("Username already taken!")
-                }
-            });
+        console.log(e.target.elements.verifypassword.value);
+        if (e.target.elements.userpassword.value === e.target.elements.verifypassword.value){
+            axios.get('http://localhost:3010/v0/giftuser?username=' + this.state.username)
+                .then(response => {
+                    if (response.data.length === 0) {
+                        axios.post('http://localhost:3010/v0/postuser', [this.state])
+                            .then(response => {
+                                console.log('Create_Account.js: success for users');
+                                console.log(response);
+                                axios.post('http://localhost:3010/v0/postqresponse', [this.state])
+                                    .then(response => {
+                                        console.log('Create_Account.js: success for qr');
+                                        console.log(response);
+                                    })
+                                    .catch(error => {
+                                        console.log("Create_Account.js: failed for qr");
+                                        console.log(this.state);
+                                        console.log(error);
+                                    });
+                            })
+                            .catch(error => {
+                                console.log("Create_Account.js: failed for users");
+                                console.log(this.state);
+                                console.log(error);
+                            });
+                            this.props.history.push('/profile');
+                    } else {
+                        window.alert("Username already taken!")
+                    }
+                });
+            } else {
+                window.alert("Passwords do not match!")
+            }
     };
     render() {
         // store input values locally into the following values
