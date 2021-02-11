@@ -22,7 +22,7 @@ class EditQuestionnaireResponsesPopup extends Component {
         super(props)
         // items that we will be able to send to the server
         this.state = {
-            username: this.props.username,
+            username: this.props.userInfo.username,
             outdooractivity: '',
             place: '',
             store: '',
@@ -76,6 +76,7 @@ class EditQuestionnaireResponsesPopup extends Component {
         .then(response => {
             console.log('EditInterestsPopup.js: success updating qr');
             console.log(response);
+            // refresh profile page to see user changes
             window.location.reload();
         })
         .catch(error => {

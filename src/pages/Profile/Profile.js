@@ -24,12 +24,28 @@ class Profile extends Component {
             mode: 'view',
             wishlist: [],
             showQuestionnairePopup: false,
-            qresponse: []
+            outdooractivity: '',
+            place: '',
+            store: '',
+            musicgenre: '',
+            musician: '',
+            band: '',
+            indooractivity: '',
+            movietvshow: '',
+            videogame: '',
+            sport: '',
+            sportsteam: '',
+            exercise: ''
         };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleInterestChange = this.handleInterestChange.bind(this);
+    }
+
+    handleUsernameChange(e) {
+        this.setState({ newUsername: e.target.value });
     }
 
     /* Opens or closes popup for editing questionnaire responses (Interests section). */
@@ -39,8 +55,9 @@ class Profile extends Component {
         });
     };
 
-    handleChange(e) {
-        this.setState({ newUsername: e.target.value });
+    /* Updates user's questionnaire responses in Interests section. */
+    handleInterestChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     handleSave() {
@@ -67,7 +84,7 @@ class Profile extends Component {
             return (
                 <span>
                     <input
-                        onChange={this.handleChange}
+                        onChange={this.handleUsernameChange}
                         value={this.state.newUsername}
                         className='editTextbox'
                     />
@@ -151,7 +168,7 @@ class Profile extends Component {
 
     render() {
         //this stuff is to display questionnaire responses
-        const qresponse = this.state.qresponse;
+        let qresponse = this.state.qresponse;
         const displayresponse = [];
         for (const [index, value] of qresponse.entries()) {
             if (value !== '') {
@@ -173,7 +190,7 @@ class Profile extends Component {
         return (
             <div className="Profile">
                 <Navbar />
-                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null} 
+                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} userInfo={this.state} editInterest={this.handleInterestChange} /> : null} 
                 <header className='profile-header'>
                     {/* profile background + pic */}
                     <div className='profile-background'>
