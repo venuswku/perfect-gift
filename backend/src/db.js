@@ -95,28 +95,20 @@ exports.insertQResponses = async (username, outdooractivity, place, store, music
 // Updates questionnaire responses in questionnaireresponses table.
 exports.updateQResponses = async (username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise) => {
     console.log('db.js: updateQResponses called');
-    let update = `UPDATE questionnaireresponses
-                  SET outdooractivity = '${outdooractivity}',
-                      place = '${place}',
-                      store = '${store}',
-                      musicgenre = '${musicgenre}',
-                      musician = '${musician}',
-                      band = '${band}',
-                      indooractivity = '${indooractivity}',
-                      movietvshow = '${movietvshow}',
-                      videogame = '${videogame}',
-                      sport = '${sport}',
-                      sportsteam = '${sportsteam}',
-                      exercise = '${exercise}'
-                  WHERE username = '${username}'`;
-    console.log(update);
-    pool.query(insert, (err, res) => {
+
+    let update = 'UPDATE questionnaireresponses ';
+    update += `SET outdooractivity = '${outdooractivity}', place = '${place}', store = '${store}', musicgenre = '${musicgenre}', musician = '${musician}', band = '${band}', indooractivity = '${indooractivity}', movietvshow = '${movietvshow}', videogame = '${videogame}', sport = '${sport}', sportsteam = '${sportsteam}', exercise = '${exercise}' `;
+    update += `WHERE username = '${username}'`;
+    // console.log(update);
+
+    pool.query(update, (err, res) => {
         if (err) {
             console.log("db.js: error!")
             console.error(err);
             return;
         }
         console.log("db.js: updateQResponse: responses updated in questionnaireresponses table!");
+        return;
     });
 }
 

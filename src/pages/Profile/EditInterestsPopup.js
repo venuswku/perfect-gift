@@ -69,13 +69,14 @@ class EditQuestionnaireResponsesPopup extends Component {
         this.props.toggle();
     };
 
-    // saves changes to questionnaire responses
+    // closes popup and saves changes to questionnaire responses
     saveChanges = () => {
         this.props.toggle();
         axios.put('http://localhost:3010/v0/putqresponse/' + this.state.username, [this.state])
         .then(response => {
             console.log('EditInterestsPopup.js: success updating qr');
             console.log(response);
+            window.location.reload();
         })
         .catch(error => {
             console.log("EditInterestsPopup.js: failed updating qr");

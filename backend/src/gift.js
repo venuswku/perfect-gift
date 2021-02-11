@@ -40,10 +40,10 @@ exports.postUser = async (req, res) => {
         db.insertUser(username, userpassword, firstname, lastname, useremail, avatar, showavatar);
 
         // check if post request was successful
-        if (username) {
-            const user = await db.selectUsers(username);
+        const userExists = await db.selectUsers(username);
+        if (userExists) {
             console.log("gift.js: postUser: Gifter's user data are stored!");
-            res.status(201).json(user);
+            res.status(201).json(userExists);
             console.log("gift.js: postUser: we are getting 201 success");
         }
     } catch {
@@ -127,10 +127,11 @@ exports.postQResponse = async (req, res) => {
 /* Puts user's updated questionnaire responses/interests. */
 exports.putQResponse = async (req, res) => {
     try {
-        console.log('gift.js: putQResponse: is called');
-
-        // get user input from Edit Interests Popup
-        const username = req.body[0].username;
+        // get username from route parameters
+        const username = req.params.username;
+        console.log("gift.js: putQResponse for", username);
+        
+        // get user changes from Edit Interests Popup
         const outdooractivity = req.body[0].outdooractivity;
         const place = req.body[0].place;
         const store = req.body[0].store;
@@ -148,11 +149,11 @@ exports.putQResponse = async (req, res) => {
         const update = await db.updateQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
 
         // check if put request was successful
-        if (update) {
-            const userResponses = await db.selectQResponses(username);
-            console.log("gift.js: putQResponse: Gifter's questionnaire responses are updated!");
-            res.status(200).json(userResponses);
-            console.log("gift.js: putQResponse: we are getting 201 success");
+        const userChanges = await db.selectQResponses(username);
+        if (userChanges) {
+            console.log("gift.js: putQResponse: Gifter's questionnaire responses are successfully updated!");
+            res.status(200).json([userChanges]);
+            console.log("gift.js: putQResponse: we are getting 200 OK");
         }
     } catch {
         console.log("gift.js: putQResponse: qr failz");

@@ -57,7 +57,7 @@ app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gi
 app.post('/v0/postqresponse', gift.postQResponse);
 
 // Puts changes for questionnaire responses from Profile page's Edit Interests popup.
-app.put('/v0/putqresponse', gift.putQResponse);
+app.put('/v0/putqresponse/:username', gift.putQResponse);
 
 // This authenticates and authorizes a user to be able to log in.
 app.post('/v0/authenticate', gift.login);
