@@ -4,6 +4,7 @@ const saltRounds = 10;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const axios = require('axios');
 
 
 // gets a single user or all of the users from the giftusers table
@@ -230,5 +231,22 @@ exports.getUserWishlist = async (req, res) => {
     catch {
         console.log(`Server: Sorry, something in the server has occured.`)
         res.send(`Server: User does not exist or isn't logged in; Failed to get wishlist from database`)
+    }
+}
+
+// This will return a gift suggestion for the user
+axios.defaults.withCredentials = true;
+exports.giftapi = async (req, res) => {
+
+    try {
+        console.log("Server: You are trying to get a gift suggestion. We are going to process it now.")
+        const response = await axios.get('https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&callname=FindItems&QueryKeywords=dog&itemSort=BestMatch', {}) //The port of the server
+        console.log("Server: Your gift suggestion request was successful.")
+        console.log(response.data)
+        res.send("Successful")
+    }
+    catch {
+        console.log("Server: Your gift suggestion request was unsuccessful. ")
+        res.send("Failed")
     }
 }

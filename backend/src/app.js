@@ -10,13 +10,18 @@ const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const proxy = require('http-proxy-middleware')
 
 // Used for letting the frontend communicate with the server
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000",],
   methods: ["GET", "POST"],
   credentials: true,
 }));
+
+
+
+
 //Used for cookie session
 app.use(cookieParser());
 app.use(bodyParser.urlencoded( {extended: true}));
@@ -33,6 +38,9 @@ app.use(session({
 //Json stuff. Not too sure
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+
+
 
 const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 
@@ -68,6 +76,7 @@ app.get('/v0/logout', gift.logout)
 // Gets the user's wishlist
 app.get('/v0/getUserWishlist', gift.getUserWishlist)
 
+app.get('/v0/giftapi', gift.giftapi)
 app.use((err, req, res, next) => {
   res.status(err.status).json({
     message: err.message,

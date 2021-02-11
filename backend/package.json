@@ -19,11 +19,13 @@
     "express": "^4.17.1",
     "express-openapi-validator": "^4.5.0",
     "express-session": "^1.17.1",
+    "http-proxy-middleware": "^1.0.6",
     "js-yaml": "^3.14.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
     "swagger-ui-express": "^4.1.4"
   },
+  "proxy": "https://open.api.ebay.com",
   "scripts": {
     "prestart": "docker-compose up -d",
     "start": "nodemon src/server.js",
