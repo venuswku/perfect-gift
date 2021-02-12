@@ -45,20 +45,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
       responses:
-          201:
-            description: Stored user data
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/User'
-          404:
-            description: Unable to store user data
-          default:
-            description: Unexpected Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+        201:
+          description: Stored user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: Unable to store user data
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /v0/giftuser/{username}:
     put:
@@ -134,12 +134,12 @@ paths:
                 $ref: '#/components/schemas/QuestionnaireResponses'
         404:
           description: Unable to store questionnaire responses
-          default:
-            description: Unexpected Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /v0/putqresponse/{username}:
     put:
