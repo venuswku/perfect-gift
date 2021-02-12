@@ -112,6 +112,17 @@ exports.updateQResponses = async (username, outdooractivity, place, store, music
     });
 }
 
+// Update the current username with the new username the user changed
+exports.updateUsername = async (username, useremail) => {
+    const select = `UPDATE giftuser SET username = $1 WHERE useremail = $2`;
+    const query = {
+        text: select,
+        values: [username, useremail],
+    };
+    const t = await pool.query(query);
+    return t;
+};
+
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username) => {
     let select = 'SELECT username, userpassword FROM giftuser';

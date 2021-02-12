@@ -10,6 +10,7 @@ const axios = require('axios');
 exports.getUsers = async (req, res) => {
     // If a username is passed into query param (name of query is username, in openapi.yaml)
     if (req.query.username) {
+        console.log('printing from inside getUsers function');
         // Get the single user's data if the user is selected
         const oneUser = await db.selectUsers(req.query.username);
         if (oneUser) {
@@ -72,11 +73,15 @@ exports.postUser = async (req, res) => {
 
 /* Gets user's questionnaire responses/interests. */
 exports.getQResponse = async (req, res) => {
-    console.log('gift.js: getQResponse: start function');
-    const username = req.session.user;
-    if (username) {
-        console.log('gift.js: getQResponse: in if statement');
-        const oneUser = await db.selectQResponses(username);
+    console.log('gift.js: getQResponse: backend');
+    console.log(`${ req.session.user }`);
+    // app.js passes username to gift.js
+    if (req.session.user) {
+        console.log('gift.js: getQResponse: in if statemen');
+    //     // gift.js sends username to db.js.
+        const oneUser = await db.selectQResponses(req.session.user);
+        console.log('gift.js getQResponse: ', oneUser);
+    //     // if db.js returns q response, send 200 and the response attached
         if (oneUser) {
             console.log('gift.js: getQResponse: oneUser is', [oneUser]);
             res.send([oneUser]);
@@ -131,7 +136,7 @@ exports.putQResponse = async (req, res) => {
         // get username from route parameters
         const username = req.params.username;
         console.log("gift.js: putQResponse for", username);
-        
+
         // get user changes from Edit Interests Popup
         const outdooractivity = req.body[0].outdooractivity;
         const place = req.body[0].place;
@@ -162,7 +167,39 @@ exports.putQResponse = async (req, res) => {
     }
 };
 
-/* Checks if login credentials are valid. */
+exports.putUser = async (req, res) => {
+    if (req.params.username) {
+        console.log("in putuser username is " + req.params.username);
+        const user = await db.selectUsers(req.params.username);
+        const password = user[0].password;
+        const firstname = user[0].firstname;
+        console.log("first name of user is " + firstname);
+        const lastname = user[0].lastname;
+        const useremail = user[0].useremail;
+        const avatar = user[0].avatar;
+        const showavatar = user[0].showavatar;
+
+        req.body[0].password = password;
+        req.body[0].firstname = firstname;
+        req.body[0].lastname = lastname;
+        req.body[0].useremail = useremail;
+        req.body[0].avatar = avatar;
+        req.body[0].showavatar = showavatar;
+
+        console.log("User data is" + req.body[0].username);
+
+        // const foundUser = await db.lookupUsername(oldUsername);
+        const updatedUser = await db.updateUsername(req.body[0].username, req.body[0].useremail);
+        // const user = await db.updateUsername(req.query.username, req.body.username);
+        if (updatedUser.rowCount === 1) {
+            res.status(204).send();
+        } else {
+            res.status(404).send();
+        }
+    }
+};
+
+// Checks if login credentials are valid
 exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
     console.log("The frontend has given us:")
@@ -276,7 +313,7 @@ exports.getUserWishlist = async (req, res) => {
 // This will return a gift suggestion for the user
 axios.defaults.withCredentials = true;
 exports.giftapi = async (req, res) => {
-    
+
     try {
         console.log(req.body.typedInput)
         console.log("------------------------")

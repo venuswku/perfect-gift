@@ -50,6 +50,19 @@ class Profile extends Component {
         }
         // save new username
         else {
+            axios.put('http://localhost:3010/v0/giftuser/' + this.state.username, [this.state])
+                .then(res => {
+                    console.log('Frontend: updated username successfully in profile');
+                    console.log(res.data);
+                    console.log('Frontend: updated username successfully in profile');
+                    // this.setState({ username: res.data[0].newUsername });
+
+                })
+                .catch(res => {
+                    console.log("Frontend: failed for updating username in profile");
+                    console.log(res);
+                })
+            console.log("this newusername in put user" + this.state.newUsername);
             this.setState({ username: this.state.newUsername, mode: 'view' });
         }
     }
@@ -92,7 +105,7 @@ class Profile extends Component {
             );
         }
     }
-    
+
     displayQResponses() {
         console.log('qresponse length', this.state.qresponse.length);
         for (var i = 0; i < this.state.qresponse.length; i++){
@@ -121,7 +134,7 @@ class Profile extends Component {
                             this.setState({
                                 qresponse: [...this.state.qresponse, res.data[0].outdooractivity, res.data[0].place, res.data[0].store, res.data[0].musicgenre,
                                     res.data[0].musician, res.data[0].band, res.data[0].indooractivity, res.data[0].movietvshow, res.data[0].videogame,
-                                    res.data[0].sport, res.data[0].sportsteam, res.data[0].exercise]  
+                                    res.data[0].sport, res.data[0].sportsteam, res.data[0].exercise]
                             });
                             console.log('qresponse is: ', this.state.qresponse);
                         });
@@ -137,16 +150,29 @@ class Profile extends Component {
                 console.log(res)
             })
 
-        // Making a get request to get the user's wishlist
-        axios.get('http://localhost:3010/v0/getUserWishlist', [this.state])
-            .then(res => {
-                console.log("Frontend: Gimme wishlist")
-                console.log(res.data)
+        // axios.put('http://localhost:3010/v0/giftuser/' + this.state.username, [this.state])
+        //     .then(res => {
+        //         console.log('Frontend: updated username successfully in profile');
+        //         console.log(res.data);
+        //         console.log('Frontend: updated username successfully in profile');
+        //         // this.setState({ username: res.data[0].newUsername });
 
-            }).catch(res => {
-                console.log("Frontend: There was an error when trying to get a user's wishlist")
-                console.log(res)
-            })
+        //     })
+        //     .catch(res => {
+        //         console.log("Frontend: failed for updating username in profile");
+        //         console.log(res);
+        //     })
+
+        // Making a get request to get the user's wishlist
+        // axios.get('http://localhost:3010/v0/getUserWishlist', [this.state])
+        //     .then(res => {
+        //         console.log("Frontend: Gimme wishlist")
+        //         console.log(res.data)
+
+        //     }).catch(res => {
+        //         console.log("Frontend: There was an error when trying to get a user's wishlist")
+        //         console.log(res)
+        //     })
     }
 
     render() {
@@ -169,11 +195,11 @@ class Profile extends Component {
                 displayresponse.push(<span className={color}>{value} &nbsp; <DeleteButton /></span>);
             }
         }
-        
+
         return (
             <div className="Profile">
                 <Navbar />
-                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null} 
+                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null}
                 <header className='profile-header'>
                     {/* profile background + pic */}
                     <div className='profile-background'>

@@ -59,6 +59,8 @@ app.get('/v0/giftuser', gift.getUsers);
 
 app.post('/v0/postuser', gift.postUser);
 
+app.put('/v0/giftuser/:username', gift.putUser);
+
 app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
 
 // Saves user responses from interest questionnaire on Create Account page.

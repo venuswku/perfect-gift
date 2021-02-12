@@ -16,7 +16,7 @@ CREATE TABLE questionnaireresponses(
     videogame VARCHAR(50),
     sport VARCHAR(50),
     sportsteam VARCHAR(50),
-    exercise VARCHAR(50),
+    exercise VARCHAR(50)
     FOREIGN KEY (username) REFERENCES giftuser(username)
 );
 
