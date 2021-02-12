@@ -276,8 +276,10 @@ exports.getUserWishlist = async (req, res) => {
 // This will return a gift suggestion for the user
 axios.defaults.withCredentials = true;
 exports.giftapi = async (req, res) => {
-
+    
     try {
+        console.log(req.body.typedInput)
+        console.log("------------------------")
         console.log("Server: You are trying to get a gift suggestion. We are going to process it now.")
         const response = await axios.get('https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&callname=FindItems&QueryKeywords=dog&itemSort=BestMatch', {}) //The port of the server
         console.log("Server: Your gift suggestion request was successful.")
