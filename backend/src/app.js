@@ -14,8 +14,13 @@ const proxy = require('http-proxy-middleware')
 
 // Used for letting the frontend communicate with the server
 app.use(cors({
+<<<<<<< HEAD
   origin: ["http://localhost:3000",],
   methods: ["GET", "POST"],
+=======
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST", "PUT"],
+>>>>>>> e22c6f3f8eff3760971ef601edcf9b27ee2b44f2
   credentials: true,
 }));
 
@@ -62,7 +67,10 @@ app.post('/v0/postuser', gift.postUser);
 app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
 
 // Saves user responses from interest questionnaire on Create Account page.
-app.post('/v0/postqresponse', gift.postQResponse);  // might need to somehow combine this with posting a giftuser sicne they're both from Create Account page
+app.post('/v0/postqresponse', gift.postQResponse);
+
+// Puts changes for questionnaire responses from Profile page's Edit Interests popup.
+app.put('/v0/putqresponse/:username', gift.putQResponse);
 
 // This authenticates and authorizes a user to be able to log in.
 app.post('/v0/authenticate', gift.login);

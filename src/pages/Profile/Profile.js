@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './Profile.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
+import EditInterestsPopup from './EditInterestsPopup';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
 import { ReactComponent as ProfilePic } from '../../images/profile_pic.svg';
-import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
@@ -20,16 +21,23 @@ class Profile extends Component {
             name: '',
             username: '',
             newUsername: '',
-            outdoorActivity: '',
             mode: 'view',
-            qresponse: [],
-            wishlist: []
+            wishlist: [],
+            showQuestionnairePopup: false,
+            qresponse: []
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
     }
+
+    /* Opens or closes popup for editing questionnaire responses (Interests section). */
+    togglePopup = () => {
+        this.setState({
+         showQuestionnairePopup: !this.state.showQuestionnairePopup
+        });
+    };
 
     handleChange(e) {
         this.setState({ newUsername: e.target.value });
@@ -84,21 +92,16 @@ class Profile extends Component {
             );
         }
     }
-    /*
-        useEffect(() => {
-            axios.get("http:localhost:3010/v0/authenticate").then((response) =>{
-                console.loge(response.data)
-                    };
-    */
     
     displayQResponses() {
-        console.log('qresponse lenght', this.state.qresponse.length);
+        console.log('qresponse length', this.state.qresponse.length);
         for (var i = 0; i < this.state.qresponse.length; i++){
             if (this.state.qresponse[i] !== '') {
                 console.log('qresponse[', i, '] = ', this.state.qresponse[i]);
             }
         }
     }
+
     componentDidMount() {
         axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
             .then(res => {
@@ -106,7 +109,7 @@ class Profile extends Component {
                 console.log(res.data)
                 if (res.data[0].username !== "") {
                     console.log(res.data[0].username);
-                    const userFullName = res.data[0].firstname + " " + res.data[0].lastname
+                    const userFullName = res.data[0].firstname + " " + res.data[0].lastname;
                     this.setState({ name: userFullName });
                     this.setState({ username: res.data[0].username });
                     this.setState({ newUsername: res.data[0].username });
@@ -125,9 +128,6 @@ class Profile extends Component {
                         // .catch(res => {
                         //     console.log('failed get q response');
                         // });
-                        
-                        
-
                 } else {
                     this.props.history.push('/sign_in')
                     console.log("Redirected to sign in page")
@@ -148,7 +148,6 @@ class Profile extends Component {
                 console.log(res)
             })
     }
-
 
     render() {
         //this stuff is to display questionnaire responses
@@ -174,6 +173,7 @@ class Profile extends Component {
         return (
             <div className="Profile">
                 <Navbar />
+                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null} 
                 <header className='profile-header'>
                     {/* profile background + pic */}
                     <div className='profile-background'>
@@ -190,10 +190,9 @@ class Profile extends Component {
                         <br></br>
                         {/* interests/questionnaire responses */}
                         <div>
-                            <span className='topicFont'>Interests &nbsp; </span>
                             {displayresponse}
                             &nbsp;
-                            <EditButton className='editInterests' />
+                            <button className='editInterests' onClick={this.togglePopup}><EditButton/></button>
                         </div>
                         <br></br>
                         {/* wishlist */}

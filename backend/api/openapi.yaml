@@ -34,6 +34,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /v0/postuser:
+      post:
+        description: Post user's data from Create Account page
+        requestBody:
+          required: true
+          description: User's information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        responses:
+          201:
+            description: Stored user data
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          404:
+            description: Unable to store user data
+          default:
+            description: Unexpected Error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
   # /v0/giftuser/{useremail}:
   #   put:
   #     description: Updates a username
@@ -122,31 +148,37 @@ paths:
                 schema:
                   $ref: '#/components/schemas/Error'
 
-  /v0/postuser:
-      post:
-        description: Post user's data from Create Account page
-        requestBody:
-          required: true
-          description: User's information
+  /v0/putqresponse/{username}:
+    put:
+      description: Updates changed questionnaire responses
+      parameters:
+      - in: path
+        name: username
+        description: User's unique username
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionnaireResponses'
+      responses:
+        200:
+          description: Questionnaire responses/interests updated
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/QuestionnaireResponses'
+        409:
+          description: Questionnaire responses/interests were not updated and saved
+        default:
+          description: Unexpected Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        responses:
-          201:
-            description: Stored user data
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/User'
-          404:
-            description: Unable to store user data
-          default:
-            description: Unexpected Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error'
 
   /v0/authenticate:
     post:
