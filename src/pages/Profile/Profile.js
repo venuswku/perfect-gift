@@ -55,7 +55,6 @@ class Profile extends Component {
                     console.log('Frontend: updated username successfully in profile');
                     console.log(res.data);
                     console.log('Frontend: updated username successfully in profile');
-                    // this.setState({ username: res.data[0].newUsername });
 
                 })
                 .catch(res => {
@@ -150,19 +149,6 @@ class Profile extends Component {
                 console.log(res)
             })
 
-        // axios.put('http://localhost:3010/v0/giftuser/' + this.state.username, [this.state])
-        //     .then(res => {
-        //         console.log('Frontend: updated username successfully in profile');
-        //         console.log(res.data);
-        //         console.log('Frontend: updated username successfully in profile');
-        //         // this.setState({ username: res.data[0].newUsername });
-
-        //     })
-        //     .catch(res => {
-        //         console.log("Frontend: failed for updating username in profile");
-        //         console.log(res);
-        //     })
-
         // Making a get request to get the user's wishlist
         // axios.get('http://localhost:3010/v0/getUserWishlist', [this.state])
         //     .then(res => {
@@ -181,7 +167,7 @@ class Profile extends Component {
         const displayresponse = [];
         for (const [index, value] of qresponse.entries()) {
             if (value !== '') {
-                console.log('index is ', index);
+                // console.log('index is ', index);
                 var color = '';
                 if (index === 0 || index === 1 || index === 2) {
                     color = 'textBubble indoors';

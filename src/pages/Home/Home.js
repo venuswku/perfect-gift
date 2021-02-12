@@ -96,7 +96,6 @@ class Home extends React.Component {
     event.preventDefault();
   }
 
-  /*
   componentDidMount() {
     console.log("WE ARE IN MOUN")
     console.log(this.state)
@@ -106,7 +105,7 @@ class Home extends React.Component {
           this.setState({
             user: res.data[0].firstname
         })
-        console.log(`You're name is: ${this.state.user}`)
+        console.log(`Your name is: ${this.state.user}`)
         } else {
           this.props.history.push('/sign_in')
         }
@@ -114,7 +113,7 @@ class Home extends React.Component {
         console.log(res)
     })
   }
-*/
+
   /*Renders the whole Home page */
   render() {
     const {value, placeholderText, typedInput, user} = this.state
@@ -126,7 +125,7 @@ class Home extends React.Component {
           {/*The greeting and picture*/}
           <div className="home-main">
             <header className="home-greeting">
-              <p className="blue varela flex-item ">Hello {this.state.user}!</p>
+              <p className="blue varela flex-item ">Hello, {this.state.user}!</p>
               <p className="blue gothic flex-item">
                 What gift are you looking for today?
               </p>
