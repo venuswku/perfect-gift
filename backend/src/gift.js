@@ -310,21 +310,53 @@ exports.getUserWishlist = async (req, res) => {
     }
 }
 
-// This will return a gift suggestion for the user
+// This will return a gift suggestion(s) to the user
+// It will send an array to the frontend that contains information about a gift in this format:
+// giftSuggestions = [ ["Gift name", Gift image, Gift redirect URL], ... ,]
 axios.defaults.withCredentials = true;
 exports.giftapi = async (req, res) => {
 
     try {
-        console.log(req.body.typedInput)
-        console.log("------------------------")
-        console.log("Server: You are trying to get a gift suggestion. We are going to process it now.")
-        const response = await axios.get('https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&callname=FindItems&QueryKeywords=dog&itemSort=BestMatch', {}) //The port of the server
-        console.log("Server: Your gift suggestion request was successful.")
-        console.log(response.data)
-        res.send("Successful")
+
+        // We will store information about the gift suggestions in this array.
+        let giftSuggestions = {}
+
+        // We are iterating through the queries that the user has given us.
+        for (const giftArray in req.query) {
+
+            // If the query is actually an array a queries and not some other thing (Object prototype thingy)
+            if (req.query.hasOwnProperty(giftArray)) {
+
+                // go through each gift suggestion in the gift array
+                let userInterests = req.query[giftArray]
+                console.log(userInterests)
+                for(i in userInterests) {
+                    console.log(`User interest ${i}: ${userInterests[i]}`)
+
+                    // and make API call to ebay to give us the image and link to the gift            
+                    const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${userInterests[i]}&itemSort=BestMatch`)
+                
+                    // Store these results in variables and then store them in our giftSuggestions array
+                    const GIFT_INFO = []
+                    const GIFT_NAME = userInterests[i]
+                    const GIFT_IMAGE_URL = response.data.Item[0].GalleryURL
+                    const GIFT_URL_TO_GIFT = response.data.Item[0].ViewItemURLForNaturalSearch
+                    console.log(GIFT_NAME);
+                    console.log(GIFT_IMAGE_URL)
+                    console.log(GIFT_URL_TO_GIFT)
+                    GIFT_INFO.push(GIFT_NAME, GIFT_IMAGE_URL, GIFT_URL_TO_GIFT)
+                    giftSuggestions[GIFT_NAME] = GIFT_INFO      
+                }
+            }
+        }
+
+        // Sending all the data back to our frontend
+        console.log("Server [SUCCESS]: We have processed all your gift suggestions")
+        giftSuggestions['typedInput'] = "Success"
+        res.send([giftSuggestions])
     }
     catch {
-        console.log("Server: Your gift suggestion request was unsuccessful. ")
+        console.log("Server [FAIL]: Your gift suggestion request was unsuccessful. ")
         res.send("Failed")
     }
 }

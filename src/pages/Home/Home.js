@@ -13,8 +13,9 @@ class Home extends React.Component {
     super(props);
     this.state = { value: "Search by..",
                    placeholderText: "Select a way to search",
-                   typedInput:"",
-                   user: ""
+                   typedInput: "",
+                   user: "",
+                   giftsuggestions: []
                  };
 
     this.handleChange = this.handleChange.bind(this);
@@ -55,14 +56,14 @@ class Home extends React.Component {
 
         // If the user is searching for a username
         if(value === "Search for username") {
-          console.log(`Frontend: We will search for the username:"${typedInput}"`)
+          console.log(`Frontend: We will give you gift suggestions for the username:"${typedInput}"`)
           serverPath += "/[INSERT WISHLIST RETRIEVAL PATH HERE]" 
         } 
         
         // If the user is searching for a gift
         else if(value === "Search for a gift") {
           console.log(`Frontend: We will search for the gift:"${typedInput}"`)
-          serverPath += "/giftapi"
+          serverPath += `/giftapi?giftsuggestions[]=${typedInput}`
         } 
         
         // The user is searching using the "Search by" option
@@ -72,7 +73,7 @@ class Home extends React.Component {
       
         // Calling axios based on the user's select choice (user or gift)
         console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
-        axios.get(serverPath, {typedInput})
+        axios.get(serverPath)
         .then(res => {
           console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
         }).catch(res => {
@@ -95,7 +96,10 @@ class Home extends React.Component {
     event.preventDefault();
   }
 
+  /*
   componentDidMount() {
+    console.log("WE ARE IN MOUN")
+    console.log(this.state)
     axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
     .then(res => {
         if (res.data[0].username !== ""){
@@ -110,7 +114,7 @@ class Home extends React.Component {
         console.log(res)
     })
   }
-
+*/
   /*Renders the whole Home page */
   render() {
     const {value, placeholderText, typedInput, user} = this.state
@@ -140,6 +144,7 @@ class Home extends React.Component {
                   className="white-searchbar gothic home-input"
                   placeholder={placeholderText}
                   value={typedInput}
+                  name="typedInput"
                   onChange={this.handleUserInput}
                 ></input>                
                 <MagnifyGlass className="mag" />                
@@ -154,6 +159,7 @@ class Home extends React.Component {
                       <option className = "home-option" value="Search for a gift">Gift</option>
                     </select>
                   </label>
+                  
                   </form>
               </div >
               {/*The gift suggestion*/}

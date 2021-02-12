@@ -303,19 +303,37 @@ paths:
         description: User's username
         schema:
           type: string
-      - name: search1
+      - name: placeholderText
         in: query
         required: false
-        description: User's username
+        description: User's placeholder
         schema:
           type: string
+      - name: typedInput
+        in: query
+        required: false
+        description: User's input
+        schema:
+          type: string
+      - name: user
+        in: query
+        required: false
+        description: User's input
+        schema:
+          type: string
+      - name: giftsuggestions
+        in: query
+        required: false
+        description: searched user's gift suggestions
+        schema:
+          type: array
       responses:
         200:
           description: User response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuestionnaireResponses'
+                $ref: '#/components/schemas/UserInput'
         404:
           description: Unknown user
         default:
@@ -430,3 +448,22 @@ components:
             type: string
         required:
           - username
+
+    UserInput:
+      description: User's wishlist
+      type: array
+      items:
+        type: object
+        properties:
+          value:
+            type: string
+          placeholderText:
+            type: string
+          typedInput:
+            type: string
+          user:
+            type: string
+          giftsuggestions:
+            type: array
+        required:
+          - typedInput
