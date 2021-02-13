@@ -293,10 +293,16 @@ paths:
   #             schema:
   #               $ref: '#/components/schemas/Error'
 
-  /v0/giftapi:
+  /v0/giftapi/{searchby}:
     get:
       description: Return a user's gift suggestion based on what they typed
       parameters:
+      - name: searchby
+        in: path
+        description: Method for searching gifts (either "searchgift" or "searchusername")
+        required: true
+        schema:
+          type: string
       - name: value
         in: query
         required: false
@@ -321,10 +327,10 @@ paths:
         description: User's input
         schema:
           type: string
-      - name: giftsuggestions
+      - name: searchTopics
         in: query
         required: false
-        description: searched user's gift suggestions
+        description: Topics to search for in eBay Shopping API
         schema:
           type: array
       responses:
@@ -450,7 +456,7 @@ components:
           - username
 
     UserInput:
-      description: User's wishlist
+      description: User's input to search bar
       type: array
       items:
         type: object
@@ -463,7 +469,10 @@ components:
             type: string
           user:
             type: string
-          giftsuggestions:
+          searchTopics:
             type: array
+          searchby:
+            type: string
         required:
+          - searchby
           - typedInput

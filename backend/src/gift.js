@@ -303,35 +303,39 @@ axios.defaults.withCredentials = true;
 exports.giftapi = async (req, res) => {
 
     try {
+        const searchMethod = req.params.searchby;
+        console.log("User wants to search by", searchMethod);
 
         // We will store information about the gift suggestions in this array.
         let giftSuggestions = {}
 
         // We are iterating through the queries that the user has given us.
-        for (const giftArray in req.query) {
+        for (const searchTopicsArray in req.query) {
 
             // If the query is actually an array a queries and not some other thing (Object prototype thingy)
-            if (req.query.hasOwnProperty(giftArray)) {
+            if (req.query.hasOwnProperty(searchTopicsArray)) {
 
-                // go through each gift suggestion in the gift array
-                let userInterests = req.query[giftArray]
-                console.log(userInterests)
-                for(i in userInterests) {
-                    console.log(`User interest ${i}: ${userInterests[i]}`)
+                // go through each topic in the searched topics array
+                let searchTopics = req.query[searchTopicsArray]
+                console.log(searchTopics)
+                for(i in searchTopics) {
+                    console.log(`Search topic ${i}: ${searchTopics[i]}`)
 
                     // and make API call to ebay to give us the image and link to the gift            
-                    const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${userInterests[i]}&itemSort=BestMatch`)
+                    const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${searchTopics[i]}&itemSort=BestMatch`)
                 
                     // Store these results in variables and then store them in our giftSuggestions array
-                    const GIFT_INFO = []
-                    const GIFT_NAME = userInterests[i]
-                    const GIFT_IMAGE_URL = response.data.Item[0].GalleryURL
-                    const GIFT_URL_TO_GIFT = response.data.Item[0].ViewItemURLForNaturalSearch
+                    const GIFT_INFO = [];
+                    const GIFT_NAME = response.data.Item[0].Title;
+                    const GIFT_IMAGE_URL = response.data.Item[0].GalleryURL;
+                    const GIFT_URL_TO_GIFT = response.data.Item[0].ViewItemURLForNaturalSearch;
+                    let RELATED_INTEREST = "";
+                    if (searchMethod === "searchusername") { RELATED_INTEREST = searchTopics[i]; }
                     console.log(GIFT_NAME);
-                    console.log(GIFT_IMAGE_URL)
-                    console.log(GIFT_URL_TO_GIFT)
-                    GIFT_INFO.push(GIFT_NAME, GIFT_IMAGE_URL, GIFT_URL_TO_GIFT)
-                    giftSuggestions[GIFT_NAME] = GIFT_INFO      
+                    console.log(GIFT_IMAGE_URL);
+                    console.log(GIFT_URL_TO_GIFT);
+                    GIFT_INFO.push(GIFT_NAME, GIFT_IMAGE_URL, GIFT_URL_TO_GIFT, RELATED_INTEREST);
+                    giftSuggestions[searchTopics[i]] = GIFT_INFO;
                 }
             }
         }
@@ -339,20 +343,26 @@ exports.giftapi = async (req, res) => {
         // Sending all the data back to our frontend
         console.log("Server [SUCCESS]: We have processed all your gift suggestions")
         giftSuggestions['typedInput'] = "Success"
-        let hardCode = {'taeyeon': ["taeyeon",
-        'https://upload.wikimedia.org/wikipedia/commons/c/cf/Kim_Tae-yeon_at_Incheon_Airport_on_August_29%2C_2019.png',
-        'https://en.wikipedia.org/wiki/Taeyeon'],
+        giftSuggestions['searchby'] = "Success"
+        let hardCode = {'taeyeon': [
+                            "Taeyeon Purpose Postcard Set",
+                            'https://thumbs2.ebaystatic.com/pict/1439383191738080_1.jpg',
+                            'https://www.ebay.com/itm/Taeyeon-Purpose-Postcard-Set-/143938319173',
+                            'taeyeon'
+                        ],
                         'aws': [
                             'aws',
                             'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1024px-Amazon_Web_Services_Logo.svg.png',
-                            'https://en.wikipedia.org/wiki/Amazon_Web_Services'
+                            'https://en.wikipedia.org/wiki/Amazon_Web_Services',
+                            'aws'
                         ],
                         typedInput: "Success"
                     }
                            
         console.log(giftSuggestions);
-        res.send([giftSuggestions])
-        // res.send([hardCode])
+        res.send([giftSuggestions]);
+        
+        // res.send([hardCode]);
     }
     catch {
         console.log("Server [FAIL]: Your gift suggestion request was unsuccessful. ")

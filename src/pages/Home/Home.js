@@ -15,7 +15,10 @@ class Home extends React.Component {
                    placeholderText: "Select a way to search",
                    typedInput: "",
                    user: "",
-                   giftsuggestions: []
+                  // array containing user's interests (used to search for gifts in eBay API)
+                   usernameInterests: [],
+                  // object containing gift suggestions (response returned by eBay API)
+                   gifts: {}
                  };
 
     this.handleChange = this.handleChange.bind(this);
@@ -63,14 +66,14 @@ class Home extends React.Component {
           serverPath += "/[INSERT WISHLIST RETRIEVAL PATH HERE]" 
 
           //for(let i =0; i <)
-          // /giftapi?giftsuggestions[]=taeyeon&giftsuggestions[]=lion&giftsuggestions[]=bunny
+          // /giftapi/searchusername?searchTopics[]=taeyeon&searchTopics[]=lion&searchTopics[]=bunny
           // [taeyeon, lion, bunny]
         } 
         
         // If the user is searching for a gift
         else if(value === "Search for a gift") {
           console.log(`Frontend: We will search for the gift:"${typedInput}"`)
-          serverPath += `/giftapi?giftsuggestions[]=${typedInput}`
+          serverPath += `/giftapi/searchgift?searchTopics[]=${typedInput}`
         } 
         
         // The user is searching using the "Search by" option
@@ -84,6 +87,8 @@ class Home extends React.Component {
         .then(res => {
           console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
           console.log(res)
+          // store returned gift suggestions in our state
+          this.setState({ gifts: res.data[0] });
         }).catch(res => {
           console.log(res)
             console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
@@ -125,7 +130,34 @@ class Home extends React.Component {
 
   /*Renders the whole Home page */
   render() {
-    const {value, placeholderText, typedInput, user} = this.state
+    const {value, placeholderText, typedInput, user} = this.state;
+
+    // display each gift returned by eBay API
+    const displayGiftSuggestions = [];
+    for (const searchTopic in this.state.gifts) {
+      if (searchTopic !== "searchby" && searchTopic !== "typedInput") {
+        const giftName = this.state.gifts[searchTopic][0];
+        const giftPic = this.state.gifts[searchTopic][1];
+        const picText = `picture of ${giftName}`;
+        const giftLink = this.state.gifts[searchTopic][2];
+        const relatedInterest = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
+
+        displayGiftSuggestions.push(
+          <div className="gift-main">
+            <img src={giftPic} alt={picText}></img>
+            <a href={giftLink} className="gift-name blue varela">{giftName}</a>
+            {relatedInterest !== ""
+              ? <div className ="gift-right">
+                  <p className="gift-interest-text grey gothic">Interest</p>
+                  <p className="gift-interest-topic grey gothic">{relatedInterest}</p>
+                </div>
+              : null
+            }
+          </div>
+        );
+      }
+    }
+
     return (
       <div className="Home">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
@@ -171,6 +203,7 @@ class Home extends React.Component {
                   </form>
               </div >
               {/*The gift suggestion*/}
+              {displayGiftSuggestions}
               <div className="gift-main">
                 <p className="gift-name blue varela">Hockey Stick</p>            
                 <div className="gift-background">

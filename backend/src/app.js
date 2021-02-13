@@ -82,7 +82,7 @@ app.get('/v0/logout', gift.logout);
 app.get('/v0/getUserWishlist', gift.getUserWishlist);
 
 // Uses eBay API to get gift suggestions.
-app.get('/v0/giftapi', gift.giftapi);
+app.get('/v0/giftapi/:searchby', gift.giftapi);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
