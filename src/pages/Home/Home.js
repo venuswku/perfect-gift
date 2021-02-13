@@ -57,7 +57,14 @@ class Home extends React.Component {
         // If the user is searching for a username
         if(value === "Search for username") {
           console.log(`Frontend: We will give you gift suggestions for the username:"${typedInput}"`)
+          
+          //Get user's interests from backend.
+          
           serverPath += "/[INSERT WISHLIST RETRIEVAL PATH HERE]" 
+
+          //for(let i =0; i <)
+          // /giftapi?giftsuggestions[]=taeyeon&giftsuggestions[]=lion&giftsuggestions[]=bunny
+          // [taeyeon, lion, bunny]
         } 
         
         // If the user is searching for a gift

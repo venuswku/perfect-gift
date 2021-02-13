@@ -55,21 +55,37 @@ exports.postUser = async (req, res) => {
 };
 
 /* Puts user's updated login info. */
-// exports.putUser = async (req, res) => {
-//     if (req.query.username) {
-//         // const newUsername = req.query.username;
-//         const newUsername = req.body.username;
-//         const email = req.body.useremail;
-//         const user = await db.updateUsername(newUsername, email);
-//         // const user = await db.updateUsername(req.query.username, req.body.username);
-//         console.log("User data is" + user);
-//         if (user.rowCount === 1) {
-//             res.status(204).send();
-//         } else {
-//             res.status(404).send();
-//         }
-//     }
-// };
+exports.putUser = async (req, res) => {
+    if (req.params.username) {
+        console.log("in putuser username is " + req.params.username);
+        const user = await db.selectUsers(req.params.username);
+        const password = user[0].password;
+        const firstname = user[0].firstname;
+        console.log("first name of user is " + firstname);
+        const lastname = user[0].lastname;
+        const useremail = user[0].useremail;
+        const avatar = user[0].avatar;
+        const showavatar = user[0].showavatar;
+
+        req.body[0].password = password;
+        req.body[0].firstname = firstname;
+        req.body[0].lastname = lastname;
+        req.body[0].useremail = useremail;
+        req.body[0].avatar = avatar;
+        req.body[0].showavatar = showavatar;
+
+        console.log("User data is" + req.body[0].username);
+
+        // const foundUser = await db.lookupUsername(oldUsername);
+        const updatedUser = await db.updateUsername(req.body[0].username, req.body[0].useremail);
+        // const user = await db.updateUsername(req.query.username, req.body.username);
+        if (updatedUser.rowCount === 1) {
+            res.status(204).send();
+        } else {
+            res.status(404).send();
+        }
+    }
+};
 
 /* Gets user's questionnaire responses/interests. */
 exports.getQResponse = async (req, res) => {
@@ -167,37 +183,7 @@ exports.putQResponse = async (req, res) => {
     }
 };
 
-exports.putUser = async (req, res) => {
-    if (req.params.username) {
-        console.log("in putuser username is " + req.params.username);
-        const user = await db.selectUsers(req.params.username);
-        const password = user[0].password;
-        const firstname = user[0].firstname;
-        console.log("first name of user is " + firstname);
-        const lastname = user[0].lastname;
-        const useremail = user[0].useremail;
-        const avatar = user[0].avatar;
-        const showavatar = user[0].showavatar;
 
-        req.body[0].password = password;
-        req.body[0].firstname = firstname;
-        req.body[0].lastname = lastname;
-        req.body[0].useremail = useremail;
-        req.body[0].avatar = avatar;
-        req.body[0].showavatar = showavatar;
-
-        console.log("User data is" + req.body[0].username);
-
-        // const foundUser = await db.lookupUsername(oldUsername);
-        const updatedUser = await db.updateUsername(req.body[0].username, req.body[0].useremail);
-        // const user = await db.updateUsername(req.query.username, req.body.username);
-        if (updatedUser.rowCount === 1) {
-            res.status(204).send();
-        } else {
-            res.status(404).send();
-        }
-    }
-};
 
 // Checks if login credentials are valid
 exports.login = async (req, res) => {
@@ -364,6 +350,7 @@ exports.giftapi = async (req, res) => {
                         typedInput: "Success"
                     }
                            
+        console.log(giftSuggestions);
         res.send([giftSuggestions])
         // res.send([hardCode])
     }

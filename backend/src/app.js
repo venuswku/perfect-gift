@@ -73,15 +73,17 @@ app.put('/v0/putqresponse/:username', gift.putQResponse);
 app.post('/v0/authenticate', gift.login);
 
 //This check if the user has the authorization to be on the website
-app.get('/v0/authenticate', gift.checkLogin)
+app.get('/v0/authenticate', gift.checkLogin);
 
 // Logs out a user
-app.get('/v0/logout', gift.logout)
+app.get('/v0/logout', gift.logout);
 
 // Gets the user's wishlist
-app.get('/v0/getUserWishlist', gift.getUserWishlist)
+app.get('/v0/getUserWishlist', gift.getUserWishlist);
 
-app.get('/v0/giftapi', gift.giftapi)
+// Uses eBay API to get gift suggestions.
+app.get('/v0/giftapi', gift.giftapi);
+
 app.use((err, req, res, next) => {
   res.status(err.status).json({
     message: err.message,
