@@ -353,7 +353,19 @@ exports.giftapi = async (req, res) => {
         // Sending all the data back to our frontend
         console.log("Server [SUCCESS]: We have processed all your gift suggestions")
         giftSuggestions['typedInput'] = "Success"
+        let hardCode = {'taeyeon': ["taeyeon",
+        'https://upload.wikimedia.org/wikipedia/commons/c/cf/Kim_Tae-yeon_at_Incheon_Airport_on_August_29%2C_2019.png',
+        'https://en.wikipedia.org/wiki/Taeyeon'],
+                        'aws': [
+                            'aws',
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1024px-Amazon_Web_Services_Logo.svg.png',
+                            'https://en.wikipedia.org/wiki/Amazon_Web_Services'
+                        ],
+                        typedInput: "Success"
+                    }
+                           
         res.send([giftSuggestions])
+        // res.send([hardCode])
     }
     catch {
         console.log("Server [FAIL]: Your gift suggestion request was unsuccessful. ")

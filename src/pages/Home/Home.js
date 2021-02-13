@@ -76,7 +76,9 @@ class Home extends React.Component {
         axios.get(serverPath)
         .then(res => {
           console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
+          console.log(res)
         }).catch(res => {
+          console.log(res)
             console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
         })
       } 
