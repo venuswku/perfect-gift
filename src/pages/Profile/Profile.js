@@ -21,6 +21,9 @@ class Profile extends Component {
             name: '',
             username: '',
             newUsername: '',
+            firstname: '',
+            lastname: '',
+            useremail: '',
             mode: 'view',
             wishlist: [],
             showQuestionnairePopup: false,
@@ -50,7 +53,9 @@ class Profile extends Component {
         }
         // save new username
         else {
-            axios.put('http://localhost:3010/v0/giftuser/' + this.state.username, [this.state])
+            console.log("USERNAME", this.state.username);
+            console.log("NEW USERNAME", this.state.newUsername);
+            axios.put(`http://localhost:3010/v0/giftuser/${this.state.username}`, [this.state])
                 .then(res => {
                     console.log('Frontend: updated username successfully in profile');
                     console.log(res.data);
@@ -61,7 +66,6 @@ class Profile extends Component {
                     console.log("Frontend: failed for updating username in profile");
                     console.log(res);
                 })
-            console.log("this newusername in put user" + this.state.newUsername);
             this.setState({ username: this.state.newUsername, mode: 'view' });
         }
     }
@@ -125,7 +129,9 @@ class Profile extends Component {
                     this.setState({ name: userFullName });
                     this.setState({ username: res.data[0].username });
                     this.setState({ newUsername: res.data[0].username });
-
+                    this.setState({ firstName: res.data[0].firstname });
+                    this.setState({ lastName: res.data[0].lastname });
+                    this.setState({ useremail: res.data[0].useremail });
                     console.log('doing get q response', res.data[0].username);
                     axios.get('http://localhost:3010/v0/getqresponse', [this.state])
                         .then(res => {

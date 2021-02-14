@@ -56,34 +56,35 @@ exports.postUser = async (req, res) => {
 
 /* Puts user's updated login info. */
 exports.putUser = async (req, res) => {
-    if (req.params.username) {
-        console.log("in putuser username is " + req.params.username);
-        const user = await db.selectUsers(req.params.username);
-        const password = user[0].password;
-        const firstname = user[0].firstname;
-        console.log("first name of user is " + firstname);
-        const lastname = user[0].lastname;
-        const useremail = user[0].useremail;
-        const avatar = user[0].avatar;
-        const showavatar = user[0].showavatar;
+    try {
+        const oldUsername = req.params.username;
+        if (oldUsername) {
+            console.log("in putuser username is " + oldUsername);
+            const newUsername = req.body[0].newUsername;
 
-        req.body[0].password = password;
-        req.body[0].firstname = firstname;
-        req.body[0].lastname = lastname;
-        req.body[0].useremail = useremail;
-        req.body[0].avatar = avatar;
-        req.body[0].showavatar = showavatar;
+            // get original user info
+            const user = await db.selectUsers(oldUsername);
+            const password = user[0].userpassword;
+            const firstname = user[0].firstname;
+            const lastname = user[0].lastname;
+            const useremail = user[0].useremail;
+            const avatar = user[0].avatar;
+            const showavatar = user[0].showavatar;
 
-        console.log("User data is" + req.body[0].username);
+            // concat old and new usernames together to pass both of them into insertUser()
+            let oldNewUsername = oldUsername + ' ' + newUsername;
 
-        // const foundUser = await db.lookupUsername(oldUsername);
-        const updatedUser = await db.updateUsername(req.body[0].username, req.body[0].useremail);
-        // const user = await db.updateUsername(req.query.username, req.body.username);
-        if (updatedUser.rowCount === 1) {
+            // insert user with new username but same user info (useremail, firstname, lastname, etc.)
+            db.insertUser(newUsername, password, firstname, lastname, useremail, avatar, showavatar);
+
+            const updatedUser = await db.updateUsername(oldNewUsername);
+
             res.status(204).send();
-        } else {
-            res.status(404).send();
-        }
+            console.log("gift.js: putUser: Gifter's new username is updated!");
+        }    
+    } catch {
+        res.status(404).send();
+        console.log("gift.js: putUser: user failz");
     }
 };
 

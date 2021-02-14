@@ -46,18 +46,28 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
     });
 }
 
-// Updates user data in giftusers table.
-// exports.updateUsername = async (username, useremail) => {
-//     const select = `UPDATE giftuser SET username = $1 WHERE useremail = $2`;
-//     // eslint-disable-next-line max-len
-//     // const select = `UPDATE mail SET mail = jsonb_set(mail, '{mail,star}', 'true') WHERE id = $1`;
-//     const query = {
-//         text: select,
-//         values: [username],
-//     };
-//     const t = await pool.query(query);
-//     return t;
-// };
+// Update the current username with the new username the user changed
+exports.updateUsername = async (username) => {
+    let splitArrayUsername = username.split(" ")
+    let oldUser = splitArrayUsername[0]
+    // console.log(oldUser);
+    let newUser = splitArrayUsername[1]
+    // console.log(newUser);
+   
+    // update other tables with new username
+    const updateQuestionnaire = `UPDATE questionnaireresponses SET username = '${newUser}' WHERE username = '${oldUser}'`;
+    const q = await pool.query(updateQuestionnaire);
+    const updateWishlist = `UPDATE wishlist SET username = '${newUser}' WHERE username = '${oldUser}'`;
+    // const w = await pool.query(updateWishlist)
+
+    // delete row in giftusers table containing old username
+    const deleteOldUser = `DELETE FROM giftuser WHERE username='${oldUser}'`
+    const d = await pool.query(deleteOldUser);
+    
+    console.log("db.js: updateUsername: new username updated in giftusers and questionnaireresponses table!");
+
+    return;
+};
 
 // gift.js sends username to db.js. if username is found, it returns all parameters of that row
 exports.selectQResponses = async (username) => {
@@ -112,16 +122,7 @@ exports.updateQResponses = async (username, outdooractivity, place, store, music
     });
 }
 
-// Update the current username with the new username the user changed
-exports.updateUsername = async (username, useremail) => {
-    const select = `UPDATE giftuser SET username = $1 WHERE useremail = $2`;
-    const query = {
-        text: select,
-        values: [username, useremail],
-    };
-    const t = await pool.query(query);
-    return t;
-};
+
 
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username) => {
