@@ -92,10 +92,18 @@ exports.getQResponse = async (req, res) => {
     console.log('gift.js: getQResponse: backend');
     console.log(`${ req.session.user }`);
     // app.js passes username to gift.js
+    console.log("Below is body")
+    //console.log(req.body)
+    console.log(req.query.typedInput)
+    const searchedUser = req.query.typedInput
+    console.log(
+        "above is body"
+    )
+    //if(req.session.user){
     if (req.session.user) {
         console.log('gift.js: getQResponse: in if statemen');
     //     // gift.js sends username to db.js.
-        const oneUser = await db.selectQResponses(req.session.user);
+        const oneUser = await db.selectQResponses(searchedUser);
         console.log('gift.js getQResponse: ', oneUser);
     //     // if db.js returns q response, send 200 and the response attached
         if (oneUser) {
@@ -107,6 +115,7 @@ exports.getQResponse = async (req, res) => {
             res.status(404).send();
         }
     }
+//}
     console.log('gift.js: getQResponse: end function');
 };
 

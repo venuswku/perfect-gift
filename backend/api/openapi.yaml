@@ -99,6 +99,12 @@ paths:
         description: User's username
         schema:
           type: string
+      - name: typedInput
+        in: query
+        required: false
+        description: typed username
+        schema:
+          type: string
       responses:
         200:
           description: User response
