@@ -62,7 +62,7 @@ exports.putUser = async (req, res) => {
             console.log("in putuser username is " + oldUsername);
             const newUsername = req.body[0].newUsername;
 
-            // get original user info
+            // get original user info for insertUser() call later
             const user = await db.selectUsers(oldUsername);
             const password = user[0].userpassword;
             const firstname = user[0].firstname;
