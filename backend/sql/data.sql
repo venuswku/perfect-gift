@@ -19,4 +19,4 @@ INSERT INTO questionnaireresponses(
 INSERT INTO questionnaireresponses(
     username, outdooractivity, place, store, musicgenre, musician, band,
     indooractivity, movietvshow, videogame, sport, sportsteam, exercise)
-    VALUES ('vwku', 'breathing', 'home', 'Amazon', 'pop', 'Taeyeon', 'BTS', 'YouTube', '', 'Little Nightmares', 'tennis', '', '');
+    VALUES ('vwku', 'breathing', 'home', 'Amazon', 'pop', 'Taeyeon', 'BTS', 'YouTube', 'Pirates of the Caribbean', 'Little Nightmares', 'tennis', '', '');
