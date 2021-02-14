@@ -6,6 +6,7 @@ import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass_grey.
 import { ReactComponent as Hockey } from "../../images/hockey.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
 import axios from 'axios';
+import { FormLabel } from "react-bootstrap";
 
 //axios.defaults.withCredentials = true; //Might need this
 class Home extends React.Component {
@@ -48,7 +49,7 @@ class Home extends React.Component {
   // When the user hits enter, it will send the string to the server
   handleSubmit(event) {
     const {value, placeholderText, typedInput} = this.state
-    let serverPath = "http://localhost:3010/v0"
+    let serverPath = "http://localhost:3010/v0/giftapi"
     console.log("Frontend: We are going to submit your search request to the server")
 
     try {
@@ -57,23 +58,37 @@ class Home extends React.Component {
       if(typedInput !=="") {
         console.log(`Frontend: You have entered: "${typedInput}"`)
 
-        // If the user is searching for a username
-        if(value === "Search for username") {
-          console.log(`Frontend: We will give you gift suggestions for the username:"${typedInput}"`)
-          
-          //Get user's interests from backend.
-          
-          serverPath += "/[INSERT WISHLIST RETRIEVAL PATH HERE]" 
 
-          //for(let i =0; i <)
-          // /giftapi/searchusername?searchTopics[]=taeyeon&searchTopics[]=lion&searchTopics[]=bunny
-          // [taeyeon, lion, bunny]
-        } 
-        
-        // If the user is searching for a gift
+          // Getting typed user's interests.
+          axios.get(`http://localhost:3010/v0/getQResponse?typedInput=${typedInput}`)
+          .then(res => {
+              // If the user is searching for a username
+              if(value === "Search for username") {
+                let queryString = '/searchusername?'
+                console.log(`Frontend: We will fetch the interests for the username:"${typedInput}"`)   
+                
+            // Parsing the response
+            console.log(`Frontend: We have recevied "users" list of interests. We will now parse them`)    
+            let qList= res.data[0]
+            let tempUserInterests = []
+            for(let [k,v] of Object.entries(qList)) {
+              console.log(k, v)
+              if(v !== '' && k !== "username") {
+                tempUserInterests.push(v)
+                queryString += `searchTopics[]=${v}&`
+              }
+              
+            }
+            queryString = queryString.slice(0,-1)
+            console.log(queryString)
+            serverPath += queryString
+            //console.log(serverPath)
+
+          }
+                  // If the user is searching for a gift
         else if(value === "Search for a gift") {
           console.log(`Frontend: We will search for the gift:"${typedInput}"`)
-          serverPath += `/giftapi/searchgift?searchTopics[]=${typedInput}`
+          serverPath += `/searchgift?searchTopics[]=${typedInput}`
         } 
         
         // The user is searching using the "Search by" option
@@ -81,9 +96,11 @@ class Home extends React.Component {
           throw new Error("FrontEnd Error")
         }
       
+
         // Calling axios based on the user's select choice (user or gift)
         console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
-        axios.get(serverPath)
+        //while(serverPath === "http://localhost:3010/v0/giftapi?")
+        axios.get(serverPath, this.state)
         .then(res => {
           console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
           console.log(res)
@@ -91,8 +108,17 @@ class Home extends React.Component {
           this.setState({ gifts: res.data[0] });
         }).catch(res => {
           console.log(res)
-            console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
+          console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
         })
+          }).catch(res => {     
+              console.log(res)
+              console.log("Frontend: There was an error when trying to search the user you typed.")       
+            })
+        
+        
+
+
+        
       } 
       
       // The user did not input anything
@@ -111,8 +137,8 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    console.log("WE ARE IN MOUN")
     console.log(this.state)
+    
     axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
     .then(res => {
         if (res.data[0].username !== ""){
@@ -126,6 +152,10 @@ class Home extends React.Component {
     }).catch(res => {
         console.log(res)
     })
+
+
+
+
   }
 
   /*Renders the whole Home page */
