@@ -333,7 +333,10 @@ exports.giftapi = async (req, res) => {
 
                     // and make API call to ebay to give us the image and link to the gift            
                     const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${searchTopics[i]}&itemSort=BestMatch`)
-                
+                    
+                    // const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindProducts&QueryKeywords=${searchTopics[i]}&MaxEntries=1&ProductSort=Popularity`)
+                    // ^ seems to give better results
+
                     // Store these results in variables and then store them in our giftSuggestions array
                     const GIFT_INFO = [];
                     const GIFT_NAME = response.data.Item[0].Title;
