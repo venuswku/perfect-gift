@@ -224,8 +224,6 @@ exports.login = async (req, res) => {
 */
 exports.checkLogin = async (req, res) => {
     console.log("Request: Check if user is logged in");
-    console.log(req.body.user);
-
     console.log(req.session.user);
     if (req.session.user) {
         console.log("Enters IF")
@@ -289,7 +287,7 @@ exports.getUserWishlist = async (req, res) => {
 
 // This will return a gift suggestion(s) to the user
 // It will send an array to the frontend that contains information about a gift in this format:
-// giftSuggestions = [ ["Gift name", Gift image, Gift redirect URL], ... ,]
+// giftSuggestions = [ [Gift name, Gift image, Gift redirect URL, Related interest (if user searched by username)], ... ,]
 axios.defaults.withCredentials = true;
 exports.giftapi = async (req, res) => {
 
