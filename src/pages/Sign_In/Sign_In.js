@@ -27,7 +27,7 @@ class Sign_In extends Component {
     axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
     .then(res => {
         if (res.data[0].username !== ""){
-          this.props.history.push('/profile')
+          this.props.history.push('/home')
         }
     }).catch(res => {
         console.log(res)
@@ -40,7 +40,7 @@ class Sign_In extends Component {
   submitHandler = (e) => {
     e.preventDefault()
     console.log(this.state)
-    console.log("We are submitting a user to either autheticate, or create")
+    console.log("We are submitting a user to either authenticate, or create")
     axios.post('http://localhost:3010/v0/authenticate', this.state)
     .then(response => {
       if (response.data === ""){
@@ -49,7 +49,7 @@ class Sign_In extends Component {
       }
       else {
         console.log("Logged In")
-        this.props.history.push('/profile')
+        this.props.history.push('/home')
       }
     })
     .catch(error => {
@@ -57,8 +57,6 @@ class Sign_In extends Component {
       console.log("You inputted a wrong username/password combination")
     })
   }
-
-  wrongPassword
     
     render() {
     const {username, password} = this.state
