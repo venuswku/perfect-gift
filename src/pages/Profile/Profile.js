@@ -56,9 +56,9 @@ class Profile extends Component {
     }
 
     handleSave() {
-        // don't save new username if it's empty (set it back to original username)
-        if (this.state.newUsername === "") {
-            this.setState({ username: this.state.username, mode: 'view' });
+        // don't save new username if it's empty or has a space in it (set it back to original username)
+        if (this.state.newUsername === "" || this.state.newUsername.split(" ").length !== 1) {
+            this.setState({ newUsername: this.state.username, mode: 'view' });
         }
         // save new username
         else {
@@ -219,6 +219,7 @@ class Profile extends Component {
                         <br></br>
                         {/* interests/questionnaire responses */}
                         <div>
+                            <span className='topicFont'>Interests &nbsp; </span>
                             {displayresponse}
                             &nbsp;
                             <button className='editInterests' onClick={this.togglePopup}><EditButton/></button>

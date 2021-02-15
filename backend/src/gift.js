@@ -311,23 +311,23 @@ exports.giftapi = async (req, res) => {
                     console.log(`Search topic ${i}: ${searchTopics[i]}`)
 
                     // and make API call to ebay to give us the image and link to the gift            
-                    const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${searchTopics[i]}&itemSort=BestMatch`)
+                    // const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${searchTopics[i]}&itemSort=BestMatch`)
                     
                     // const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindProducts&QueryKeywords=${searchTopics[i]}&MaxEntries=1&ProductSort=Popularity`)
                     // ^ seems to give better results
 
                     // Store these results in variables and then store them in our giftSuggestions array
-                    const GIFT_INFO = [];
-                    const GIFT_NAME = response.data.Item[0].Title;
-                    const GIFT_IMAGE_URL = response.data.Item[0].GalleryURL;
-                    const GIFT_URL_TO_GIFT = response.data.Item[0].ViewItemURLForNaturalSearch;
-                    let RELATED_INTEREST = "";
-                    if (searchMethod === "searchusername") { RELATED_INTEREST = searchTopics[i]; }
-                    console.log(GIFT_NAME);
-                    console.log(GIFT_IMAGE_URL);
-                    console.log(GIFT_URL_TO_GIFT);
-                    GIFT_INFO.push(GIFT_NAME, GIFT_IMAGE_URL, GIFT_URL_TO_GIFT, RELATED_INTEREST);
-                    giftSuggestions[searchTopics[i]] = GIFT_INFO;
+                    // const GIFT_INFO = [];
+                    // const GIFT_NAME = response.data.Item[0].Title;
+                    // const GIFT_IMAGE_URL = response.data.Item[0].GalleryURL;
+                    // const GIFT_URL_TO_GIFT = response.data.Item[0].ViewItemURLForNaturalSearch;
+                    // let RELATED_INTEREST = "";
+                    // if (searchMethod === "searchusername") { RELATED_INTEREST = searchTopics[i]; }
+                    // console.log(GIFT_NAME);
+                    // console.log(GIFT_IMAGE_URL);
+                    // console.log(GIFT_URL_TO_GIFT);
+                    // GIFT_INFO.push(GIFT_NAME, GIFT_IMAGE_URL, GIFT_URL_TO_GIFT, RELATED_INTEREST);
+                    // giftSuggestions[searchTopics[i]] = GIFT_INFO;
                 }
             }
         }
@@ -336,6 +336,9 @@ exports.giftapi = async (req, res) => {
         console.log("Server [SUCCESS]: We have processed all your gift suggestions")
         giftSuggestions['typedInput'] = "Success"
         giftSuggestions['searchby'] = "Success"
+        // console.log(giftSuggestions);
+        // res.send([giftSuggestions]);
+        
         let hardCode = {'taeyeon': [
                             "Taeyeon Purpose Postcard Set",
                             'https://thumbs2.ebaystatic.com/pict/1439383191738080_1.jpg',
@@ -348,13 +351,10 @@ exports.giftapi = async (req, res) => {
                             'https://en.wikipedia.org/wiki/Amazon_Web_Services',
                             'aws'
                         ],
-                        typedInput: "Success"
+                        typedInput: "Success",
+                        searchby: "Success"
                     }
-                           
-        console.log(giftSuggestions);
-        res.send([giftSuggestions]);
-        
-        // res.send([hardCode]);
+        res.send([hardCode]);
     }
     catch {
         console.log("Server [FAIL]: Your gift suggestion request was unsuccessful. ")
