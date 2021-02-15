@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-//import axios from 'axios';
+import axios from 'axios';
 import "./AddToWishlistPopup.css";
 
 // Class to make a screen popup when the user
@@ -7,20 +7,38 @@ import "./AddToWishlistPopup.css";
 class AddToWishlistPopup extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      WLGiftToStore: ''
+
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
   }
 
+
+
   handleSubmit(event) {
-    console.log("Done");
+    console.log("Frontend: We are going to request to store the wishlist gift.");
     event.preventDefault();
+    axios.post("http://localhost:3010/v0/storeWLGift", [this.state])
+    .then(response => {
+      console.log("Frontend: We have successfully stored the wishlist gift into our database.")
+    }).catch(error => {
+      console.log("There was an error when trying to store the wishlist gift into the database")
+      console.log(error)
+    })
+  
+  
   }
+
 
   handleChange(event) {
     console.log("Frontend: Handling change");
+    this.setState({
+      WLGiftToStore: event.target.value
+    });
     event.preventDefault();
   }
 
@@ -32,7 +50,7 @@ class AddToWishlistPopup extends React.Component {
 
           <form onSubmit={this.handleSubmit}>
             <label>
-              <input type="text" placeholder="Enter wishlist item here" onChange={this.handleChange}></input>
+              <input type="text" value ={this.WLGiftToStore} placeholder="Enter wishlist item here" onChange={this.handleChange}></input>
               
             </label>
           </form>

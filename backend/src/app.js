@@ -63,6 +63,8 @@ app.put('/v0/giftuser/:username', gift.putUser);
 
 app.get('/v0/getqresponse/:username', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
 
+app.get('/v0/getwishlist/:username', gift.getwishlist);
+
 // Saves user responses from interest questionnaire on Create Account page.
 app.post('/v0/postqresponse', gift.postQResponse);
 
@@ -83,6 +85,9 @@ app.get('/v0/getUserWishlist', gift.getUserWishlist);
 
 // Uses eBay API to get gift suggestions.
 app.get('/v0/giftapi/:searchby', gift.giftapi);
+
+//Stores the wishlist gift into our database
+app.post('/v0/storeWLGift', gift.storeWLGift);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

@@ -261,6 +261,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+
+  /v0/getwishlist/{username}:
+    get:
+      description: Return user's questionnaire responses
+      parameters:
+      - name: username
+        in: path
+        required: true
+        description: Username of user that we need wishlist for
+        schema:
+          type: string
+      responses:
+        200:
+          description: User response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionnaireResponses'
+        404:
+          description: Unknown user
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   # /v0/:
   #   get:
   #     description: Return a user's wishlist
@@ -349,6 +376,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /v0/storeWLGift:
+    post:
+      description: Stores the typed user's wishlist gift. 
+      parameters:
+      - name: WLGiftToStore
+        in: query
+        required: false
+        description: User's password
+        schema:
+          type: string
+      responses:
+        201:
+          description: Stored user wishlist gift
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wishlist'
+        404:
+          description: Unable to store user wishlist gift
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Error:
@@ -430,30 +483,8 @@ components:
       items:
         type: object
         properties:
-          username:
+          WLGiftToStore:
             type: string
-          gift1:
-            type: string
-          gift2:
-            type: string
-          gift3:
-            type: string
-          gift4:
-            type: string
-          gift5:
-            type: string
-          gift6:
-            type: string
-          gift7:
-            type: string
-          gift8:
-            type: string
-          gift9:
-            type: string
-          gift10:
-            type: string
-        required:
-          - username
 
     UserInput:
       description: User's input to search bar
@@ -476,3 +507,4 @@ components:
         required:
           - searchby
           - typedInput
+
