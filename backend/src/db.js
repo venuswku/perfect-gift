@@ -53,16 +53,17 @@ exports.updateUsername = async (username) => {
     // console.log(oldUser);
     let newUser = splitArrayUsername[1]
     // console.log(newUser);
-   
-    // update other tables with new username
-    const updateQuestionnaire = `UPDATE questionnaireresponses SET username = '${newUser}' WHERE username = '${oldUser}'`;
-    const q = await pool.query(updateQuestionnaire);
-    const updateWishlist = `UPDATE wishlist SET username = '${newUser}' WHERE username = '${oldUser}'`;
-    // const w = await pool.query(updateWishlist)
+   const updateUsername = `UPDATE giftusers SET username = '${newUser}' WHERE username = '${oldUser}` 
+   const q = await pool.query(updateUsername)
+    // // update other tables with new username
+    // const updateQuestionnaire = `UPDATE questionnaireresponses SET username = '${newUser}' WHERE username = '${oldUser}'`;
+    // const q = await pool.query(updateQuestionnaire);
+    // const updateWishlist = `UPDATE wishlist SET username = '${newUser}' WHERE username = '${oldUser}'`;
+    // // const w = await pool.query(updateWishlist)
 
-    // delete row in giftusers table containing old username
-    const deleteOldUser = `DELETE FROM giftuser WHERE username='${oldUser}'`
-    const d = await pool.query(deleteOldUser);
+    // // delete row in giftusers table containing old username
+    // const deleteOldUser = `DELETE FROM giftuser WHERE username='${oldUser}'`
+    // const d = await pool.query(deleteOldUser);
     
     console.log("db.js: updateUsername: new username updated in giftusers and questionnaireresponses table!");
 

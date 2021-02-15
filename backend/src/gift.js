@@ -75,7 +75,7 @@ exports.putUser = async (req, res) => {
             let oldNewUsername = oldUsername + ' ' + newUsername;
 
             // insert user with new username but same user info (useremail, firstname, lastname, etc.)
-            db.insertUser(newUsername, password, firstname, lastname, useremail, avatar, showavatar);
+            //db.insertUser(newUsername, password, firstname, lastname, useremail, avatar, showavatar);
 
             const updatedUser = await db.updateUsername(oldNewUsername);
 
