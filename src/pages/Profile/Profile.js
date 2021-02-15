@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Profile.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
 import EditInterestsPopup from './EditInterestsPopup';
+import AddToWishlistPopup from './AddToWishlistPopup';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
@@ -27,7 +28,8 @@ class Profile extends Component {
             mode: 'view',
             wishlist: [],
             showQuestionnairePopup: false,
-            qresponse: []
+            qresponse: [],
+            showWishlistPopup: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,6 +41,13 @@ class Profile extends Component {
     togglePopup = () => {
         this.setState({
          showQuestionnairePopup: !this.state.showQuestionnairePopup
+        });
+    };
+
+    /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
+    togglePopupWL = () => {
+        this.setState({
+         showWishlistPopup: !this.state.showWishlistPopup
         });
     };
 
@@ -190,7 +199,9 @@ class Profile extends Component {
 
         return (
             <div className="Profile">
+                
                 <Navbar />
+                
                 {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null}
                 <header className='profile-header'>
                     {/* profile background + pic */}
@@ -215,6 +226,7 @@ class Profile extends Component {
                         <br></br>
                         {/* wishlist */}
                         <div>
+                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} /> : null}
                             <span className='topicFont'>Wishlist</span>
                             <ul className='tab no-bullets'>
                                 <li>hockey stick &nbsp; <DeleteButton /></li>
@@ -228,7 +240,7 @@ class Profile extends Component {
                                 <li>Harry Potter wand &nbsp; <DeleteButton /></li>
                             </ul>
                             <br></br>
-                            <span className='tab'> <AddButton /> Add to wishlist</span>
+                            <span className='tab'> <AddButton  onClick={this.togglePopupWL} /> Add to wishlist</span>
                         </div>
 
                     </div>
