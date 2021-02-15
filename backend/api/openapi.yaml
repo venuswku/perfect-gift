@@ -89,20 +89,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /v0/getqresponse:
+  /v0/getqresponse/{username}:
     get:
       description: Return user's questionnaire responses
       parameters:
       - name: username
-        in: query
-        required: false
-        description: User's username
-        schema:
-          type: string
-      - name: typedInput
-        in: query
-        required: false
-        description: typed username
+        in: path
+        required: true
+        description: Username of user that we need questionnaire responses for
         schema:
           type: string
       responses:

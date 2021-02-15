@@ -23,7 +23,7 @@ CREATE TABLE questionnaireresponses(
 -- For now, we can only let a user have 10 items on their wishlist.
 -- Not sure how to add attributes to a table once they're been initialzed
 CREATE TABLE wishlist(
-    username VARCHAR(32)
-    gift VARCHAR(50)
+    username VARCHAR(32),
+    gift VARCHAR(50),
     FOREIGN KEY (username) REFERENCES giftuser(username) ON UPDATE CASCADE
 );

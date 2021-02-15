@@ -62,20 +62,8 @@ exports.putUser = async (req, res) => {
             console.log("in putuser username is " + oldUsername);
             const newUsername = req.body[0].newUsername;
 
-            // get original user info for insertUser() call later
-            const user = await db.selectUsers(oldUsername);
-            const password = user[0].userpassword;
-            const firstname = user[0].firstname;
-            const lastname = user[0].lastname;
-            const useremail = user[0].useremail;
-            const avatar = user[0].avatar;
-            const showavatar = user[0].showavatar;
-
             // concat old and new usernames together to pass both of them into insertUser()
             let oldNewUsername = oldUsername + ' ' + newUsername;
-
-            // insert user with new username but same user info (useremail, firstname, lastname, etc.)
-            //db.insertUser(newUsername, password, firstname, lastname, useremail, avatar, showavatar);
 
             const updatedUser = await db.updateUsername(oldNewUsername);
 
@@ -90,23 +78,17 @@ exports.putUser = async (req, res) => {
 
 /* Gets user's questionnaire responses/interests. */
 exports.getQResponse = async (req, res) => {
-    console.log('gift.js: getQResponse: backend');
-    console.log(`${ req.session.user }`);
     // app.js passes username to gift.js
-    console.log("Below is body")
-    //console.log(req.body)
-    console.log(req.query.typedInput)
-    const searchedUser = req.query.typedInput
-    console.log(
-        "above is body"
-    )
-    //if(req.session.user){
-    if (req.session.user) {
-        console.log('gift.js: getQResponse: in if statemen');
-    //     // gift.js sends username to db.js.
-        const oneUser = await db.selectQResponses(searchedUser);
+    console.log('gift.js: getQResponse: backend');
+    const username = req.params.username;
+    console.log("gift.js: getQResponse for", username);
+
+    if (username) {
+        console.log('gift.js: getQResponse: in if statement');
+        // gift.js sends username to db.js.
+        const oneUser = await db.selectQResponses(username);
         console.log('gift.js getQResponse: ', oneUser);
-    //     // if db.js returns q response, send 200 and the response attached
+        // if db.js returns q response, send 200 and the response attached
         if (oneUser) {
             console.log('gift.js: getQResponse: oneUser is', [oneUser]);
             res.send([oneUser]);
@@ -116,7 +98,6 @@ exports.getQResponse = async (req, res) => {
             res.status(404).send();
         }
     }
-//}
     console.log('gift.js: getQResponse: end function');
 };
 
