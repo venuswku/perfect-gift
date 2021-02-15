@@ -13,7 +13,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "Search by..",
+      value: "Search by...",
       placeholderText: "Select a way to search",
       typedInput: "",
       user: "",
@@ -100,8 +100,9 @@ class Home extends React.Component {
             })
         }
 
-        // If the user is searching for a gift
-        else if (value === "Search for a gift") {
+        // If the user is either using the "Search for a gift" or "Search by..." option
+        else {
+        // else if (value === "Search for a gift") {
           console.log(`Frontend: We will search for the gift:"${typedInput}"`);
           serverPath += `/searchgift?searchTopics[]=${typedInput}`;
           console.log(serverPath);
@@ -120,9 +121,9 @@ class Home extends React.Component {
         }
 
         // The user is searching using the "Search by" option
-        else {
-          throw new Error("FrontEnd Error")
-        }
+        // else {
+        //   throw new Error("FrontEnd Error")
+        // }
       }
 
       // The user did not input anything
@@ -173,16 +174,19 @@ class Home extends React.Component {
         const relatedInterest = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
 
         displayGiftSuggestions.push(
-          <div className="gift-main" key={giftName}>
-            <img src={giftPic} alt={picText}></img>
-            <a href={giftLink} className="gift-name blue varela">{giftName}</a>
-            {relatedInterest !== ""
-              ? <div className="gift-right">
-                <p className="gift-interest-text grey gothic">Interest</p>
-                <p className="gift-interest-topic grey gothic">{relatedInterest}</p>
+          <div className="giftSuggestionWrapper" key={giftName}>
+            <div className="giftImgBackground"><img src={giftPic} alt={picText} className="gift-img"/></div>
+            <div className="giftInfo">
+              <a href={giftLink} className="giftName blue varela">{giftName}</a>
+              <div className="moreGiftInfo">
+                {relatedInterest !== ""
+                ? <div className="interestInfo grey gothic">
+                    <p className="interestLabel">Interest</p>
+                    <p className="giftInterestTopic">{relatedInterest}</p>
+                  </div>
+                : null}
               </div>
-              : null
-            }
+            </div>
           </div>
         );
       }
@@ -224,7 +228,7 @@ class Home extends React.Component {
                       onChange={this.handleChange}
                       className="varela home-select"
                     >
-                      <option className="home-option" value="Select a way to search">Search by..</option>
+                      <option className="home-option" value="Select a way to search">Search by...</option>
                       <option className="home-option" value="Search by username">Username</option>
                       <option className="home-option" value="Search for a gift">Gift</option>
                     </select>
@@ -234,7 +238,7 @@ class Home extends React.Component {
               </div >
               {/*The gift suggestion*/}
               {displayGiftSuggestions}
-              <div className="gift-main">
+              {/* <div className="gift-main">
                 <p className="gift-name blue varela">Hockey Stick</p>
                 <div className="gift-background">
                   <Hockey className="gift-img" />
@@ -245,7 +249,7 @@ class Home extends React.Component {
                   <Heart className="gift-heart-pic" />
                   <p className="gift-wishlist-text grey varela small-text">Wishlist item</p>
                 </div>
-              </div>
+              </div> */}
             </header>
           </div>
         </div>
