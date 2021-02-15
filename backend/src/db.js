@@ -31,10 +31,6 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
     console.log('db.js: insertUsers called');
     let insert = `INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES('${username}', '${userpassword}', '${firstname}', '${lastname}', '${useremail}', '${avatar}', '${showavatar}')`;
     // console.log(insert);
-    // const { rows } = await pool.query(query);
-    // if (rows.length == 1) {
-    //     rows[0].userpassword = userpassword;
-    // }
 
     pool.query(insert, (err, res) => {
         if (err) {
@@ -44,6 +40,7 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
         }
         console.log("db.js: insertUsers: user info inserted into giftusers table!");
     });
+    return;
 }
 
 // Update the current username with the new username the user changed
@@ -67,8 +64,9 @@ exports.updateUsername = async (username) => {
 exports.selectQResponses = async (username) => {
     let select = `SELECT * FROM questionnaireresponses WHERE username = '${username}'`;
     console.log('db.js: selectQResponse: start selectQResponse');
+    console.log(select);
     try {
-        const result =  await pool.query(select);
+        const result = await pool.query(select);
         console.log(result.rowCount);
         console.log(result.rows[0]);
         if (result) {
@@ -93,7 +91,8 @@ exports.insertQResponses = async (username, outdooractivity, place, store, music
             return;
         }
         console.log("db.js: insertQResponse: responses inserted into questionnaireresponses table!");
-    });
+        return;
+    });   
 }
 
 // Updates questionnaire responses in questionnaireresponses table.
@@ -115,8 +114,6 @@ exports.updateQResponses = async (username, outdooractivity, place, store, music
         return;
     });
 }
-
-
 
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username) => {

@@ -122,15 +122,15 @@ exports.postQResponse = async (req, res) => {
         const exercise = req.body[0].exercise;
 
         // insert questionnaire responses in questionnareresponses table
-        const yesInsert = await db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
+        const insertedResponses = await db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
 
         // check if post request was successful
-        if (yesInsert) {
-            const userResponses = await db.selectQResponses(username);
+        // if (insertedResponses) {
+            // const userResponses = await db.selectQResponses(username);
             console.log("gift.js: postQResponse: Gifter's questionnaire responses are stored!");
-            res.status(201).json(userResponses);
-            console.log("gift.js: postQResponse: we are getting 201 success");
-        }
+            // res.status(201).json(userResponses);
+            res.status(201).json([{username: username}]);
+        // }
     } catch {
         console.log("gift.js: postQResponse: qr failz");
         res.status(404).send();
@@ -174,26 +174,20 @@ exports.putQResponse = async (req, res) => {
     }
 };
 
-
-
 // Checks if login credentials are valid
 exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
     console.log("The frontend has given us:")
     try {
-        console.log(req.body.username, req.body.password)
+        console.log(req.body.username, req.body.userpassword)
         const oneUser = await db.authenticateUser(req.body.username);
         const stored_pass = oneUser[0]['userpassword'];
         console.log(oneUser)
         console.log(stored_pass)
 
-        // bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-        //     console.log(hash);
-        // });
-
         if (stored_pass.length > 0) {
 
-            bcrypt.compare(req.body.password, stored_pass, (err, result) => {
+            bcrypt.compare(req.body.userpassword, stored_pass, (err, result) => {
                 if (result) {
                     console.log("AUTHENTICATED")
                     req.session.user = oneUser[0]['username']
@@ -219,7 +213,7 @@ exports.login = async (req, res) => {
 /*
  * This function check is the user has a cookie.
  * If they do, they are allowed to be on the website.
- * Else, they will be redirected to the login page (done in the frontend).
+ * Else, they will be redirected to the sign in page (done in the frontend).
  * Note to self: Make sure to remove the password when sending back the data to frontend.
 */
 exports.checkLogin = async (req, res) => {
