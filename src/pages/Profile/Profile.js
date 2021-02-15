@@ -151,6 +151,19 @@ class Profile extends Component {
                                     res.data[0].sport, res.data[0].sportsteam, res.data[0].exercise]
                             });
                             console.log('qresponse is: ', this.state.qresponse);
+
+                            axios.get(`http://localhost:3010/v0/getwishlist/${this.state.username}`, [this.state])
+                            .then(res => {
+                                console.log("Frontend [SUCCESS]: We have received the user's wishlist")
+                                console.log(res.data)
+                            })
+                            .catch(err => {
+                                console.log("Frontend [ERROR]: Retrieving wishlist was unsuccessful.")
+                                console.log(err)
+                                this.setState({
+                                    
+                                });
+                            })
                         });
                         // .catch(res => {
                         //     console.log('failed get q response');

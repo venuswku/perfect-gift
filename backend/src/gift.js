@@ -363,3 +363,43 @@ exports.giftapi = async (req, res) => {
         res.send("Failed")
     }
 }
+
+exports.storeWLGift = async (req,res) => {
+    try {
+        console.log(req.body)
+        const WL_Stored = await db.storeUserWishlistGift(req.session.user, req.body[0].WLGiftToStore)
+        if(WL_Stored === "Success") {
+            console.log("Server [SUCCESS]: Stored user wishlist gift in wishlist table")
+        res.send("Success")
+        }
+
+        else if(WL_Stored === "Warning") {
+            console.log("Server [WARNING]: The user is trying to insert a wishlist gift that is already in the table.")
+        }
+
+        else if(WL_Stored === "Failure") {
+            console.log("Server [FAILURE]: Storing the new wishlist gives us an error")
+        }   
+    }
+
+    catch(error) {
+        console.log("Server [FAILURE]: There was an error when storing the wishlist gift into the database.")
+        console.log(error)
+        res.send("Failure")
+    }
+}
+
+exports.getwishlist = async (req,res) => {
+    try {   
+        let wishlist_result = await db.selectWishlist(req.session.user)
+        console.log(wishlist_result)
+        wishlist_result['username'] = req.session.user
+        res.send([wishlist_result])
+        console.log("Server [SUCCESS]: We retrieved the user's wishlist. Sending it back to the Frontend...")
+
+    }
+
+    catch {
+        console.log("Server [ERROR]: We could not retrieve the user's wishlist")
+    }
+}

@@ -137,3 +137,63 @@ exports.authenticateUser = async (username) => {
 };
 
 console.log(`Connected to database '${process.env.POSTGRES_DB}'`);
+
+exports.storeUserWishlistGift = async (username, WLG) => {
+    try {
+        console.log(username,WLG)
+        let noDuplicateWLG = `SELECT * FROM wishlist WHERE username='${username}' AND gift='${WLG}'`
+        const queryResult = await pool.query(noDuplicateWLG);
+        console.log("----------")
+        console.log(queryResult.rows)
+        console.log("----------")
+        console.log
+        if(queryResult.rows.length !== 1) {
+            console.log("DATABASE [SUCCESS]: The wishlist gift is not in our table. Thus, we will store it now...")
+            let insertWLG = `INSERT INTO wishlist(username, gift) VALUES('${username}', '${WLG}')`
+            const successful_store = await pool.query(insertWLG)
+            console.log('DATABASE [SUCCESS]: We have successfully stored the WLG into our database.')
+            return "Success";
+        } else {
+            console.log("DATABASE [WARNING]: The wishlist gift we are trying to insert already exists in the database.")
+            return "Warning"
+        }
+        
+    }
+
+    catch(error) {
+        console.log("DATABASE [ERROR]: There was an error when trying to call the function to query the wishlist.")
+        console.log(error)
+        return "Error"
+    }
+}
+
+exports.selectWishlist = async (username) => {
+    try {
+
+        let getWL = `SELECT gift FROM wishlist WHERE username = '${username}'`
+        const WL_QUERY = await pool.query(getWL)
+        console.log(WL_QUERY)
+        console.log("DATABASE [SUCCESS]: Retrieved wishlist")
+        
+        // for([k,v] of Object.entries({WL_QUERY.rows[0]})){
+        //     console.log(k,v)
+        // }
+        let gifts = {'gift': []}
+        for(let i = 0; i < WL_QUERY.rows.length; i++) {
+            console.log(WL_QUERY.rows[i]['gift'])
+           gifts['gift'].push(WL_QUERY.rows[i]['gift'])
+        }
+        console.log(gifts)
+            
+        return gifts
+       //return 1;
+    }
+
+    catch(err) {
+
+        console.log("DATABASE [ERROR]: Could not get wishlist")
+        console.log(err)
+        return 2;
+    }
+
+}
