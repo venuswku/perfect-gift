@@ -193,7 +193,7 @@ class Profile extends Component {
                 } else if (index === 9 || index === 10 || index === 11) {
                     color = 'textBubble music';
                 }
-                displayresponse.push(<span className={color}>{value} &nbsp; <DeleteButton /></span>);
+                displayresponse.push(<span className={color} key={value}>{value} &nbsp; <DeleteButton /></span>);
             }
         }
 

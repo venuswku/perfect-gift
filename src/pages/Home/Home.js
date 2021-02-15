@@ -173,7 +173,7 @@ class Home extends React.Component {
         const relatedInterest = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
 
         displayGiftSuggestions.push(
-          <div className="gift-main">
+          <div className="gift-main" key={giftName}>
             <img src={giftPic} alt={picText}></img>
             <a href={giftLink} className="gift-name blue varela">{giftName}</a>
             {relatedInterest !== ""
