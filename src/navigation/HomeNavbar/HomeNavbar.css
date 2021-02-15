@@ -1,4 +1,4 @@
-.home-navbar {
+.homeNavbar {
     position: absolute;
     padding: 30px 50px 0px 0px;
 
@@ -18,12 +18,12 @@
     z-index: 100;
 }
 
-.home-navbar-logo {
+.homeNavbarLogo {
     /* resize logo */
     transform: scale(0.8);
 }
 
-.navigation-links {
+.navigationLinks {
     /* display navigation links in a row */
     display: flex;
     flex-direction: row;

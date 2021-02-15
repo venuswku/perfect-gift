@@ -45,9 +45,9 @@ class HomeNavbar extends Component {
 
     render() {
     return (
-        <div className="home-navbar">
-            <Link to="/home" className="home-navbar-logo" ><PerfectGiftLogo/></Link>
-            <div className="navigation-links">
+        <div className="homeNavbar">
+            <Link to="/home" className="homeNavbarLogo" ><PerfectGiftLogo/></Link>
+            <div className="navigationLinks">
                 <Link to="/home" className="link"><MagnifyGlass/> Find Gift</Link>
                 <Link to="/profile" className="link">My Profile</Link>
                 <Link to="/" className="link" onClick={this.submitHandler}>Sign Out</Link>
