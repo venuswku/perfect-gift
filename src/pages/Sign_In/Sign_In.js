@@ -45,7 +45,7 @@ class Sign_In extends Component {
     .then(response => {
       if (response.data === ""){
         console.log("Not Logged In")
-        this.setState({wrongPassword: "The password/username combination you entered is incorrect. Try again"})
+        this.setState({wrongPassword: "The password/username combination you entered is incorrect. Try again."})
       }
       else {
         console.log("Logged In")
