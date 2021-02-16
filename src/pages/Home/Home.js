@@ -2,7 +2,7 @@ import React from "react";
 import "./Home.css";
 import Navbar from "../../navigation/HomeNavbar/HomeNavbar";
 import HomeImage from "../../images/create_account_image.png";
-import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass_grey.svg";
+import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
 import { ReactComponent as Hockey } from "../../images/hockey.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
 import axios from 'axios';
@@ -229,7 +229,7 @@ class Home extends React.Component {
                 name="typedInput"
                 onChange={this.handleUserInput}
               />
-              <div className="searchButton" onClick={this.handleSubmit}><MagnifyGlass className="mag"/></div>
+              <div className="searchButton" onClick={this.handleSubmit}><MagnifyGlass className="searchButtonIcon"/></div>
             </div>
           </form>
           {/*The gift suggestion*/}

@@ -115,7 +115,7 @@
 }
 
 .searchInput {
-  width: 280px;
+  width: 260px;
   font-size: 18px;
   padding-left: 8px;
   color: black;
@@ -130,15 +130,15 @@
   display: flex;
   align-items: center;
 }
-
 .searchButton:hover {
   background: rgb(114, 214, 201);
 }
 
 /* The magnifying glass picture next to the search bar */
-.mag {
+.searchButtonIcon {
   width: 15px;
   height: 15px;
+  fill: rgba(255, 255, 255, 0.85);
 }
 
 .giftSuggestionWrapper {
