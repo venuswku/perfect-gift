@@ -49,7 +49,7 @@ class Home extends React.Component {
 
   // When the user hits enter, it will send the string to the server
   handleSubmit(event) {
-    const { value, placeholderText, typedInput } = this.state
+    const { value, typedInput } = this.state
     let serverPath = "http://localhost:3010/v0/giftapi";
     console.log("Frontend: We are going to submit your search request to the server")
 
@@ -161,7 +161,7 @@ class Home extends React.Component {
 
   /*Renders the whole Home page */
   render() {
-    const { value, placeholderText, typedInput, user } = this.state;
+    const { placeholderText, typedInput } = this.state;
 
     // display each gift returned by eBay API
     const displayGiftSuggestions = [];
@@ -194,64 +194,58 @@ class Home extends React.Component {
 
     return (
       <div className="Home">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        {/* <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta> */}
         <Navbar />
-        <div className="home-parent">
+        <div className="homeContent">
           {/*The greeting and picture*/}
-          <div className="home-main">
-            <header className="home-greeting">
-              <p className="blue varela flex-item ">Hello, {this.state.user}!</p>
-              <p className="blue gothic flex-item">
-                What gift are you looking for today?
-              </p>
-              <img
-                src={HomeImage}
-                alt="the gifters"
-                className="flex-item homePic"
+          <header className="homeGreeting">
+            <p className="hello blue varela flexItem">Hello, {this.state.user}!</p>
+            <p className="blue gothic flexItem">What gift are you looking for today?</p>
+            <img
+              src={HomeImage}
+              alt="the gifters"
+              className="homePic"
+            />
+          </header>
+          {/*The searchbar and dropdown*/}
+          <form className="homeSearchbarBackground" onSubmit={this.handleSubmit}>
+            <label className="dropDown smallText">
+              <select
+                value={this.state.value}
+                onChange={this.handleChange}
+                className="homeSelect varela blue"
+              >
+                <option className="homeOption" value="Select a way to search">&nbsp;Search by...</option>
+                <option className="homeOption" value="Search by username">&nbsp;Username</option>
+                <option className="homeOption" value="Search for a gift">&nbsp;Gift</option>
+              </select>
+            </label>
+            <div className="searchbar">
+              <input
+                type="text"
+                className="searchInput gothic"
+                placeholder={placeholderText}
+                value={typedInput}
+                name="typedInput"
+                onChange={this.handleUserInput}
               />
-              {/*The searchbar and dropdown*/}
-              <div className="home-searchbar-background">
-                <p></p>
-                <form onSubmit={this.handleSubmit}>
-                  <input
-                    type="text"
-                    className="white-searchbar gothic home-input"
-                    placeholder={placeholderText}
-                    value={typedInput}
-                    name="typedInput"
-                    onChange={this.handleUserInput}
-                  ></input>
-                  <MagnifyGlass className="mag" />
-                  <label className="dropDown1 small-text">
-                    <select
-                      value={this.state.value}
-                      onChange={this.handleChange}
-                      className="varela home-select"
-                    >
-                      <option className="home-option" value="Select a way to search">Search by...</option>
-                      <option className="home-option" value="Search by username">Username</option>
-                      <option className="home-option" value="Search for a gift">Gift</option>
-                    </select>
-                  </label>
-
-                </form>
-              </div >
-              {/*The gift suggestion*/}
-              {displayGiftSuggestions}
-              {/* <div className="gift-main">
-                <p className="gift-name blue varela">Hockey Stick</p>
-                <div className="gift-background">
-                  <Hockey className="gift-img" />
-                </div>
-                <div className="gift-right">
-                  <p className="gift-interest-text grey gothic">Interest</p>
-                  <p className="gift-interest-topic grey gothic">Hockey</p>
-                  <Heart className="gift-heart-pic" />
-                  <p className="gift-wishlist-text grey varela small-text">Wishlist item</p>
-                </div>
-              </div> */}
-            </header>
-          </div>
+              <div className="searchButton" onClick={this.handleSubmit}><MagnifyGlass className="mag"/></div>
+            </div>
+          </form>
+          {/*The gift suggestion*/}
+          {displayGiftSuggestions}
+          {/* <div className="gift-main">
+            <p className="gift-name blue varela">Hockey Stick</p>
+            <div className="gift-background">
+              <Hockey className="gift-img" />
+            </div>
+            <div className="gift-right">
+              <p className="gift-interest-text grey gothic">Interest</p>
+              <p className="gift-interest-topic grey gothic">Hockey</p>
+              <Heart className="gift-heart-pic" />
+              <p className="gift-wishlist-text grey varela small-text">Wishlist item</p>
+            </div>
+          </div> */}
         </div>
       </div>
     );

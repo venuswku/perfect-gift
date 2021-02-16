@@ -1,16 +1,12 @@
 /*Has the background color from Figma */
-.home-parent {
+.Home {
+  min-height: 100vh;
+  padding-bottom: 6%;   /* 3% from top padding + 3% bottom padding from homeContent class */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
   text-align: center;
 
-  position: absolute;
-  left: 0%;
-  right: 0%;
-  top: 0%;
-  bottom: 0%;
   background: linear-gradient(
       113.82deg,
       #ffddb5 -4%,
@@ -20,101 +16,33 @@
     #ffffff;
 }
 
-/*Using flexbox to space items in a column */
-.home-greeting {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/*This is the sky blue bar */
-.home-searchbar-background {
-  align-items: center;
-  background-color: #bad1ff;
-  border-radius: 25px;
-  display: flex;
-  width: 1000px;
-  height: 50px;
-  justify-content: center;
-  /*
-  background-color: #32ffff;
-  border: 5px solid blue;
-  */
-}
-
-/* This is the search bar where you can type in text */
-.white-searchbar {
-  background-color: white;
-  width: 300px;
-  height: 25px;
-  border-radius: 25px;
-  color: #989898;
-  justify-content: right;
-  font-size: 20px;
-  text-align: center;
-  /* border: 4px solid lavender; */
-}
-
-/* The magnifying glass picture next to the search bar */
-.mag {
-  /* background-color: khaki;
- border: 4px solid green; */
-  position: absolute;
-  text-align: left;
-  justify-content: left;
-  left: 275px;
-  width: 20px;
-  height: 20px;
-  top:292px;
-}
-
-.dropDown {
-  position: absolute;
-  text-align: left;
-
-  left: 50px;
-  width: 175px;
-  height: 25px;
-
-  background-color: #fff;
-  border-radius: 5px;
-  border: 1px solid #007eff;
-  font-size: 17px;
-  text-indent: 15px;
-  line-height: 1.5;
-}
-
-.dd-icon {
-  width: 15px;
-  height: 15px;
-  left: 200px;
-  border: 0px solid white;
-}
-
-/* A flex item that has no margin (used for greeting) */
-.flex-item {
-  margin: 0 5px;
-}
-
-/* A picture of all 5 of us */
-.homePic {
-  width: 300px;
-  height: auto;
-}
-
-/* Starting flex-box below navbar */
-.home-main {
+.homeContent {
   position: relative;
   top: 100px;
   width: 800px;
   text-align: center;
-  padding: 0;
+  padding: 3% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*Using flexbox to space items in a column */
+.homeGreeting {
+  justify-content: space-between;
+}
+
+.hello {
+  font-size: 36px;
 }
 
 /* Blue color */
 .blue {
   color: #2970fa;
+}
+
+.grey {
+  color: #5a5858;
 }
 
 /*Varela font */
@@ -127,79 +55,90 @@
   font-family: "Didact Gothic";
 }
 
-/* Styling for the search bar input */
-/*
-input {
-  width: 120px;
-  height: 60px;
-  margin-left: 35px;
-  display: block;
-  background-color: gray;
-  color: white;
-  border: none;
-  outline: none;
-}
-
-option {
-  background-color: white;
-  border: 5px solid red;
-}
-
-select {
-  background-color: white;
-  border: 1px solid #007EFF;
-  border-radius: 5px;
-  width: 150px;
-  height: 30px;
-  color: #007EFF;
-  outline: none;
-}
-*/
-
-.home-input {
-  width: 300px;
-  height: 30px;
-  margin-left: 35px;
-  display: block;
-  background-color: white;
-  color: gray;
-  border: none;
-  outline: none;
-}
-
-.home-option {
-  background-color: white;
-  border: 5px solid red;
-}
-
-.home-select {
-  background-color: white;
-  border: 1px solid #007eff;
-  border-radius: 5px;
-  width: 150px;
-  height: 30px;
-  color: #007eff;
-  outline: none;
-  position: relative;
-  top: -30px;  
-}
-
-.small-text {
+.smallText {
   font-size: 15px;
 }
-.dropDown1 {
-  position: absolute;
+
+/* A flex item that has no margin (used for greeting) */
+.flexItem {
+  margin: 0 5px;
+}
+
+/* A picture of all 5 of us */
+.homePic {
+  width: 60%;
+}
+
+/*This is the sky blue bar */
+.homeSearchbarBackground {
+  background-color: #bad1ff;
+  width: 1000px;
+  height: 50px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropDown {
   text-align: left;
-
-  left: 50px;
   width: 175px;
-  height: 25px;
-
   border-radius: 5px;
-
   font-size: 17px;
-  text-indent: 15px;
-  line-height: 1.5;
+}
+
+.homeSelect {
+  background-color: white;
+  border: 1px solid #2970fa;
+  border-radius: 5px;
+  width: 150px;
+  height: 30px;
+  outline: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.homeOption {
+  cursor: pointer;
+}
+
+/* This is the search bar where you can type in text */
+.searchbar {
+  background-color: white;
+  width: 300px;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.searchInput {
+  width: 280px;
+  font-size: 18px;
+  padding-left: 8px;
+  color: black;
+  border: none;
+  outline: none;
+}
+
+.searchButton {
+  background: rgba(114, 214, 201, 0.8);
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.searchButton:hover {
+  background: rgb(114, 214, 201);
+}
+
+/* The magnifying glass picture next to the search bar */
+.mag {
+  width: 15px;
+  height: 15px;
 }
 
 .giftSuggestionWrapper {
@@ -281,12 +220,6 @@ select {
   text-decoration: none;
 }
 
-/* This displays the image of the gift */
-.gift-img {
-  width: 100px;
-  /* height: 100px; */
-}
-
 /* This displays a white background behind the gift */
 .gift-background {
   width: 150px;
@@ -303,6 +236,26 @@ select {
   align-items: center;
 }
 
+/* This displays the image of the gift */
+.gift-img {
+  width: 100px;
+  /* height: 100px; */
+}
+
+.gift-right {
+  position: absolute;
+  /*
+  background-color: lightseagreen;
+  opacity: 0.3;
+  border: 2px solid orange;
+  */
+  width: 400px;
+  height: 100px;
+  top: 30%;
+  left: 30%;
+  bottom: 0;
+  right: 10;
+}
 
 .gift-interest-text {
   position: absolute;
@@ -321,29 +274,10 @@ select {
   width: 80px; /*Check out auto later */
 }
 
-.grey {
-  color: #5a5858;
-}
-
 .gift-heart-pic {
   position: absolute;
   top: 33%;
   left: 50%;
-}
-
-.gift-right {
-  position: absolute;
-  /*
-  background-color: lightseagreen;
-  opacity: 0.3;
-  border: 2px solid orange;
-  */
-  width: 400px;
-  height: 100px;
-  top: 30%;
-  left: 30%;
-  bottom: 0;
-  right: 10;
 }
 
 .gift-wishlist-text {
