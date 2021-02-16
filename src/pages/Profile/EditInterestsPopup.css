@@ -27,11 +27,12 @@
 }
 
 .close {
-    font-size: 60px;
+    font-size: 50px;
+    font-family: "Varela Round";
     cursor: pointer;
-    position: absolute;
-    top: 1%;
-    right: 2%;
+    position: fixed;
+    top: 8%;
+    right: 11%;
 }
 
 .close:hover {
