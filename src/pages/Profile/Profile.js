@@ -30,6 +30,7 @@ class Profile extends Component {
             showQuestionnairePopup: false,
             qresponse: [],
             showWishlistPopup: false,
+            wlresponse: [],
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -156,6 +157,9 @@ class Profile extends Component {
                             .then(res => {
                                 console.log("Frontend [SUCCESS]: We have received the user's wishlist")
                                 console.log(res.data)
+                                console.log(res.data[0].gift)
+                                this.setState({wlresponse: res.data[0].gift})
+                                console.log(this.state.wlresponse)
                             })
                             .catch(err => {
                                 console.log("Frontend [ERROR]: Retrieving wishlist was unsuccessful.")
@@ -210,6 +214,18 @@ class Profile extends Component {
             }
         }
 
+        // Setting up wishlist items
+        const wl_response = this.state.wlresponse;
+        const displaywishlist = [];
+        for (let i in wl_response) {
+                var color = '';
+                color = 'textBubble indoors';
+
+                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteButton /></span>);
+            
+        }
+
+
         return (
             <div className="Profile">
                 
@@ -242,8 +258,9 @@ class Profile extends Component {
                         <div>
                             {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} /> : null}
                             <span className='topicFont'>Wishlist</span>
+                            {displaywishlist}
                             <ul className='tab no-bullets'>
-                                <li>hockey stick &nbsp; <DeleteButton /></li>
+                                {/* <li>hockey stick &nbsp; <DeleteButton /></li>
                                 <li>hockey shin guard &nbsp; <DeleteButton /></li>
                                 <li>Harry Potter wand &nbsp; <DeleteButton /></li>
                                 <li>hockey stick &nbsp; <DeleteButton /></li>
@@ -251,7 +268,7 @@ class Profile extends Component {
                                 <li>Harry Potter wand &nbsp; <DeleteButton /></li>
                                 <li>hockey stick &nbsp; <DeleteButton /></li>
                                 <li>hockey shin guard &nbsp; <DeleteButton /></li>
-                                <li>Harry Potter wand &nbsp; <DeleteButton /></li>
+                                <li>Harry Potter wand &nbsp; <DeleteButton /></li> */}
                             </ul>
                             <br></br>
                             <span className='tab'> <AddButton  onClick={this.togglePopupWL} /> Add to wishlist</span>
