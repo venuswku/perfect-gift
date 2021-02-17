@@ -27,11 +27,7 @@
   },
   "proxy": "https://open.api.ebay.com",
   "scripts": {
-    "prestart": "docker-compose up -d",
     "start": "nodemon src/server.js",
-    "pretest": "docker-compose up -d",
-    "test": "jest --runInBand --testTimeout=2000 --coverage --forceExit",
-    "posttest": "docker-compose down",
     "lint": "./node_modules/.bin/eslint . --ext .js"
   }
 }
