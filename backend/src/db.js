@@ -31,10 +31,6 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
     console.log('db.js: insertUsers called');
     let insert = `INSERT INTO giftuser(username, userpassword, firstname, lastname, useremail, avatar, showavatar) VALUES('${username}', '${userpassword}', '${firstname}', '${lastname}', '${useremail}', '${avatar}', '${showavatar}')`;
     // console.log(insert);
-    // const { rows } = await pool.query(query);
-    // if (rows.length == 1) {
-    //     rows[0].userpassword = userpassword;
-    // }
 
     pool.query(insert, (err, res) => {
         if (err) {
@@ -44,27 +40,33 @@ exports.insertUser = async (username, userpassword, firstname, lastname, userema
         }
         console.log("db.js: insertUsers: user info inserted into giftusers table!");
     });
+    return;
 }
 
-// Updates user data in giftusers table.
-// exports.updateUsername = async (username, useremail) => {
-//     const select = `UPDATE giftuser SET username = $1 WHERE useremail = $2`;
-//     // eslint-disable-next-line max-len
-//     // const select = `UPDATE mail SET mail = jsonb_set(mail, '{mail,star}', 'true') WHERE id = $1`;
-//     const query = {
-//         text: select,
-//         values: [username],
-//     };
-//     const t = await pool.query(query);
-//     return t;
-// };
+// Update the current username with the new username the user changed
+exports.updateUsername = async (username) => {
+    let splitArrayUsername = username.split(" ");
+    let oldUser = splitArrayUsername[0];
+    // console.log(oldUser);
+    let newUser = splitArrayUsername[1];
+    // console.log(newUser);
+
+    // update username for giftuser table and other tables with username as foreign key
+    const updateUsername = `UPDATE giftuser SET username = '${newUser}' WHERE username = '${oldUser}'`;
+    const q = await pool.query(updateUsername);
+    
+    console.log("db.js: updateUsername: new username updated in giftusers and questionnaireresponses table!");
+
+    return;
+};
 
 // gift.js sends username to db.js. if username is found, it returns all parameters of that row
 exports.selectQResponses = async (username) => {
     let select = `SELECT * FROM questionnaireresponses WHERE username = '${username}'`;
     console.log('db.js: selectQResponse: start selectQResponse');
+    console.log(select);
     try {
-        const result =  await pool.query(select);
+        const result = await pool.query(select);
         console.log(result.rowCount);
         console.log(result.rows[0]);
         if (result) {
@@ -89,7 +91,8 @@ exports.insertQResponses = async (username, outdooractivity, place, store, music
             return;
         }
         console.log("db.js: insertQResponse: responses inserted into questionnaireresponses table!");
-    });
+        return;
+    });   
 }
 
 // Updates questionnaire responses in questionnaireresponses table.
@@ -131,3 +134,63 @@ exports.authenticateUser = async (username) => {
 };
 
 console.log(`Connected to database '${process.env.POSTGRES_DB}'`);
+
+exports.storeUserWishlistGift = async (username, WLG) => {
+    try {
+        console.log(username,WLG)
+        let noDuplicateWLG = `SELECT * FROM wishlist WHERE username='${username}' AND gift='${WLG}'`
+        const queryResult = await pool.query(noDuplicateWLG);
+        console.log("----------")
+        console.log(queryResult.rows)
+        console.log("----------")
+        console.log
+        if(queryResult.rows.length !== 1) {
+            console.log("DATABASE [SUCCESS]: The wishlist gift is not in our table. Thus, we will store it now...")
+            let insertWLG = `INSERT INTO wishlist(username, gift) VALUES('${username}', '${WLG}')`
+            const successful_store = await pool.query(insertWLG)
+            console.log('DATABASE [SUCCESS]: We have successfully stored the WLG into our database.')
+            return "Success";
+        } else {
+            console.log("DATABASE [WARNING]: The wishlist gift we are trying to insert already exists in the database.")
+            return "Warning"
+        }
+        
+    }
+
+    catch(error) {
+        console.log("DATABASE [ERROR]: There was an error when trying to call the function to query the wishlist.")
+        console.log(error)
+        return "Error"
+    }
+}
+
+exports.selectWishlist = async (username) => {
+    try {
+
+        let getWL = `SELECT gift FROM wishlist WHERE username = '${username}'`
+        const WL_QUERY = await pool.query(getWL)
+        console.log(WL_QUERY)
+        console.log("DATABASE [SUCCESS]: Retrieved wishlist")
+        
+        // for([k,v] of Object.entries({WL_QUERY.rows[0]})){
+        //     console.log(k,v)
+        // }
+        let gifts = {'gift': []}
+        for(let i = 0; i < WL_QUERY.rows.length; i++) {
+            console.log(WL_QUERY.rows[i]['gift'])
+           gifts['gift'].push(WL_QUERY.rows[i]['gift'])
+        }
+        console.log(gifts)
+            
+        return gifts
+       //return 1;
+    }
+
+    catch(err) {
+
+        console.log("DATABASE [ERROR]: Could not get wishlist")
+        console.log(err)
+        return 2;
+    }
+
+}

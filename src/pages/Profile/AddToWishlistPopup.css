@@ -1,0 +1,16 @@
+section {
+  background-color: darkblue;
+}
+.pg {
+  background-color: coral;
+  text-align: center;
+}
+
+.wishlist {
+  background-color: rgb(51, 51, 51);
+  text-align: center;
+}
+
+.cool-red {
+  color: rgb(221, 77, 77);
+}
