@@ -14,7 +14,7 @@ const proxy = require('http-proxy-middleware')
 
 // Used for letting the frontend communicate with the server
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", "http://59a2678ecd1d.ngrok.io"],
   methods: ["GET", "POST", "PUT"],
   credentials: true,
 }));
