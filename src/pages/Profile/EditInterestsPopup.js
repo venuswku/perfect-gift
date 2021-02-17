@@ -40,7 +40,7 @@ class EditQuestionnaireResponsesPopup extends Component {
 
     // load user's original questionnaire responses
     componentDidMount() {
-        axios.get('http://localhost:3010/v0/getqresponse', this.state)
+        axios.get(`http://localhost:3010/v0/getqresponse/${this.state.username}`, this.state)
         .then(res => {
             this.setState({ outdooractivity: res.data[0].outdooractivity });
             this.setState({ place: res.data[0].place });

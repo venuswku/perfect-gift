@@ -10,6 +10,7 @@ const axios = require('axios');
 exports.getUsers = async (req, res) => {
     // If a username is passed into query param (name of query is username, in openapi.yaml)
     if (req.query.username) {
+        console.log('printing from inside getUsers function');
         // Get the single user's data if the user is selected
         const oneUser = await db.selectUsers(req.query.username);
         if (oneUser) {
@@ -54,29 +55,40 @@ exports.postUser = async (req, res) => {
 };
 
 /* Puts user's updated login info. */
-// exports.putUser = async (req, res) => {
-//     if (req.query.username) {
-//         // const newUsername = req.query.username;
-//         const newUsername = req.body.username;
-//         const email = req.body.useremail;
-//         const user = await db.updateUsername(newUsername, email);
-//         // const user = await db.updateUsername(req.query.username, req.body.username);
-//         console.log("User data is" + user);
-//         if (user.rowCount === 1) {
-//             res.status(204).send();
-//         } else {
-//             res.status(404).send();
-//         }
-//     }
-// };
+exports.putUser = async (req, res) => {
+    try {
+        const oldUsername = req.params.username;
+        if (oldUsername) {
+            console.log("in putuser username is " + oldUsername);
+            const newUsername = req.body[0].newUsername;
+
+            // concat old and new usernames together to pass both of them into insertUser()
+            let oldNewUsername = oldUsername + ' ' + newUsername;
+
+            const updatedUser = await db.updateUsername(oldNewUsername);
+
+            res.status(204).send();
+            console.log("gift.js: putUser: Gifter's new username is updated!");
+        }    
+    } catch {
+        res.status(404).send();
+        console.log("gift.js: putUser: user failz");
+    }
+};
 
 /* Gets user's questionnaire responses/interests. */
 exports.getQResponse = async (req, res) => {
-    console.log('gift.js: getQResponse: start function');
-    const username = req.session.user;
+    // app.js passes username to gift.js
+    console.log('gift.js: getQResponse: backend');
+    const username = req.params.username;
+    console.log("gift.js: getQResponse for", username);
+
     if (username) {
         console.log('gift.js: getQResponse: in if statement');
+        // gift.js sends username to db.js.
         const oneUser = await db.selectQResponses(username);
+        console.log('gift.js getQResponse: ', oneUser);
+        // if db.js returns q response, send 200 and the response attached
         if (oneUser) {
             console.log('gift.js: getQResponse: oneUser is', [oneUser]);
             res.send([oneUser]);
@@ -110,15 +122,15 @@ exports.postQResponse = async (req, res) => {
         const exercise = req.body[0].exercise;
 
         // insert questionnaire responses in questionnareresponses table
-        const yesInsert = await db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
+        const insertedResponses = await db.insertQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
 
         // check if post request was successful
-        if (yesInsert) {
-            const userResponses = await db.selectQResponses(username);
+        // if (insertedResponses) {
+            // const userResponses = await db.selectQResponses(username);
             console.log("gift.js: postQResponse: Gifter's questionnaire responses are stored!");
-            res.status(201).json(userResponses);
-            console.log("gift.js: postQResponse: we are getting 201 success");
-        }
+            // res.status(201).json(userResponses);
+            res.status(201).json([{username: username}]);
+        // }
     } catch {
         console.log("gift.js: postQResponse: qr failz");
         res.status(404).send();
@@ -131,7 +143,7 @@ exports.putQResponse = async (req, res) => {
         // get username from route parameters
         const username = req.params.username;
         console.log("gift.js: putQResponse for", username);
-        
+
         // get user changes from Edit Interests Popup
         const outdooractivity = req.body[0].outdooractivity;
         const place = req.body[0].place;
@@ -162,24 +174,20 @@ exports.putQResponse = async (req, res) => {
     }
 };
 
-/* Checks if login credentials are valid. */
+// Checks if login credentials are valid
 exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
     console.log("The frontend has given us:")
     try {
-        console.log(req.body.username, req.body.password)
+        console.log(req.body.username, req.body.userpassword)
         const oneUser = await db.authenticateUser(req.body.username);
         const stored_pass = oneUser[0]['userpassword'];
         console.log(oneUser)
         console.log(stored_pass)
 
-        // bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-        //     console.log(hash);
-        // });
-
         if (stored_pass.length > 0) {
 
-            bcrypt.compare(req.body.password, stored_pass, (err, result) => {
+            bcrypt.compare(req.body.userpassword, stored_pass, (err, result) => {
                 if (result) {
                     console.log("AUTHENTICATED")
                     req.session.user = oneUser[0]['username']
@@ -205,13 +213,11 @@ exports.login = async (req, res) => {
 /*
  * This function check is the user has a cookie.
  * If they do, they are allowed to be on the website.
- * Else, they will be redirected to the login page (done in the frontend).
+ * Else, they will be redirected to the sign in page (done in the frontend).
  * Note to self: Make sure to remove the password when sending back the data to frontend.
 */
 exports.checkLogin = async (req, res) => {
     console.log("Request: Check if user is logged in");
-    console.log(req.body.user);
-
     console.log(req.session.user);
     if (req.session.user) {
         console.log("Enters IF")
@@ -273,21 +279,119 @@ exports.getUserWishlist = async (req, res) => {
     }
 }
 
-// This will return a gift suggestion for the user
+// This will return a gift suggestion(s) to the user
+// It will send an array to the frontend that contains information about a gift in this format:
+// giftSuggestions = [ [Gift name, Gift image, Gift redirect URL, Related interest (if user searched by username)], ... ,]
 axios.defaults.withCredentials = true;
 exports.giftapi = async (req, res) => {
-    
+
     try {
-        console.log(req.body.typedInput)
-        console.log("------------------------")
-        console.log("Server: You are trying to get a gift suggestion. We are going to process it now.")
-        const response = await axios.get('https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&callname=FindItems&QueryKeywords=dog&itemSort=BestMatch', {}) //The port of the server
-        console.log("Server: Your gift suggestion request was successful.")
-        console.log(response.data)
-        res.send("Successful")
+        const searchMethod = req.params.searchby;
+        console.log("User wants to search by", searchMethod);
+
+        // We will store information about the gift suggestions in this array.
+        let giftSuggestions = {}
+
+        // We are iterating through the queries that the user has given us.
+        for (const searchTopicsArray in req.query) {
+
+            // If the query is actually an array a queries and not some other thing (Object prototype thingy)
+            if (req.query.hasOwnProperty(searchTopicsArray)) {
+
+                // go through each topic in the searched topics array
+                let searchTopics = req.query[searchTopicsArray]
+                console.log(searchTopics)
+                for(i in searchTopics) {
+                    console.log(`Search topic ${i}: ${searchTopics[i]}`)
+
+                    // and make API call to ebay to give us the image and link to the gift            
+                    const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${searchTopics[i]}&itemSort=BestMatch`)
+                    
+                    // const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindProducts&QueryKeywords=${searchTopics[i]}&MaxEntries=1&ProductSort=Popularity`)
+                    // ^ seems to give better results
+
+                    // Store these results in variables and then store them in our giftSuggestions array
+                    const GIFT_INFO = [];
+                    const GIFT_NAME = response.data.Item[0].Title;
+                    const GIFT_IMAGE_URL = response.data.Item[0].GalleryURL;
+                    const GIFT_URL_TO_GIFT = response.data.Item[0].ViewItemURLForNaturalSearch;
+                    let RELATED_INTEREST = "";
+                    if (searchMethod === "searchusername") { RELATED_INTEREST = searchTopics[i]; }
+                    console.log(GIFT_NAME);
+                    console.log(GIFT_IMAGE_URL);
+                    console.log(GIFT_URL_TO_GIFT);
+                    GIFT_INFO.push(GIFT_NAME, GIFT_IMAGE_URL, GIFT_URL_TO_GIFT, RELATED_INTEREST);
+                    giftSuggestions[searchTopics[i]] = GIFT_INFO;
+                }
+            }
+        }
+
+        // Sending all the data back to our frontend
+        console.log("Server [SUCCESS]: We have processed all your gift suggestions")
+        giftSuggestions['typedInput'] = "Success"
+        giftSuggestions['searchby'] = "Success"
+        console.log(giftSuggestions);
+        res.send([giftSuggestions]);
+        
+        // let hardCode = {'taeyeon': [
+        //                     "Taeyeon Purpose Postcard Set",
+        //                     'https://thumbs2.ebaystatic.com/pict/1439383191738080_1.jpg',
+        //                     'https://www.ebay.com/itm/Taeyeon-Purpose-Postcard-Set-/143938319173',
+        //                     'taeyeon'
+        //                 ],
+        //                 'aws': [
+        //                     'aws',
+        //                     'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1024px-Amazon_Web_Services_Logo.svg.png',
+        //                     'https://en.wikipedia.org/wiki/Amazon_Web_Services',
+        //                     'aws'
+        //                 ],
+        //                 typedInput: "Success",
+        //                 searchby: "Success"
+        //             }
+        // res.send([hardCode]);
     }
     catch {
-        console.log("Server: Your gift suggestion request was unsuccessful. ")
+        console.log("Server [FAIL]: Your gift suggestion request was unsuccessful. ")
         res.send("Failed")
+    }
+}
+
+exports.storeWLGift = async (req,res) => {
+    try {
+        console.log(req.body)
+        const WL_Stored = await db.storeUserWishlistGift(req.session.user, req.body[0].WLGiftToStore)
+        if(WL_Stored === "Success") {
+            console.log("Server [SUCCESS]: Stored user wishlist gift in wishlist table")
+        res.send("Success")
+        }
+
+        else if(WL_Stored === "Warning") {
+            console.log("Server [WARNING]: The user is trying to insert a wishlist gift that is already in the table.")
+        }
+
+        else if(WL_Stored === "Failure") {
+            console.log("Server [FAILURE]: Storing the new wishlist gives us an error")
+        }   
+    }
+
+    catch(error) {
+        console.log("Server [FAILURE]: There was an error when storing the wishlist gift into the database.")
+        console.log(error)
+        res.send("Failure")
+    }
+}
+
+exports.getwishlist = async (req,res) => {
+    try {   
+        let wishlist_result = await db.selectWishlist(req.session.user)
+        console.log(wishlist_result)
+        wishlist_result['username'] = req.session.user
+        res.send([wishlist_result])
+        console.log("Server [SUCCESS]: We retrieved the user's wishlist. Sending it back to the Frontend...")
+
+    }
+
+    catch {
+        console.log("Server [ERROR]: We could not retrieve the user's wishlist")
     }
 }

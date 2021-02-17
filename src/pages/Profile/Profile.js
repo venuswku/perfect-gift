@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Profile.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
 import EditInterestsPopup from './EditInterestsPopup';
+import AddToWishlistPopup from './AddToWishlistPopup';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
@@ -21,10 +22,15 @@ class Profile extends Component {
             name: '',
             username: '',
             newUsername: '',
+            firstname: '',
+            lastname: '',
+            useremail: '',
             mode: 'view',
             wishlist: [],
             showQuestionnairePopup: false,
-            qresponse: []
+            qresponse: [],
+            showWishlistPopup: false,
+            wlresponse: [],
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,17 +45,37 @@ class Profile extends Component {
         });
     };
 
+    /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
+    togglePopupWL = () => {
+        this.setState({
+         showWishlistPopup: !this.state.showWishlistPopup
+        });
+    };
+
     handleChange(e) {
         this.setState({ newUsername: e.target.value });
     }
 
     handleSave() {
-        // don't save new username if it's empty (set it back to original username)
-        if (this.state.newUsername === "") {
-            this.setState({ username: this.state.username, mode: 'view' });
+        // don't save new username if it's empty or has a space in it (set it back to original username)
+        if (this.state.newUsername === "" || this.state.newUsername.split(" ").length !== 1) {
+            this.setState({ newUsername: this.state.username, mode: 'view' });
         }
         // save new username
         else {
+            console.log("USERNAME", this.state.username);
+            console.log("NEW USERNAME", this.state.newUsername);
+            axios.put(`http://localhost:3010/v0/giftuser/${this.state.username}`, [this.state])
+                .then(res => {
+                    console.log('Frontend: updated username successfully in profile');
+                    console.log(res.data);
+                    console.log('Frontend: updated username successfully in profile');
+
+                })
+                .catch(res => {
+                    console.log("Frontend: failed for updating username in profile");
+                    console.log(res);
+                })
             this.setState({ username: this.state.newUsername, mode: 'view' });
         }
     }
@@ -92,7 +118,7 @@ class Profile extends Component {
             );
         }
     }
-    
+
     displayQResponses() {
         console.log('qresponse length', this.state.qresponse.length);
         for (var i = 0; i < this.state.qresponse.length; i++){
@@ -113,17 +139,35 @@ class Profile extends Component {
                     this.setState({ name: userFullName });
                     this.setState({ username: res.data[0].username });
                     this.setState({ newUsername: res.data[0].username });
-
+                    this.setState({ firstName: res.data[0].firstname });
+                    this.setState({ lastName: res.data[0].lastname });
+                    this.setState({ useremail: res.data[0].useremail });
                     console.log('doing get q response', res.data[0].username);
-                    axios.get('http://localhost:3010/v0/getqresponse', [this.state])
+                    axios.get(`http://localhost:3010/v0/getqresponse/${this.state.username}`, [this.state])
                         .then(res => {
                             console.log('successful get q response');
                             this.setState({
                                 qresponse: [...this.state.qresponse, res.data[0].outdooractivity, res.data[0].place, res.data[0].store, res.data[0].musicgenre,
                                     res.data[0].musician, res.data[0].band, res.data[0].indooractivity, res.data[0].movietvshow, res.data[0].videogame,
-                                    res.data[0].sport, res.data[0].sportsteam, res.data[0].exercise]  
+                                    res.data[0].sport, res.data[0].sportsteam, res.data[0].exercise]
                             });
                             console.log('qresponse is: ', this.state.qresponse);
+
+                            axios.get(`http://localhost:3010/v0/getwishlist/${this.state.username}`, [this.state])
+                            .then(res => {
+                                console.log("Frontend [SUCCESS]: We have received the user's wishlist")
+                                console.log(res.data)
+                                console.log(res.data[0].gift)
+                                this.setState({wlresponse: res.data[0].gift})
+                                console.log(this.state.wlresponse)
+                            })
+                            .catch(err => {
+                                console.log("Frontend [ERROR]: Retrieving wishlist was unsuccessful.")
+                                console.log(err)
+                                this.setState({
+                                    
+                                });
+                            })
                         });
                         // .catch(res => {
                         //     console.log('failed get q response');
@@ -138,15 +182,15 @@ class Profile extends Component {
             })
 
         // Making a get request to get the user's wishlist
-        axios.get('http://localhost:3010/v0/getUserWishlist', [this.state])
-            .then(res => {
-                console.log("Frontend: Gimme wishlist")
-                console.log(res.data)
+        // axios.get('http://localhost:3010/v0/getUserWishlist', [this.state])
+        //     .then(res => {
+        //         console.log("Frontend: Gimme wishlist")
+        //         console.log(res.data)
 
-            }).catch(res => {
-                console.log("Frontend: There was an error when trying to get a user's wishlist")
-                console.log(res)
-            })
+        //     }).catch(res => {
+        //         console.log("Frontend: There was an error when trying to get a user's wishlist")
+        //         console.log(res)
+        //     })
     }
 
     render() {
@@ -155,7 +199,7 @@ class Profile extends Component {
         const displayresponse = [];
         for (const [index, value] of qresponse.entries()) {
             if (value !== '') {
-                console.log('index is ', index);
+                // console.log('index is ', index);
                 var color = '';
                 if (index === 0 || index === 1 || index === 2) {
                     color = 'textBubble indoors';
@@ -166,14 +210,28 @@ class Profile extends Component {
                 } else if (index === 9 || index === 10 || index === 11) {
                     color = 'textBubble music';
                 }
-                displayresponse.push(<span className={color}>{value} &nbsp; <DeleteButton /></span>);
+                displayresponse.push(<span className={color} key={value}>{value} &nbsp; <DeleteButton /></span>);
             }
         }
-        
+
+        // Setting up wishlist items
+        const wl_response = this.state.wlresponse;
+        const displaywishlist = [];
+        for (let i in wl_response) {
+                var color = '';
+                color = 'textBubble indoors';
+
+                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteButton /></span>);
+            
+        }
+
+
         return (
             <div className="Profile">
+                
                 <Navbar />
-                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null} 
+                
+                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null}
                 <header className='profile-header'>
                     {/* profile background + pic */}
                     <div className='profile-background'>
@@ -190,6 +248,7 @@ class Profile extends Component {
                         <br></br>
                         {/* interests/questionnaire responses */}
                         <div>
+                            <span className='topicFont'>Interests &nbsp; </span>
                             {displayresponse}
                             &nbsp;
                             <button className='editInterests' onClick={this.togglePopup}><EditButton/></button>
@@ -197,9 +256,11 @@ class Profile extends Component {
                         <br></br>
                         {/* wishlist */}
                         <div>
+                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} /> : null}
                             <span className='topicFont'>Wishlist</span>
+                            {displaywishlist}
                             <ul className='tab no-bullets'>
-                                <li>hockey stick &nbsp; <DeleteButton /></li>
+                                {/* <li>hockey stick &nbsp; <DeleteButton /></li>
                                 <li>hockey shin guard &nbsp; <DeleteButton /></li>
                                 <li>Harry Potter wand &nbsp; <DeleteButton /></li>
                                 <li>hockey stick &nbsp; <DeleteButton /></li>
@@ -207,10 +268,10 @@ class Profile extends Component {
                                 <li>Harry Potter wand &nbsp; <DeleteButton /></li>
                                 <li>hockey stick &nbsp; <DeleteButton /></li>
                                 <li>hockey shin guard &nbsp; <DeleteButton /></li>
-                                <li>Harry Potter wand &nbsp; <DeleteButton /></li>
+                                <li>Harry Potter wand &nbsp; <DeleteButton /></li> */}
                             </ul>
                             <br></br>
-                            <span className='tab'> <AddButton /> Add to wishlist</span>
+                            <span className='tab'> <AddButton  onClick={this.togglePopupWL} /> Add to wishlist</span>
                         </div>
 
                     </div>

@@ -5,8 +5,8 @@ import { ReactComponent as PerfectGiftLogo } from '../../images/website_logo.svg
 
 function LogoNavbar() {
     return (
-        <div className="logo-navbar">
-            <Link to="/"><PerfectGiftLogo className="logo-navbar-logo" /></Link>
+        <div className="logoNavbar">
+            <Link to="/"><PerfectGiftLogo className="logoNavbarLogo" /></Link>
         </div>
     );
 }

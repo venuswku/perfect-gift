@@ -35,75 +35,68 @@ paths:
                 $ref: '#/components/schemas/Error'
 
   /v0/postuser:
-      post:
-        description: Post user's data from Create Account page
-        requestBody:
-          required: true
-          description: User's information
+    post:
+      description: Post user's data from Create Account page
+      requestBody:
+        required: true
+        description: User's information
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      responses:
+        201:
+          description: Stored user data
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        responses:
-          201:
-            description: Stored user data
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/User'
-          404:
-            description: Unable to store user data
-          default:
-            description: Unexpected Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+        404:
+          description: Unable to store user data
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
-  # /v0/giftuser/{useremail}:
-  #   put:
-  #     description: Updates a username
-  #     parameters:
-  #     - in: query
-  #       name: username
-  #       description: User's username
-  #       required: false
-  #       schema:
-  #         type: string
-  #     - in: path
-  #       name: useremail
-  #       description: User's email
-  #       required: true
-  #       schema:
-  #         type: string
-  #         format: email
-  #     requestBody:
-  #       description: Update a username that was changed
-  #       required: false
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/User'
-  #     responses:
-  #       204:
-  #         description: Username updated
-  #       409:
-  #         description: Username was not updated and saved
-  #       default:
-  #         description: Unexpected Error
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/Error'
+  /v0/giftuser/{username}:
+    put:
+      description: Updates a username
+      parameters:
+      - in: path
+        name: username
+        description: User's username
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Update a username that was changed
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        204:
+          description: Username updated
+        409:
+          description: Username was not updated and saved
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
-  /v0/getqresponse:
+  /v0/getqresponse/{username}:
     get:
       description: Return user's questionnaire responses
       parameters:
       - name: username
-        in: query
-        required: false
-        description: User's username
+        in: path
+        required: true
+        description: Username of user that we need questionnaire responses for
         schema:
           type: string
       responses:
@@ -123,30 +116,30 @@ paths:
                 $ref: '#/components/schemas/Error'
 
   /v0/postqresponse:
-      post:
-        description: Post user's questionnaire responses from Create Account page
-        requestBody:
-          required: true
-          description: User's username
+    post:
+      description: Post user's questionnaire responses from Create Account page
+      requestBody:
+        required: true
+        description: User's username
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionnaireResponses'
+      responses:
+        201:
+          description: Stored questionnaire responses
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/QuestionnaireResponses'
-        responses:
-          201:
-            description: Stored questionnaire responses
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/QuestionnaireResponses'
-          404:
-            description: Unable to store questionnaire responses
-          default:
-            description: Unexpected Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+        404:
+          description: Unable to store questionnaire responses
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /v0/putqresponse/{username}:
     put:
@@ -268,22 +261,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /v0/getUserWishlist:
+
+  /v0/getwishlist/{username}:
     get:
-      description: Return a user's wishlist
+      description: Return user's questionnaire responses
       parameters:
       - name: username
-        in: query
-        required: false
-        description: User's username
+        in: path
+        required: true
+        description: Username of user that we need wishlist for
         schema:
           type: string
-      - name: wishlist
-        in: query
-        required: false
-        description: User's username
-        schema:
-          type: array
       responses:
         200:
           description: User response
@@ -300,31 +288,113 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /v0/giftapi:
+  # /v0/:
+  #   get:
+  #     description: Return a user's wishlist
+  #     parameters:
+  #     - name: username
+  #       in: query
+  #       required: false
+  #       description: User's username
+  #       schema:
+  #         type: string
+  #     - name: wishlist
+  #       in: query
+  #       required: false
+  #       description: User's username
+  #       schema:
+  #         type: array
+  #     responses:
+  #       200:
+  #         description: User response
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/QuestionnaireResponses'
+  #       404:
+  #         description: Unknown user
+  #       default:
+  #         description: Unexpected Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Error'
+
+  /v0/giftapi/{searchby}:
     get:
       description: Return a user's gift suggestion based on what they typed
       parameters:
+      - name: searchby
+        in: path
+        description: Method for searching gifts (either "searchgift" or "searchusername")
+        required: true
+        schema:
+          type: string
       - name: value
         in: query
         required: false
         description: User's username
         schema:
           type: string
-      - name: search1
+      - name: placeholderText
         in: query
         required: false
-        description: User's username
+        description: User's placeholder
         schema:
           type: string
+      - name: typedInput
+        in: query
+        required: false
+        description: User's input
+        schema:
+          type: string
+      - name: user
+        in: query
+        required: false
+        description: User's input
+        schema:
+          type: string
+      - name: searchTopics
+        in: query
+        required: false
+        description: Topics to search for in eBay Shopping API
+        schema:
+          type: array
       responses:
         200:
           description: User response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuestionnaireResponses'
+                $ref: '#/components/schemas/UserInput'
         404:
           description: Unknown user
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /v0/storeWLGift:
+    post:
+      description: Stores the typed user's wishlist gift. 
+      parameters:
+      - name: WLGiftToStore
+        in: query
+        required: false
+        description: User's password
+        schema:
+          type: string
+      responses:
+        201:
+          description: Stored user wishlist gift
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wishlist'
+        404:
+          description: Unable to store user wishlist gift
         default:
           description: Unexpected Error
           content:
@@ -371,7 +441,7 @@ components:
           - firstname
           - lastname
           - useremail
-    
+
     QuestionnaireResponses:
       description: User's responses to interest questionnaire
       type: array
@@ -413,27 +483,28 @@ components:
       items:
         type: object
         properties:
-          username:
+          WLGiftToStore:
             type: string
-          gift1:
+
+    UserInput:
+      description: User's input to search bar
+      type: array
+      items:
+        type: object
+        properties:
+          value:
             type: string
-          gift2:
+          placeholderText:
             type: string
-          gift3:
+          typedInput:
             type: string
-          gift4:
+          user:
             type: string
-          gift5:
-            type: string
-          gift6:
-            type: string
-          gift7:
-            type: string
-          gift8:
-            type: string
-          gift9:
-            type: string
-          gift10:
+          searchTopics:
+            type: array
+          searchby:
             type: string
         required:
-          - username
+          - searchby
+          - typedInput
+

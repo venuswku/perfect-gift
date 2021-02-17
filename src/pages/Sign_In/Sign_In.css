@@ -1,7 +1,12 @@
 .SignIn {
   overflow: hidden;
   min-height: 100vh;
-  background: radial-gradient(66.39% 66.39% at 28.91% 48.19%, #B0DEFF 0%, rgba(255, 255, 255, 0) 100%), #FFFFFF;
+  background: radial-gradient(
+      66.39% 66.39% at 28.91% 48.19%,
+      #b0deff 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    #ffffff;
 }
 
 .signInContent {
@@ -22,7 +27,7 @@
 .signInForm {
   position: relative;
   width: 40%;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   margin: 0;
@@ -37,14 +42,14 @@
 
 .signInTitle {
   font-size: 36px;
-  font-family: 'Varela Round';
+  font-family: "Varela Round";
   color: rgba(41, 112, 250, 1);
   margin: 0 0 10px;
 }
 
 .signInBenefits {
   font-size: 24px;
-  font-family: 'Didact Gothic';
+  font-family: "Didact Gothic";
   width: 85%;
   margin: 0 0 10px 0;
 }
@@ -61,14 +66,14 @@
 
 .signInLabel {
   font-size: 20px;
-  font-family: 'Varela Round';
+  font-family: "Varela Round";
   color: rgba(41, 112, 250, 1);
   text-align: left;
 }
 
 .signInTextbox {
   font-size: 25px;
-  font-family: 'Didact Gothic';
+  font-family: "Didact Gothic";
   border-radius: 8px;
   outline: none;
   margin: 0;
@@ -91,7 +96,7 @@
 .create {
   color: rgba(41, 112, 250, 1);
   font-size: 20px;
-  font-family: 'Varela Round';
+  font-family: "Varela Round";
   text-decoration: none;
   cursor: pointer;
 }
@@ -99,7 +104,7 @@
 .continue {
   color: white;
   font-size: 24px;
-  font-family: 'Varela Round';
+  font-family: "Varela Round";
   background: rgba(114, 214, 201, 0.8);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 80px;
@@ -115,5 +120,5 @@
 }
 
 .wrongPassword {
-  background-color: chocolate;
+  color: rgb(236, 30, 30);
 }

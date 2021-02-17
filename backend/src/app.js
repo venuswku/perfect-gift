@@ -31,7 +31,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie : {
-    expires : 60 * 60 * 24 * 5 // Found out that this is in miliseconds. Currently rounds about 7 minutes. To make a user stay logged in longer, multiply by a bigger number
+    expires : 1800000 // Found out that this is in miliseconds. Currently rounds about 30 minutes.
   }
 }))
 
@@ -59,7 +59,11 @@ app.get('/v0/giftuser', gift.getUsers);
 
 app.post('/v0/postuser', gift.postUser);
 
-app.get('/v0/getqresponse', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
+app.put('/v0/giftuser/:username', gift.putUser);
+
+app.get('/v0/getqresponse/:username', gift.getQResponse); //openapi.yaml --> app.js --> gift.js --> db.js
+
+app.get('/v0/getwishlist/:username', gift.getwishlist);
 
 // Saves user responses from interest questionnaire on Create Account page.
 app.post('/v0/postqresponse', gift.postQResponse);
@@ -71,15 +75,20 @@ app.put('/v0/putqresponse/:username', gift.putQResponse);
 app.post('/v0/authenticate', gift.login);
 
 //This check if the user has the authorization to be on the website
-app.get('/v0/authenticate', gift.checkLogin)
+app.get('/v0/authenticate', gift.checkLogin);
 
 // Logs out a user
-app.get('/v0/logout', gift.logout)
+app.get('/v0/logout', gift.logout);
 
 // Gets the user's wishlist
-app.get('/v0/getUserWishlist', gift.getUserWishlist)
+app.get('/v0/getUserWishlist', gift.getUserWishlist);
 
-app.get('/v0/giftapi', gift.giftapi)
+// Uses eBay API to get gift suggestions.
+app.get('/v0/giftapi/:searchby', gift.giftapi);
+
+//Stores the wishlist gift into our database
+app.post('/v0/storeWLGift', gift.storeWLGift);
+
 app.use((err, req, res, next) => {
   res.status(err.status).json({
     message: err.message,

@@ -4,7 +4,7 @@ import './LandingNavbar.css';
 
 function LandingNavbar() {
     return (
-        <div className="landing-navbar">
+        <div className="landingNavbar">
             <p className="link">Mission</p>
             <p className="link">About Us</p>
             <Link to="/sign_in" className="link">Sign In</Link>
