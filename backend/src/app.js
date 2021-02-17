@@ -31,7 +31,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie : {
-    expires : 60 * 60 * 24 * 5 // Found out that this is in miliseconds. Currently rounds about 7 minutes. To make a user stay logged in longer, multiply by a bigger number
+    expires : 1800000 // Found out that this is in miliseconds. Currently rounds about 30 minutes.
   }
 }))
 
