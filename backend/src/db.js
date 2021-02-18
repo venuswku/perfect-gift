@@ -1,12 +1,8 @@
 const { Pool } = require('pg');
 
-const pool = new Pool({
-    host: 'localhost',
-    port: 5432,
-    database: process.env.POSTGRES_DB,
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-});
+
+const connectionString = 'postgres://dmdchhfx:h109rWA_vyG-KSBgRK96McXPR7sCC8Mk@ziggy.db.elephantsql.com:5432/dmdchhfx'
+const pool = new Pool({connectionString});
 
 // Returns one user and its data or all users and their data, used in getUsers
 exports.selectUsers = async (username) => {
