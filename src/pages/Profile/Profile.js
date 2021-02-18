@@ -52,6 +52,7 @@ class Profile extends Component {
         this.handleSave = this.handleSave.bind(this);
         this.toggleQuestionnairePopup = this.toggleQuestionnairePopup.bind(this);
         this.handleInterestChange = this.handleInterestChange.bind(this);
+        this.deleteInterest = this.deleteInterest.bind(this);
     }
 
     handleUsernameChange(e) {
@@ -87,13 +88,30 @@ class Profile extends Component {
     }
     
     /* Opens or closes popup for editing questionnaire responses (Interests section). */
-    toggleQuestionnairePopup = () => {
+    toggleQuestionnairePopup() {
         this.setState({ showQuestionnairePopup: !this.state.showQuestionnairePopup });
     };
 
     /* Updates (in this.state) user's questionnaire responses in Interests section. */
     handleInterestChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    /* Deletes (empties) questionnaire response from Interests section. */
+    deleteInterest = (e) => {
+        console.log(e.target.value);
+        // this.setState({ [e.target.name]: '' });
+        // // update questionnaire responses table in backend
+        // axios.put('http://localhost:3010/v0/putqresponse/' + this.state.username, [this.state])
+        // .then(response => {
+        //     console.log('Profile.js: success deleting qr');
+        //     console.log(response);
+        // })
+        // .catch(error => {
+        //     console.log("Profile.js: failed deleting qr");
+        //     console.log(this.state);
+        //     console.log(error);
+        // });
     }
     
     /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
@@ -125,9 +143,7 @@ class Profile extends Component {
     renderButton() {
         if (this.state.mode === 'view') {
             return (
-                <button onClick={this.handleEdit}>
-                    <EditButton />
-                </button>
+                <EditButton onClick={this.handleEdit} className="editButton"/>
             );
         } else {
             return (
@@ -219,7 +235,7 @@ class Profile extends Component {
         const displayQResponses = [];
         const questionnaireTopics = ['outdooractivity', 'place', 'store', 'musicgenre', 'musician', 'band', 'indooractivity', 'movietvshow', 'videogame', 'sport', 'sportsteam', 'exercise'];
         Object.entries(this.state).map(([qTopic, qResponse]) => {
-            console.log(qTopic, ":", qResponse);
+            // console.log(qTopic, ":", qResponse);
             if ((qResponse !== '') && (questionnaireTopics.indexOf(qTopic) > -1)) {
                 let color = '';
                 if (qTopic === 'outdooractivity' || qTopic === 'place' || qTopic === 'store') {
@@ -234,7 +250,7 @@ class Profile extends Component {
                 else if (qTopic === 'sport' || qTopic === 'sportsteam' || qTopic === 'exercise') {
                     color = 'textBubble sports';
                 }
-                displayQResponses.push(<span key={qResponse} className={color}>{qResponse} &nbsp; <DeleteButton /></span>);
+                displayQResponses.push(<div name={qTopic} value={qTopic} onClick={this.deleteInterest} className={color}>{qResponse} &nbsp;<DeleteButton className="delete"/></div>);
             }
         });
 
@@ -264,15 +280,16 @@ class Profile extends Component {
                         {/* username */}
                         <div>
                             <span className='topicFont'>Username &nbsp; </span>
-                            <span>{this.renderInputField()} &nbsp; {this.renderButton()}</span>
+                            <span className="username">{this.renderInputField()} &nbsp; {this.renderButton()}</span>
                         </div>
                         <br></br>
                         {/* interests/questionnaire responses */}
                         <div>
                             <span className='topicFont'>Interests &nbsp; </span>
-                            {displayQResponses}
+                            <EditButton className='editButton' onClick={this.toggleQuestionnairePopup}/>
+                            <div className="interestBubblesWrapper">{displayQResponses}</div>
                             &nbsp;
-                            <button className='editInterests' onClick={this.toggleQuestionnairePopup}><EditButton/></button>
+                            
                         </div>
                         <br></br>
                         {/* wishlist */}

@@ -191,7 +191,7 @@ class EditQuestionnaireResponsesPopup extends Component {
                             </tr>
                         </tbody>
                     </table>
-                    <input type='submit' value='Save' className='saveQuestionnaireChanges' onClick={this.saveChanges} ></input>
+                    <input type='submit' value='Save' className='saveQuestionnaireChanges' onClick={this.saveChanges}></input>
                 </div>
             </div>
         );
