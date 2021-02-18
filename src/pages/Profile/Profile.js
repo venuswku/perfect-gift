@@ -269,13 +269,13 @@ class Profile extends Component {
             <div className="Profile">
                 <Navbar />
                 {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.toggleQuestionnairePopup} userInfo={this.state} editInterest={this.handleInterestChange} /> : null} 
-                <header className='profile-header'>
+                <header className='profileHeader'>
                     {/* profile background + pic */}
-                    <div className='profile-background'>
+                    <div className='profileBackground'>
                         <ProfilePic />
                     </div>
-                    <div className='profile-info'>
-                        <h3 className='profile-center'>{this.state.name}</h3>
+                    <div className='profileInfo'>
+                        <div className='name'>{this.state.name}</div>
                         <br></br>
                         {/* username */}
                         <div>

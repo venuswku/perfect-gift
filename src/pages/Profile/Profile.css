@@ -5,7 +5,7 @@
 }
 
 /* for the whole page */
-.profile-header {
+.profileHeader {
   position: absolute;
   left: 0%;
   right: 0%;
@@ -24,7 +24,7 @@
 }
 
 /* for the profile pic + background */
-.profile-background {
+.profileBackground {
   position: relative;
   width: 1000px;
   height: 150px;
@@ -35,14 +35,19 @@
 }
 
 /* name + interests + wishlist */
-.profile-info {
+.profileInfo {
   position: relative;
   top: 160px;
   width: 800px;
   text-align: left;
 
 }
-.profile-center {
+
+.name {
+  margin-top: 6%;
+  color: rgba(41, 112, 250, 1);
+  font-size: 48px;
+  font-family: 'Varela Round';
   text-align: center;
 }
 
