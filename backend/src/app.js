@@ -55,6 +55,10 @@ app.use(
   }),
 );
 
+app.get('/', function (req, res) {
+  res.send('hello world')
+})
+
 app.get('/v0/giftuser', gift.getUsers);
 
 app.post('/v0/postuser', gift.postUser);
