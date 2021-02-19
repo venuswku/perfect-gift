@@ -191,7 +191,7 @@ exports.selectWishlist = async (username) => {
             console.log(WL_QUERY.rows[i]['gift'])
            gifts['gift'].push(WL_QUERY.rows[i]['gift'])
         }
-        console.log(gifts)
+        //console.log(gifts)
             
         return gifts
        //return 1;
@@ -204,4 +204,19 @@ exports.selectWishlist = async (username) => {
         return 2;
     }
 
+}
+
+// Removes wishlist item from the database
+exports.removeWishlistItem = async (user, item) => {
+    try{
+    let QUERY_DELETE = `DELETE FROM wishlist WHERE username = '${user}' AND gift = '${item}'`
+    const QUERY_DELETE_RESULT = await pool.query(QUERY_DELETE)
+    
+    return "Success"
+    }
+
+    catch {
+        console.log("Bad")
+        return "Failure"
+    }
 }

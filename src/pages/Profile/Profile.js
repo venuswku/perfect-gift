@@ -4,6 +4,7 @@ import './Profile.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
 import EditInterestsPopup from './EditInterestsPopup';
 import AddToWishlistPopup from './AddToWishlistPopup';
+import DeleteUserInfo from './DeleteUserInfo';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
@@ -269,7 +270,7 @@ class Profile extends Component {
                 var color = '';
                 color = 'textBubble indoors';
 
-                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteButton /></span>);
+                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteUserInfo info={wl_response[i]}/></span>);
             
         }
 
@@ -316,6 +317,7 @@ class Profile extends Component {
                             </ul>
                             <br></br>
                             <span className='tab'> <AddButton  onClick={this.togglePopupWL} /> Add to wishlist</span>
+                            <DeleteUserInfo info="wishlist"></DeleteUserInfo>
                         </div>
 
                     </div>

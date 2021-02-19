@@ -15,7 +15,7 @@ const proxy = require('http-proxy-middleware')
 // Used for letting the frontend communicate with the server
 app.use(cors({
   origin: ["http://localhost:3000"],
-  methods: ["GET", "POST", "PUT"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
 
@@ -85,6 +85,9 @@ app.get('/v0/giftapi/:searchby', gift.giftapi);
 
 //Stores the wishlist gift into our database
 app.post('/v0/storeWLGift', gift.storeWLGift);
+
+// Deletes the generic item (wishlist/questionnaire)
+app.delete('/v0/deleteItem', gift.deleteItem);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

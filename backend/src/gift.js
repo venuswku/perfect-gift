@@ -405,7 +405,7 @@ exports.storeWLGift = async (req,res) => {
 
 exports.getwishlist = async (req,res) => {
     try {   
-        let wishlist_result = await db.selectWishlist(req.session.user)
+        let wishlist_result = await db.selectWishlist(req.session.user) //FIX THIS IS A BUG CHANGE TO GET PARAM USER (I WILL FIX...MAYBE.....OK I WILL DONT WORRY ABOUT IT)
         console.log(wishlist_result)
         wishlist_result['username'] = req.session.user
         res.send([wishlist_result])
@@ -417,3 +417,19 @@ exports.getwishlist = async (req,res) => {
         console.log("Server [ERROR]: We could not retrieve the user's wishlist")
     }
 }
+
+exports.deleteItem = async (req,res) => {
+    try {
+        let wishlist_delete_confirmation = await db.removeWishlistItem(req.session.user, req.query.item)
+        console.log(req.query)
+        console.log(req.query.item)
+        res.send("Success");
+    }
+
+    catch {
+        console.log("Fail");
+        res.send("Failure");
+        
+    };
+
+};
