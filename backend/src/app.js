@@ -19,9 +19,6 @@ app.use(cors({
   credentials: true,
 }));
 
-
-
-
 //Used for cookie session
 app.use(cookieParser());
 app.use(bodyParser.urlencoded( {extended: true}));
@@ -38,9 +35,6 @@ app.use(session({
 //Json stuff. Not too sure
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-
-
 
 const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 
@@ -70,6 +64,9 @@ app.post('/v0/postqresponse', gift.postQResponse);
 
 // Puts changes for questionnaire responses from Profile page's Edit Interests popup.
 app.put('/v0/putqresponse/:username', gift.putQResponse);
+
+// "Removes" (in reality, empties string) for the corresponding questionnaire topic in the questionnaire table.
+app.put('/v0/removeqresponse/:username/:questionnairetopic', gift.removeQResponse);
 
 // This authenticates and authorizes a user to be able to log in.
 app.post('/v0/authenticate', gift.login);

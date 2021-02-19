@@ -98,20 +98,20 @@ class Profile extends Component {
     }
 
     /* Deletes (empties) questionnaire response from Interests section. */
-    deleteInterest = (e) => {
-        console.log(e.target.value);
-        // this.setState({ [e.target.name]: '' });
-        // // update questionnaire responses table in backend
-        // axios.put('http://localhost:3010/v0/putqresponse/' + this.state.username, [this.state])
-        // .then(response => {
-        //     console.log('Profile.js: success deleting qr');
-        //     console.log(response);
-        // })
-        // .catch(error => {
-        //     console.log("Profile.js: failed deleting qr");
-        //     console.log(this.state);
-        //     console.log(error);
-        // });
+    deleteInterest(questionnaireTopic) {
+        console.log("remove", questionnaireTopic, "for", this.state.username);
+        axios.put(`http://localhost:3010/v0/removeqresponse/${this.state.username}/${questionnaireTopic}`, [this.state])
+        .then(response => {
+            console.log('Profile.js: success deleting qr');
+            console.log(response);
+            // refreshes page to see changes to interests
+            window.location.reload();
+        })
+        .catch(error => {
+            console.log("Profile.js: failed deleting qr");
+            console.log(this.state);
+            console.log(error);
+        });
     }
     
     /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
@@ -236,7 +236,8 @@ class Profile extends Component {
         const questionnaireTopics = ['outdooractivity', 'place', 'store', 'musicgenre', 'musician', 'band', 'indooractivity', 'movietvshow', 'videogame', 'sport', 'sportsteam', 'exercise'];
         Object.entries(this.state).map(([qTopic, qResponse]) => {
             // console.log(qTopic, ":", qResponse);
-            if ((qResponse !== '') && (questionnaireTopics.indexOf(qTopic) > -1)) {
+            // only display non-empty questionnaire responses that contain at least 1 non-whitespace character
+            if ((/\S/.test(qResponse)) && (questionnaireTopics.indexOf(qTopic) > -1)) {
                 let color = '';
                 if (qTopic === 'outdooractivity' || qTopic === 'place' || qTopic === 'store') {
                     color = 'textBubble outdoors';
@@ -250,7 +251,14 @@ class Profile extends Component {
                 else if (qTopic === 'sport' || qTopic === 'sportsteam' || qTopic === 'exercise') {
                     color = 'textBubble sports';
                 }
-                displayQResponses.push(<div name={qTopic} value={qTopic} onClick={this.deleteInterest} className={color}>{qResponse} &nbsp;<DeleteButton className="delete"/></div>);
+                displayQResponses.push(
+                    <div onClick={() => this.deleteInterest(qTopic)}
+                         className={color}
+                         key={qTopic}
+                    >
+                        {qResponse} &nbsp;<DeleteButton className="delete"/>
+                    </div>
+                );
             }
         });
 
@@ -288,8 +296,6 @@ class Profile extends Component {
                             <span className='topicFont'>Interests &nbsp; </span>
                             <EditButton className='editButton' onClick={this.toggleQuestionnairePopup}/>
                             <div className="interestBubblesWrapper">{displayQResponses}</div>
-                            &nbsp;
-                            
                         </div>
                         <br></br>
                         {/* wishlist */}

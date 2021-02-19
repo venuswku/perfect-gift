@@ -174,6 +174,28 @@ exports.putQResponse = async (req, res) => {
     }
 };
 
+// "Removes" (in reality, empties string) for the corresponding questionnaire topic in the questionnaire table.
+exports.removeQResponse = async (req, res) => {
+    try {
+        const username = req.params.username;
+        const questionnaireTopic = req.params.questionnairetopic;
+        console.log("gift.js: removeResponse for", username, "in", questionnaireTopic, "column");
+        
+        const remove = await db.deleteQResponse(username, questionnaireTopic);
+        
+        const userChanges = await db.selectQResponses(username);
+        if (userChanges) {
+            console.log("gift.js: removeQResponse: Gifter's questionnaire response is successfully deleted!");
+            res.status(200).json([userChanges]);
+            console.log("gift.js: removeQResponse: we are getting 200 OK");
+        }
+    }
+    catch {
+        console.log("gift.js: removeQResponse: qr failz");
+        res.status(409).send();
+    }
+}
+
 // Checks if login credentials are valid
 exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
