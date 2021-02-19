@@ -22,15 +22,15 @@ class AddToWishlistPopup extends React.Component {
   handleSubmit(event) {
     console.log("Frontend: We are going to request to store the wishlist gift.");
     event.preventDefault();
-    axios.post("http://localhost:3010/v0/storeWLGift", [this.state])
+    axios.post("http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/storeWLGift", [this.state])
     .then(response => {
       console.log("Frontend: We have successfully stored the wishlist gift into our database.")
     }).catch(error => {
       console.log("There was an error when trying to store the wishlist gift into the database")
       console.log(error)
     })
-  
-  
+
+
   }
 
 
@@ -51,7 +51,7 @@ class AddToWishlistPopup extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label>
               <input type="text" value ={this.WLGiftToStore} placeholder="Enter wishlist item here" onChange={this.handleChange}></input>
-              
+
             </label>
           </form>
         </section>

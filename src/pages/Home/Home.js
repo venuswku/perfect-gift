@@ -50,7 +50,7 @@ class Home extends React.Component {
   // When the user hits enter, it will send the string to the server
   handleSubmit(event) {
     const { value, typedInput } = this.state
-    let serverPath = "http://localhost:3010/v0/giftapi";
+    let serverPath = "http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftapi";
     console.log("Frontend: We are going to submit your search request to the server")
 
     try {
@@ -64,7 +64,7 @@ class Home extends React.Component {
           let queryString = '/searchusername?'
           console.log(`Frontend: We will fetch the interests for the username:"${typedInput}"`)
           // Getting typed user's interests.
-          axios.get(`http://localhost:3010/v0/getQResponse/${typedInput}`)
+          axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getQResponse/${typedInput}`)
             .then(res => {
               // Parsing the response
               console.log(`Frontend: We have recevied "users" list of interests. We will now parse them`)
@@ -141,23 +141,23 @@ class Home extends React.Component {
     event.preventDefault();
   }
 
-  componentDidMount() {
-    console.log(this.state)
+  // componentDidMount() {
+  //   console.log(this.state)
 
-    axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
-      .then(res => {
-        if (res.data[0].username !== "") {
-          this.setState({
-            user: res.data[0].firstname
-          })
-          console.log(`Your name is: ${this.state.user}`)
-        } else {
-          this.props.history.push('/sign_in')
-        }
-      }).catch(res => {
-        console.log(res)
-      })
-  }
+  //   axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state) //The port of the server
+  //     .then(res => {
+  //       if (res.data[0].username !== "") {
+  //         this.setState({
+  //           user: res.data[0].firstname
+  //         })
+  //         console.log(`Your name is: ${this.state.user}`)
+  //       } else {
+  //         this.props.history.push('/sign_in')
+  //       }
+  //     }).catch(res => {
+  //       console.log(res)
+  //     })
+  // }
 
   /*Renders the whole Home page */
   render() {

@@ -27,7 +27,7 @@ class HomeNavbar extends Component {
         e.preventDefault()
         console.log(this.state)
         console.log("We are signing out")
-        axios.get('http://localhost:3010/v0/logout', this.state)
+        axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/logout', this.state)
         .then(response => {
           if (response.data === "Successfully logged out"){
             console.log("Successfully signed out")

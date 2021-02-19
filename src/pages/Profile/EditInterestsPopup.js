@@ -17,7 +17,7 @@ import music1Image from '../../images/create_account_music1.svg';
 import music2Image from '../../images/create_account_music2.svg';
 
 class EditQuestionnaireResponsesPopup extends Component {
-    
+
     constructor(props) {
         super(props)
         // items that we will be able to send to the server
@@ -40,7 +40,7 @@ class EditQuestionnaireResponsesPopup extends Component {
 
     // load user's original questionnaire responses
     componentDidMount() {
-        axios.get(`http://localhost:3010/v0/getqresponse/${this.state.username}`, this.state)
+        axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getqresponse/${this.state.username}`, this.state)
         .then(res => {
             this.setState({ outdooractivity: res.data[0].outdooractivity });
             this.setState({ place: res.data[0].place });
@@ -72,7 +72,7 @@ class EditQuestionnaireResponsesPopup extends Component {
     // closes popup and saves changes to questionnaire responses
     saveChanges = () => {
         this.props.toggle();
-        axios.put('http://localhost:3010/v0/putqresponse/' + this.state.username, [this.state])
+        axios.put('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/putqresponse/' + this.state.username, [this.state])
         .then(response => {
             console.log('EditInterestsPopup.js: success updating qr');
             console.log(response);

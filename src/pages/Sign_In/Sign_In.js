@@ -22,9 +22,9 @@ class Sign_In extends Component {
   changeHandler = (e) =>{
     this.setState({[e.target.name]: e.target.value})
   }
-  
+
   componentDidMount() {
-    axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
+    axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state) //The port of the server
     .then(res => {
         if (res.data[0].username !== ""){
           this.props.history.push('/home')
@@ -41,7 +41,7 @@ class Sign_In extends Component {
     e.preventDefault()
     console.log(this.state)
     console.log("We are submitting a user to either authenticate, or create")
-    axios.post('http://localhost:3010/v0/authenticate', this.state)
+    axios.post('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state)
     .then(response => {
       if (response.data === ""){
         console.log("Not Logged In")
@@ -57,7 +57,7 @@ class Sign_In extends Component {
       console.log("You inputted a wrong username/password combination")
     })
   }
-    
+
     render() {
     const {username, userpassword} = this.state
     return (

@@ -65,7 +65,7 @@ class Profile extends Component {
         else {
             console.log("USERNAME", this.state.username);
             console.log("NEW USERNAME", this.state.newUsername);
-            axios.put(`http://localhost:3010/v0/giftuser/${this.state.username}`, [this.state])
+            axios.put(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftuser/${this.state.username}`, [this.state])
                 .then(res => {
                     console.log('Frontend: updated username successfully in profile');
                     console.log(res.data);
@@ -129,7 +129,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
+        axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state) //The port of the server
             .then(res => {
                 console.log("Got a response with GET")
                 console.log(res.data)
@@ -143,7 +143,7 @@ class Profile extends Component {
                     this.setState({ lastName: res.data[0].lastname });
                     this.setState({ useremail: res.data[0].useremail });
                     console.log('doing get q response', res.data[0].username);
-                    axios.get(`http://localhost:3010/v0/getqresponse/${this.state.username}`, [this.state])
+                    axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getqresponse/${this.state.username}`, [this.state])
                         .then(res => {
                             console.log('successful get q response');
                             this.setState({
@@ -153,7 +153,7 @@ class Profile extends Component {
                             });
                             console.log('qresponse is: ', this.state.qresponse);
 
-                            axios.get(`http://localhost:3010/v0/getwishlist/${this.state.username}`, [this.state])
+                            axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getwishlist/${this.state.username}`, [this.state])
                             .then(res => {
                                 console.log("Frontend [SUCCESS]: We have received the user's wishlist")
                                 console.log(res.data)
@@ -165,7 +165,7 @@ class Profile extends Component {
                                 console.log("Frontend [ERROR]: Retrieving wishlist was unsuccessful.")
                                 console.log(err)
                                 this.setState({
-                                    
+
                                 });
                             })
                         });
@@ -182,7 +182,7 @@ class Profile extends Component {
             })
 
         // Making a get request to get the user's wishlist
-        // axios.get('http://localhost:3010/v0/getUserWishlist', [this.state])
+        // axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getUserWishlist', [this.state])
         //     .then(res => {
         //         console.log("Frontend: Gimme wishlist")
         //         console.log(res.data)
@@ -222,15 +222,15 @@ class Profile extends Component {
                 color = 'textBubble indoors';
 
                 displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteButton /></span>);
-            
+
         }
 
 
         return (
             <div className="Profile">
-                
+
                 <Navbar />
-                
+
                 {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null}
                 <header className='profile-header'>
                     {/* profile background + pic */}
