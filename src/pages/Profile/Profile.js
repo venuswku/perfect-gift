@@ -26,34 +26,41 @@ class Profile extends Component {
             lastname: '',
             useremail: '',
             mode: 'view',
-            wishlist: [],
+
             showQuestionnairePopup: false,
-            qresponse: [],
+            indooractivity: '',
+            place: '',
+            sportsteam: '',
+            musicgenre: '',
+            movietvshow: '',
+            outdooractivity: '',
+            sport: '',
+            musician: '',
+            videogame: '',
+            store: '',
+            exercise: '',
+            band: '',
+    
+            wishlist: [],
             showWishlistPopup: false,
             wlresponse: [],
         };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
+        /* Binding functions allows it to access component attributes (e.g. this.props, this.state). */
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleSave = this.handleSave.bind(this);
+        this.toggleQuestionnairePopup = this.toggleQuestionnairePopup.bind(this);
+        this.handleInterestChange = this.handleInterestChange.bind(this);
+        this.deleteInterest = this.deleteInterest.bind(this);
     }
 
-    /* Opens or closes popup for editing questionnaire responses (Interests section). */
-    togglePopup = () => {
-        this.setState({
-         showQuestionnairePopup: !this.state.showQuestionnairePopup
-        });
-    };
-
-    /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
-    togglePopupWL = () => {
-        this.setState({
-         showWishlistPopup: !this.state.showWishlistPopup
-        });
-    };
-
-    handleChange(e) {
+    handleUsernameChange(e) {
         this.setState({ newUsername: e.target.value });
+    }
+
+    handleEdit() {
+        this.setState({ mode: 'edit' });
     }
 
     handleSave() {
@@ -79,10 +86,40 @@ class Profile extends Component {
             this.setState({ username: this.state.newUsername, mode: 'view' });
         }
     }
+    
+    /* Opens or closes popup for editing questionnaire responses (Interests section). */
+    toggleQuestionnairePopup() {
+        this.setState({ showQuestionnairePopup: !this.state.showQuestionnairePopup });
+    };
 
-    handleEdit() {
-        this.setState({ mode: 'edit' });
+    /* Updates (in this.state) user's questionnaire responses in Interests section. */
+    handleInterestChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
     }
+
+    /* Deletes (empties) questionnaire response from Interests section. */
+    deleteInterest(questionnaireTopic) {
+        console.log("remove", questionnaireTopic, "for", this.state.username);
+        axios.put(`http://localhost:3010/v0/removeqresponse/${this.state.username}/${questionnaireTopic}`, [this.state])
+        .then(response => {
+            console.log('Profile.js: success deleting qr');
+            console.log(response);
+            // refreshes page to see changes to interests
+            window.location.reload();
+        })
+        .catch(error => {
+            console.log("Profile.js: failed deleting qr");
+            console.log(this.state);
+            console.log(error);
+        });
+    }
+    
+    /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
+    togglePopupWL = () => {
+        this.setState({
+         showWishlistPopup: !this.state.showWishlistPopup
+        });
+    };
 
     // show/hide textbox to edit username
     renderInputField() {
@@ -93,7 +130,7 @@ class Profile extends Component {
             return (
                 <span>
                     <input
-                        onChange={this.handleChange}
+                        onChange={this.handleUsernameChange}
                         value={this.state.newUsername}
                         className='editTextbox'
                     />
@@ -106,9 +143,7 @@ class Profile extends Component {
     renderButton() {
         if (this.state.mode === 'view') {
             return (
-                <button onClick={this.handleEdit}>
-                    <EditButton />
-                </button>
+                <EditButton onClick={this.handleEdit} className="editButton"/>
             );
         } else {
             return (
@@ -119,17 +154,9 @@ class Profile extends Component {
         }
     }
 
-    displayQResponses() {
-        console.log('qresponse length', this.state.qresponse.length);
-        for (var i = 0; i < this.state.qresponse.length; i++){
-            if (this.state.qresponse[i] !== '') {
-                console.log('qresponse[', i, '] = ', this.state.qresponse[i]);
-            }
-        }
-    }
-
     componentDidMount() {
-        axios.get('http://localhost:3010/v0/authenticate', this.state) //The port of the server
+        // Authenticate user when they reach profile page.
+        axios.get('http://localhost:3010/v0/authenticate', this.state)
             .then(res => {
                 console.log("Got a response with GET")
                 console.log(res.data)
@@ -142,17 +169,26 @@ class Profile extends Component {
                     this.setState({ firstName: res.data[0].firstname });
                     this.setState({ lastName: res.data[0].lastname });
                     this.setState({ useremail: res.data[0].useremail });
+                    
+                    // Get user's questionnaire responses and store them in this.state.
                     console.log('doing get q response', res.data[0].username);
                     axios.get(`http://localhost:3010/v0/getqresponse/${this.state.username}`, [this.state])
                         .then(res => {
                             console.log('successful get q response');
-                            this.setState({
-                                qresponse: [...this.state.qresponse, res.data[0].outdooractivity, res.data[0].place, res.data[0].store, res.data[0].musicgenre,
-                                    res.data[0].musician, res.data[0].band, res.data[0].indooractivity, res.data[0].movietvshow, res.data[0].videogame,
-                                    res.data[0].sport, res.data[0].sportsteam, res.data[0].exercise]
-                            });
-                            console.log('qresponse is: ', this.state.qresponse);
+                            this.setState({ outdooractivity: res.data[0].outdooractivity });
+                            this.setState({ place: res.data[0].place });
+                            this.setState({ store: res.data[0].store });
+                            this.setState({ musicgenre: res.data[0].musicgenre });
+                            this.setState({ musician: res.data[0].musician });
+                            this.setState({ band: res.data[0].band });
+                            this.setState({ indooractivity: res.data[0].indooractivity });
+                            this.setState({ movietvshow: res.data[0].movietvshow });
+                            this.setState({ videogame: res.data[0].videogame });
+                            this.setState({ sport: res.data[0].sport });
+                            this.setState({ sportsteam: res.data[0].sportsteam });
+                            this.setState({ exercise: res.data[0].exercise });
 
+                            // Get user's wishlist items.
                             axios.get(`http://localhost:3010/v0/getwishlist/${this.state.username}`, [this.state])
                             .then(res => {
                                 console.log("Frontend [SUCCESS]: We have received the user's wishlist")
@@ -168,10 +204,11 @@ class Profile extends Component {
                                     
                                 });
                             })
+                        })
+                        .catch(err => {
+                            console.log('failed get q response');
+                            console.log(err);
                         });
-                        // .catch(res => {
-                        //     console.log('failed get q response');
-                        // });
                 } else {
                     this.props.history.push('/sign_in')
                     console.log("Redirected to sign in page")
@@ -194,25 +231,36 @@ class Profile extends Component {
     }
 
     render() {
-        //this stuff is to display questionnaire responses
-        const qresponse = this.state.qresponse;
-        const displayresponse = [];
-        for (const [index, value] of qresponse.entries()) {
-            if (value !== '') {
-                // console.log('index is ', index);
-                var color = '';
-                if (index === 0 || index === 1 || index === 2) {
-                    color = 'textBubble indoors';
-                } else if (index === 3 || index === 4 || index === 5) {
+        // Displays questionnaire responses.
+        const displayQResponses = [];
+        const questionnaireTopics = ['outdooractivity', 'place', 'store', 'musicgenre', 'musician', 'band', 'indooractivity', 'movietvshow', 'videogame', 'sport', 'sportsteam', 'exercise'];
+        Object.entries(this.state).map(([qTopic, qResponse]) => {
+            // console.log(qTopic, ":", qResponse);
+            // only display non-empty questionnaire responses that contain at least 1 non-whitespace character
+            if ((/\S/.test(qResponse)) && (questionnaireTopics.indexOf(qTopic) > -1)) {
+                let color = '';
+                if (qTopic === 'outdooractivity' || qTopic === 'place' || qTopic === 'store') {
                     color = 'textBubble outdoors';
-                } else if (index === 6 || index === 7 || index === 8) {
-                    color = 'textBubble sports';
-                } else if (index === 9 || index === 10 || index === 11) {
+                }
+                else if (qTopic === 'musicgenre' || qTopic === 'musician' || qTopic === 'band') {
                     color = 'textBubble music';
                 }
-                displayresponse.push(<span className={color} key={value}>{value} &nbsp; <DeleteButton /></span>);
+                else if (qTopic === 'indooractivity' || qTopic === 'movietvshow' || qTopic === 'videogame') {
+                    color = 'textBubble indoors';
+                }
+                else if (qTopic === 'sport' || qTopic === 'sportsteam' || qTopic === 'exercise') {
+                    color = 'textBubble sports';
+                }
+                displayQResponses.push(
+                    <div onClick={() => this.deleteInterest(qTopic)}
+                         className={color}
+                         key={qTopic}
+                    >
+                        {qResponse} &nbsp;<DeleteButton className="delete"/>
+                    </div>
+                );
             }
-        }
+        });
 
         // Setting up wishlist items
         const wl_response = this.state.wlresponse;
@@ -225,33 +273,29 @@ class Profile extends Component {
             
         }
 
-
         return (
             <div className="Profile">
-                
                 <Navbar />
-                
-                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.togglePopup} username={this.state.username} /> : null}
-                <header className='profile-header'>
+                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.toggleQuestionnairePopup} userInfo={this.state} editInterest={this.handleInterestChange} /> : null} 
+                <header className='profileHeader'>
                     {/* profile background + pic */}
-                    <div className='profile-background'>
+                    <div className='profileBackground'>
                         <ProfilePic />
                     </div>
-                    <div className='profile-info'>
-                        <h3 className='profile-center'>{this.state.name}</h3>
+                    <div className='profileInfo'>
+                        <div className='name'>{this.state.name}</div>
                         <br></br>
                         {/* username */}
                         <div>
                             <span className='topicFont'>Username &nbsp; </span>
-                            <span>{this.renderInputField()} &nbsp; {this.renderButton()}</span>
+                            <span className="username">{this.renderInputField()} &nbsp; {this.renderButton()}</span>
                         </div>
                         <br></br>
                         {/* interests/questionnaire responses */}
                         <div>
                             <span className='topicFont'>Interests &nbsp; </span>
-                            {displayresponse}
-                            &nbsp;
-                            <button className='editInterests' onClick={this.togglePopup}><EditButton/></button>
+                            <EditButton className='editButton' onClick={this.toggleQuestionnairePopup}/>
+                            <div className="interestBubblesWrapper">{displayQResponses}</div>
                         </div>
                         <br></br>
                         {/* wishlist */}

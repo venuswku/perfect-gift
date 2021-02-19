@@ -173,6 +173,44 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /v0/removeqresponse/{username}/{questionnairetopic}:
+    put:
+      description: Removes chosen questionnaire response on Profile page
+      parameters:
+      - in: path
+        name: username
+        description: User's unique username
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: questionnairetopic
+        description: Name of column in questionnaire table to "remove"
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionnaireResponses'
+      responses:
+        200:
+          description: Questionnaire response/interest removed
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/QuestionnaireResponses'
+        409:
+          description: Questionnaire response/interest was not removed
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /v0/authenticate:
     post:
       description: Authenticate user given username and password

@@ -1,6 +1,4 @@
 const { Pool } = require('pg');
-
-
 const connectionString = 'postgres://dmdchhfx:h109rWA_vyG-KSBgRK96McXPR7sCC8Mk@ziggy.db.elephantsql.com:5432/dmdchhfx'
 const pool = new Pool({connectionString});
 
@@ -107,6 +105,23 @@ exports.updateQResponses = async (username, outdooractivity, place, store, music
             return;
         }
         console.log("db.js: updateQResponse: responses updated in questionnaireresponses table!");
+        return;
+    });
+}
+
+// Empties string for the interest column in questionnaire responses.
+exports.deleteQResponse = async (username, questionnairetopic) => {
+    console.log('db.js: deleteQResponses called');
+    const remove = `UPDATE questionnaireresponses SET ${questionnairetopic} = '' WHERE username = '${username}'`;
+    // console.log(remove);
+
+    pool.query(remove, (err, res) => {
+        if (err) {
+            console.log("db.js: deleteQResponse error!")
+            console.error(err);
+            return;
+        }
+        console.log("db.js: deleteQResponse: response deleted in questionnaireresponses table!");
         return;
     });
 }
