@@ -47,7 +47,7 @@ class Home extends React.Component {
   }
 
 
-  // When the user hits enter, it will send the string to the server
+  /* When the user hits enter, it will send the string to the server. */
   handleSubmit(event) {
     const { value, typedInput } = this.state
     let serverPath = "http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftapi";
