@@ -106,7 +106,7 @@ class Profile extends Component {
             console.log('Profile.js: success deleting qr');
             console.log(response);
             // call get request again to see new changes
-            axios.get(`http://localhost:3010/v0/getqresponse/${this.state.username}`, [this.state])
+            axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getqresponse/${this.state.username}`, [this.state])
                 .then(res => {
                     console.log('successful get q response');
                     this.setState({ outdooractivity: res.data[0].outdooractivity });
