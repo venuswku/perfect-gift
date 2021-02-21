@@ -405,7 +405,10 @@ exports.storeWLGift = async (req,res) => {
 
 exports.getwishlist = async (req,res) => {
     try {   
-        let wishlist_result = await db.selectWishlist(req.session.user) //FIX THIS IS A BUG CHANGE TO GET PARAM USER (I WILL FIX...MAYBE.....OK I WILL DONT WORRY ABOUT IT)
+        console.log('--------')
+        console.log(req.params.username);
+        console.log('-------')
+        let wishlist_result = await db.selectWishlist(req.params.username) //FIX THIS IS A BUG CHANGE TO GET PARAM USER (I WILL FIX...MAYBE.....OK I WILL DONT WORRY ABOUT IT)
         console.log(wishlist_result)
         wishlist_result['username'] = req.session.user
         res.send([wishlist_result])

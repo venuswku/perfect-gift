@@ -317,7 +317,6 @@ class Profile extends Component {
                             </ul>
                             <br></br>
                             <span className='tab'> <AddButton  onClick={this.togglePopupWL} /> Add to wishlist</span>
-                            <DeleteUserInfo info="wishlist"></DeleteUserInfo>
                         </div>
 
                     </div>
