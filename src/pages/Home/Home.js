@@ -69,15 +69,18 @@ class Home extends React.Component {
             .then(res => {
               // Parsing the response
               console.log(`Frontend: We have recevied "users" list of interests. We will now parse them`)
-              let qList = res.data[0]
-              let tempUserInterests = []
-              for (let [k, v] of Object.entries(qList)) {
-                console.log(k, v)
-                if (v !== '' && k !== "username") {
-                  tempUserInterests.push(v)
-                  queryString += `searchTopics[]=${v}&`
+              let qList = res.data[0];
+              let tempUserInterests = [];
+              console.log("result of getQResponse:", this.state.usernameInterests);
+              for (let [qResponseTopic, qResponseInterest] of Object.entries(qList)) {
+                console.log(qResponseTopic, qResponseInterest)
+                if (qResponseInterest !== '' && qResponseTopic !== "username") {
+                  tempUserInterests.push(qResponseInterest)
+                  queryString += `searchTopics[]=${qResponseInterest}&`
                 }
               }
+              // this.state.userInterests just has questionnaire responses (e.g. ["Taeyeon", "YouTube"])
+              this.setState({ usernameInterests: tempUserInterests });
               queryString = queryString.slice(0, -1)
               console.log(queryString)
               serverPath += queryString
@@ -256,7 +259,9 @@ class Home extends React.Component {
         const giftPic = this.state.wishlist[searchTopic][1];
         const picText = `picture of ${giftName}`;
         const giftLink = this.state.wishlist[searchTopic][2];
-        const relatedInterest = this.state.wishlist[searchTopic][3];   // empty string if user searched by gift
+        const wishlistItem = this.state.wishlist[searchTopic][3];
+        // call function to figure out if gift suggestion matches an interest (replace this.state.wishlist[searchTopic][3] with function call, which returns a string containing the interest - empty string if there's no related interest)
+        const relatedInterest = "CALL FUNCTION HERE";
 
         displayWishlistSuggestions.push(
           <div className="giftSuggestionWrapper" key={giftName}>
@@ -270,6 +275,7 @@ class Home extends React.Component {
                     <p className="giftInterestTopic">{relatedInterest}</p>
                   </div>
                 : null}
+                {/* put heart for wishlist item */}
               </div>
             </div>
           </div>
@@ -319,8 +325,8 @@ class Home extends React.Component {
             </div>
           </form>
           {/*The gift suggestion*/}
-          {displayGiftSuggestions}
           {displayWishlistSuggestions}
+          {displayGiftSuggestions}
           {/* <div className="gift-main">
             <p className="gift-name blue varela">Hockey Stick</p>
             <div className="gift-background">

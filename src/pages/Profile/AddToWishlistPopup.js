@@ -9,7 +9,6 @@ class AddToWishlistPopup extends React.Component {
     super(props);
     this.state = {
       WLGiftToStore: ''
-
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,12 +46,10 @@ class AddToWishlistPopup extends React.Component {
     return (
       <Fragment>
         <section className="wishlist">
-          <p className='cool-red'>Search below to add a new item to your wishlist</p>
-
+          <p className='cool-red'>What item would you want as a gift?</p>
           <form onSubmit={this.handleSubmit}>
             <label>
               <input type="text" value ={this.WLGiftToStore} placeholder="Enter wishlist item here" onChange={this.handleChange}></input>
-              
             </label>
           </form>
         </section>
