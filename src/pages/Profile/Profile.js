@@ -280,6 +280,7 @@ class Profile extends Component {
                     </div>
                 );
             }
+            return displayQResponses;
         });
 
         // Setting up wishlist items
