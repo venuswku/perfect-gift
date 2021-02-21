@@ -19,9 +19,6 @@ app.use(cors({
   credentials: true,
 }));
 
-
-
-
 //Used for cookie session
 app.use(cookieParser());
 app.use(bodyParser.urlencoded( {extended: true}));
@@ -39,9 +36,6 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-
-
-
 const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 
 const apidoc = yaml.safeLoad(fs.readFileSync(apiSpec, 'utf8'));
@@ -54,6 +48,12 @@ app.use(
     validateResponses: true,
   }),
 );
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.get('/', function (req, res) {
   res.send('hello world')
