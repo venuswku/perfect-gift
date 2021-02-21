@@ -1,4 +1,4 @@
-openapi: '3.0.3'
+openapi: "3.0.3"
 
 info:
   version: 0.1.0
@@ -8,23 +8,29 @@ servers:
   - url: http://localhost:3010
 
 paths:
-  /v0/giftuser:
-    get:
-      description: Returns all users
+  /v0/deleteItem:
+    delete:
+      description: Deletes an item from the wishlist
       parameters:
-      - name: username
-        in: query
-        required: false
-        description: User's username
-        schema:
-          type: string
+        - name: username
+          in: query
+          required: false
+          description: User's username
+          schema:
+            type: string
+        - name: item
+          in: query
+          required: false
+          description: User's wishlist gift item
+          schema:
+            type: string
       responses:
         200:
           description: User response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/WishlistDelete"
         404:
           description: Unknown user
         default:
@@ -32,7 +38,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
+  /v0/giftuser:
+    get:
+      description: Returns all users
+      parameters:
+        - name: username
+          in: query
+          required: false
+          description: User's username
+          schema:
+            type: string
+      responses:
+        200:
+          description: User response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WishlistDelete"
+        404:
+          description: Unknown user
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
   /v0/postuser:
     post:
@@ -42,15 +73,15 @@ paths:
         description: User's information
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/User'
+            schema:
+              $ref: "#/components/schemas/User"
       responses:
         201:
           description: Stored user data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         404:
           description: Unable to store user data
         default:
@@ -58,25 +89,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /v0/giftuser/{username}:
     put:
       description: Updates a username
       parameters:
-      - in: path
-        name: username
-        description: User's username
-        required: true
-        schema:
-          type: string
+        - in: path
+          name: username
+          description: User's username
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Update a username that was changed
         required: false
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
         204:
           description: Username updated
@@ -87,25 +118,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /v0/getqresponse/{username}:
     get:
       description: Return user's questionnaire responses
       parameters:
-      - name: username
-        in: path
-        required: true
-        description: Username of user that we need questionnaire responses for
-        schema:
-          type: string
+        - name: username
+          in: path
+          required: true
+          description: Username of user that we need questionnaire responses for
+          schema:
+            type: string
       responses:
         200:
           description: User response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuestionnaireResponses'
+                $ref: "#/components/schemas/QuestionnaireResponses"
         404:
           description: Unknown user
         default:
@@ -113,7 +144,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /v0/postqresponse:
     post:
@@ -124,14 +155,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QuestionnaireResponses'
+              $ref: "#/components/schemas/QuestionnaireResponses"
       responses:
         201:
           description: Stored questionnaire responses
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuestionnaireResponses'
+                $ref: "#/components/schemas/QuestionnaireResponses"
         404:
           description: Unable to store questionnaire responses
         default:
@@ -139,15 +170,53 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /v0/putqresponse/{username}:
     put:
       description: Updates changed questionnaire responses
       parameters:
+        - in: path
+          name: username
+          description: User's unique username
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionnaireResponses"
+      responses:
+        200:
+          description: Questionnaire responses/interests updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionnaireResponses"
+        409:
+          description: Questionnaire responses/interests were not updated and saved
+        default:
+          description: Unexpected Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v0/removeqresponse/{username}/{questionnairetopic}:
+    put:
+      description: Removes chosen questionnaire response on Profile page
+      parameters:
       - in: path
         name: username
         description: User's unique username
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: questionnairetopic
+        description: Name of column in questionnaire table to "remove"
         required: true
         schema:
           type: string
@@ -159,13 +228,13 @@ paths:
               $ref: '#/components/schemas/QuestionnaireResponses'
       responses:
         200:
-          description: Questionnaire responses/interests updated
+          description: Questionnaire response/interest removed
           content:
               application/json:
                 schema:
                   $ref: '#/components/schemas/QuestionnaireResponses'
         409:
-          description: Questionnaire responses/interests were not updated and saved
+          description: Questionnaire response/interest was not removed
         default:
           description: Unexpected Error
           content:
@@ -177,25 +246,25 @@ paths:
     post:
       description: Authenticate user given username and password
       parameters:
-      - name: username
-        in: query
-        required: false
-        description: User's username
-        schema:
-          type: string
-      - name: password
-        in: query
-        required: false
-        description: User's password
-        schema:
-          type: string
+        - name: username
+          in: query
+          required: false
+          description: User's username
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: false
+          description: User's password
+          schema:
+            type: string
       responses:
         200:
           description: User response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         404:
           description: Unable to authenticate
         default:
@@ -203,29 +272,29 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     get:
       description: Check if user is logged in
       parameters:
-      - name: username
-        in: query
-        required: false
-        description: User's username
-        schema:
-          type: string
-      - name: password
-        in: query
-        required: false
-        description: User's password
-        schema:
-          type: string
+        - name: username
+          in: query
+          required: false
+          description: User's username
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: false
+          description: User's password
+          schema:
+            type: string
       responses:
         200:
           description: User response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         404:
           description: Unable to authenticate
         default:
@@ -233,25 +302,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /v0/logout:
     get:
       description: Logs out a user when the button ("Sign out") is clicked
       parameters:
-      - name: signOut
-        in: query
-        required: false
-        description: Boolean value to see if user is logged in or out
-        schema:
-          type: boolean
+        - name: signOut
+          in: query
+          required: false
+          description: Boolean value to see if user is logged in or out
+          schema:
+            type: boolean
       responses:
         200:
           description: Logged out
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         404:
           description: Unable to logout
         default:
@@ -259,26 +328,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
+                $ref: "#/components/schemas/Error"
 
   /v0/getwishlist/{username}:
     get:
       description: Return user's questionnaire responses
       parameters:
-      - name: username
-        in: path
-        required: true
-        description: Username of user that we need wishlist for
-        schema:
-          type: string
+        - name: username
+          in: path
+          required: true
+          description: Username of user that we need wishlist for
+          schema:
+            type: string
       responses:
         200:
           description: User response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuestionnaireResponses'
+                $ref: "#/components/schemas/QuestionnaireResponses"
         404:
           description: Unknown user
         default:
@@ -286,7 +354,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   # /v0/:
   #   get:
@@ -324,49 +392,49 @@ paths:
     get:
       description: Return a user's gift suggestion based on what they typed
       parameters:
-      - name: searchby
-        in: path
-        description: Method for searching gifts (either "searchgift" or "searchusername")
-        required: true
-        schema:
-          type: string
-      - name: value
-        in: query
-        required: false
-        description: User's username
-        schema:
-          type: string
-      - name: placeholderText
-        in: query
-        required: false
-        description: User's placeholder
-        schema:
-          type: string
-      - name: typedInput
-        in: query
-        required: false
-        description: User's input
-        schema:
-          type: string
-      - name: user
-        in: query
-        required: false
-        description: User's input
-        schema:
-          type: string
-      - name: searchTopics
-        in: query
-        required: false
-        description: Topics to search for in eBay Shopping API
-        schema:
-          type: array
+        - name: searchby
+          in: path
+          description: Method for searching gifts (either "searchgift" or "searchusername")
+          required: true
+          schema:
+            type: string
+        - name: value
+          in: query
+          required: false
+          description: User's username
+          schema:
+            type: string
+        - name: placeholderText
+          in: query
+          required: false
+          description: User's placeholder
+          schema:
+            type: string
+        - name: typedInput
+          in: query
+          required: false
+          description: User's input
+          schema:
+            type: string
+        - name: user
+          in: query
+          required: false
+          description: User's input
+          schema:
+            type: string
+        - name: searchTopics
+          in: query
+          required: false
+          description: Topics to search for in eBay Shopping API
+          schema:
+            type: array
       responses:
         200:
           description: User response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserInput'
+                $ref: "#/components/schemas/UserInput"
         404:
           description: Unknown user
         default:
@@ -374,25 +442,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
   /v0/storeWLGift:
     post:
-      description: Stores the typed user's wishlist gift. 
+      description: Stores the typed user's wishlist gift.
       parameters:
-      - name: WLGiftToStore
-        in: query
-        required: false
-        description: User's password
-        schema:
-          type: string
+        - name: WLGiftToStore
+          in: query
+          required: false
+          description: User's password
+          schema:
+            type: string
       responses:
         201:
           description: Stored user wishlist gift
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Wishlist'
+                $ref: "#/components/schemas/Wishlist"
         404:
           description: Unable to store user wishlist gift
         default:
@@ -400,7 +468,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 
 components:
   schemas:
@@ -486,6 +554,17 @@ components:
           WLGiftToStore:
             type: string
 
+    WishlistDelete:
+      description: User's responses to interest questionnaire
+      type: array
+      items:
+        type: object
+        properties:
+          username:
+            type: string
+          item:
+            type: string
+
     UserInput:
       description: User's input to search bar
       type: array
@@ -507,4 +586,3 @@ components:
         required:
           - searchby
           - typedInput
-

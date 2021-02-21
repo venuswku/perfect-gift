@@ -20,7 +20,8 @@ class Home extends React.Component {
       // array containing user's interests (used to search for gifts in eBay API)
       usernameInterests: [],
       // object containing gift suggestions (response returned by eBay API)
-      gifts: {}
+      gifts: {},
+      wishlist: {}
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -90,6 +91,39 @@ class Home extends React.Component {
                   console.log(res)
                   // store returned gift suggestions in our state
                   this.setState({ gifts: res.data[0] });
+////////
+        //The user is searching using the "Search by wishlist" option
+          console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist")
+          let queryString_WL = '/searchusername?'
+          console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`)
+          // Getting typed user's interests.
+          axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getwishlist/${typedInput}`)
+            .then(res => {
+              // Parsing the response
+              serverPath = "http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftapi";
+              console.log("----------------")
+              console.log(`Frontend: We have recevied "users" wishlist. We will now parse them`)
+              let qList = res.data[0].gift
+              console.log(qList);
+              console.log("----------------")
+              for (let i in qList) {
+                  queryString_WL += `searchTopics[]=${qList[i]}&`
+
+              }
+              queryString_WL = queryString_WL.slice(0, -1)
+              console.log(queryString_WL)
+              serverPath += queryString_WL
+              console.log(serverPath)
+
+              // Calling axios based on the user's select choice (username or gift)
+              console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
+              axios.get(serverPath, this.state)
+                .then(res => {
+                  console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
+                  console.log(res)
+                  // store returned gift suggestions in our state
+                  this.setState({ wishlist: res.data[0] });
+                  console.log(serverPath)
                 }).catch(res => {
                   console.log(res)
                   console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
@@ -98,10 +132,24 @@ class Home extends React.Component {
               console.log(res)
               console.log("Frontend: There was an error when trying to search the user you typed.")
             })
+        
+
+////////
+                }).catch(res => {
+                  console.log(res)
+                  console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
+                })
+
+
+
+            }).catch(res => {
+              console.log(res)
+              console.log("Frontend: There was an error when trying to search the user you typed.")
+            })
         }
 
         // If the user is either using the "Search for a gift" or "Search by..." option
-        else {
+        else if(value === "Search for a gift"){
         // else if (value === "Search for a gift") {
           console.log(`Frontend: We will search for the gift:"${typedInput}"`);
           serverPath += `/searchgift?searchTopics[]=${typedInput}`;
@@ -119,11 +167,7 @@ class Home extends React.Component {
               console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
             })
         }
-
-        // The user is searching using the "Search by" option
-        // else {
-        //   throw new Error("FrontEnd Error")
-        // }
+ 
       }
 
       // The user did not input anything
@@ -165,7 +209,13 @@ class Home extends React.Component {
 
     // display each gift returned by eBay API
     const displayGiftSuggestions = [];
+    let i = 0
     for (const searchTopic in this.state.gifts) {
+      console.log(searchTopic)
+      if (i === 0) {
+        displayGiftSuggestions.push(<div>Gift Suggestions</div>)
+      }
+      i++;
       if (searchTopic !== "searchby" && searchTopic !== "typedInput") {
         const giftName = this.state.gifts[searchTopic][0];
         const giftPic = this.state.gifts[searchTopic][1];
@@ -174,6 +224,41 @@ class Home extends React.Component {
         const relatedInterest = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
 
         displayGiftSuggestions.push(
+          <div className="giftSuggestionWrapper" key={giftName}>
+            <div className="giftImgBackground"><img src={giftPic} alt={picText} className="gift-img"/></div>
+            <div className="giftInfo">
+              <a href={giftLink} className="giftName blue varela">{giftName}</a>
+              <div className="moreGiftInfo">
+                {relatedInterest !== ""
+                ? <div className="interestInfo grey gothic">
+                    <p className="interestLabel">Interest</p>
+                    <p className="giftInterestTopic">{relatedInterest}</p>
+                  </div>
+                : null}
+              </div>
+            </div>
+          </div>
+        );
+      }
+    }
+
+    // display each wishlist item returned by eBay API
+    const displayWishlistSuggestions = [];
+    let j = 0
+    for (const searchTopic in this.state.wishlist) {
+      console.log(searchTopic)
+      if (j === 0) {
+        displayWishlistSuggestions.push(<div>Wishlist Suggestions</div>)
+      }
+      j++;
+      if (searchTopic !== "searchby" && searchTopic !== "typedInput") {
+        const giftName = this.state.wishlist[searchTopic][0];
+        const giftPic = this.state.wishlist[searchTopic][1];
+        const picText = `picture of ${giftName}`;
+        const giftLink = this.state.wishlist[searchTopic][2];
+        const relatedInterest = this.state.wishlist[searchTopic][3];   // empty string if user searched by gift
+
+        displayWishlistSuggestions.push(
           <div className="giftSuggestionWrapper" key={giftName}>
             <div className="giftImgBackground"><img src={giftPic} alt={picText} className="gift-img"/></div>
             <div className="giftInfo">
@@ -218,6 +303,7 @@ class Home extends React.Component {
                 <option className="homeOption" value="Select a way to search">&nbsp;Search by...</option>
                 <option className="homeOption" value="Search by username">&nbsp;Username</option>
                 <option className="homeOption" value="Search for a gift">&nbsp;Gift</option>
+                <option className="homeOption" value="Search by wishlist">&nbsp;Wishlist</option>
               </select>
             </label>
             <div className="searchbar">
@@ -234,6 +320,7 @@ class Home extends React.Component {
           </form>
           {/*The gift suggestion*/}
           {displayGiftSuggestions}
+          {displayWishlistSuggestions}
           {/* <div className="gift-main">
             <p className="gift-name blue varela">Hockey Stick</p>
             <div className="gift-background">

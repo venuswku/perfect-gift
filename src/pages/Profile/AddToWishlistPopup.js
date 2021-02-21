@@ -19,6 +19,7 @@ class AddToWishlistPopup extends React.Component {
 
 
 
+
   handleSubmit(event) {
     console.log("Frontend: We are going to request to store the wishlist gift.");
     event.preventDefault();
