@@ -14,7 +14,7 @@ const proxy = require('http-proxy-middleware')
 
 // Used for letting the frontend communicate with the server
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", "http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com"],
   methods: ["GET", "POST", "PUT"],
   credentials: true,
 }));
