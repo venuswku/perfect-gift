@@ -22,7 +22,22 @@ class DeleteUserInfo extends React.Component {
          console.log(`We are going to delete ${this.props.info}`)
          axios.delete(serverPath, [this.state]).then(res => {
             console.log("Frontend [SUCCESS]: Deleted Wishlist item")
-            window.location.reload();
+            // call get request to see changes to wishlist items
+            axios.get(`http://localhost:3010/v0/getwishlist/${this.state.username}`, [this.state])
+            .then(res => {
+                console.log("Frontend [SUCCESS]: We have received the user's wishlist")
+                console.log(res.data)
+                console.log(res.data[0].gift)
+                this.setState({wlresponse: res.data[0].gift})
+                console.log(this.state.wlresponse)
+            })
+            .catch(err => {
+                console.log("Frontend [ERROR]: Retrieving wishlist was unsuccessful.")
+                console.log(err)
+                this.setState({
+                    
+                });
+            })
          }).catch(err =>{
              console.log("Frontend [ERROR]: Wishlist not deleted.");
              console.log(err)
