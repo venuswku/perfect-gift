@@ -261,6 +261,7 @@ class Profile extends Component {
                     </div>
                 );
             }
+            return;
         });
 
         // Setting up wishlist items

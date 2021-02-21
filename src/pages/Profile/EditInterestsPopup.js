@@ -18,14 +18,11 @@ import music2Image from '../../images/create_account_music2.svg';
 
 class EditQuestionnaireResponsesPopup extends Component {
 
-    constructor(props) {
-        super(props)
-        /* Parent component (Profile.js) passed the following properties through this.props:
-            - toggle: makes popup open/close
-            - userInfo: contains username, questionnainre responses, etc.
-            - editInterest: handles changes to any state
-        */
-    }
+    /* Parent component (Profile.js) passed the following properties through this.props:
+        - toggle: makes popup open/close
+        - userInfo: contains username, questionnainre responses, etc.
+        - editInterest: handles changes to any state
+    */
 
     componentDidMount() { }
 
