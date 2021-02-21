@@ -261,7 +261,7 @@ class Profile extends Component {
                     </div>
                 );
             }
-            return;
+            return displayQResponses;
         });
 
         // Setting up wishlist items
