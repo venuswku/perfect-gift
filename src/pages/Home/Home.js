@@ -3,10 +3,10 @@ import "./Home.css";
 import Navbar from "../../navigation/HomeNavbar/HomeNavbar";
 import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
-import { ReactComponent as Hockey } from "../../images/hockey.svg";
-import { ReactComponent as Heart } from "../../images/heart.svg";
+// import { ReactComponent as Hockey } from "../../images/hockey.svg";
+// import { ReactComponent as Heart } from "../../images/heart.svg";
 import axios from 'axios';
-import { FormLabel } from "react-bootstrap";
+// import { FormLabel } from "react-bootstrap";
 
 //axios.defaults.withCredentials = true; //Might need this
 class Home extends React.Component {

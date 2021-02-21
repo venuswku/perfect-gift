@@ -200,17 +200,17 @@ class Profile extends Component {
         for (const [index, value] of qresponse.entries()) {
             if (value !== '') {
                 // console.log('index is ', index);
-                var color = '';
+                var bubbleColor = '';
                 if (index === 0 || index === 1 || index === 2) {
-                    color = 'textBubble indoors';
+                    bubbleColor = 'textBubble indoors';
                 } else if (index === 3 || index === 4 || index === 5) {
-                    color = 'textBubble outdoors';
+                    bubbleColor = 'textBubble outdoors';
                 } else if (index === 6 || index === 7 || index === 8) {
-                    color = 'textBubble sports';
+                    bubbleColor = 'textBubble sports';
                 } else if (index === 9 || index === 10 || index === 11) {
-                    color = 'textBubble music';
+                    bubbleColor = 'textBubble music';
                 }
-                displayresponse.push(<span className={color} key={value}>{value} &nbsp; <DeleteButton /></span>);
+                displayresponse.push(<span className={bubbleColor} key={value}>{value} &nbsp; <DeleteButton /></span>);
             }
         }
 
