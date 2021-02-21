@@ -28,7 +28,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie : {
-    expires : 1800000 // Found out that this is in miliseconds. Currently rounds about 30 minutes.
+    //expires : 1800000, // Found out that this is in miliseconds. Currently rounds about 30 minutes.
+    sameSite: 'none',
   }
 }))
 
