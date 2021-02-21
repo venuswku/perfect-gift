@@ -8,7 +8,7 @@ class DeleteUserInfo extends React.Component {
         super(props);
 
         this.state = {
-            username: "",
+            username: this.props.username,
             item: this.props.info
         };
         this.DeleteSpecifiedInfo = this.DeleteSpecifiedInfo.bind(this);

@@ -289,7 +289,7 @@ class Profile extends Component {
                 var color = '';
                 color = 'textBubble indoors';
 
-                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteUserInfo info={wl_response[i]}/></span>);
+                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
             
         }
 
