@@ -185,23 +185,23 @@ class Home extends React.Component {
     event.preventDefault();
   }
 
-  // componentDidMount() {
-  //   console.log(this.state)
+  componentDidMount() {
+    console.log(this.state)
 
-  //   axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state) //The port of the server
-  //     .then(res => {
-  //       if (res.data[0].username !== "") {
-  //         this.setState({
-  //           user: res.data[0].firstname
-  //         })
-  //         console.log(`Your name is: ${this.state.user}`)
-  //       } else {
-  //         this.props.history.push('/sign_in')
-  //       }
-  //     }).catch(res => {
-  //       console.log(res)
-  //     })
-  // }
+    axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state) //The port of the server
+      .then(res => {
+        if (res.data[0].username !== "") {
+          this.setState({
+            user: res.data[0].firstname
+          })
+          console.log(`Your name is: ${this.state.user}`)
+        } else {
+          this.props.history.push('/sign_in')
+        }
+      }).catch(res => {
+        console.log(res)
+      })
+  }
 
   /*Renders the whole Home page */
   render() {
