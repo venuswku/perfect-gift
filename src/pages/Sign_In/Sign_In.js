@@ -24,7 +24,7 @@ class Sign_In extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state) //The port of the server
+    axios.get('https://cors-everywhere-me.herokuapp.com/http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state) //The port of the server
     .then(res => {
         if (res.data[0].username !== ""){
           this.props.history.push('/home')
