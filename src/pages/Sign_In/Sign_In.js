@@ -41,7 +41,7 @@ class Sign_In extends Component {
     e.preventDefault()
     console.log(this.state)
     console.log("We are submitting a user to either authenticate, or create")
-    axios.post('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state)
+    axios.post('https://cors-everywhere-me.herokuapp.com/http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state)
     .then(response => {
       if (response.data === ""){
         console.log("Not Logged In")
