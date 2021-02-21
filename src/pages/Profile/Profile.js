@@ -105,8 +105,27 @@ class Profile extends Component {
         .then(response => {
             console.log('Profile.js: success deleting qr');
             console.log(response);
-            // refreshes page to see changes to interests
-            window.location.reload();
+            // call get request again to see new changes
+            axios.get(`http://localhost:3010/v0/getqresponse/${this.state.username}`, [this.state])
+                .then(res => {
+                    console.log('successful get q response');
+                    this.setState({ outdooractivity: res.data[0].outdooractivity });
+                    this.setState({ place: res.data[0].place });
+                    this.setState({ store: res.data[0].store });
+                    this.setState({ musicgenre: res.data[0].musicgenre });
+                    this.setState({ musician: res.data[0].musician });
+                    this.setState({ band: res.data[0].band });
+                    this.setState({ indooractivity: res.data[0].indooractivity });
+                    this.setState({ movietvshow: res.data[0].movietvshow });
+                    this.setState({ videogame: res.data[0].videogame });
+                    this.setState({ sport: res.data[0].sport });
+                    this.setState({ sportsteam: res.data[0].sportsteam });
+                    this.setState({ exercise: res.data[0].exercise });
+                })
+                .catch(err => {
+                    console.log('failed get q response');
+                    console.log(err);
+                });
         })
         .catch(error => {
             console.log("Profile.js: failed deleting qr");
@@ -261,6 +280,7 @@ class Profile extends Component {
                     </div>
                 );
             }
+            return displayQResponses;
         });
 
         // Setting up wishlist items
@@ -270,7 +290,7 @@ class Profile extends Component {
                 var color = '';
                 color = 'textBubble indoors';
 
-                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteUserInfo info={wl_response[i]}/></span>);
+                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
             
         }
 
