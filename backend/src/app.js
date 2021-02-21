@@ -15,7 +15,7 @@ const proxy = require('http-proxy-middleware')
 // Used for letting the frontend communicate with the server
 app.use(cors({
   origin: ["http://localhost:3000", "http://http-perfect-gift-frontend.s3-website-us-west-1.amazonaws.com"],
-  methods: ["GET", "POST", "PUT"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
 
@@ -28,7 +28,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie : {
-    expires : 60 * 60 * 24 * 5 // Found out that this is in miliseconds. Currently rounds about 7 minutes. To make a user stay logged in longer, multiply by a bigger number
+    expires : 1800000 // Found out that this is in miliseconds. Currently rounds about 30 minutes.
   }
 }))
 
@@ -74,6 +74,9 @@ app.post('/v0/postqresponse', gift.postQResponse);
 // Puts changes for questionnaire responses from Profile page's Edit Interests popup.
 app.put('/v0/putqresponse/:username', gift.putQResponse);
 
+// "Removes" (in reality, empties string) for the corresponding questionnaire topic in the questionnaire table.
+app.put('/v0/removeqresponse/:username/:questionnairetopic', gift.removeQResponse);
+
 // This authenticates and authorizes a user to be able to log in.
 app.post('/v0/authenticate', gift.login);
 
@@ -91,6 +94,9 @@ app.get('/v0/giftapi/:searchby', gift.giftapi);
 
 //Stores the wishlist gift into our database
 app.post('/v0/storeWLGift', gift.storeWLGift);
+
+// Deletes the generic item (wishlist/questionnaire)
+app.delete('/v0/deleteItem', gift.deleteItem);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

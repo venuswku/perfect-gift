@@ -1,6 +1,4 @@
 const { Pool } = require('pg');
-
-
 const connectionString = 'postgres://dmdchhfx:h109rWA_vyG-KSBgRK96McXPR7sCC8Mk@ziggy.db.elephantsql.com:5432/dmdchhfx'
 const pool = new Pool({connectionString});
 
@@ -111,6 +109,23 @@ exports.updateQResponses = async (username, outdooractivity, place, store, music
     });
 }
 
+// Empties string for the interest column in questionnaire responses.
+exports.deleteQResponse = async (username, questionnairetopic) => {
+    console.log('db.js: deleteQResponses called');
+    const remove = `UPDATE questionnaireresponses SET ${questionnairetopic} = '' WHERE username = '${username}'`;
+    // console.log(remove);
+
+    pool.query(remove, (err, res) => {
+        if (err) {
+            console.log("db.js: deleteQResponse error!")
+            console.error(err);
+            return;
+        }
+        console.log("db.js: deleteQResponse: response deleted in questionnaireresponses table!");
+        return;
+    });
+}
+
 // Returns one user and its data or all users and their data, used in getUsers
 exports.authenticateUser = async (username) => {
     let select = 'SELECT username, userpassword FROM giftuser';
@@ -176,7 +191,7 @@ exports.selectWishlist = async (username) => {
             console.log(WL_QUERY.rows[i]['gift'])
            gifts['gift'].push(WL_QUERY.rows[i]['gift'])
         }
-        console.log(gifts)
+        //console.log(gifts)
             
         return gifts
        //return 1;
@@ -189,4 +204,19 @@ exports.selectWishlist = async (username) => {
         return 2;
     }
 
+}
+
+// Removes wishlist item from the database
+exports.removeWishlistItem = async (user, item) => {
+    try{
+    let QUERY_DELETE = `DELETE FROM wishlist WHERE username = '${user}' AND gift = '${item}'`
+    const QUERY_DELETE_RESULT = await pool.query(QUERY_DELETE)
+    
+    return "Success"
+    }
+
+    catch {
+        console.log("Bad")
+        return "Failure"
+    }
 }
