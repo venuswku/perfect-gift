@@ -21,7 +21,8 @@ class Home extends React.Component {
       usernameInterests: [],
       // object containing gift suggestions (response returned by eBay API)
       gifts: {},
-      wishlist: {}
+      wishlist: {},
+      loading: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -57,6 +58,11 @@ class Home extends React.Component {
     try {
 
       // If the input the user input was not empty
+      this.setState({loading: true,
+                    gifts: {},
+                    wishlist: {}
+      });
+
       if (typedInput !== "") {
         console.log(`Frontend: You have entered: "${typedInput}"`)
 
@@ -94,6 +100,7 @@ class Home extends React.Component {
                   console.log(res)
                   // store returned gift suggestions in our state
                   this.setState({ gifts: res.data[0] });
+                  this.setState({loading: false});
 ////////
         //The user is searching using the "Search by wishlist" option
           console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist")
@@ -165,6 +172,7 @@ class Home extends React.Component {
               console.log(res)
               // store returned gift suggestions in our state
               this.setState({ gifts: res.data[0] });
+              this.setState({loading: false});
             }).catch(res => {
               console.log(res)
               console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
@@ -332,8 +340,9 @@ class Home extends React.Component {
             </div>
           </form>
           {/*The gift suggestion*/}
-          {displayWishlistSuggestions}
           {displayGiftSuggestions}
+          {displayWishlistSuggestions}
+          <div class="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
           {/* <div className="gift-main">
             <p className="gift-name blue varela">Hockey Stick</p>
             <div className="gift-background">
@@ -347,7 +356,9 @@ class Home extends React.Component {
             </div>
           </div> */}
         </div>
+        
       </div>
+      
     );
   }
 }
