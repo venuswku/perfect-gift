@@ -4,7 +4,7 @@ import Navbar from "../../navigation/HomeNavbar/HomeNavbar";
 import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
 // import { ReactComponent as Hockey } from "../../images/hockey.svg";
-// import { ReactComponent as Heart } from "../../images/heart.svg";
+import { ReactComponent as Heart } from "../../images/heart.svg";
 import axios from 'axios';
 // import { FormLabel } from "react-bootstrap";
 
@@ -135,7 +135,7 @@ class Home extends React.Component {
               console.log(res)
               console.log("Frontend: There was an error when trying to search the user you typed.")
             })
-        
+
 
 ////////
                 }).catch(res => {
@@ -170,7 +170,7 @@ class Home extends React.Component {
               console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
             })
         }
- 
+
       }
 
       // The user did not input anything
@@ -205,6 +205,11 @@ class Home extends React.Component {
         console.log(res)
       })
   }
+
+  // Function to show interest based on wishlist item
+  // showInterest() {
+
+  // }
 
   /*Renders the whole Home page */
   render() {
@@ -276,6 +281,8 @@ class Home extends React.Component {
                   </div>
                 : null}
                 {/* put heart for wishlist item */}
+                <Heart className="giftHeartPic"></Heart>
+                <div className="giftWishlistText grey gothic">Wishlist Item</div>
               </div>
             </div>
           </div>
