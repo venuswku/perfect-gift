@@ -49,7 +49,12 @@
   font-family: 'Varela Round';
   text-align: center;
 }
- 
+
+.usernameWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
 .topicFont {
   font-size: 22px;
   color: rgba(41, 112, 250, 1);
@@ -65,11 +70,18 @@
 .username {
   font-size: 19px;
   font-family: 'Didact Gothic';
+  display: flex;
+  flex-direction: row;
 }
 
 .editButton {
   cursor: pointer;
   background-color: transparent;
+}
+
+.saveUndoButtons {
+  display: flex;
+  flex-direction: row;
 }
 
 .interestBubblesWrapper {
@@ -116,6 +128,11 @@
 
 .addToWishlist {
   cursor: pointer;
+  font-size: 19px;
+  font-family: 'Didact Gothic';
+}
+
+.wishlistItem {
   font-size: 19px;
   font-family: 'Didact Gothic';
 }

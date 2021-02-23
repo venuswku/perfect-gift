@@ -9,6 +9,7 @@ import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
 import { ReactComponent as ProfilePic } from '../../images/profile_pic.svg';
+import { ReactComponent as GiftBullet } from '../../images/gift_bullet_point.svg';
 
 axios.defaults.withCredentials = true;
 
@@ -167,9 +168,14 @@ class Profile extends Component {
             );
         } else {
             return (
-                <button onClick={this.handleSave}>
-                    Save
-                </button>
+                <div className="saveUndoButtons">
+                    <button onClick={this.handleSave}>
+                        Save
+                    </button>
+                    <button>
+                        Undo
+                    </button>
+                </div>
             );
         }
     }
@@ -276,11 +282,7 @@ class Profile extends Component {
         const wl_response = this.state.wlresponse;
         const displaywishlist = [];
         for (let i in wl_response) {
-                var color = '';
-                color = 'textBubble indoors';
-
-                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
-            
+            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>{wl_response[i]}&nbsp;<DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
         }
 
         return (
@@ -296,7 +298,7 @@ class Profile extends Component {
                         <div className='name'>{this.state.name}</div>
                         <br></br>
                         {/* username */}
-                        <div>
+                        <div className="usernameWrapper">
                             <span className='topicFont'>Username &nbsp; </span>
                             <span className="username">{this.renderInputField()} &nbsp; {this.renderButton()}</span>
                         </div>
