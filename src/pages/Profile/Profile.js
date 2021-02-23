@@ -282,7 +282,7 @@ class Profile extends Component {
         const wl_response = this.state.wlresponse;
         const displaywishlist = [];
         for (let i in wl_response) {
-            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>{wl_response[i]}&nbsp;<DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
+            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}&nbsp;&nbsp;<DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
         }
 
         return (
@@ -311,9 +311,9 @@ class Profile extends Component {
                         </div>
                         <br></br>
                         {/* wishlist */}
-                        <div>
+                        <div className="wishlistWrapper">
                             <span className='topicFont'>Wishlist</span>
-                            {displaywishlist}
+                            <div className="list">{displaywishlist}</div>
                             {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} /> : null}
                             <span className='addToWishlist' onClick={this.togglePopupWL}><AddButton/>&nbsp;Add to wishlist</span>
                         </div>

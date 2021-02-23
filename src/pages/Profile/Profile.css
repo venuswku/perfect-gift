@@ -126,13 +126,30 @@
   fill: #FF6060;
 }
 
-.addToWishlist {
-  cursor: pointer;
-  font-size: 19px;
-  font-family: 'Didact Gothic';
+.wishlistWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  /* allow extra wishlist items to wrap to next row if there's already 2 items in a row */
+  flex-wrap: wrap;
 }
 
 .wishlistItem {
   font-size: 19px;
   font-family: 'Didact Gothic';
+  display: flex;
+  align-items: center;
+  margin-top: 1%;
+  width: 50%;
+}
+
+.addToWishlist {
+  cursor: pointer;
+  font-size: 19px;
+  font-family: 'Didact Gothic';
+  margin-top: 1%;
 }
