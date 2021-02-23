@@ -40,7 +40,6 @@
   top: 160px;
   width: 800px;
   text-align: left;
-
 }
 
 .name {
@@ -50,20 +49,9 @@
   font-family: 'Varela Round';
   text-align: center;
 }
-
-.tab { 
-  margin-left: 60px; 
-}
-
-
-ul.no-bullets {
-  list-style-type: none; /* Remove bullets */
-  column-count: 2;
-}
-
  
 .topicFont {
-  font-size: 18 px;
+  font-size: 22px;
   color: rgba(41, 112, 250, 1);
 }
 
@@ -124,4 +112,10 @@ ul.no-bullets {
 
 .delete:hover {
   fill: #FF6060;
+}
+
+.addToWishlist {
+  cursor: pointer;
+  font-size: 19px;
+  font-family: 'Didact Gothic';
 }

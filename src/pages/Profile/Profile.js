@@ -237,17 +237,6 @@ class Profile extends Component {
             }).catch(res => {
                 console.log(res)
             })
-
-        // Making a get request to get the user's wishlist
-        // axios.get('http://localhost:3010/v0/getUserWishlist', [this.state])
-        //     .then(res => {
-        //         console.log("Frontend: Gimme wishlist")
-        //         console.log(res.data)
-
-        //     }).catch(res => {
-        //         console.log("Frontend: There was an error when trying to get a user's wishlist")
-        //         console.log(res)
-        //     })
     }
 
     render() {
@@ -321,24 +310,11 @@ class Profile extends Component {
                         <br></br>
                         {/* wishlist */}
                         <div>
-                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} /> : null}
                             <span className='topicFont'>Wishlist</span>
                             {displaywishlist}
-                            <ul className='tab no-bullets'>
-                                {/* <li>hockey stick &nbsp; <DeleteButton /></li>
-                                <li>hockey shin guard &nbsp; <DeleteButton /></li>
-                                <li>Harry Potter wand &nbsp; <DeleteButton /></li>
-                                <li>hockey stick &nbsp; <DeleteButton /></li>
-                                <li>hockey shin guard &nbsp; <DeleteButton /></li>
-                                <li>Harry Potter wand &nbsp; <DeleteButton /></li>
-                                <li>hockey stick &nbsp; <DeleteButton /></li>
-                                <li>hockey shin guard &nbsp; <DeleteButton /></li>
-                                <li>Harry Potter wand &nbsp; <DeleteButton /></li> */}
-                            </ul>
-                            <br></br>
-                            <span className='tab'> <AddButton  onClick={this.togglePopupWL} /> Add to wishlist</span>
+                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} /> : null}
+                            <span className='addToWishlist' onClick={this.togglePopupWL}><AddButton/>&nbsp;Add to wishlist</span>
                         </div>
-
                     </div>
                 </header>
             </div>
