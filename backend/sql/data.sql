@@ -24,3 +24,7 @@ INSERT INTO questionnaireresponses(
     username, outdooractivity, place, store, musicgenre, musician, band,
     indooractivity, movietvshow, videogame, sport, sportsteam, exercise)
     VALUES ('cviche', 'running', 'san jose', 'Smite', 'edm', 'chet baker', '', 'coding', 'high school musical', 'Little Nightmares', 'Smash', 'running', '');
+INSERT INTO questionnaireresponses(
+    username, outdooractivity, place, store, musicgenre, musician, band,
+    indooractivity, movietvshow, videogame, sport, sportsteam, exercise)
+    VALUES ('cmruffin', 'biking', 'beach', '', 'rock', 'lil uzi', 'nothing but theives', 'watching tv', 'new girl', 'sims', 'soccer', 'miami heat', 'cardio');
