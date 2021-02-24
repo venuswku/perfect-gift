@@ -18,6 +18,13 @@ exports.getUsers = async (req, res) => {
         } else {
             res.status(404).send();
         }
+    }else if (req.query.useremail) {
+        const oneUser = await db.selectUsersEmail(req.query.useremail);
+        if (oneUser) {
+            res.status(200).json(oneUser);
+        } else {
+            res.status(404).send();
+        }
     } else { // get all users from database if none are passed into parameter
         const allUsers = await db.selectUsers([]);
         res.status(200).json([allUsers]);

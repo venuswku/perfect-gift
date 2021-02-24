@@ -20,6 +20,25 @@ exports.selectUsers = async (username) => {
     return allUsers;
 };
 
+// Returns one user and its data or all users and their data by the user's email
+exports.selectUsersEmail = async (useremail) => {
+    let select = 'SELECT username, userpassword, firstname, lastname, useremail, avatar, showavatar FROM giftuser';
+    if (useremail) {
+        select += ` WHERE useremail = $1`;
+    }
+    const query = {
+        text: select,
+        values: [useremail ? `${useremail}` : []],
+    };
+    const { rows } = await pool.query(query);
+    const allUsers = [];
+    for (const row of rows) {
+        allUsers.push({ username: row.username, userpassword: row.userpassword, firstname: row.firstname, lastname: row.lastname, useremail: row.useremail, avatar: row.avatar, showavatar: row.showavatar });
+    }
+    return allUsers;
+};
+
+
 // Inserts user data in giftusers table.
 exports.insertUser = async (username, userpassword, firstname, lastname, useremail, avatar, showavatar) => {
     console.log('db.js: insertUsers called');
