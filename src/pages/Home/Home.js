@@ -3,76 +3,79 @@ import "./Home.css";
 import Navbar from "../../navigation/HomeNavbar/HomeNavbar";
 import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
-// import { ReactComponent as Hockey } from "../../images/hockey.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
 import axios from 'axios';
-// import { FormLabel } from "react-bootstrap";
 
 //axios.defaults.withCredentials = true; //Might need this
 class Home extends React.Component {
+
+  // Constructor
   constructor(props) {
     super(props);
+    
+    // Holds the state of the component Home.js
     this.state = {
-      value: "Search by...",
-      placeholderText: "Select a way to search",
-      typedInput: "",
-      user: "",
-      // array containing user's interests (used to search for gifts in eBay API)
-      usernameInterests: [],
-      // object containing gift suggestions (response returned by eBay API)
-      gifts: {},
-      wishlist: {},
-      loading: false
+      value: "Search by...", // Value of the dropdown (e.g., gift, user/email)
+      placeholderText: "Select a way to search", // Placeholder for search bar
+      typedInput: "", // Contains the text that the user has typed
+      user: "", // Name of the signed in user    
+      usernameInterests: [], // array containing user's interests (used to search for gifts in eBay API)  
+      gifts: {}, // object containing gift suggestions (response returned by eBay API)
+      wishlist: {}, // Object containing wishlist suggestions (reponse returned by eBay API)
+      loading: false // Determines if the search bar is loading a search request
     };
 
+    // Binding to make sure functions work
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
   }
 
-  /*When the drop down is changed, the placeholder and dropdown items are changed also */
+  /*When the drop down is changed, 
+  the placeholder and dropdown items are changed also */
   handleChange(event) {
     this.setState({
-
-      //placeholder: event.target.value,
       placeholderText: event.target.value,
       value: event.target.value
     });
   }
 
-  // This function updates the state (typedInput) everytime a user enters a key
+  // Updates the state (typedInput) everytime a user enters a key in the search bar
   handleUserInput(event) {
-    console.log("The user has entered more keys, updating state")
+    console.log("The user has entered (or removed) more keys, updating state")
     this.setState({
       typedInput: event.target.value
     })
   }
 
-
-  // When the user hits enter, it will send the string to the server
+  // When the user hits enter, it will send the typed string (typedInput) to the server
   handleSubmit(event) {
-    const { value, typedInput } = this.state
-    let serverPath = "http://localhost:3010/v0/giftapi";
-    console.log("Frontend: We are going to submit your search request to the server")
 
+    console.log("Frontend: We are going to submit your search request to the server")
+    const { value, typedInput } = this.state
+    let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
+    
     try {
 
-      // If the input the user input was not empty
+      // Setting the loading state to true (causes the loading image to show up)
       this.setState({loading: true,
                     gifts: {},
                     wishlist: {}
       });
+      console.log(`Frontend: You have entered: "${typedInput}"`)
 
-      if (typedInput !== "") {
-        console.log(`Frontend: You have entered: "${typedInput}"`)
+      // If the user has typed something (No response == ignore)
+      if (typedInput !== "") {      
 
         // If the user is searching for a username
         if (value === "Search by username") {
-          let queryString = '/searchusername?'
           console.log(`Frontend: We will fetch the interests for the username:"${typedInput}"`)
-          // Getting typed user's interests.
+          let queryString = '/searchusername?' // Will be used to concatanate more queries and attach to the main string (serverPath)
+          
+          // GET Request to get the "typed user's" interests.
           axios.get(`http://localhost:3010/v0/getQResponse/${typedInput}`)
             .then(res => {
+              
               // Parsing the response
               console.log(`Frontend: We have recevied "users" list of interests. We will now parse them`)
               let qList = res.data[0];
