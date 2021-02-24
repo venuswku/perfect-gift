@@ -174,6 +174,28 @@ exports.putQResponse = async (req, res) => {
     }
 };
 
+// "Removes" (in reality, empties string) for the corresponding questionnaire topic in the questionnaire table.
+exports.removeQResponse = async (req, res) => {
+    try {
+        const username = req.params.username;
+        const questionnaireTopic = req.params.questionnairetopic;
+        console.log("gift.js: removeResponse for", username, "in", questionnaireTopic, "column");
+        
+        const remove = await db.deleteQResponse(username, questionnaireTopic);
+        
+        const userChanges = await db.selectQResponses(username);
+        if (userChanges) {
+            console.log("gift.js: removeQResponse: Gifter's questionnaire response is successfully deleted!");
+            res.status(200).json([userChanges]);
+            console.log("gift.js: removeQResponse: we are getting 200 OK");
+        }
+    }
+    catch {
+        console.log("gift.js: removeQResponse: qr failz");
+        res.status(409).send();
+    }
+}
+
 // Checks if login credentials are valid
 exports.login = async (req, res) => {
     console.log("We are going to authenticate the request that the frontend has given us")
@@ -362,7 +384,7 @@ exports.storeWLGift = async (req,res) => {
         const WL_Stored = await db.storeUserWishlistGift(req.session.user, req.body[0].WLGiftToStore)
         if(WL_Stored === "Success") {
             console.log("Server [SUCCESS]: Stored user wishlist gift in wishlist table")
-        res.send("Success")
+            res.send("Success")
         }
 
         else if(WL_Stored === "Warning") {
@@ -383,7 +405,10 @@ exports.storeWLGift = async (req,res) => {
 
 exports.getwishlist = async (req,res) => {
     try {   
-        let wishlist_result = await db.selectWishlist(req.session.user)
+        console.log('--------')
+        console.log(req.params.username);
+        console.log('-------')
+        let wishlist_result = await db.selectWishlist(req.params.username) //FIX THIS IS A BUG CHANGE TO GET PARAM USER (I WILL FIX...MAYBE.....OK I WILL DONT WORRY ABOUT IT)
         console.log(wishlist_result)
         wishlist_result['username'] = req.session.user
         res.send([wishlist_result])
@@ -395,3 +420,19 @@ exports.getwishlist = async (req,res) => {
         console.log("Server [ERROR]: We could not retrieve the user's wishlist")
     }
 }
+
+exports.deleteItem = async (req,res) => {
+    try {
+        let wishlist_delete_confirmation = await db.removeWishlistItem(req.session.user, req.query.item)
+        console.log(req.query)
+        console.log(req.query.item)
+        res.send("Success");
+    }
+
+    catch {
+        console.log("Fail");
+        res.send("Failure");
+        
+    };
+
+};

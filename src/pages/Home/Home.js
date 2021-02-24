@@ -3,80 +3,93 @@ import "./Home.css";
 import Navbar from "../../navigation/HomeNavbar/HomeNavbar";
 import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
-import { ReactComponent as Hockey } from "../../images/hockey.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
 import axios from 'axios';
-import { FormLabel } from "react-bootstrap";
 
 //axios.defaults.withCredentials = true; //Might need this
 class Home extends React.Component {
+
+  // Constructor
   constructor(props) {
     super(props);
+    
+    // Holds the state of the component Home.js
     this.state = {
-      value: "Search by...",
-      placeholderText: "Select a way to search",
-      typedInput: "",
-      user: "",
-      // array containing user's interests (used to search for gifts in eBay API)
-      usernameInterests: [],
-      // object containing gift suggestions (response returned by eBay API)
-      gifts: {}
+      value: "Search by...", // Value of the dropdown (e.g., gift, user/email)
+      placeholderText: "Select a way to search", // Placeholder for search bar
+      typedInput: "", // Contains the text that the user has typed
+      user: "", // Name of the signed in user    
+      usernameInterests: [], // array containing user's interests (used to search for gifts in eBay API)  
+      gifts: {}, // object containing gift suggestions (response returned by eBay API)
+      wishlist: {}, // Object containing wishlist suggestions (reponse returned by eBay API)
+      loading: false // Determines if the search bar is loading a search request
     };
 
+    // Binding to make sure functions work
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
   }
 
-  /*When the drop down is changed, the placeholder and dropdown items are changed also */
+  /*When the drop down is changed, 
+  the placeholder and dropdown items are changed also */
   handleChange(event) {
     this.setState({
-
-      //placeholder: event.target.value,
       placeholderText: event.target.value,
       value: event.target.value
     });
   }
 
-  // This function updates the state (typedInput) everytime a user enters a key
+  // Updates the state (typedInput) everytime a user enters a key in the search bar
   handleUserInput(event) {
-    console.log("The user has entered more keys, updating state")
+    console.log("The user has entered (or removed) more keys, updating state")
     this.setState({
       typedInput: event.target.value
     })
   }
 
-
-  // When the user hits enter, it will send the string to the server
+  // When the user hits enter, it will send the typed string (typedInput) to the server
   handleSubmit(event) {
-    const { value, typedInput } = this.state
-    let serverPath = "http://localhost:3010/v0/giftapi";
-    console.log("Frontend: We are going to submit your search request to the server")
 
+    console.log("Frontend: We are going to submit your search request to the server")
+    const { value, typedInput } = this.state
+    let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
+    
     try {
 
-      // If the input the user input was not empty
-      if (typedInput !== "") {
-        console.log(`Frontend: You have entered: "${typedInput}"`)
+      // Setting the loading state to true (causes the loading image to show up)
+      this.setState({loading: true,
+                    gifts: {},
+                    wishlist: {}
+      });
+      console.log(`Frontend: You have entered: "${typedInput}"`)
+
+      // If the user has typed something (No response == ignore)
+      if (typedInput !== "") {      
 
         // If the user is searching for a username
         if (value === "Search by username") {
-          let queryString = '/searchusername?'
           console.log(`Frontend: We will fetch the interests for the username:"${typedInput}"`)
-          // Getting typed user's interests.
+          let queryString = '/searchusername?' // Will be used to concatanate more queries and attach to the main string (serverPath)
+          
+          // GET Request to get the "typed user's" interests.
           axios.get(`http://localhost:3010/v0/getQResponse/${typedInput}`)
             .then(res => {
+              
               // Parsing the response
               console.log(`Frontend: We have recevied "users" list of interests. We will now parse them`)
-              let qList = res.data[0]
-              let tempUserInterests = []
-              for (let [k, v] of Object.entries(qList)) {
-                console.log(k, v)
-                if (v !== '' && k !== "username") {
-                  tempUserInterests.push(v)
-                  queryString += `searchTopics[]=${v}&`
+              let qList = res.data[0];
+              let tempUserInterests = [];
+              console.log("result of getQResponse:", this.state.usernameInterests);
+              for (let [qResponseTopic, qResponseInterest] of Object.entries(qList)) {
+                console.log(qResponseTopic, qResponseInterest)
+                if (qResponseInterest !== '' && qResponseTopic !== "username") {
+                  tempUserInterests.push(qResponseInterest)
+                  queryString += `searchTopics[]=${qResponseInterest}&`
                 }
               }
+              // this.state.userInterests just has questionnaire responses (e.g. ["Taeyeon", "YouTube"])
+              this.setState({ usernameInterests: tempUserInterests });
               queryString = queryString.slice(0, -1)
               console.log(queryString)
               serverPath += queryString
@@ -90,6 +103,40 @@ class Home extends React.Component {
                   console.log(res)
                   // store returned gift suggestions in our state
                   this.setState({ gifts: res.data[0] });
+                  this.setState({loading: false});
+////////
+        //The user is searching using the "Search by wishlist" option
+          console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist")
+          let queryString_WL = '/searchusername?'
+          console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`)
+          // Getting typed user's interests.
+          axios.get(`http://localhost:3010/v0/getwishlist/${typedInput}`)
+            .then(res => {
+              // Parsing the response
+              serverPath = "http://localhost:3010/v0/giftapi";
+              console.log("----------------")
+              console.log(`Frontend: We have recevied "users" wishlist. We will now parse them`)
+              let qList = res.data[0].gift
+              console.log(qList);
+              console.log("----------------")
+              for (let i in qList) {
+                  queryString_WL += `searchTopics[]=${qList[i]}&`
+
+              }
+              queryString_WL = queryString_WL.slice(0, -1)
+              console.log(queryString_WL)
+              serverPath += queryString_WL
+              console.log(serverPath)
+
+              // Calling axios based on the user's select choice (username or gift)
+              console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
+              axios.get(serverPath, this.state)
+                .then(res => {
+                  console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
+                  console.log(res)
+                  // store returned gift suggestions in our state
+                  this.setState({ wishlist: res.data[0] });
+                  console.log(serverPath)
                 }).catch(res => {
                   console.log(res)
                   console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
@@ -98,10 +145,24 @@ class Home extends React.Component {
               console.log(res)
               console.log("Frontend: There was an error when trying to search the user you typed.")
             })
+
+
+////////
+                }).catch(res => {
+                  console.log(res)
+                  console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
+                })
+
+
+
+            }).catch(res => {
+              console.log(res)
+              console.log("Frontend: There was an error when trying to search the user you typed.")
+            })
         }
 
         // If the user is either using the "Search for a gift" or "Search by..." option
-        else {
+        else if(value === "Search for a gift"){
         // else if (value === "Search for a gift") {
           console.log(`Frontend: We will search for the gift:"${typedInput}"`);
           serverPath += `/searchgift?searchTopics[]=${typedInput}`;
@@ -114,16 +175,13 @@ class Home extends React.Component {
               console.log(res)
               // store returned gift suggestions in our state
               this.setState({ gifts: res.data[0] });
+              this.setState({loading: false});
             }).catch(res => {
               console.log(res)
               console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
             })
         }
 
-        // The user is searching using the "Search by" option
-        // else {
-        //   throw new Error("FrontEnd Error")
-        // }
       }
 
       // The user did not input anything
@@ -157,6 +215,26 @@ class Home extends React.Component {
       }).catch(res => {
         console.log(res)
       })
+
+    // displayInterest(this.showWishlistInterest(this.state.wishlist[searchTopic][3]));
+  }
+
+  // Function to show interest based on wishlist item
+  showWishlistInterest(wishlistItem) {
+    console.log(`usernameinterests are: ${this.state.usernameInterests}`);
+    console.log(`usernameinterests length is: ${this.state.usernameInterests[0]}`);
+    var index;
+    for(index = 0; index < this.state.usernameInterests.length; index++){
+      if (this.state.usernameInterests[index].toUpperCase().includes(wishlistItem.toUpperCase()) || wishlistItem.toUpperCase().includes(this.state.usernameInterests[index].toUpperCase())) {
+        console.log(`this.state.usernameInterests[index] is: ${this.state.usernameInterests[index]}`);
+        return this.state.usernameInterests[index];
+      }
+    }
+    // for (let el of document.querySelectorAll('.interestInfo')) el.style.visibility = 'hidden';
+    // for (let el of document.querySelectorAll('.interestLabel')) el.style.visibility = 'hidden';
+    // for (let el of document.querySelectorAll('.giftInterestTopic')) el.style.visibility = 'hidden';
+    // console.log(`returning none in showWishlistInterest`);
+    return "none";
   }
 
   /*Renders the whole Home page */
@@ -165,7 +243,13 @@ class Home extends React.Component {
 
     // display each gift returned by eBay API
     const displayGiftSuggestions = [];
+    let i = 0
     for (const searchTopic in this.state.gifts) {
+      console.log(searchTopic)
+      if (i === 0) {
+        displayGiftSuggestions.push(<div>Gift Suggestions</div>)
+      }
+      i++;
       if (searchTopic !== "searchby" && searchTopic !== "typedInput") {
         const giftName = this.state.gifts[searchTopic][0];
         const giftPic = this.state.gifts[searchTopic][1];
@@ -185,6 +269,45 @@ class Home extends React.Component {
                     <p className="giftInterestTopic">{relatedInterest}</p>
                   </div>
                 : null}
+              </div>
+            </div>
+          </div>
+        );
+      }
+    }
+
+    // display each wishlist item returned by eBay API
+    const displayWishlistSuggestions = [];
+    let j = 0
+    for (const searchTopic in this.state.wishlist) {
+      console.log(searchTopic)
+      if (j === 0) {
+        displayWishlistSuggestions.push(<div>Wishlist Suggestions</div>)
+      }
+      j++;
+      if (searchTopic !== "searchby" && searchTopic !== "typedInput") {
+        const giftName = this.state.wishlist[searchTopic][0];
+        const giftPic = this.state.wishlist[searchTopic][1];
+        const picText = `picture of ${giftName}`;
+        const giftLink = this.state.wishlist[searchTopic][2];
+        const wishlistItem = this.state.wishlist[searchTopic][3];
+        // call function to figure out if gift suggestion matches an interest (replace this.state.wishlist[searchTopic][3] with function call, which returns a string containing the interest - empty string if there's no related interest)
+        const relatedInterest = this.showWishlistInterest(wishlistItem);
+
+        displayWishlistSuggestions.push(
+          <div className="giftSuggestionWrapper" key={giftName}>
+            <div className="giftImgBackground"><img src={giftPic} alt={picText} className="gift-img"/></div>
+            <div className="giftInfo">
+              <a href={giftLink} className="giftName blue varela">{giftName}</a>
+              <div className="moreGiftInfo">
+                {relatedInterest !== ""
+                  ? <div className="interestInfo grey gothic" style={{ display: relatedInterest }}>
+                    <p className="interestLabel">Interest</p>
+                    <p className="giftInterestTopic">{relatedInterest}</p>
+                  </div>
+                : null}
+                <Heart className="giftHeartPic"></Heart>
+                <div className="giftWishlistText grey gothic">Wishlist Item</div>
               </div>
             </div>
           </div>
@@ -234,6 +357,8 @@ class Home extends React.Component {
           </form>
           {/*The gift suggestion*/}
           {displayGiftSuggestions}
+          {displayWishlistSuggestions}
+          <div class="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
           {/* <div className="gift-main">
             <p className="gift-name blue varela">Hockey Stick</p>
             <div className="gift-background">
@@ -247,7 +372,9 @@ class Home extends React.Component {
             </div>
           </div> */}
         </div>
+        
       </div>
+      
     );
   }
 }

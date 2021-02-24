@@ -14,13 +14,10 @@ const proxy = require('http-proxy-middleware')
 
 // Used for letting the frontend communicate with the server
 app.use(cors({
-  origin: ["http://localhost:3000", "http://59a2678ecd1d.ngrok.io"],
-  methods: ["GET", "POST", "PUT"],
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
-
-
-
 
 //Used for cookie session
 app.use(cookieParser());
@@ -38,9 +35,6 @@ app.use(session({
 //Json stuff. Not too sure
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-
-
 
 const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 
@@ -71,6 +65,9 @@ app.post('/v0/postqresponse', gift.postQResponse);
 // Puts changes for questionnaire responses from Profile page's Edit Interests popup.
 app.put('/v0/putqresponse/:username', gift.putQResponse);
 
+// "Removes" (in reality, empties string) for the corresponding questionnaire topic in the questionnaire table.
+app.put('/v0/removeqresponse/:username/:questionnairetopic', gift.removeQResponse);
+
 // This authenticates and authorizes a user to be able to log in.
 app.post('/v0/authenticate', gift.login);
 
@@ -88,6 +85,9 @@ app.get('/v0/giftapi/:searchby', gift.giftapi);
 
 //Stores the wishlist gift into our database
 app.post('/v0/storeWLGift', gift.storeWLGift);
+
+// Deletes the generic item (wishlist/questionnaire)
+app.delete('/v0/deleteItem', gift.deleteItem);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
