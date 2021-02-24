@@ -169,10 +169,10 @@ class Profile extends Component {
         } else {
             return (
                 <div className="saveUndoButtons">
-                    <button onClick={this.handleSave}>
+                    <button onClick={this.handleSave} className="usernameButton">
                         Save
                     </button>
-                    <button>
+                    <button onClick={this.handleSave} className="usernameButton">
                         Undo
                     </button>
                 </div>
