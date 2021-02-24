@@ -21,7 +21,14 @@ class AddToWishlistPopup extends React.Component {
     event.preventDefault();
     axios.post("http://localhost:3010/v0/storeWLGift", [this.state])
     .then(response => {
+      console.log('===================')
       console.log("Frontend: We have successfully stored the wishlist gift into our database.")
+      console.log(this.props)
+      console.log(response)
+      console.log(this.state.WLGiftToStore)
+      //this.setState({wlresponse: newParent})
+      this.props.updateWishlist(this.state.WLGiftToStore)
+      console.log('===================')
     }).catch(error => {
       console.log("There was an error when trying to store the wishlist gift into the database")
       console.log(error)

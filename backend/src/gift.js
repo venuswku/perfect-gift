@@ -384,7 +384,7 @@ exports.storeWLGift = async (req,res) => {
         const WL_Stored = await db.storeUserWishlistGift(req.session.user, req.body[0].WLGiftToStore)
         if(WL_Stored === "Success") {
             console.log("Server [SUCCESS]: Stored user wishlist gift in wishlist table")
-        res.send("Success")
+            res.send("Success")
         }
 
         else if(WL_Stored === "Warning") {

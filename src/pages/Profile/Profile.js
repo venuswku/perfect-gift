@@ -55,6 +55,8 @@ class Profile extends Component {
         this.toggleQuestionnairePopup = this.toggleQuestionnairePopup.bind(this);
         this.handleInterestChange = this.handleInterestChange.bind(this);
         this.deleteInterest = this.deleteInterest.bind(this);
+        this.updateWL = this.updateWL.bind(this);
+        this.deleteWLItem = this.deleteWLItem.bind(this);
     }
 
     handleUsernameChange(e) {
@@ -63,6 +65,26 @@ class Profile extends Component {
 
     handleEdit() {
         this.setState({ mode: 'edit' });
+    }
+
+    // Updates the wishlist to show new item
+    updateWL(new_item) {
+        //console.log(old_wlresponse)
+        let old_wlresponse = this.state.wlresponse
+        //console.log(old_wlresponse)
+        //let new_wlreponse = old_wlresponse.push(new_item)
+        old_wlresponse.push(new_item)
+        this.setState({wlresponse : old_wlresponse})
+    }
+
+    // Deletes an item from the wishlist in the frontend UI
+    deleteWLItem(removed_item) {
+        let old_wlresponse = this.state.wlresponse;
+        let new1 = old_wlresponse.filter(e => e !== removed_item);
+        console.log('..............................')
+        console.log(old_wlresponse)
+        console.log('..............................')
+        this.setState({wlresponse: new1})
     }
 
     handleSave() {
@@ -282,7 +304,7 @@ class Profile extends Component {
         const wl_response = this.state.wlresponse;
         const displaywishlist = [];
         for (let i in wl_response) {
-            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}&nbsp;&nbsp;<DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
+            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}&nbsp;&nbsp;<DeleteUserInfo username={this.state.username} info={wl_response[i]} deleteWLItem={this.deleteWLItem}/></span>);
         }
 
         return (
@@ -314,8 +336,8 @@ class Profile extends Component {
                         <div className="wishlistWrapper">
                             <span className='topicFont'>Wishlist</span>
                             <div className="list">{displaywishlist}</div>
-                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} /> : null}
-                            <span className='addToWishlist' onClick={this.togglePopupWL}><AddButton/>&nbsp;Add to wishlist</span>
+                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} updateWishlist={this.updateWL}/> : null}
+                            <span className='addToWishlist' onClick={this.togglePopupWL} ><AddButton/>&nbsp;Add to wishlist</span>
                         </div>
                     </div>
                 </header>
