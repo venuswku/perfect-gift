@@ -40,7 +40,6 @@
   top: 160px;
   width: 800px;
   text-align: left;
-
 }
 
 .name {
@@ -51,19 +50,13 @@
   text-align: center;
 }
 
-.tab { 
-  margin-left: 60px; 
+.usernameWrapper {
+  display: flex;
+  flex-direction: row;
 }
 
-
-ul.no-bullets {
-  list-style-type: none; /* Remove bullets */
-  column-count: 2;
-}
-
- 
 .topicFont {
-  font-size: 18 px;
+  font-size: 22px;
   color: rgba(41, 112, 250, 1);
 }
 
@@ -77,11 +70,18 @@ ul.no-bullets {
 .username {
   font-size: 19px;
   font-family: 'Didact Gothic';
+  display: flex;
+  flex-direction: row;
 }
 
 .editButton {
   cursor: pointer;
   background-color: transparent;
+}
+
+.saveUndoButtons {
+  display: flex;
+  flex-direction: row;
 }
 
 .interestBubblesWrapper {
@@ -124,4 +124,32 @@ ul.no-bullets {
 
 .delete:hover {
   fill: #FF6060;
+}
+
+.wishlistWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  /* allow extra wishlist items to wrap to next row if there's already 2 items in a row */
+  flex-wrap: wrap;
+}
+
+.wishlistItem {
+  font-size: 19px;
+  font-family: 'Didact Gothic';
+  display: flex;
+  align-items: center;
+  margin-top: 1%;
+  width: 50%;
+}
+
+.addToWishlist {
+  cursor: pointer;
+  font-size: 19px;
+  font-family: 'Didact Gothic';
+  margin-top: 1%;
 }

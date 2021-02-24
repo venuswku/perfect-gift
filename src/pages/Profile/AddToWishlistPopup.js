@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import axios from 'axios';
 import "./AddToWishlistPopup.css";
 
@@ -16,9 +16,6 @@ class AddToWishlistPopup extends React.Component {
 
   }
 
-
-
-
   handleSubmit(event) {
     console.log("Frontend: We are going to request to store the wishlist gift.");
     event.preventDefault();
@@ -29,10 +26,7 @@ class AddToWishlistPopup extends React.Component {
       console.log("There was an error when trying to store the wishlist gift into the database")
       console.log(error)
     })
-  
-  
   }
-
 
   handleChange(event) {
     console.log("Frontend: Handling change");
@@ -44,16 +38,14 @@ class AddToWishlistPopup extends React.Component {
 
   render() {
     return (
-      <Fragment>
-        <section className="wishlist">
-          <p className='cool-red'>What item would you want as a gift?</p>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              <input type="text" value ={this.WLGiftToStore} placeholder="Enter wishlist item here" onChange={this.handleChange}></input>
-            </label>
-          </form>
-        </section>
-      </Fragment>
+      <div className="wishlist">
+        <p className="addWishlistItemTitle">What item would you want as a gift?</p>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            <input type="text" value ={this.WLGiftToStore} placeholder="Enter wishlist item here" onChange={this.handleChange} className="wishlistItemInputBox"/>
+          </label>
+        </form>
+      </div>
     );
   }
 }
