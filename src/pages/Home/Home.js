@@ -338,7 +338,6 @@ class Home extends React.Component {
                 <option className="homeOption" value="Select a way to search">&nbsp;Search by...</option>
                 <option className="homeOption" value="Search by username">&nbsp;Username</option>
                 <option className="homeOption" value="Search for a gift">&nbsp;Gift</option>
-                <option className="homeOption" value="Search by wishlist">&nbsp;Wishlist</option>
               </select>
             </label>
             <div className="searchbar">

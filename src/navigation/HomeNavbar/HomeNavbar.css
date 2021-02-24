@@ -1,46 +1,54 @@
 .homeNavbar {
-    position: absolute;
-    padding: 30px 50px 0px 0px;
+  position: absolute;
+  padding: 30px 50px 0px 0px;
 
-    /* display navbar elements in a row */
-    display: flex;
-    flex-direction: row;
+  /* display navbar elements in a row */
+  display: flex;
+  flex-direction: row;
 
-    /* align navbar elements by their (horizontal) center */
-    height: 100px;
-    align-items: center;
+  /* align navbar elements by their (horizontal) center */
+  height: 100px;
+  align-items: center;
 
-    /* put space between logo and navigation links */
-    width: 95%;
-    justify-content: space-between;
+  /* put space between logo and navigation links */
+  width: 95%;
+  justify-content: space-between;
 
-    /* put navbar on top of all pages */
-    z-index: 100;
+  /* put navbar on top of all pages */
+  z-index: 100;
 }
 
 .homeNavbarLogo {
-    /* resize logo */
-    transform: scale(0.8);
+  /* resize logo */
+  transform: scale(0.8);
 }
 
 .navigationLinks {
-    /* display navigation links in a row */
-    display: flex;
-    flex-direction: row;
-    
-    /* put some space between navigation links */
-    width: 40%;
-    justify-content: space-between;
+  /* display navigation links in a row */
+  display: flex;
+  flex-direction: row;
+
+  /* put some space between navigation links */
+  width: 40%;
+  justify-content: space-between;
 }
 
 /* text styling for navbar links */
 .link {
-    color: rgba(114, 214, 201, 1);
-    text-decoration: none;
-    font-size: 24px;
-    font-family: 'Varela Round';
+  color: rgba(114, 214, 201, 1);
+  text-decoration: none;
+  font-size: 24px;
+  font-family: "Varela Round";
+}
+
+.link:hover {
+  color: rgb(247, 144, 221);
 }
 
 .magnifyGlass {
-    fill: rgb(114, 214, 201);
+  fill: rgb(114, 214, 201);
+}
+
+.magnifyGlass:hover {
+  fill: rgb(247, 144, 221);
 }
