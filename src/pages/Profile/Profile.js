@@ -48,6 +48,9 @@ class Profile extends Component {
             wlresponse: [],
         };
 
+        /* For scrolling wishlist popup into view. */
+        // this.wishlistPopupRef = React.createRef();
+
         /* Binding functions allows it to access component attributes (e.g. this.props, this.state). */
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
@@ -55,6 +58,8 @@ class Profile extends Component {
         this.toggleQuestionnairePopup = this.toggleQuestionnairePopup.bind(this);
         this.handleInterestChange = this.handleInterestChange.bind(this);
         this.deleteInterest = this.deleteInterest.bind(this);
+        // this.scrollToWishlistPopup = this.scrollToWishlistPopup.bind(this);
+        this.togglePopupWL = this.togglePopupWL.bind(this);
         this.updateWL = this.updateWL.bind(this);
         this.deleteWLItem = this.deleteWLItem.bind(this);
     }
@@ -66,27 +71,7 @@ class Profile extends Component {
     handleEdit() {
         this.setState({ mode: 'edit' });
     }
-
-    // Updates the wishlist to show new item
-    updateWL(new_item) {
-        //console.log(old_wlresponse)
-        let old_wlresponse = this.state.wlresponse
-        //console.log(old_wlresponse)
-        //let new_wlreponse = old_wlresponse.push(new_item)
-        old_wlresponse.push(new_item)
-        this.setState({wlresponse : old_wlresponse})
-    }
-
-    // Deletes an item from the wishlist in the frontend UI
-    deleteWLItem(removed_item) {
-        let old_wlresponse = this.state.wlresponse;
-        let new1 = old_wlresponse.filter(e => e !== removed_item);
-        console.log('..............................')
-        console.log(old_wlresponse)
-        console.log('..............................')
-        this.setState({wlresponse: new1})
-    }
-
+    
     handleSave() {
         // don't save new username if it's empty or has a space in it (set it back to original username)
         if (this.state.newUsername === "" || this.state.newUsername.split(" ").length !== 1) {
@@ -108,6 +93,44 @@ class Profile extends Component {
                     console.log(res);
                 })
             this.setState({ username: this.state.newUsername, mode: 'view' });
+        }
+    }
+
+    // show/hide textbox to edit username
+    renderInputField() {
+        if (this.state.mode === 'view') {
+            return this.state.username;
+        } else {
+            // display newUsername as user is editing it
+            return (
+                <span>
+                    <input
+                        onChange={this.handleUsernameChange}
+                        value={this.state.newUsername}
+                        className='editUsernameTextbox'
+                    />
+                </span>
+            );
+        }
+    }
+
+    // Shows edit or save & undo button for modifying username.
+    renderButton() {
+        if (this.state.mode === 'view') {
+            return (
+                <EditButton onClick={this.handleEdit} className="editUsernameButton"/>
+            );
+        } else {
+            return (
+                <div className="saveUndoButtons">
+                    <button onClick={this.handleSave} className="usernameButton">
+                        Save
+                    </button>
+                    <button onClick={this.handleSave} className="usernameButton">
+                        Undo
+                    </button>
+                </div>
+            );
         }
     }
     
@@ -156,52 +179,38 @@ class Profile extends Component {
             console.log(error);
         });
     }
-    
+
+    /* Scrolls down to wishlist popup when user wants to add new wishlist item. */
+    // scrollToWishlistPopup = () => 
+
     /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
     togglePopupWL = () => {
-        this.setState({
-         showWishlistPopup: !this.state.showWishlistPopup
-        });
+        this.setState({ showWishlistPopup: !this.state.showWishlistPopup });
+        // const wishlistPopupSection = document.querySelector( 'add-wishlist' );
+        // wishlistPopupSection.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+        // wishlistPopupRef.current.scrollIntoView();
     };
 
-    // show/hide textbox to edit username
-    renderInputField() {
-        if (this.state.mode === 'view') {
-            return this.state.username;
-        } else {
-            // display newUsername as user is editing it
-            return (
-                <span>
-                    <input
-                        onChange={this.handleUsernameChange}
-                        value={this.state.newUsername}
-                        className='editUsernameTextbox'
-                    />
-                </span>
-            );
-        }
+    // Updates the wishlist to show new item
+    updateWL(new_item) {
+        //console.log(old_wlresponse)
+        let old_wlresponse = this.state.wlresponse
+        //console.log(old_wlresponse)
+        //let new_wlreponse = old_wlresponse.push(new_item)
+        old_wlresponse.push(new_item)
+        this.setState({wlresponse : old_wlresponse})
     }
 
-    // Shows edit or save & undo button for modifying username.
-    renderButton() {
-        if (this.state.mode === 'view') {
-            return (
-                <EditButton onClick={this.handleEdit} className="editUsernameButton"/>
-            );
-        } else {
-            return (
-                <div className="saveUndoButtons">
-                    <button onClick={this.handleSave} className="usernameButton">
-                        Save
-                    </button>
-                    <button onClick={this.handleSave} className="usernameButton">
-                        Undo
-                    </button>
-                </div>
-            );
-        }
+    // Deletes an item from the wishlist in the frontend UI
+    deleteWLItem(removed_item) {
+        let old_wlresponse = this.state.wlresponse;
+        let new1 = old_wlresponse.filter(e => e !== removed_item);
+        console.log('..............................')
+        console.log(old_wlresponse)
+        console.log('..............................')
+        this.setState({wlresponse: new1})
     }
-
+    
     componentDidMount() {
         // Authenticate user when they reach profile page.
         axios.get('http://localhost:3010/v0/authenticate', this.state)
@@ -300,7 +309,7 @@ class Profile extends Component {
             return displayQResponses;
         });
 
-        // Setting up wishlist items
+        // Displays wishlist items.
         const wl_response = this.state.wlresponse;
         const displaywishlist = [];
         for (let i in wl_response) {
@@ -311,9 +320,9 @@ class Profile extends Component {
             <div className="Profile">
                 <Navbar />
                 {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.toggleQuestionnairePopup} userInfo={this.state} editInterest={this.handleInterestChange} /> : null} 
-                <header className='profileHeader'>
+                <div className='profileContent'>
                     {/* profile background + pic */}
-                    <div className='profileBackground'>
+                    <div className='profilePicBackground'>
                         <ProfilePic />
                     </div>
                     <div className='profileInfo'>
@@ -336,13 +345,12 @@ class Profile extends Component {
                         <div className="wishlistWrapper">
                             <span className='topicFont'>Wishlist</span>
                             <div className="list">{displaywishlist}</div>
-                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} updateWishlist={this.updateWL}/> : null}
-                            <span className='addToWishlist' onClick={this.togglePopupWL} ><AddButton/>&nbsp;Add to wishlist</span>
+                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} updateWishlist={this.updateWL} ref={(el) => (this.wishlistPopupSection = el)}/> : null}
+                            <span className='addToWishlist' onClick={this.togglePopupWL}><AddButton/>&nbsp;Add to wishlist</span>
                         </div>
                     </div>
-                </header>
+                </div>
             </div>
-
         );
     }
 }
