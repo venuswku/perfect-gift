@@ -49,6 +49,12 @@ paths:
           description: User's username
           schema:
             type: string
+        - name: useremail
+          in: query
+          required: false
+          description: User's useremail
+          schema:
+            type: string
       responses:
         200:
           description: User response

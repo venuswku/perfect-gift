@@ -60,35 +60,42 @@ class Create_Account extends Component {
             axios.get('http://localhost:3010/v0/giftuser?username=' + this.state.username)
                 .then(response => {
                     if (response.data.length === 0) {
-                        axios.post('http://localhost:3010/v0/postuser', [this.state])
-                            .then(response => {
-                                console.log('Create_Account.js: success for users');
-                                console.log(response);
-                                axios.post('http://localhost:3010/v0/postqresponse', [this.state])
+                        axios.get(('http://localhost:3010/v0/giftuser?useremail=' + this.state.useremail).replace('@', '%40'))
+                        .then(response => {
+                            if (response.data.length === 0) {
+                                axios.post('http://localhost:3010/v0/postuser', [this.state])
                                     .then(response => {
-                                        console.log('Create_Account.js: success for qr');
+                                        console.log('Create_Account.js: success for users');
                                         console.log(response);
-                                        axios.post('http://localhost:3010/v0/authenticate', this.state)
+                                        axios.post('http://localhost:3010/v0/postqresponse', [this.state])
                                             .then(response => {
-                                                console.log("Logged in after creating account");
+                                                console.log('Create_Account.js: success for qr');
                                                 console.log(response);
-                                                this.props.history.push('/profile');
+                                                axios.post('http://localhost:3010/v0/authenticate', this.state)
+                                                    .then(response => {
+                                                        console.log("Logged in after creating account");
+                                                        console.log(response);
+                                                        this.props.history.push('/profile');
+                                                    })
+                                                    .catch(error => {
+                                                        console.log("Create_Account.js: failed signing in for first time");
+                                                        console.log(error);
+                                                    });
                                             })
                                             .catch(error => {
-                                                console.log("Create_Account.js: failed signing in for first time");
+                                                console.log("Create_Account.js: failed for qr");
+                                                console.log(this.state);
                                                 console.log(error);
                                             });
                                     })
                                     .catch(error => {
-                                        console.log("Create_Account.js: failed for qr");
+                                        console.log("Create_Account.js: failed for users");
                                         console.log(this.state);
                                         console.log(error);
                                     });
-                            })
-                            .catch(error => {
-                                console.log("Create_Account.js: failed for users");
-                                console.log(this.state);
-                                console.log(error);
+                                } else {
+                                    window.alert("Email already taken!")
+                                }
                             });
                     } else {
                         window.alert("Username already taken!")
