@@ -76,7 +76,7 @@ exports.putUser = async (req, res) => {
 
             res.status(204).send();
             console.log("gift.js: putUser: Gifter's new username is updated!");
-        }    
+        }
     } catch {
         res.status(404).send();
         console.log("gift.js: putUser: user failz");
@@ -187,9 +187,9 @@ exports.removeQResponse = async (req, res) => {
         const username = req.params.username;
         const questionnaireTopic = req.params.questionnairetopic;
         console.log("gift.js: removeResponse for", username, "in", questionnaireTopic, "column");
-        
+
         const remove = await db.deleteQResponse(username, questionnaireTopic);
-        
+
         const userChanges = await db.selectQResponses(username);
         if (userChanges) {
             console.log("gift.js: removeQResponse: Gifter's questionnaire response is successfully deleted!");
@@ -330,12 +330,13 @@ exports.giftapi = async (req, res) => {
                 // go through each topic in the searched topics array
                 let searchTopics = req.query[searchTopicsArray]
                 console.log(searchTopics)
+                let i;
                 for(i in searchTopics) {
                     console.log(`Search topic ${i}: ${searchTopics[i]}`)
 
-                    // and make API call to ebay to give us the image and link to the gift            
+                    // and make API call to ebay to give us the image and link to the gift
                     const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${searchTopics[i]}&itemSort=BestMatch`)
-                    
+
                     // const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindProducts&QueryKeywords=${searchTopics[i]}&MaxEntries=1&ProductSort=Popularity`)
                     // ^ seems to give better results
 
@@ -361,7 +362,7 @@ exports.giftapi = async (req, res) => {
         giftSuggestions['searchby'] = "Success"
         console.log(giftSuggestions);
         res.send([giftSuggestions]);
-        
+
         // let hardCode = {'taeyeon': [
         //                     "Taeyeon Purpose Postcard Set",
         //                     'https://thumbs2.ebaystatic.com/pict/1439383191738080_1.jpg',
@@ -400,7 +401,7 @@ exports.storeWLGift = async (req,res) => {
 
         else if(WL_Stored === "Failure") {
             console.log("Server [FAILURE]: Storing the new wishlist gives us an error")
-        }   
+        }
     }
 
     catch(error) {
@@ -411,7 +412,7 @@ exports.storeWLGift = async (req,res) => {
 }
 
 exports.getwishlist = async (req,res) => {
-    try {   
+    try {
         console.log('--------')
         console.log(req.params.username);
         console.log('-------')
@@ -439,7 +440,7 @@ exports.deleteItem = async (req,res) => {
     catch {
         console.log("Fail");
         res.send("Failure");
-        
+
     };
 
 };
