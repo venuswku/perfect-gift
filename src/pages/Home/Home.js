@@ -22,7 +22,8 @@ class Home extends React.Component {
       usernameInterests: [], // array containing user's interests (used to search for gifts in eBay API)  
       gifts: {}, // object containing gift suggestions (response returned by eBay API)
       wishlist: {}, // Object containing wishlist suggestions (reponse returned by eBay API)
-      loading: false // Determines if the search bar is loading a search request
+      loading: false, // Determines if the search bar is loading a search request
+      noSearchByMethodChosen: false // Determines whether to show reminder for user to choose a "Search by" method first
     };
 
     // Binding to make sure functions work
@@ -64,6 +65,11 @@ class Home extends React.Component {
       });
       console.log(`Frontend: You have entered: "${typedInput}"`)
 
+      if (value === "Search by...") {
+        this.setState({ loading: false });
+        this.setState({ noSearchByMethodChosen: true });
+      }
+
       // If the user has typed something (No response == ignore)
       if (typedInput !== "") {      
 
@@ -104,57 +110,51 @@ class Home extends React.Component {
                   // store returned gift suggestions in our state
                   this.setState({ gifts: res.data[0] });
                   this.setState({loading: false});
-////////
-        //The user is searching using the "Search by wishlist" option
-          console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist")
-          let queryString_WL = '/searchusername?'
-          console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`)
-          // Getting typed user's interests.
-          axios.get(`http://localhost:3010/v0/getwishlist/${typedInput}`)
-            .then(res => {
-              // Parsing the response
-              serverPath = "http://localhost:3010/v0/giftapi";
-              console.log("----------------")
-              console.log(`Frontend: We have recevied "users" wishlist. We will now parse them`)
-              let qList = res.data[0].gift
-              console.log(qList);
-              console.log("----------------")
-              for (let i in qList) {
-                  queryString_WL += `searchTopics[]=${qList[i]}&`
 
-              }
-              queryString_WL = queryString_WL.slice(0, -1)
-              console.log(queryString_WL)
-              serverPath += queryString_WL
-              console.log(serverPath)
+                  //The user is searching using the "Search by wishlist" option
+                  console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist")
+                  let queryString_WL = '/searchusername?'
+                  console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`)
+                  // Getting typed user's interests.
+                  axios.get(`http://localhost:3010/v0/getwishlist/${typedInput}`)
+                    .then(res => {
+                      // Parsing the response
+                      serverPath = "http://localhost:3010/v0/giftapi";
+                      console.log("----------------")
+                      console.log(`Frontend: We have recevied "users" wishlist. We will now parse them`)
+                      let qList = res.data[0].gift
+                      console.log(qList);
+                      console.log("----------------")
+                      for (let i in qList) {
+                          queryString_WL += `searchTopics[]=${qList[i]}&`
+                      }
+                      queryString_WL = queryString_WL.slice(0, -1)
+                      console.log(queryString_WL)
+                      serverPath += queryString_WL
+                      console.log(serverPath)
 
-              // Calling axios based on the user's select choice (username or gift)
-              console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
-              axios.get(serverPath, this.state)
-                .then(res => {
-                  console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
-                  console.log(res)
-                  // store returned gift suggestions in our state
-                  this.setState({ wishlist: res.data[0] });
-                  console.log(serverPath)
+                      // Calling axios based on the user's select choice (username or gift)
+                      console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
+                      axios.get(serverPath, this.state)
+                        .then(res => {
+                          console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
+                          console.log(res)
+                          // store returned gift suggestions in our state
+                          this.setState({ wishlist: res.data[0] });
+                          console.log(serverPath)
+                        }).catch(res => {
+                          console.log(res)
+                          console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
+                        })
+                    }).catch(res => {
+                      console.log(res)
+                      console.log("Frontend: There was an error when trying to search the user you typed.")
+                    })
+
                 }).catch(res => {
                   console.log(res)
                   console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
                 })
-            }).catch(res => {
-              console.log(res)
-              console.log("Frontend: There was an error when trying to search the user you typed.")
-            })
-
-
-////////
-                }).catch(res => {
-                  console.log(res)
-                  console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
-                })
-
-
-
             }).catch(res => {
               console.log(res)
               console.log("Frontend: There was an error when trying to search the user you typed.")
@@ -162,8 +162,7 @@ class Home extends React.Component {
         }
 
         // If the user is either using the "Search for a gift" or "Search by..." option
-        else if(value === "Search for a gift"){
-        // else if (value === "Search for a gift") {
+        else if (value === "Search for a gift"){
           console.log(`Frontend: We will search for the gift:"${typedInput}"`);
           serverPath += `/searchgift?searchTopics[]=${typedInput}`;
           console.log(serverPath);
@@ -181,7 +180,10 @@ class Home extends React.Component {
               console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
             })
         }
-
+        else if (value === "Search by...") {
+          this.setState({ loading: false });
+          this.setState({ noSearchByMethodChosen: true });
+        }
       }
 
       // The user did not input anything
@@ -356,6 +358,7 @@ class Home extends React.Component {
               <div className="searchButton" onClick={this.handleSubmit}><MagnifyGlass className="searchButtonIcon"/></div>
             </div>
           </form>
+          {this.state.noSearchByMethodChosen ? <p>Please select a way to search in the dropdown menu above.</p> : null}
           {/*The gift suggestion*/}
           {displayGiftSuggestions}
           {displayWishlistSuggestions}
