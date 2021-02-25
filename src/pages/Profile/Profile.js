@@ -48,9 +48,6 @@ class Profile extends Component {
             wlresponse: [],
         };
 
-        /* For scrolling wishlist popup into view. */
-        // this.wishlistPopupRef = React.createRef();
-
         /* Binding functions allows it to access component attributes (e.g. this.props, this.state). */
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
@@ -58,7 +55,6 @@ class Profile extends Component {
         this.toggleQuestionnairePopup = this.toggleQuestionnairePopup.bind(this);
         this.handleInterestChange = this.handleInterestChange.bind(this);
         this.deleteInterest = this.deleteInterest.bind(this);
-        // this.scrollToWishlistPopup = this.scrollToWishlistPopup.bind(this);
         this.togglePopupWL = this.togglePopupWL.bind(this);
         this.updateWL = this.updateWL.bind(this);
         this.deleteWLItem = this.deleteWLItem.bind(this);
@@ -180,15 +176,9 @@ class Profile extends Component {
         });
     }
 
-    /* Scrolls down to wishlist popup when user wants to add new wishlist item. */
-    // scrollToWishlistPopup = () => 
-
     /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
     togglePopupWL = () => {
         this.setState({ showWishlistPopup: !this.state.showWishlistPopup });
-        // const wishlistPopupSection = document.querySelector( 'add-wishlist' );
-        // wishlistPopupSection.scrollIntoView( { behavior: 'smooth', block: 'start' } );
-        // wishlistPopupRef.current.scrollIntoView();
     };
 
     // Updates the wishlist to show new item
@@ -345,7 +335,7 @@ class Profile extends Component {
                         <div className="wishlistWrapper">
                             <span className='topicFont'>Wishlist</span>
                             <div className="list">{displaywishlist}</div>
-                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} updateWishlist={this.updateWL} ref={(el) => (this.wishlistPopupSection = el)}/> : null}
+                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} updateWishlist={this.updateWL}/> : null}
                             <span className='addToWishlist' onClick={this.togglePopupWL}><AddButton/>&nbsp;Add to wishlist</span>
                         </div>
                     </div>
