@@ -175,18 +175,18 @@ class Profile extends Component {
                     <input
                         onChange={this.handleUsernameChange}
                         value={this.state.newUsername}
-                        className='editTextbox'
+                        className='editUsernameTextbox'
                     />
                 </span>
             );
         }
     }
 
-    //show edit/save button
+    // Shows edit or save & undo button for modifying username.
     renderButton() {
         if (this.state.mode === 'view') {
             return (
-                <EditButton onClick={this.handleEdit} className="editButton"/>
+                <EditButton onClick={this.handleEdit} className="editUsernameButton"/>
             );
         } else {
             return (
