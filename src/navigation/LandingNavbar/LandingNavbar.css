@@ -26,3 +26,8 @@
     font-size: 24px;
     font-family: 'Varela Round';
 }
+
+.link:hover, .activeLink {
+    color: rgb(41, 112, 250);
+    fill: rgb(41, 112, 250);
+}

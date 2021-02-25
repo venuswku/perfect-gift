@@ -84,8 +84,8 @@ class Home extends React.Component {
               for (let [qResponseTopic, qResponseInterest] of Object.entries(qList)) {
                 console.log(qResponseTopic, qResponseInterest)
                 if (qResponseInterest !== '' && qResponseTopic !== "username") {
-                  tempUserInterests.push(qResponseInterest)
-                  queryString += `searchTopics[]=${qResponseInterest}&`
+                  tempUserInterests.push(qResponseInterest);
+                  queryString += `searchTopics[]=${qResponseInterest}&`;
                 }
               }
               // this.state.userInterests just has questionnaire responses (e.g. ["Taeyeon", "YouTube"])

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './LandingNavbar.css';
 
 function LandingNavbar() {
@@ -7,7 +7,7 @@ function LandingNavbar() {
         <div className="landingNavbar">
             <p className="link">Mission</p>
             <p className="link">About Us</p>
-            <Link to="/sign_in" className="link">Sign In</Link>
+            <NavLink to="/sign_in" className="link" activeClassName="activeLink">Sign In</NavLink>
         </div>
     );
 }
