@@ -216,7 +216,8 @@ class Home extends React.Component {
         console.log(res)
       })
 
-    // displayInterest(this.showWishlistInterest(this.state.wishlist[searchTopic][3]));
+    // Get most watched items (automatically displays before user searches for anything).
+    // http://svcs.ebay.com/MerchandisingService?OPERATION-NAME=getMostWatchedItems&SERVICE-NAME=MerchandisingService&SERVICE-VERSION=1.1.0&CONSUMER-ID=VenusKu-PerfectG-PRD-7b1a5ba56-51f91256&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&maxResults=5
   }
 
   // Function to show interest based on wishlist item

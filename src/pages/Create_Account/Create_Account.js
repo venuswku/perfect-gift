@@ -143,7 +143,8 @@ class Create_Account extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <p className="createAccountInstructions">Please take your time to answer our interest questions below. <br /> We will take note and share them with other gifters on your profile!</p>
+                        <p className="createAccountInstructions">Please take your time to answer our interest questions below.* <br /> We will take note and share them with other gifters on your profile!</p>
+                        <p className="sideNote">* The following questions are just some suggestions, so feel free to put anything that interests you.</p>
                         <table className="questionnaire">
                             <tbody>
                                 <tr>
@@ -280,7 +281,7 @@ class Create_Account extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <p className="createAccountInstructions">It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile.</p><br />
+                        <p className="createAccountInstructions">It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile, and you can edit these interests anytime!</p><br />
                         <input type='submit' value='Continue' className='createAccountSubmit' ></input>
                     </form>
                 </div>

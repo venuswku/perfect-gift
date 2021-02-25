@@ -60,6 +60,13 @@
 .createAccountInstructions {
   font-size: 24px;
   font-family: 'Didact Gothic';
+  margin-bottom: 0;
+}
+
+.sideNote {
+  font-size: 20px;
+  font-family: 'Didact Gothic';
+  margin: 0;
 }
 
 .questionnaire {
