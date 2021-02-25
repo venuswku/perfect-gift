@@ -254,7 +254,7 @@ class Home extends React.Component {
     console.log(`usernameinterests length is: ${this.state.usernameInterests[0]}`);
     var index;
     for(index = 0; index < this.state.usernameInterests.length; index++){
-      if (this.state.usernameInterests[index].toUpperCase().includes(wishlistItem.toUpperCase()) || wishlistItem.toUpperCase().includes(this.state.usernameInterests[index].toUpperCase())) {
+      if ((this.state.usernameInterests[index]).toUpperCase().includes(wishlistItem.toUpperCase()) || wishlistItem.toUpperCase().includes(this.state.usernameInterests[index].toUpperCase())) {
         console.log(`this.state.usernameInterests[index] is: ${this.state.usernameInterests[index]}`);
         return this.state.usernameInterests[index];
       }
@@ -280,9 +280,7 @@ class Home extends React.Component {
         const giftPic = this.state.gifts[searchTopic][1];
         const picText = `picture of ${giftName}`;
         const giftLink = this.state.gifts[searchTopic][2];
-        const giftItem = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
-        const relatedInterest = this.showInterest(giftItem);
-        console.log(`relatedInterest in gifts is: ${relatedInterest}`);
+        const relatedInterest = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
 
         displayGiftSuggestions.push(
           <div className="giftSuggestionWrapper" key={giftName}>
