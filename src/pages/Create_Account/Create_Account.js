@@ -47,7 +47,8 @@ class Create_Account extends Component {
 
     // if changed, update appropriately
     changeHandler = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+        var interest = (e.target.value).trim();     // get rid of any unnecessary whitespace characters
+        this.setState({ [e.target.name]: interest });
     }
 
     // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend

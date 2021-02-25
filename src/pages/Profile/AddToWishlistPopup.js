@@ -29,19 +29,19 @@ class AddToWishlistPopup extends React.Component {
         console.log(response)
         // console.log(this.state.WLGiftToStore)
         this.props.updateWishlist(this.state.WLGiftToStore);
-        this.props.toggle();
         console.log('===================')
       }).catch(error => {
         console.log("There was an error when trying to store the wishlist gift into the database")
         console.log(error)
       });
     }
+    this.props.toggle();
   }
 
   handleChange(event) {
     console.log("Frontend: Handling change");
     this.setState({
-      WLGiftToStore: event.target.value
+      WLGiftToStore: (event.target.value).trim(),
     });
     event.preventDefault();
   }
