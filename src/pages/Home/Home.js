@@ -12,14 +12,14 @@ class Home extends React.Component {
   // Constructor
   constructor(props) {
     super(props);
-    
+
     // Holds the state of the component Home.js
     this.state = {
       value: "Search by...", // Value of the dropdown (e.g., gift, user/email)
       placeholderText: "Select a way to search", // Placeholder for search bar
       typedInput: "", // Contains the text that the user has typed
-      user: "", // Name of the signed in user    
-      usernameInterests: [], // array containing user's interests (used to search for gifts in eBay API)  
+      user: "", // Name of the signed in user
+      usernameInterests: [], // array containing user's interests (used to search for gifts in eBay API)
       gifts: {}, // object containing gift suggestions (response returned by eBay API)
       wishlist: {}, // Object containing wishlist suggestions (reponse returned by eBay API)
       loading: false, // Determines if the search bar is loading a search request
@@ -33,7 +33,7 @@ class Home extends React.Component {
     this.handleUserInput = this.handleUserInput.bind(this);
   }
 
-  /*When the drop down is changed, 
+  /*When the drop down is changed,
   the placeholder and dropdown items are changed also */
   handleChange(event) {
     this.setState({
@@ -56,7 +56,7 @@ class Home extends React.Component {
     console.log("Frontend: We are going to submit your search request to the server")
     const { value, typedInput } = this.state
     let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
-    
+
     try {
       // If the user didn't select a way to search
       // show reminder to tell user to  choose a way to search.
@@ -90,17 +90,38 @@ class Home extends React.Component {
           // GET Request to get the "typed user's" interests.
           axios.get(`http://localhost:3010/v0/getQResponse/${typedInput}`)
             .then(res => {
-              
+
               // Parsing the response
               console.log(`Frontend: We have recevied "users" list of interests. We will now parse them`);
               let qList = res.data[0];
               let tempUserInterests = [];
               console.log("result of getQResponse:", this.state.usernameInterests);
               for (let [qResponseTopic, qResponseInterest] of Object.entries(qList)) {
-                console.log(qResponseTopic, qResponseInterest);
+                console.log(qResponseTopic, qResponseInterest)
+                // qResponseTopic is the name of the column of qr table
                 if (qResponseInterest !== '' && qResponseTopic !== "username") {
-                  tempUserInterests.push(qResponseInterest);
-                  queryString += `searchTopics[]=${qResponseInterest}&`;
+                  tempUserInterests.push(qResponseInterest)
+                  // This searches the ebay api. Add the qResponseTopic to this search query. DONE
+                  if (qResponseTopic === 'outdooractivity') {
+                    qResponseTopic = 'outdoors';
+                  }
+                  else if (qResponseTopic === 'musicgenre') {
+                    qResponseTopic = 'music';
+                  }
+                  else if (qResponseTopic === 'indooractivity') {
+                    qResponseTopic = 'indoors';
+                  }
+                  else if (qResponseTopic === 'movietvshow') {
+                    qResponseTopic = 'television';
+                  }
+                  else if (qResponseTopic === 'videogame') {
+                    qResponseTopic = 'video game';
+                  }
+                  else if (qResponseTopic === 'sportsteam') {
+                    qResponseTopic = 'sports team';
+                  }
+                  queryString += `searchTopics[]=${qResponseInterest} ${qResponseTopic}&`
+                  // queryString += `searchTopics[]=${qResponseInterest}&`
                 }
               }
               // this.state.userInterests just has questionnaire responses (e.g. ["Taeyeon", "YouTube"])
@@ -228,7 +249,7 @@ class Home extends React.Component {
   }
 
   // Function to show interest based on wishlist item
-  showWishlistInterest(wishlistItem) {
+  showInterest(wishlistItem) {
     console.log(`usernameinterests are: ${this.state.usernameInterests}`);
     console.log(`usernameinterests length is: ${this.state.usernameInterests[0]}`);
     var index;
@@ -238,10 +259,6 @@ class Home extends React.Component {
         return this.state.usernameInterests[index];
       }
     }
-    // for (let el of document.querySelectorAll('.interestInfo')) el.style.visibility = 'hidden';
-    // for (let el of document.querySelectorAll('.interestLabel')) el.style.visibility = 'hidden';
-    // for (let el of document.querySelectorAll('.giftInterestTopic')) el.style.visibility = 'hidden';
-    // console.log(`returning none in showWishlistInterest`);
     return "none";
   }
 
@@ -263,7 +280,9 @@ class Home extends React.Component {
         const giftPic = this.state.gifts[searchTopic][1];
         const picText = `picture of ${giftName}`;
         const giftLink = this.state.gifts[searchTopic][2];
-        const relatedInterest = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
+        const giftItem = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
+        const relatedInterest = this.showInterest(giftItem);
+        console.log(`relatedInterest in gifts is: ${relatedInterest}`);
 
         displayGiftSuggestions.push(
           <div className="giftSuggestionWrapper" key={giftName}>
@@ -300,7 +319,8 @@ class Home extends React.Component {
         const giftLink = this.state.wishlist[searchTopic][2];
         const wishlistItem = this.state.wishlist[searchTopic][3];
         // call function to figure out if gift suggestion matches an interest (replace this.state.wishlist[searchTopic][3] with function call, which returns a string containing the interest - empty string if there's no related interest)
-        const relatedInterest = this.showWishlistInterest(wishlistItem);
+        const relatedInterest = this.showInterest(wishlistItem);
+        console.log(`relatedInterest in wishlists is: ${relatedInterest}`);
 
         displayWishlistSuggestions.push(
           <div className="giftSuggestionWrapper" key={giftName}>
@@ -373,7 +393,6 @@ class Home extends React.Component {
           <div class="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
         </div>
       </div>
-      
     );
   }
 }
