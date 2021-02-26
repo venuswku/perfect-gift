@@ -172,6 +172,8 @@ class Home extends React.Component {
                 }).catch(res => {
                   console.log(res)
                   console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
+                  alert("Error when trying to search for the gift!!!!");
+                  // this.props.history.push('/profile');
                 })
 
 
@@ -244,6 +246,11 @@ class Home extends React.Component {
     console.log(`usernameinterests length is: ${this.state.usernameInterests[0]}`);
     var index;
     for(index = 0; index < this.state.usernameInterests.length; index++){
+      if ((wishlistItem === undefined) || this.state.usernameInterests[index] === undefined) {
+        alert("Hello User! You are getting this error message because Ebay could not find the wishlist item you are looking for. To fix this, you can either: 1. Check if there is a typo in one of your wishlist items. 2. Make sure the wishlist item or interest is the full name of the item or else Ebay cannot find the item correctly.");
+        this.props.history.push('/profile');
+        return;
+      }
       if (this.state.usernameInterests[index].toUpperCase().includes(wishlistItem.toUpperCase()) || wishlistItem.toUpperCase().includes(this.state.usernameInterests[index].toUpperCase())) {
         console.log(`this.state.usernameInterests[index] is: ${this.state.usernameInterests[index]}`);
         return this.state.usernameInterests[index];
