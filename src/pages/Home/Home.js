@@ -31,6 +31,116 @@ class Home extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  handleSearch(typedInput){
+
+    let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
+    let queryString = '/searchusername?'; // Will be used to concatanate more queries and attach to the main string (serverPath)
+
+    // GET Request to get the "typed user's" interests.
+    axios.get(`http://localhost:3010/v0/getQResponse/${typedInput}`)
+    .then(res => {
+
+      // Parsing the response
+      console.log(`Frontend: We have recevied "users" list of interests. We will now parse them`);
+      let qList = res.data[0];
+      let tempUserInterests = [];
+      console.log("result of getQResponse:", this.state.usernameInterests);
+      for (let [qResponseTopic, qResponseInterest] of Object.entries(qList)) {
+        console.log(qResponseTopic, qResponseInterest)
+        // qResponseTopic is the name of the column of qr table
+        if (qResponseInterest !== '' && qResponseTopic !== "username") {
+          tempUserInterests.push(qResponseInterest)
+          // This searches the ebay api. Add the qResponseTopic to this search query. DONE
+          if (qResponseTopic === 'outdooractivity') {
+            qResponseTopic = 'outdoors';
+          }
+          else if (qResponseTopic === 'musicgenre') {
+            qResponseTopic = 'music';
+          }
+          else if (qResponseTopic === 'indooractivity') {
+            qResponseTopic = 'indoors';
+          }
+          else if (qResponseTopic === 'movietvshow') {
+            qResponseTopic = 'television';
+          }
+          else if (qResponseTopic === 'videogame') {
+            qResponseTopic = 'video game';
+          }
+          else if (qResponseTopic === 'sportsteam') {
+            qResponseTopic = 'sports team';
+          }
+          queryString += `searchTopics[]=${qResponseInterest} ${qResponseTopic}&`
+          // queryString += `searchTopics[]=${qResponseInterest}&`
+        }
+      }
+      // this.state.userInterests just has questionnaire responses (e.g. ["Taeyeon", "YouTube"])
+      this.setState({ usernameInterests: tempUserInterests });
+      queryString = queryString.slice(0, -1);
+      console.log(queryString);
+      serverPath += queryString;
+      //console.log(serverPath)
+
+      // Calling axios based on the user's select choice (username or gift)
+      console.log(`Frontend: The server we are connecting to is: ${serverPath}`);
+      axios.get(serverPath, this.state)
+        .then(res => {
+          console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`);
+          console.log(res);
+          // store returned gift suggestions in our state
+          this.setState({ gifts: res.data[0] });
+          this.setState({ loading: false });
+
+          //The user is searching using the "Search by wishlist" option
+          console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist");
+          let queryString_WL = '/searchusername?';
+          console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`);
+          // Getting typed user's interests.
+          axios.get(`http://localhost:3010/v0/getwishlist/${typedInput}`)
+            .then(res => {
+              // Parsing the response
+              serverPath = "http://localhost:3010/v0/giftapi";
+              console.log("----------------");
+              console.log(`Frontend: We have recevied "users" wishlist. We will now parse them`);
+              let qList = res.data[0].gift;
+              console.log(qList);
+              console.log("----------------");
+              for (let i in qList) {
+                  queryString_WL += `searchTopics[]=${qList[i]}&`;
+              }
+              queryString_WL = queryString_WL.slice(0, -1);
+              console.log(queryString_WL);
+              serverPath += queryString_WL;
+              console.log(serverPath);
+
+              // Calling axios based on the user's select choice (username or gift)
+              console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
+              axios.get(serverPath, this.state)
+                .then(res => {
+                  console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`);
+                  console.log(res);
+                  // store returned gift suggestions in our state
+                  this.setState({ wishlist: res.data[0] });
+                  console.log(serverPath);
+                }).catch(res => {
+                  console.log(res);
+                  console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE");
+                })
+            }).catch(res => {
+              console.log(res);
+              console.log("Frontend: There was an error when trying to search the user you typed.");
+            })
+
+        }).catch(res => {
+          console.log(res);
+          console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE");
+        })
+    }).catch(res => {
+      console.log(res);
+      console.log("Frontend: There was an error when trying to search the user you typed.");
+    });
   }
 
   /*When the drop down is changed,
@@ -54,7 +164,7 @@ class Home extends React.Component {
   handleSubmit(event) {
 
     console.log("Frontend: We are going to submit your search request to the server")
-    const { value, typedInput } = this.state
+    var { value, typedInput } = this.state
     let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
 
     try {
@@ -85,110 +195,26 @@ class Home extends React.Component {
         // If the user is searching for a username
         if (value === "Search by username") {
           console.log(`Frontend: We will fetch the interests for the username:"${typedInput}"`);
-          let queryString = '/searchusername?'; // Will be used to concatanate more queries and attach to the main string (serverPath)
           
-          // GET Request to get the "typed user's" interests.
-          axios.get(`http://localhost:3010/v0/getQResponse/${typedInput}`)
-            .then(res => {
+          // Detect if typed input is an email
+          const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          const isEmail =  re.test(typedInput);
 
-              // Parsing the response
-              console.log(`Frontend: We have recevied "users" list of interests. We will now parse them`);
-              let qList = res.data[0];
-              let tempUserInterests = [];
-              console.log("result of getQResponse:", this.state.usernameInterests);
-              for (let [qResponseTopic, qResponseInterest] of Object.entries(qList)) {
-                console.log(qResponseTopic, qResponseInterest)
-                // qResponseTopic is the name of the column of qr table
-                if (qResponseInterest !== '' && qResponseTopic !== "username") {
-                  tempUserInterests.push(qResponseInterest)
-                  // This searches the ebay api. Add the qResponseTopic to this search query. DONE
-                  if (qResponseTopic === 'outdooractivity') {
-                    qResponseTopic = 'outdoors';
-                  }
-                  else if (qResponseTopic === 'musicgenre') {
-                    qResponseTopic = 'music';
-                  }
-                  else if (qResponseTopic === 'indooractivity') {
-                    qResponseTopic = 'indoors';
-                  }
-                  else if (qResponseTopic === 'movietvshow') {
-                    qResponseTopic = 'television';
-                  }
-                  else if (qResponseTopic === 'videogame') {
-                    qResponseTopic = 'video game';
-                  }
-                  else if (qResponseTopic === 'sportsteam') {
-                    qResponseTopic = 'sports team';
-                  }
-                  queryString += `searchTopics[]=${qResponseInterest} ${qResponseTopic}&`
-                  // queryString += `searchTopics[]=${qResponseInterest}&`
+          // If an email, lookup username before proceeding and set typed_input equal to username
+          if (isEmail) {
+            console.log("Hey you entered an email!");
+            axios.get(('http://localhost:3010/v0/giftuser?useremail=' + typedInput).replace('@', '%40')).then(
+              res => {
+                console.log(res.data.length)
+                if (res.data.length !== 0){
+                  typedInput = res.data[0]['username']
+                  this.handleSearch(typedInput);
                 }
               }
-              // this.state.userInterests just has questionnaire responses (e.g. ["Taeyeon", "YouTube"])
-              this.setState({ usernameInterests: tempUserInterests });
-              queryString = queryString.slice(0, -1);
-              console.log(queryString);
-              serverPath += queryString;
-              //console.log(serverPath)
-
-              // Calling axios based on the user's select choice (username or gift)
-              console.log(`Frontend: The server we are connecting to is: ${serverPath}`);
-              axios.get(serverPath, this.state)
-                .then(res => {
-                  console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`);
-                  console.log(res);
-                  // store returned gift suggestions in our state
-                  this.setState({ gifts: res.data[0] });
-                  this.setState({ loading: false });
-
-                  //The user is searching using the "Search by wishlist" option
-                  console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist");
-                  let queryString_WL = '/searchusername?';
-                  console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`);
-                  // Getting typed user's interests.
-                  axios.get(`http://localhost:3010/v0/getwishlist/${typedInput}`)
-                    .then(res => {
-                      // Parsing the response
-                      serverPath = "http://localhost:3010/v0/giftapi";
-                      console.log("----------------");
-                      console.log(`Frontend: We have recevied "users" wishlist. We will now parse them`);
-                      let qList = res.data[0].gift;
-                      console.log(qList);
-                      console.log("----------------");
-                      for (let i in qList) {
-                          queryString_WL += `searchTopics[]=${qList[i]}&`;
-                      }
-                      queryString_WL = queryString_WL.slice(0, -1);
-                      console.log(queryString_WL);
-                      serverPath += queryString_WL;
-                      console.log(serverPath);
-
-                      // Calling axios based on the user's select choice (username or gift)
-                      console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
-                      axios.get(serverPath, this.state)
-                        .then(res => {
-                          console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`);
-                          console.log(res);
-                          // store returned gift suggestions in our state
-                          this.setState({ wishlist: res.data[0] });
-                          console.log(serverPath);
-                        }).catch(res => {
-                          console.log(res);
-                          console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE");
-                        })
-                    }).catch(res => {
-                      console.log(res);
-                      console.log("Frontend: There was an error when trying to search the user you typed.");
-                    })
-
-                }).catch(res => {
-                  console.log(res);
-                  console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE");
-                })
-            }).catch(res => {
-              console.log(res);
-              console.log("Frontend: There was an error when trying to search the user you typed.");
-            })
+            );
+          } else {
+            this.handleSearch(typedInput)
+          }
         }
 
         // If the user is either using the "Search for a gift" or "Search by..." option
@@ -365,7 +391,7 @@ class Home extends React.Component {
                 className="homeSelect varela blue"
               >
                 <option className="homeOption" value="Select a way to search">&nbsp;Search by...</option>
-                <option className="homeOption" value="Search by username">&nbsp;Username</option>
+                <option className="homeOption" value="Search by username">&nbsp;Username/Email</option>
                 <option className="homeOption" value="Search for a gift">&nbsp;Gift</option>
               </select>
             </label>
