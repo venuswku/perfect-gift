@@ -5,6 +5,7 @@ import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
 import axios from 'axios';
+import NoUser from  "../../images/nouser.png";
 
 //axios.defaults.withCredentials = true; //Might need this
 class Home extends React.Component {
@@ -24,7 +25,8 @@ class Home extends React.Component {
       wishlist: {}, // Object containing wishlist suggestions (reponse returned by eBay API)
       loading: false, // Determines if the search bar is loading a search request
       noSearchByMethodChosen: false, // Determines whether to show reminder for user to choose a "Search by" method first
-      noSearchbarInput: false // Determines whether to show reminder for user to input something into searchbar
+      noSearchbarInput: false, // Determines whether to show reminder for user to input something into searchbar
+      displayErrorMessage: false,
     };
 
     // Binding to make sure functions work
@@ -38,6 +40,7 @@ class Home extends React.Component {
 
     let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
     let queryString = '/searchusername?'; // Will be used to concatanate more queries and attach to the main string (serverPath)
+    this.setState({displayErrorMessage: false});
 
     // GET Request to get the "typed user's" interests.
     axios.get(`http://localhost:3010/v0/getQResponse/${typedInput}`)
@@ -131,6 +134,8 @@ class Home extends React.Component {
             }).catch(res => {
               console.log(res);
               console.log("Frontend: There was an error when trying to search the user you typed.");
+              this.setState({displayErrorMessage : true});
+              this.setState({ loading: false });
             })
 
         }).catch(res => {
@@ -140,6 +145,8 @@ class Home extends React.Component {
     }).catch(res => {
       console.log(res);
       console.log("Frontend: There was an error when trying to search the user you typed.");
+      this.setState({displayErrorMessage : true});
+      this.setState({ loading: false });
     });
   }
 
@@ -165,6 +172,7 @@ class Home extends React.Component {
 
     console.log("Frontend: We are going to submit your search request to the server")
     var { value, typedInput } = this.state
+    this.setState({displayErrorMessage: false});
     let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
 
     try {
@@ -297,6 +305,19 @@ class Home extends React.Component {
   render() {
     const { placeholderText, typedInput } = this.state;
 
+    let errorMessage_user =           <div className="giftSuggestionWrapper">
+            <div className="giftImgBackground">            <img
+              src={NoUser}
+              alt="the gifters"
+              className="homePic"
+            /></div>
+            <div className="giftInfo">
+              <div className="moreGiftInfo">
+                <div className="giftWishlistText grey gothic">Error: This user does not exist.</div>
+              </div>
+            </div>
+          </div>
+
     // display each gift returned by eBay API
     const displayGiftSuggestions = [];
     let i = 0
@@ -419,6 +440,7 @@ class Home extends React.Component {
             {this.state.noSearchbarInput ? <p className="reminder">Don't forget to input what you're searching in the search bar!</p> : null}
           </div>
           {/*The gift suggestion*/}
+          {this.state.displayErrorMessage ? errorMessage_user : null}
           {displayGiftSuggestions}
           {displayWishlistSuggestions}
           <div class="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
