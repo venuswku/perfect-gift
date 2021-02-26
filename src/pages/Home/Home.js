@@ -51,7 +51,7 @@ class Home extends React.Component {
   /* When the user hits enter, it will send the string to the server. */
   handleSubmit(event) {
     const { value, typedInput } = this.state
-    let serverPath = "http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftapi";
+    let serverPath = "https://backend-perfectgift.com/v0/giftapi";
     console.log("Frontend: We are going to submit your search request to the server")
 
     try {
@@ -65,7 +65,7 @@ class Home extends React.Component {
           let queryString = '/searchusername?'
           console.log(`Frontend: We will fetch the interests for the username:"${typedInput}"`)
           // Getting typed user's interests.
-          axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getQResponse/${typedInput}`)
+          axios.get(`https://backend-perfectgift.com/v0/getQResponse/${typedInput}`)
             .then(res => {
               // Parsing the response
               console.log(`Frontend: We have recevied "users" list of interests. We will now parse them`)
@@ -91,50 +91,50 @@ class Home extends React.Component {
                   console.log(res)
                   // store returned gift suggestions in our state
                   this.setState({ gifts: res.data[0] });
-////////
-        //The user is searching using the "Search by wishlist" option
-          console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist")
-          let queryString_WL = '/searchusername?'
-          console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`)
-          // Getting typed user's interests.
-          axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getwishlist/${typedInput}`)
-            .then(res => {
-              // Parsing the response
-              serverPath = "http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftapi";
-              console.log("----------------")
-              console.log(`Frontend: We have recevied "users" wishlist. We will now parse them`)
-              let qList = res.data[0].gift
-              console.log(qList);
-              console.log("----------------")
-              for (let i in qList) {
-                  queryString_WL += `searchTopics[]=${qList[i]}&`
+                  ////////
+                  //The user is searching using the "Search by wishlist" option
+                  console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist")
+                  let queryString_WL = '/searchusername?'
+                  console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`)
+                  // Getting typed user's interests.
+                  axios.get(`https://backend-perfectgift.com/v0/getwishlist/${typedInput}`)
+                    .then(res => {
+                      // Parsing the response
+                      serverPath = "https://backend-perfectgift.com/v0/giftapi";
+                      console.log("----------------")
+                      console.log(`Frontend: We have recevied "users" wishlist. We will now parse them`)
+                      let qList = res.data[0].gift
+                      console.log(qList);
+                      console.log("----------------")
+                      for (let i in qList) {
+                        queryString_WL += `searchTopics[]=${qList[i]}&`
 
-              }
-              queryString_WL = queryString_WL.slice(0, -1)
-              console.log(queryString_WL)
-              serverPath += queryString_WL
-              console.log(serverPath)
+                      }
+                      queryString_WL = queryString_WL.slice(0, -1)
+                      console.log(queryString_WL)
+                      serverPath += queryString_WL
+                      console.log(serverPath)
 
-              // Calling axios based on the user's select choice (username or gift)
-              console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
-              axios.get(serverPath, this.state)
-                .then(res => {
-                  console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
-                  console.log(res)
-                  // store returned gift suggestions in our state
-                  this.setState({ wishlist: res.data[0] });
-                  console.log(serverPath)
-                }).catch(res => {
-                  console.log(res)
-                  console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
-                })
-            }).catch(res => {
-              console.log(res)
-              console.log("Frontend: There was an error when trying to search the user you typed.")
-            })
-        
+                      // Calling axios based on the user's select choice (username or gift)
+                      console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
+                      axios.get(serverPath, this.state)
+                        .then(res => {
+                          console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`)
+                          console.log(res)
+                          // store returned gift suggestions in our state
+                          this.setState({ wishlist: res.data[0] });
+                          console.log(serverPath)
+                        }).catch(res => {
+                          console.log(res)
+                          console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
+                        })
+                    }).catch(res => {
+                      console.log(res)
+                      console.log("Frontend: There was an error when trying to search the user you typed.")
+                    })
 
-////////
+
+                  ////////
                 }).catch(res => {
                   console.log(res)
                   console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
@@ -149,8 +149,8 @@ class Home extends React.Component {
         }
 
         // If the user is either using the "Search for a gift" or "Search by..." option
-        else if(value === "Search for a gift"){
-        // else if (value === "Search for a gift") {
+        else if (value === "Search for a gift") {
+          // else if (value === "Search for a gift") {
           console.log(`Frontend: We will search for the gift:"${typedInput}"`);
           serverPath += `/searchgift?searchTopics[]=${typedInput}`;
           console.log(serverPath);
@@ -167,7 +167,7 @@ class Home extends React.Component {
               console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE")
             })
         }
- 
+
       }
 
       // The user did not input anything
@@ -188,7 +188,7 @@ class Home extends React.Component {
   componentDidMount() {
     console.log(this.state)
 
-    axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state) //The port of the server
+    axios.get('https://backend-perfectgift.com/v0/authenticate', this.state) //The port of the server
       .then(res => {
         if (res.data[0].username !== "") {
           this.setState({
@@ -225,16 +225,16 @@ class Home extends React.Component {
 
         displayGiftSuggestions.push(
           <div className="giftSuggestionWrapper" key={giftName}>
-            <div className="giftImgBackground"><img src={giftPic} alt={picText} className="gift-img"/></div>
+            <div className="giftImgBackground"><img src={giftPic} alt={picText} className="gift-img" /></div>
             <div className="giftInfo">
               <a href={giftLink} className="giftName blue varela">{giftName}</a>
               <div className="moreGiftInfo">
                 {relatedInterest !== ""
-                ? <div className="interestInfo grey gothic">
+                  ? <div className="interestInfo grey gothic">
                     <p className="interestLabel">Interest</p>
                     <p className="giftInterestTopic">{relatedInterest}</p>
                   </div>
-                : null}
+                  : null}
               </div>
             </div>
           </div>
@@ -260,16 +260,16 @@ class Home extends React.Component {
 
         displayWishlistSuggestions.push(
           <div className="giftSuggestionWrapper" key={giftName}>
-            <div className="giftImgBackground"><img src={giftPic} alt={picText} className="gift-img"/></div>
+            <div className="giftImgBackground"><img src={giftPic} alt={picText} className="gift-img" /></div>
             <div className="giftInfo">
               <a href={giftLink} className="giftName blue varela">{giftName}</a>
               <div className="moreGiftInfo">
                 {relatedInterest !== ""
-                ? <div className="interestInfo grey gothic">
+                  ? <div className="interestInfo grey gothic">
                     <p className="interestLabel">Interest</p>
                     <p className="giftInterestTopic">{relatedInterest}</p>
                   </div>
-                : null}
+                  : null}
               </div>
             </div>
           </div>
@@ -315,7 +315,7 @@ class Home extends React.Component {
                 name="typedInput"
                 onChange={this.handleUserInput}
               />
-              <div className="searchButton" onClick={this.handleSubmit}><MagnifyGlass className="searchButtonIcon"/></div>
+              <div className="searchButton" onClick={this.handleSubmit}><MagnifyGlass className="searchButtonIcon" /></div>
             </div>
           </form>
           {/*The gift suggestion*/}

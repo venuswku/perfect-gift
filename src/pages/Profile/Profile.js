@@ -41,7 +41,7 @@ class Profile extends Component {
             store: '',
             exercise: '',
             band: '',
-    
+
             wishlist: [],
             showWishlistPopup: false,
             wlresponse: [],
@@ -73,7 +73,7 @@ class Profile extends Component {
         else {
             console.log("USERNAME", this.state.username);
             console.log("NEW USERNAME", this.state.newUsername);
-            axios.put(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftuser/${this.state.username}`, [this.state])
+            axios.put(`https://backend-perfectgift.com/v0/giftuser/${this.state.username}`, [this.state])
                 .then(res => {
                     console.log('Frontend: updated username successfully in profile');
                     console.log(res.data);
@@ -87,7 +87,7 @@ class Profile extends Component {
             this.setState({ username: this.state.newUsername, mode: 'view' });
         }
     }
-    
+
     /* Opens or closes popup for editing questionnaire responses (Interests section). */
     toggleQuestionnairePopup() {
         this.setState({ showQuestionnairePopup: !this.state.showQuestionnairePopup });
@@ -101,43 +101,43 @@ class Profile extends Component {
     /* Deletes (empties) questionnaire response from Interests section. */
     deleteInterest(questionnaireTopic) {
         console.log("remove", questionnaireTopic, "for", this.state.username);
-        axios.put(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/removeqresponse/${this.state.username}/${questionnaireTopic}`, [this.state])
-        .then(response => {
-            console.log('Profile.js: success deleting qr');
-            console.log(response);
-            // call get request again to see new changes
-            axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getqresponse/${this.state.username}`, [this.state])
-                .then(res => {
-                    console.log('successful get q response');
-                    this.setState({ outdooractivity: res.data[0].outdooractivity });
-                    this.setState({ place: res.data[0].place });
-                    this.setState({ store: res.data[0].store });
-                    this.setState({ musicgenre: res.data[0].musicgenre });
-                    this.setState({ musician: res.data[0].musician });
-                    this.setState({ band: res.data[0].band });
-                    this.setState({ indooractivity: res.data[0].indooractivity });
-                    this.setState({ movietvshow: res.data[0].movietvshow });
-                    this.setState({ videogame: res.data[0].videogame });
-                    this.setState({ sport: res.data[0].sport });
-                    this.setState({ sportsteam: res.data[0].sportsteam });
-                    this.setState({ exercise: res.data[0].exercise });
-                })
-                .catch(err => {
-                    console.log('failed get q response');
-                    console.log(err);
-                });
-        })
-        .catch(error => {
-            console.log("Profile.js: failed deleting qr");
-            console.log(this.state);
-            console.log(error);
-        });
+        axios.put(`https://backend-perfectgift.com/v0/removeqresponse/${this.state.username}/${questionnaireTopic}`, [this.state])
+            .then(response => {
+                console.log('Profile.js: success deleting qr');
+                console.log(response);
+                // call get request again to see new changes
+                axios.get(`https://backend-perfectgift.com/v0/getqresponse/${this.state.username}`, [this.state])
+                    .then(res => {
+                        console.log('successful get q response');
+                        this.setState({ outdooractivity: res.data[0].outdooractivity });
+                        this.setState({ place: res.data[0].place });
+                        this.setState({ store: res.data[0].store });
+                        this.setState({ musicgenre: res.data[0].musicgenre });
+                        this.setState({ musician: res.data[0].musician });
+                        this.setState({ band: res.data[0].band });
+                        this.setState({ indooractivity: res.data[0].indooractivity });
+                        this.setState({ movietvshow: res.data[0].movietvshow });
+                        this.setState({ videogame: res.data[0].videogame });
+                        this.setState({ sport: res.data[0].sport });
+                        this.setState({ sportsteam: res.data[0].sportsteam });
+                        this.setState({ exercise: res.data[0].exercise });
+                    })
+                    .catch(err => {
+                        console.log('failed get q response');
+                        console.log(err);
+                    });
+            })
+            .catch(error => {
+                console.log("Profile.js: failed deleting qr");
+                console.log(this.state);
+                console.log(error);
+            });
     }
-    
+
     /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
     togglePopupWL = () => {
         this.setState({
-         showWishlistPopup: !this.state.showWishlistPopup
+            showWishlistPopup: !this.state.showWishlistPopup
         });
     };
 
@@ -163,7 +163,7 @@ class Profile extends Component {
     renderButton() {
         if (this.state.mode === 'view') {
             return (
-                <EditButton onClick={this.handleEdit} className="editButton"/>
+                <EditButton onClick={this.handleEdit} className="editButton" />
             );
         } else {
             return (
@@ -176,7 +176,7 @@ class Profile extends Component {
 
     componentDidMount() {
         // Authenticate user when they reach profile page.
-        axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state) //The port of the server
+        axios.get('https://backend-perfectgift.com/v0/authenticate', this.state) //The port of the server
             .then(res => {
                 console.log("Got a response with GET")
                 console.log(res.data)
@@ -189,10 +189,10 @@ class Profile extends Component {
                     this.setState({ firstName: res.data[0].firstname });
                     this.setState({ lastName: res.data[0].lastname });
                     this.setState({ useremail: res.data[0].useremail });
-                    
+
                     // Get user's questionnaire responses and store them in this.state.
                     console.log('doing get q response', res.data[0].username);
-                    axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getqresponse/${this.state.username}`, [this.state])
+                    axios.get(`https://backend-perfectgift.com/v0/getqresponse/${this.state.username}`, [this.state])
                         .then(res => {
                             console.log('successful get q response');
                             this.setState({ outdooractivity: res.data[0].outdooractivity });
@@ -209,21 +209,21 @@ class Profile extends Component {
                             this.setState({ exercise: res.data[0].exercise });
 
                             // Get user's wishlist items.
-                            axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getwishlist/${this.state.username}`, [this.state])
-                            .then(res => {
-                                console.log("Frontend [SUCCESS]: We have received the user's wishlist")
-                                console.log(res.data)
-                                console.log(res.data[0].gift)
-                                this.setState({wlresponse: res.data[0].gift})
-                                console.log(this.state.wlresponse)
-                            })
-                            .catch(err => {
-                                console.log("Frontend [ERROR]: Retrieving wishlist was unsuccessful.")
-                                console.log(err)
-                                this.setState({
+                            axios.get(`https://backend-perfectgift.com/v0/getwishlist/${this.state.username}`, [this.state])
+                                .then(res => {
+                                    console.log("Frontend [SUCCESS]: We have received the user's wishlist")
+                                    console.log(res.data)
+                                    console.log(res.data[0].gift)
+                                    this.setState({ wlresponse: res.data[0].gift })
+                                    console.log(this.state.wlresponse)
+                                })
+                                .catch(err => {
+                                    console.log("Frontend [ERROR]: Retrieving wishlist was unsuccessful.")
+                                    console.log(err)
+                                    this.setState({
 
-                                });
-                            })
+                                    });
+                                })
                         })
                         .catch(err => {
                             console.log('failed get q response');
@@ -239,7 +239,7 @@ class Profile extends Component {
             })
 
         // Making a get request to get the user's wishlist
-        // axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getUserWishlist', [this.state])
+        // axios.get('https://backend-perfectgift.com/v0/getUserWishlist', [this.state])
         //     .then(res => {
         //         console.log("Frontend: Gimme wishlist")
         //         console.log(res.data)
@@ -273,10 +273,10 @@ class Profile extends Component {
                 }
                 displayQResponses.push(
                     <div onClick={() => this.deleteInterest(qTopic)}
-                         className={color}
-                         key={qTopic}
+                        className={color}
+                        key={qTopic}
                     >
-                        {qResponse} &nbsp;<DeleteButton className="delete"/>
+                        {qResponse} &nbsp;<DeleteButton className="delete" />
                     </div>
                 );
             }
@@ -287,17 +287,17 @@ class Profile extends Component {
         const wl_response = this.state.wlresponse;
         const displaywishlist = [];
         for (let i in wl_response) {
-                var color = '';
-                color = 'textBubble indoors';
+            var color = '';
+            color = 'textBubble indoors';
 
-                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
-            
+            displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
+
         }
 
         return (
             <div className="Profile">
                 <Navbar />
-                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.toggleQuestionnairePopup} userInfo={this.state} editInterest={this.handleInterestChange} /> : null} 
+                {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.toggleQuestionnairePopup} userInfo={this.state} editInterest={this.handleInterestChange} /> : null}
                 <header className='profileHeader'>
                     {/* profile background + pic */}
                     <div className='profileBackground'>
@@ -315,7 +315,7 @@ class Profile extends Component {
                         {/* interests/questionnaire responses */}
                         <div>
                             <span className='topicFont'>Interests &nbsp; </span>
-                            <EditButton className='editButton' onClick={this.toggleQuestionnairePopup}/>
+                            <EditButton className='editButton' onClick={this.toggleQuestionnairePopup} />
                             <div className="interestBubblesWrapper">{displayQResponses}</div>
                         </div>
                         <br></br>
@@ -325,7 +325,7 @@ class Profile extends Component {
                             <span className='topicFont'>Wishlist</span>
                             {displaywishlist}
                             <br></br>
-                            <span className='tab'> <AddButton  onClick={this.togglePopupWL} /> Add to wishlist</span>
+                            <span className='tab'> <AddButton onClick={this.togglePopupWL} /> Add to wishlist</span>
                         </div>
 
                     </div>
