@@ -34,21 +34,18 @@
 }
 
 /* text styling for navbar links */
-.link {
+.link, .signOutLink {
   color: rgba(114, 214, 201, 1);
   text-decoration: none;
   font-size: 24px;
   font-family: "Varela Round";
 }
 
-.link:hover {
-  color: rgb(247, 144, 221);
+.link:hover, .activeLink, .signOutLink:hover, .signOutLink:active {
+  color: rgb(41, 112, 250);
+  fill: rgb(41, 112, 250);
 }
 
 .magnifyGlass {
   fill: rgb(114, 214, 201);
-}
-
-.magnifyGlass:hover {
-  fill: rgb(247, 144, 221);
 }

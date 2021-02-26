@@ -52,6 +52,7 @@ class EditQuestionnaireResponsesPopup extends Component {
                     <span className="close" onClick={this.props.toggle}>&times;</span>
                     <div className="updateInterestsTitle">Edit your Interests</div>
                     <p className="updateInterestsInstructions">Make sure to save your changes at the bottom of this popup!</p>
+                    <p className="sideNote">* The following questions are just some suggestions, so feel free to put anything that interests you.</p>
                     <table className="questionnaire">
                         <tbody>
                             <tr>

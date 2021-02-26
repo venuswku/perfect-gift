@@ -13,45 +13,56 @@ class AddToWishlistPopup extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
+    this.handleUndo = this.handleUndo.bind(this);
   }
 
   handleSubmit(event) {
-    console.log("Frontend: We are going to request to store the wishlist gift.");
-    event.preventDefault();
-    axios.post("http://localhost:3010/v0/storeWLGift", [this.state])
-    .then(response => {
-      console.log('===================')
-      console.log("Frontend: We have successfully stored the wishlist gift into our database.")
-      console.log(this.props)
-      console.log(response)
-      console.log(this.state.WLGiftToStore)
-      //this.setState({wlresponse: newParent})
-      this.props.updateWishlist(this.state.WLGiftToStore)
-      console.log('===================')
-    }).catch(error => {
-      console.log("There was an error when trying to store the wishlist gift into the database")
-      console.log(error)
-    })
+    // only add item to wishlist if it has at least 1 non-whitespace character
+    if (((/\S/.test(this.state.WLGiftToStore))) && (this.state.WLGiftToStore !== "")) {
+      console.log("Frontend: We are going to request to store the wishlist gift.");
+      event.preventDefault();
+      axios.post("http://localhost:3010/v0/storeWLGift", [this.state])
+      .then(response => {
+        console.log('===================')
+        console.log("Frontend: We have successfully stored the wishlist gift into our database.")
+        // console.log(this.props)
+        console.log(response)
+        // console.log(this.state.WLGiftToStore)
+        this.props.updateWishlist(this.state.WLGiftToStore);
+        console.log('===================')
+      }).catch(error => {
+        console.log("There was an error when trying to store the wishlist gift into the database")
+        console.log(error)
+      });
+    }
+    this.props.toggle();
   }
 
   handleChange(event) {
     console.log("Frontend: Handling change");
     this.setState({
-      WLGiftToStore: event.target.value
+      WLGiftToStore: (event.target.value).trim(),
     });
     event.preventDefault();
   }
 
+  handleUndo() {
+    this.props.toggle();
+  }
+
   render() {
     return (
-      <div className="wishlist">
+      <div className="wishlistItemPopup">
         <p className="addWishlistItemTitle">What item would you want as a gift?</p>
         <form onSubmit={this.handleSubmit}>
-          <label>
+          <span>
             <input type="text" value ={this.WLGiftToStore} placeholder="Enter wishlist item here" onChange={this.handleChange} className="wishlistItemInputBox"/>
-          </label>
+          </span>
         </form>
+        <div className="saveUndoButtons">
+          <button onClick={this.handleSubmit} className="usernameButton">Save</button>
+          <button onClick={this.handleUndo} className="usernameButton">Undo</button>
+        </div>
       </div>
     );
   }
