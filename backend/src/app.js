@@ -14,8 +14,9 @@ const proxy = require('http-proxy-middleware')
 
 // Used for letting the frontend communicate with the server
 app.use(cors({
-  origin: ["http://localhost:3000", "http://http-perfect-gift-frontend.s3-website-us-west-1.amazonaws.com"],
+  origin: "https://backend-perfectgift.com",
   methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Origin", "X - Requested-With", "Content-Type", "Accept"],
   credentials: true,
 }));
 
@@ -50,10 +51,6 @@ app.use(
   }),
 );
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 app.get('/', function (req, res) {
   res.send('hello world')
