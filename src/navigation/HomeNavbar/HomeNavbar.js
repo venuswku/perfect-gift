@@ -35,6 +35,7 @@ class HomeNavbar extends Component {
           }
           else {
             console.log("Error: Logging out failed")
+            this.props.history.push('/')
           }
         })
         .catch(error => {
