@@ -306,7 +306,9 @@ class Home extends React.Component {
         const giftPic = this.state.gifts[searchTopic][1];
         const picText = `picture of ${giftName}`;
         const giftLink = this.state.gifts[searchTopic][2];
-        const relatedInterest = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
+        const giftItem = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
+        const relatedInterest = this.showInterest(giftItem);
+        console.log(`relatedInterest in questionnaire response is: ${relatedInterest}`);
 
         displayGiftSuggestions.push(
           <div className="giftSuggestionWrapper" key={giftName}>
