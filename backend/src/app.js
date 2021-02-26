@@ -29,9 +29,11 @@ app.use(session({
   secret: "hello",
   resave: false,
   saveUninitialized: false,
+  proxy: true,
   cookie : {
     //expires : 1800000, // Found out that this is in miliseconds. Currently rounds about 30 minutes.
     sameSite: 'none',
+    secure: true
   }
 }))
 
