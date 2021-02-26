@@ -14,9 +14,10 @@ const proxy = require('http-proxy-middleware')
 
 // Used for letting the frontend communicate with the server
 app.use(cors({
-  origin: "https://backend-perfectgift.com",
+  // 
+  origin: "https://aws-frontend.d3i4pwwftbhh87.amplifyapp.com", 
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Origin", "X - Requested-With", "Content-Type", "Accept"],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
   credentials: true,
 }));
 
