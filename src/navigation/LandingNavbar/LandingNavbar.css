@@ -12,8 +12,8 @@
     align-items: center;
 
     /* put some space between navigation links */
-    width: 40%;
-    justify-content: space-between;
+    /* width: 40%;
+    justify-content: space-between; */
 
     /* put navbar on top of all pages */
     z-index: 100;
