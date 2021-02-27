@@ -58,7 +58,7 @@ class Home extends React.Component {
     console.log("Frontend: We are going to submit your search request to the server")
     var { value, typedInput } = this.state
     this.setState({displayErrorMessage: false});
-    let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
+    let serverPath = "http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftapi"; // Main URL of where we will send our this.state info to
 
     try {
       // If the user didn't select a way to search
@@ -96,7 +96,7 @@ class Home extends React.Component {
           // If an email, lookup username before proceeding and set typed_input equal to username.
           if (isEmail) {
             console.log("Hey you entered an email!");
-            axios.get(('http://localhost:3010/v0/giftuser?useremail=' + typedInput).replace('@', '%40')).then(
+            axios.get(('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftuser?useremail=' + typedInput).replace('@', '%40')).then(
               res => {
                 console.log(res.data.length)
                 if (res.data.length !== 0) {
@@ -148,12 +148,12 @@ class Home extends React.Component {
 
   // Handles searching by either email or username.
   handleSearch(typedInput){
-    let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
+    let serverPath = "http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftapi"; // Main URL of where we will send our this.state info to
     let queryString = '/searchusername?'; // Will be used to concatanate more queries and attach to the main string (serverPath)
     this.setState({displayErrorMessage: false});
 
     // GET Request to get the "typed user's" interests.
-    axios.get(`http://localhost:3010/v0/getQResponse/${typedInput}`)
+    axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getQResponse/${typedInput}`)
     .then(res => {
 
       // Parsing the response
@@ -210,10 +210,10 @@ class Home extends React.Component {
           let queryString_WL = '/searchusername?';
           console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`);
           // Getting typed user's interests.
-          axios.get(`http://localhost:3010/v0/getwishlist/${typedInput}`)
+          axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getwishlist/${typedInput}`)
             .then(res => {
               // Parsing the response
-              serverPath = "http://localhost:3010/v0/giftapi";
+              serverPath = "http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftapi";
               console.log("----------------");
               console.log(`Frontend: We have recevied "users" wishlist. We will now parse them`);
               let qList = res.data[0].gift;
