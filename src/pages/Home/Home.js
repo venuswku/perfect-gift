@@ -215,8 +215,13 @@ class Home extends React.Component {
               res => {
                 console.log(res.data.length)
                 if (res.data.length !== 0) {
+                //a username is returned back. search for gift suggestions with given username
                   typedInput = res.data[0]['username']
                   this.handleSearch(typedInput);
+                } else { 
+                  //no username is found for the email give. stop loading animation and display error message
+                  console.log("couldn't find email. try again")
+                  this.setState({ loading: false, displayErrorMessage: true});
                 }
               }
             );
