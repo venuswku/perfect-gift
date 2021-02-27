@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import './HomeNavbar.css';
 import { ReactComponent as PerfectGiftLogo } from '../../images/website_logo.svg';
 import { ReactComponent as MagnifyGlass } from '../../images/magnify_glass.svg';
@@ -22,7 +22,6 @@ class HomeNavbar extends Component {
 
       // When the sign out button is clicked
       // This function is called which sends this.state to the server
-      // It sends the curren
       submitHandler = (e) => {
         e.preventDefault()
         console.log(this.state)
@@ -35,6 +34,7 @@ class HomeNavbar extends Component {
           }
           else {
             console.log("Error: Logging out failed")
+            this.props.history.push('/')
           }
         })
         .catch(error => {
@@ -46,11 +46,11 @@ class HomeNavbar extends Component {
     render() {
     return (
         <div className="homeNavbar">
-            <Link to="/home" className="homeNavbarLogo" ><PerfectGiftLogo/></Link>
+            <NavLink to="/home" className="homeNavbarLogo"><PerfectGiftLogo/></NavLink>
             <div className="navigationLinks">
-                <Link to="/home" className="link"><MagnifyGlass className="magnifyGlass"/> Find Gift</Link>
-                <Link to="/profile" className="link">My Profile</Link>
-                <Link to="/" className="link" onClick={this.submitHandler}>Sign Out</Link>
+              <NavLink to="/home" className="link" activeClassName="activeLink"><MagnifyGlass className="magnifyGlass"/> Find Gift</NavLink>
+              <NavLink to="/profile" className="link" activeClassName="activeLink">My Profile</NavLink>
+              <NavLink exact to="/" className="signOutLink" onClick={this.submitHandler}>Sign Out</NavLink>
             </div>
         </div>
     );

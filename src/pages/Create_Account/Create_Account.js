@@ -47,7 +47,8 @@ class Create_Account extends Component {
 
     // if changed, update appropriately
     changeHandler = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+        var interest = (e.target.value).trim();     // get rid of any unnecessary whitespace characters
+        this.setState({ [e.target.name]: interest });
     }
 
     // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
@@ -60,35 +61,42 @@ class Create_Account extends Component {
             axios.get('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftuser?username=' + this.state.username)
                 .then(response => {
                     if (response.data.length === 0) {
-                        axios.post('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/postuser', [this.state])
-                            .then(response => {
-                                console.log('Create_Account.js: success for users');
-                                console.log(response);
-                                axios.post('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/postqresponse', [this.state])
+                        axios.get(('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/giftuser?useremail=' + this.state.useremail).replace('@', '%40'))
+                        .then(response => {
+                            if (response.data.length === 0) {
+                                axios.post('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/postuser', [this.state])
                                     .then(response => {
-                                        console.log('Create_Account.js: success for qr');
+                                        console.log('Create_Account.js: success for users');
                                         console.log(response);
-                                        axios.post('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state)
+                                        axios.post('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/postqresponse', [this.state])
                                             .then(response => {
-                                                console.log("Logged in after creating account");
+                                                console.log('Create_Account.js: success for qr');
                                                 console.log(response);
-                                                this.props.history.push('/profile');
+                                                axios.post('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/authenticate', this.state)
+                                                    .then(response => {
+                                                        console.log("Logged in after creating account");
+                                                        console.log(response);
+                                                        this.props.history.push('/profile');
+                                                    })
+                                                    .catch(error => {
+                                                        console.log("Create_Account.js: failed signing in for first time");
+                                                        console.log(error);
+                                                    });
                                             })
                                             .catch(error => {
-                                                console.log("Create_Account.js: failed signing in for first time");
+                                                console.log("Create_Account.js: failed for qr");
+                                                console.log(this.state);
                                                 console.log(error);
                                             });
                                     })
                                     .catch(error => {
-                                        console.log("Create_Account.js: failed for qr");
+                                        console.log("Create_Account.js: failed for users");
                                         console.log(this.state);
                                         console.log(error);
                                     });
-                            })
-                            .catch(error => {
-                                console.log("Create_Account.js: failed for users");
-                                console.log(this.state);
-                                console.log(error);
+                                } else {
+                                    window.alert("Email already taken!")
+                                }
                             });
                     } else {
                         window.alert("Username already taken!")
@@ -136,7 +144,8 @@ class Create_Account extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <p className="createAccountInstructions">Please take your time to answer our interest questions below. <br /> We will take note and share them with other gifters on your profile!</p>
+                        <p className="createAccountInstructions">Please take your time to answer our interest questions below.* <br /> We will take note and share them with other gifters on your profile!</p>
+                        <p className="sideNote">* The following questions are just some suggestions, so feel free to put anything that interests you.</p>
                         <table className="questionnaire">
                             <tbody>
                                 <tr>
@@ -273,7 +282,7 @@ class Create_Account extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <p className="createAccountInstructions">It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile.</p><br />
+                        <p className="createAccountInstructions">It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile, and you can edit these interests anytime!</p><br />
                         <input type='submit' value='Continue' className='createAccountSubmit' ></input>
                     </form>
                 </div>

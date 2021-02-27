@@ -17,7 +17,7 @@ import music1Image from '../../images/create_account_music1.svg';
 import music2Image from '../../images/create_account_music2.svg';
 
 class EditQuestionnaireResponsesPopup extends Component {
-
+    
     /* Parent component (Profile.js) passed the following properties through this.props:
         - toggle: makes popup open/close
         - userInfo: contains username, questionnainre responses, etc.
@@ -52,6 +52,7 @@ class EditQuestionnaireResponsesPopup extends Component {
                     <span className="close" onClick={this.props.toggle}>&times;</span>
                     <div className="updateInterestsTitle">Edit your Interests</div>
                     <p className="updateInterestsInstructions">Make sure to save your changes at the bottom of this popup!</p>
+                    <p className="sideNote">* The following questions are just some suggestions, so feel free to put anything that interests you.</p>
                     <table className="questionnaire">
                         <tbody>
                             <tr>

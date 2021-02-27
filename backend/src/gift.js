@@ -18,6 +18,13 @@ exports.getUsers = async (req, res) => {
         } else {
             res.status(404).send();
         }
+    }else if (req.query.useremail) {
+        const oneUser = await db.selectUsersEmail(req.query.useremail);
+        if (oneUser) {
+            res.status(200).json(oneUser);
+        } else {
+            res.status(404).send();
+        }
     } else { // get all users from database if none are passed into parameter
         const allUsers = await db.selectUsers([]);
         res.status(200).json([allUsers]);
@@ -69,7 +76,7 @@ exports.putUser = async (req, res) => {
 
             res.status(204).send();
             console.log("gift.js: putUser: Gifter's new username is updated!");
-        }    
+        }
     } catch {
         res.status(404).send();
         console.log("gift.js: putUser: user failz");
@@ -180,9 +187,9 @@ exports.removeQResponse = async (req, res) => {
         const username = req.params.username;
         const questionnaireTopic = req.params.questionnairetopic;
         console.log("gift.js: removeResponse for", username, "in", questionnaireTopic, "column");
-        
+
         const remove = await db.deleteQResponse(username, questionnaireTopic);
-        
+
         const userChanges = await db.selectQResponses(username);
         if (userChanges) {
             console.log("gift.js: removeQResponse: Gifter's questionnaire response is successfully deleted!");
@@ -323,27 +330,37 @@ exports.giftapi = async (req, res) => {
                 // go through each topic in the searched topics array
                 let searchTopics = req.query[searchTopicsArray]
                 console.log(searchTopics)
-                for(i in searchTopics) {
-                    console.log(`Search topic ${i}: ${searchTopics[i]}`)
-
-                    // and make API call to ebay to give us the image and link to the gift            
-                    const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${searchTopics[i]}&itemSort=BestMatch`)
+                for(let i in searchTopics) {
+                    console.log(`Search topic ${i}: ${searchTopics[i]}`);
                     
+                    // For each search topic, make API call to eBay to give us the image and link to the gift suggestion.
+                    let apiCallLink = `https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindItems&QueryKeywords=${searchTopics[i]}&itemSort=BestMatch`;
                     // const response = await axios.get(`https://open.api.ebay.com/shopping?version=515&appid=CarlosVi-PerfectG-PRD-26a7b2fae-e210886d&responseencoding=JSON&callname=FindProducts&QueryKeywords=${searchTopics[i]}&MaxEntries=1&ProductSort=Popularity`)
-                    // ^ seems to give better results
+                    // ^ seems to give better results but maybe use it in the future
+
+                    // return 10 gift suggestions if user used "Search by Gift" method
+                    if (searchMethod === "searchgift") { apiCallLink = apiCallLink.concat("&MaxEntries=10"); }
+                    // else return just 1 gift suggestion if "Search by Username/Email"
+                    else { apiCallLink = apiCallLink.concat("&MaxEntries=1"); }
+                    
+                    // console.log(apiCallLink);
+                    const response = await axios.get(apiCallLink);
 
                     // Store these results in variables and then store them in our giftSuggestions array
-                    const GIFT_INFO = [];
-                    const GIFT_NAME = response.data.Item[0].Title;
-                    const GIFT_IMAGE_URL = response.data.Item[0].GalleryURL;
-                    const GIFT_URL_TO_GIFT = response.data.Item[0].ViewItemURLForNaturalSearch;
-                    let RELATED_INTEREST = "";
-                    if (searchMethod === "searchusername") { RELATED_INTEREST = searchTopics[i]; }
-                    console.log(GIFT_NAME);
-                    console.log(GIFT_IMAGE_URL);
-                    console.log(GIFT_URL_TO_GIFT);
-                    GIFT_INFO.push(GIFT_NAME, GIFT_IMAGE_URL, GIFT_URL_TO_GIFT, RELATED_INTEREST);
-                    giftSuggestions[searchTopics[i]] = GIFT_INFO;
+                    for (let itemNum = 0; itemNum < response.data.Item.length; itemNum++) {
+                        console.log(response.data.Item[itemNum]);
+                        const GIFT_INFO = [];
+                        const GIFT_NAME = response.data.Item[itemNum].Title;
+                        const GIFT_IMAGE_URL = response.data.Item[itemNum].GalleryURL;
+                        const GIFT_URL_TO_GIFT = response.data.Item[itemNum].ViewItemURLForNaturalSearch;
+                        let RELATED_INTEREST = "";
+                        if (searchMethod === "searchusername") { RELATED_INTEREST = searchTopics[i]; }
+                        console.log(GIFT_NAME);
+                        console.log(GIFT_IMAGE_URL);
+                        console.log(GIFT_URL_TO_GIFT);
+                        GIFT_INFO.push(GIFT_NAME, GIFT_IMAGE_URL, GIFT_URL_TO_GIFT, RELATED_INTEREST);
+                        giftSuggestions[GIFT_NAME] = GIFT_INFO;
+                    }
                 }
             }
         }
@@ -354,7 +371,7 @@ exports.giftapi = async (req, res) => {
         giftSuggestions['searchby'] = "Success"
         console.log(giftSuggestions);
         res.send([giftSuggestions]);
-        
+
         // let hardCode = {'taeyeon': [
         //                     "Taeyeon Purpose Postcard Set",
         //                     'https://thumbs2.ebaystatic.com/pict/1439383191738080_1.jpg',
@@ -384,7 +401,7 @@ exports.storeWLGift = async (req,res) => {
         const WL_Stored = await db.storeUserWishlistGift(req.session.user, req.body[0].WLGiftToStore)
         if(WL_Stored === "Success") {
             console.log("Server [SUCCESS]: Stored user wishlist gift in wishlist table")
-        res.send("Success")
+            res.send("Success")
         }
 
         else if(WL_Stored === "Warning") {
@@ -393,7 +410,7 @@ exports.storeWLGift = async (req,res) => {
 
         else if(WL_Stored === "Failure") {
             console.log("Server [FAILURE]: Storing the new wishlist gives us an error")
-        }   
+        }
     }
 
     catch(error) {
@@ -404,7 +421,7 @@ exports.storeWLGift = async (req,res) => {
 }
 
 exports.getwishlist = async (req,res) => {
-    try {   
+    try {
         console.log('--------')
         console.log(req.params.username);
         console.log('-------')
@@ -432,7 +449,7 @@ exports.deleteItem = async (req,res) => {
     catch {
         console.log("Fail");
         res.send("Failure");
-        
+
     };
 
 };

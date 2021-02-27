@@ -12,8 +12,8 @@
     align-items: center;
 
     /* put some space between navigation links */
-    width: 40%;
-    justify-content: space-between;
+    /* width: 40%;
+    justify-content: space-between; */
 
     /* put navbar on top of all pages */
     z-index: 100;
@@ -25,4 +25,9 @@
     cursor: pointer;
     font-size: 24px;
     font-family: 'Varela Round';
+}
+
+.link:hover, .activeLink {
+    color: rgb(41, 112, 250);
+    fill: rgb(41, 112, 250);
 }

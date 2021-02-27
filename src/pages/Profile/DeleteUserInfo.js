@@ -25,11 +25,15 @@ class DeleteUserInfo extends React.Component {
             // call get request to see changes to wishlist items
             axios.get(`http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/getwishlist/${this.state.username}`, [this.state])
             .then(res => {
-                console.log("Frontend [SUCCESS]: We have received the user's wishlist")
+                console.log('-------------------')
+                console.log("Frontend [SUCCESS][DeleteWLItem]: We have received the user's wishlist")
                 console.log(res.data)
                 console.log(res.data[0].gift)
-                this.setState({wlresponse: res.data[0].gift})
-                console.log(this.state.wlresponse)
+                console.log(this.state.item)
+                this.props.deleteWLItem(this.state.item)
+                //this.setState({wlresponse: res.data[0].gift})
+                //console.log(this.state.wlresponse)
+                console.log('-------------------')
             })
             .catch(err => {
                 console.log("Frontend [ERROR]: Retrieving wishlist was unsuccessful.")
