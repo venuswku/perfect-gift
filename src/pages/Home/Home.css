@@ -178,11 +178,13 @@
 .moreGiftInfo {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .interestInfo {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   text-align: center;
 }
 
@@ -198,26 +200,22 @@
   display: inline-block;
   padding: 0 10px 3px;
   border-radius: 15px;
-  background-color: #fbb4a5;
+  background-color: rgb(255, 252, 189);
   margin: 0;
 }
 
+.wishlistInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .giftHeartPic {
-  position: relative;
-  top: 0;
-  display: inline-block;
-  padding-top: 20px;
-  padding-left: 130px;
-  border-radius: 10px;
   margin: 0;
 }
 
 .giftWishlistText {
   font-size: 19px;
-  position: relative;
-  top: 0;
-  display: inline-block;
-  padding-top: 20px;
   padding-left: 10px;
   margin: 0;
 }
@@ -238,6 +236,7 @@
   position: relative;
   width: 80px;
   height: 80px;
+  padding-bottom: 3%;
 }
 .lds-roller div {
   animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;

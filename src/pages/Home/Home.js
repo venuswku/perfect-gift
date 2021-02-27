@@ -16,11 +16,11 @@ class Home extends React.Component {
 
     // Holds the state of the component Home.js
     this.state = {
-      value: "Search by...", // Value of the dropdown (e.g., gift, user/email)
+      value: "Select a way to search", // Value of the dropdown (e.g., gift, user/email)
       placeholderText: "Select a way to search", // Placeholder for search bar
       typedInput: "", // Contains the text that the user has typed
       user: "", // Name of the signed in user
-      usernameInterests: [], // array containing user's interests (used to search for gifts in eBay API)
+      usernameInterests: [], // array containing searched user's interests (used to compare if wishlist item is related to an interest)
       gifts: {}, // object containing gift suggestions (response returned by eBay API)
       wishlist: {}, // Object containing wishlist suggestions (reponse returned by eBay API)
       loading: false, // Determines if the search bar is loading a search request
@@ -63,7 +63,7 @@ class Home extends React.Component {
     try {
       // If the user didn't select a way to search
       // show reminder to tell user to  choose a way to search.
-      if (value === "Search by...") {
+      if (value === "Select a way to search") {
         this.setState({ loading: false, noSearchByMethodChosen: true });
 
         // if user didn't search anything in search bar, show reminder to input something in search bar as well
@@ -74,7 +74,7 @@ class Home extends React.Component {
       }
 
       // Else if the user has typed something and chose a method to search
-      else if (value !== "Search by..." && typedInput !== "") {
+      else if (value !== "Select a way to search" && typedInput !== "") {
         // Setting the loading state to true (causes the loading animation to show up)
         this.setState({
           loading: true,
@@ -90,7 +90,7 @@ class Home extends React.Component {
           console.log(`Frontend: We will fetch the interests for the username:"${typedInput}"`);
 
           // Detect if typed input is an email.
-          const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           const isEmail = re.test(typedInput);
 
           // If an email, lookup username before proceeding and set typed_input equal to username.
@@ -276,7 +276,7 @@ class Home extends React.Component {
     // http://svcs.ebay.com/MerchandisingService?OPERATION-NAME=getMostWatchedItems&SERVICE-NAME=MerchandisingService&SERVICE-VERSION=1.1.0&CONSUMER-ID=VenusKu-PerfectG-PRD-7b1a5ba56-51f91256&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&maxResults=5
   }
 
-  // Function to show interest based on wishlist item
+  // Function to show interest based on wishlist item.
   showInterest(wishlistItem) {
     console.log(`usernameinterests are: ${this.state.usernameInterests}`);
     console.log(`usernameinterests length is: ${this.state.usernameInterests[0]}`);
@@ -325,7 +325,8 @@ class Home extends React.Component {
         const picText = `picture of ${giftName}`;
         const giftLink = this.state.gifts[searchTopic][2];
         const giftItem = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
-        const relatedInterest = this.showInterest(giftItem);
+        let relatedInterest = "";
+        if (this.state.value === "Search by username/email") { relatedInterest = this.showInterest(giftItem); }
         console.log(`relatedInterest in questionnaire response is: ${relatedInterest}`);
 
         displayGiftSuggestions.push(
@@ -374,8 +375,10 @@ class Home extends React.Component {
                     <p className="giftInterestTopic">{relatedInterest}</p>
                   </div>
                 : null}
-                <Heart className="giftHeartPic"></Heart>
-                <div className="giftWishlistText grey gothic">Wishlist Item</div>
+                <div className="wishlistInfo">
+                  <Heart className="giftHeartPic"/>
+                  <div className="giftWishlistText grey gothic">Wishlist Item</div>
+                </div>
               </div>
             </div>
           </div>
