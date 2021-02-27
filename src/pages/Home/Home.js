@@ -226,6 +226,7 @@ class Home extends React.Component {
               }
             );
           } else {
+            //if given a username, search for gift suggestions with given username
             this.handleSearch(typedInput)
           }
         }
