@@ -34,14 +34,15 @@
 }
 
 /* text styling for navbar links */
-.link, .signOutLink {
+.link svg, .signOutLink {
   color: rgba(114, 214, 201, 1);
+  fill: rgb(114, 214, 201);
   text-decoration: none;
   font-size: 24px;
   font-family: "Varela Round";
 }
 
-.link:hover, .activeLink, .signOutLink:hover, .signOutLink:active {
+.link:hover svg, .activeLink svg, .signOutLink:hover, .signOutLink:active {
   color: rgb(41, 112, 250);
   fill: rgb(41, 112, 250);
 }

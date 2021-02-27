@@ -22,7 +22,6 @@ class HomeNavbar extends Component {
 
       // When the sign out button is clicked
       // This function is called which sends this.state to the server
-      // It sends the curren
       submitHandler = (e) => {
         e.preventDefault()
         console.log(this.state)
@@ -49,9 +48,9 @@ class HomeNavbar extends Component {
         <div className="homeNavbar">
             <NavLink to="/home" className="homeNavbarLogo"><PerfectGiftLogo/></NavLink>
             <div className="navigationLinks">
-                <NavLink to="/home" className="link" activeClassName="activeLink"><MagnifyGlass className="magnifyGlass"/> Find Gift</NavLink>
-                <NavLink to="/profile" className="link" activeClassName="activeLink">My Profile</NavLink>
-                <NavLink exact to="/" className="signOutLink" onClick={this.submitHandler}>Sign Out</NavLink>
+              <NavLink to="/home" className="link" activeClassName="activeLink"><MagnifyGlass className="magnifyGlass"/> Find Gift</NavLink>
+              <NavLink to="/profile" className="link" activeClassName="activeLink">My Profile</NavLink>
+              <NavLink exact to="/" className="signOutLink" onClick={this.submitHandler}>Sign Out</NavLink>
             </div>
         </div>
     );

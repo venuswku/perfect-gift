@@ -1,10 +1,10 @@
 import React from "react";
+import axios from 'axios';
 import "./Home.css";
 import Navbar from "../../navigation/HomeNavbar/HomeNavbar";
 import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
-import axios from 'axios';
 import NoUser from  "../../images/nouser.png";
 
 //axios.defaults.withCredentials = true; //Might need this
