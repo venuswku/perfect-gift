@@ -9,6 +9,7 @@ import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
 import { ReactComponent as ProfilePic } from '../../images/profile_pic.svg';
+import { ReactComponent as GiftBullet } from '../../images/gift_bullet_point.svg';
 
 axios.defaults.withCredentials = true;
 
@@ -54,6 +55,9 @@ class Profile extends Component {
         this.toggleQuestionnairePopup = this.toggleQuestionnairePopup.bind(this);
         this.handleInterestChange = this.handleInterestChange.bind(this);
         this.deleteInterest = this.deleteInterest.bind(this);
+        this.togglePopupWL = this.togglePopupWL.bind(this);
+        this.updateWL = this.updateWL.bind(this);
+        this.deleteWLItem = this.deleteWLItem.bind(this);
     }
 
     handleUsernameChange(e) {
@@ -63,7 +67,7 @@ class Profile extends Component {
     handleEdit() {
         this.setState({ mode: 'edit' });
     }
-
+    
     handleSave() {
         // don't save new username if it's empty or has a space in it (set it back to original username)
         if (this.state.newUsername === "" || this.state.newUsername.split(" ").length !== 1) {
@@ -87,6 +91,44 @@ class Profile extends Component {
             this.setState({ username: this.state.newUsername, mode: 'view' });
         }
     }
+
+    // show/hide textbox to edit username
+    renderInputField() {
+        if (this.state.mode === 'view') {
+            return this.state.username;
+        } else {
+            // display newUsername as user is editing it
+            return (
+                <span>
+                    <input
+                        onChange={this.handleUsernameChange}
+                        value={this.state.newUsername}
+                        className='editUsernameTextbox'
+                    />
+                </span>
+            );
+        }
+    }
+
+    // Shows edit or save & undo button for modifying username.
+    renderButton() {
+        if (this.state.mode === 'view') {
+            return (
+                <EditButton onClick={this.handleEdit} className="editUsernameButton"/>
+            );
+        } else {
+            return (
+                <div className="saveUndoButtons">
+                    <button onClick={this.handleSave} className="usernameButton">
+                        Save
+                    </button>
+                    <button onClick={this.handleSave} className="usernameButton">
+                        Undo
+                    </button>
+                </div>
+            );
+        }
+    }
     
     /* Opens or closes popup for editing questionnaire responses (Interests section). */
     toggleQuestionnairePopup() {
@@ -95,7 +137,8 @@ class Profile extends Component {
 
     /* Updates (in this.state) user's questionnaire responses in Interests section. */
     handleInterestChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+        var newInterest = (e.target.value).trim();     // get rid of any unnecessary whitespace characters
+        this.setState({ [e.target.name]: newInterest });
     }
 
     /* Deletes (empties) questionnaire response from Interests section. */
@@ -133,47 +176,32 @@ class Profile extends Component {
             console.log(error);
         });
     }
-    
+
     /* Opens or closes popup for adding to your wishlist (Wishlist secion). */
     togglePopupWL = () => {
-        this.setState({
-         showWishlistPopup: !this.state.showWishlistPopup
-        });
+        this.setState({ showWishlistPopup: !this.state.showWishlistPopup });
     };
 
-    // show/hide textbox to edit username
-    renderInputField() {
-        if (this.state.mode === 'view') {
-            return this.state.username;
-        } else {
-            // display newUsername as user is editing it
-            return (
-                <span>
-                    <input
-                        onChange={this.handleUsernameChange}
-                        value={this.state.newUsername}
-                        className='editTextbox'
-                    />
-                </span>
-            );
-        }
+    // Updates the wishlist to show new item
+    updateWL(new_item) {
+        //console.log(old_wlresponse)
+        let old_wlresponse = this.state.wlresponse
+        //console.log(old_wlresponse)
+        //let new_wlreponse = old_wlresponse.push(new_item)
+        old_wlresponse.push(new_item)
+        this.setState({wlresponse : old_wlresponse})
     }
 
-    //show edit/save button
-    renderButton() {
-        if (this.state.mode === 'view') {
-            return (
-                <EditButton onClick={this.handleEdit} className="editButton"/>
-            );
-        } else {
-            return (
-                <button onClick={this.handleSave}>
-                    Save
-                </button>
-            );
-        }
+    // Deletes an item from the wishlist in the frontend UI
+    deleteWLItem(removed_item) {
+        let old_wlresponse = this.state.wlresponse;
+        let new1 = old_wlresponse.filter(e => e !== removed_item);
+        console.log('..............................')
+        console.log(old_wlresponse)
+        console.log('..............................')
+        this.setState({wlresponse: new1})
     }
-
+    
     componentDidMount() {
         // Authenticate user when they reach profile page.
         axios.get('http://localhost:3010/v0/authenticate', this.state)
@@ -237,17 +265,6 @@ class Profile extends Component {
             }).catch(res => {
                 console.log(res)
             })
-
-        // Making a get request to get the user's wishlist
-        // axios.get('http://localhost:3010/v0/getUserWishlist', [this.state])
-        //     .then(res => {
-        //         console.log("Frontend: Gimme wishlist")
-        //         console.log(res.data)
-
-        //     }).catch(res => {
-        //         console.log("Frontend: There was an error when trying to get a user's wishlist")
-        //         console.log(res)
-        //     })
     }
 
     render() {
@@ -283,31 +300,27 @@ class Profile extends Component {
             return displayQResponses;
         });
 
-        // Setting up wishlist items
+        // Displays wishlist items.
         const wl_response = this.state.wlresponse;
         const displaywishlist = [];
         for (let i in wl_response) {
-                var color = '';
-                color = 'textBubble indoors';
-
-                displaywishlist.push(<span className={color} key={wl_response[i]}>{wl_response[i]} &nbsp; <DeleteUserInfo username={this.state.username} info={wl_response[i]} /></span>);
-            
+            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}&nbsp;&nbsp;<DeleteUserInfo username={this.state.username} info={wl_response[i]} deleteWLItem={this.deleteWLItem}/></span>);
         }
 
         return (
             <div className="Profile">
                 <Navbar />
                 {this.state.showQuestionnairePopup ? <EditInterestsPopup toggle={this.toggleQuestionnairePopup} userInfo={this.state} editInterest={this.handleInterestChange} /> : null} 
-                <header className='profileHeader'>
+                <div className='profileContent'>
                     {/* profile background + pic */}
-                    <div className='profileBackground'>
+                    <div className='profilePicBackground'>
                         <ProfilePic />
                     </div>
                     <div className='profileInfo'>
                         <div className='name'>{this.state.name}</div>
                         <br></br>
                         {/* username */}
-                        <div>
+                        <div className="usernameWrapper">
                             <span className='topicFont'>Username &nbsp; </span>
                             <span className="username">{this.renderInputField()} &nbsp; {this.renderButton()}</span>
                         </div>
@@ -320,29 +333,15 @@ class Profile extends Component {
                         </div>
                         <br></br>
                         {/* wishlist */}
-                        <div>
-                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} /> : null}
+                        <div className="wishlistWrapper">
                             <span className='topicFont'>Wishlist</span>
-                            {displaywishlist}
-                            <ul className='tab no-bullets'>
-                                {/* <li>hockey stick &nbsp; <DeleteButton /></li>
-                                <li>hockey shin guard &nbsp; <DeleteButton /></li>
-                                <li>Harry Potter wand &nbsp; <DeleteButton /></li>
-                                <li>hockey stick &nbsp; <DeleteButton /></li>
-                                <li>hockey shin guard &nbsp; <DeleteButton /></li>
-                                <li>Harry Potter wand &nbsp; <DeleteButton /></li>
-                                <li>hockey stick &nbsp; <DeleteButton /></li>
-                                <li>hockey shin guard &nbsp; <DeleteButton /></li>
-                                <li>Harry Potter wand &nbsp; <DeleteButton /></li> */}
-                            </ul>
-                            <br></br>
-                            <span className='tab'> <AddButton  onClick={this.togglePopupWL} /> Add to wishlist</span>
+                            <div className="list">{displaywishlist}</div>
+                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} updateWishlist={this.updateWL}/> : null}
+                            <span className='addToWishlist' onClick={this.togglePopupWL}><AddButton/>&nbsp;Add to wishlist</span>
                         </div>
-
                     </div>
-                </header>
+                </div>
             </div>
-
         );
     }
 }

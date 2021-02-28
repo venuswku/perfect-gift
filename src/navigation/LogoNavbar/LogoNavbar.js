@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './LogoNavbar.css';
 import { ReactComponent as PerfectGiftLogo } from '../../images/website_logo.svg';
 
 function LogoNavbar() {
     return (
         <div className="logoNavbar">
-            <Link to="/"><PerfectGiftLogo className="logoNavbarLogo" /></Link>
+            <NavLink exact to="/"><PerfectGiftLogo className="logoNavbarLogo"/></NavLink>
         </div>
     );
 }
