@@ -29,16 +29,16 @@ class EditQuestionnaireResponsesPopup extends Component {
     // closes popup and saves changes to questionnaire responses
     saveChanges = () => {
         this.props.toggle();
-        axios.put('http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/putqresponse/' + this.props.userInfo.username, [this.props.userInfo])
-        .then(response => {
-            console.log('EditInterestsPopup.js: success updating qr');
-            console.log(response);
-        })
-        .catch(error => {
-            console.log("EditInterestsPopup.js: failed updating qr");
-            console.log(this.props.userInfo);
-            console.log(error);
-        });
+        axios.put('https://backend-perfectgift.com/v0/putqresponse/' + this.props.userInfo.username, [this.props.userInfo])
+            .then(response => {
+                console.log('EditInterestsPopup.js: success updating qr');
+                console.log(response);
+            })
+            .catch(error => {
+                console.log("EditInterestsPopup.js: failed updating qr");
+                console.log(this.props.userInfo);
+                console.log(error);
+            });
     };
 
     render() {

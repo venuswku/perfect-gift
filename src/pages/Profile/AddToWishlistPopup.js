@@ -21,7 +21,7 @@ class AddToWishlistPopup extends React.Component {
     if (((/\S/.test(this.state.WLGiftToStore))) && (this.state.WLGiftToStore !== "")) {
       console.log("Frontend: We are going to request to store the wishlist gift.");
       event.preventDefault();
-      axios.post("http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com/v0/storeWLGift", [this.state])
+      axios.post("https://backend-perfectgift.com/v0/storeWLGift", [this.state])
       .then(response => {
         console.log('===================')
         console.log("Frontend: We have successfully stored the wishlist gift into our database.")
