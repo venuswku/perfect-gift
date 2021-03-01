@@ -17,24 +17,41 @@ class AddToWishlistPopup extends React.Component {
   }
 
   handleSubmit(event) {
-    // only add item to wishlist if it has at least 1 non-whitespace character
+    // Only add item to wishlist if it has at least 1 non-whitespace character.
     if (((/\S/.test(this.state.WLGiftToStore))) && (this.state.WLGiftToStore !== "")) {
-      console.log("Frontend: We are going to request to store the wishlist gift.");
-      event.preventDefault();
-      axios.post("https://backend-perfectgift.com/v0/storeWLGift", [this.state])
-      .then(response => {
-        console.log('===================')
-        console.log("Frontend: We have successfully stored the wishlist gift into our database.")
-        // console.log(this.props)
-        console.log(response)
-        // console.log(this.state.WLGiftToStore)
-        this.props.updateWishlist(this.state.WLGiftToStore);
-        console.log('===================')
-      }).catch(error => {
-        console.log("There was an error when trying to store the wishlist gift into the database")
-        console.log(error)
-      });
+      // Check if wishlist item is spelled correctly (make sure it's an actual item that can be searched on eBay).
+      axios.get(`https://backend-perfectgift.com/v0/giftapi/searchgift?searchTopics[]=${this.state.WLGiftToStore}`, this.state)
+        .then(res => {
+          console.log(res);
+          if (res.data !== "Failed") {
+            console.log(`AddToWishlistPopup.js: ${this.state.WLGiftToStore} is a searchable gift on eBay!`);
+            // Store wishlist item to backend.
+            console.log("Frontend: We are going to request to store the wishlist gift.");
+              event.preventDefault();
+              axios.post("https://backend-perfectgift.com/v0/storeWLGift", [this.state])
+              .then(response => {
+                console.log('===================')
+                console.log("Frontend: We have successfully stored the wishlist gift into our database.")
+                // console.log(this.props)
+                console.log(response)
+                // console.log(this.state.WLGiftToStore)
+                this.props.updateWishlist(this.state.WLGiftToStore);
+                console.log('===================')
+              }).catch(error => {
+                console.log("There was an error when trying to store the wishlist gift into the database")
+                console.log(error)
+              });
+          } else {
+            console.log(`AddToWishlistPopup.js: ${this.state.WLGiftToStore} is NOT searchable on eBay!`);
+            // tell user that wishlist item that they're trying to add isn't searchable
+            alert(`Hello ${this.props.firstname}! You are getting this error message because the item that you want to add to your wishlist isn't searchable on eBay. To fix this, you can either: 1. Check if there is a typo in one of your wishlist items. 2. Make sure the wishlist item or interest is the full name of the item or else eBay cannot find the item correctly.`);
+          }
+        }).catch(res => {
+          console.log("AddToWishlistPopup.js: call to eBay API failed");
+          console.log(res);
+        })
     }
+    // Close popup for adding a wishlist item.
     this.props.toggle();
   }
 

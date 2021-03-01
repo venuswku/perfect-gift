@@ -102,6 +102,10 @@ class Home extends React.Component {
                 if (res.data.length !== 0) {
                   typedInput = res.data[0]['username']
                   this.handleSearch(typedInput);
+                } else {
+                  //no username is found for the email give. stop loading animation and display error message
+                  console.log("couldn't find email. try again")
+                  this.setState({ loading: false, displayErrorMessage: true });
                 }
               }
             );
@@ -166,26 +170,29 @@ class Home extends React.Component {
         // qResponseTopic is the name of the column of qr table
         if (qResponseInterest !== '' && qResponseTopic !== "username") {
           tempUserInterests.push(qResponseInterest)
-          // This searches the ebay api. Add the qResponseTopic to this search query. DONE
+          // Add the qResponseTopic to this search query for better gift suggestions.
           if (qResponseTopic === 'outdooractivity') {
-            qResponseTopic = 'outdoors';
+            qResponseTopic = ' outdoors';
           }
           else if (qResponseTopic === 'musicgenre') {
-            qResponseTopic = 'music';
+            qResponseTopic = ' music';
           }
           else if (qResponseTopic === 'indooractivity') {
-            qResponseTopic = 'indoors';
+            qResponseTopic = ' indoors';
           }
           else if (qResponseTopic === 'movietvshow') {
-            qResponseTopic = 'television';
+            qResponseTopic = ' entertainment';
           }
           else if (qResponseTopic === 'videogame') {
-            qResponseTopic = 'video game';
+            qResponseTopic = ' video game';
           }
           else if (qResponseTopic === 'sportsteam') {
-            qResponseTopic = 'sports team';
+            qResponseTopic = ' sports team';
           }
-          queryString += `searchTopics[]=${qResponseInterest} ${qResponseTopic}&`
+          else {
+            qResponseTopic = '';
+          }
+          queryString += `searchTopics[]=${qResponseInterest}${qResponseTopic}&`
           // queryString += `searchTopics[]=${qResponseInterest}&`
         }
       }
@@ -194,7 +201,7 @@ class Home extends React.Component {
       queryString = queryString.slice(0, -1);
       console.log(queryString);
       serverPath += queryString;
-      //console.log(serverPath)
+      console.log(serverPath);
 
       // Calling axios based on the user's select choice (username or gift)
       console.log(`Frontend: The server we are connecting to is: ${serverPath}`);
@@ -282,8 +289,7 @@ class Home extends React.Component {
     console.log(`usernameinterests length is: ${this.state.usernameInterests[0]}`);
     for(var index = 0; index < this.state.usernameInterests.length; index++){
       if ((wishlistItem === undefined) || this.state.usernameInterests[index] === undefined) {
-        alert("Hello User! You are getting this error message because Ebay could not find the wishlist item you are looking for. To fix this, you can either: 1. Check if there is a typo in one of your wishlist items. 2. Make sure the wishlist item or interest is the full name of the item or else Ebay cannot find the item correctly.");
-        this.props.history.push('/profile');
+        alert(`Hello ${this.state.user}! You are getting this error message because eBay could not find gift suggestions for the searched user's interest or wishlist item. eBay cannot find the item correctly because: 1. There is a typo in one of their wishlist items. 2. Their wishlist item or interest is not the full name of the item.`);
         return;
       }
       if (this.state.usernameInterests[index].toUpperCase().includes(wishlistItem.toUpperCase()) || wishlistItem.toUpperCase().includes(this.state.usernameInterests[index].toUpperCase())) {
@@ -316,7 +322,6 @@ class Home extends React.Component {
 
     // display each gift returned by eBay API
     const displayGiftSuggestions = [];
-    if (this.state.gifts.length > 0) { displayGiftSuggestions.push(<div>Gift Suggestions</div>); }
     for (const searchTopic in this.state.gifts) {
       console.log(searchTopic)
       if (searchTopic !== "searchby" && searchTopic !== "typedInput") {
@@ -350,7 +355,6 @@ class Home extends React.Component {
 
     // display each wishlist item returned by eBay API
     const displayWishlistSuggestions = [];
-    if (this.state.wishlist.length > 0) { displayWishlistSuggestions.push(<div>Wishlist Suggestions</div>); }
     for (const gift in this.state.wishlist) {
       console.log(gift);
       if (gift !== "searchby" && gift !== "typedInput") {
@@ -434,7 +438,7 @@ class Home extends React.Component {
           {this.state.displayErrorMessage ? errorMessage_user : null}
           {displayGiftSuggestions}
           {displayWishlistSuggestions}
-          <div class="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
+          <div className="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
         </div>
       </div>
     );
