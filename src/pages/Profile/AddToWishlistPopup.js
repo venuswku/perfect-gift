@@ -44,7 +44,7 @@ class AddToWishlistPopup extends React.Component {
           } else {
             console.log(`AddToWishlistPopup.js: ${this.state.WLGiftToStore} is NOT searchable on eBay!`);
             // tell user that wishlist item that they're trying to add isn't searchable
-            alert(`Hello User! You are getting this error message because the item that you want to add to your wishlist isn't searchable on eBay. To fix this, you can either: 1. Check if there is a typo in one of your wishlist items. 2. Make sure the wishlist item or interest is the full name of the item or else eBay cannot find the item correctly.`);
+            alert(`Hello ${this.props.firstname}! You are getting this error message because the item that you want to add to your wishlist isn't searchable on eBay. To fix this, you can either: 1. Check if there is a typo in one of your wishlist items. 2. Make sure the wishlist item or interest is the full name of the item or else eBay cannot find the item correctly.`);
           }
         }).catch(res => {
           console.log("AddToWishlistPopup.js: call to eBay API failed");
