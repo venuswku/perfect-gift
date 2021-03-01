@@ -170,7 +170,7 @@ class Home extends React.Component {
         // qResponseTopic is the name of the column of qr table
         if (qResponseInterest !== '' && qResponseTopic !== "username") {
           tempUserInterests.push(qResponseInterest)
-          // This searches the ebay api. Add the qResponseTopic to this search query. DONE
+          // Add the qResponseTopic to this search query for better gift suggestions.
           if (qResponseTopic === 'outdooractivity') {
             qResponseTopic = 'outdoors';
           }
@@ -198,7 +198,7 @@ class Home extends React.Component {
       queryString = queryString.slice(0, -1);
       console.log(queryString);
       serverPath += queryString;
-      //console.log(serverPath)
+      console.log(serverPath);
 
       // Calling axios based on the user's select choice (username or gift)
       console.log(`Frontend: The server we are connecting to is: ${serverPath}`);
@@ -286,7 +286,7 @@ class Home extends React.Component {
     console.log(`usernameinterests length is: ${this.state.usernameInterests[0]}`);
     for(var index = 0; index < this.state.usernameInterests.length; index++){
       if ((wishlistItem === undefined) || this.state.usernameInterests[index] === undefined) {
-        alert("Hello User! You are getting this error message because Ebay could not find the wishlist item you are looking for. To fix this, you can either: 1. Check if there is a typo in one of your wishlist items. 2. Make sure the wishlist item or interest is the full name of the item or else Ebay cannot find the item correctly.");
+        alert("Hello User! You are getting this error message because eBay could not find the wishlist item you are looking for. To fix this, you can either: 1. Check if there is a typo in one of your wishlist items. 2. Make sure the wishlist item or interest is the full name of the item or else eBay cannot find the item correctly.");
         this.props.history.push('/profile');
         return;
       }
@@ -438,7 +438,7 @@ class Home extends React.Component {
           {this.state.displayErrorMessage ? errorMessage_user : null}
           {displayGiftSuggestions}
           {displayWishlistSuggestions}
-          <div class="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
+          <div className="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
         </div>
       </div>
     );
