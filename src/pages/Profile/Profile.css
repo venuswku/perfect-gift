@@ -62,7 +62,7 @@
   flex-direction: row;
 }
 
-.editUsernameButton {
+.editButton {
   cursor: pointer;
   background-color: transparent;
 }

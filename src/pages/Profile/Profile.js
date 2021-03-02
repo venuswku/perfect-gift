@@ -114,7 +114,7 @@ class Profile extends Component {
     renderButton() {
         if (this.state.mode === 'view') {
             return (
-                <EditButton onClick={this.handleEdit} className="editUsernameButton"/>
+                <EditButton onClick={this.handleEdit} className="editButton"/>
             );
         } else {
             return (
