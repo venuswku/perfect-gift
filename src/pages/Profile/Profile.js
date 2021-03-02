@@ -289,10 +289,7 @@ class Profile extends Component {
                     color = 'textBubble sports';
                 }
                 displayQResponses.push(
-                    <div onClick={() => this.deleteInterest(qTopic)}
-                         className={color}
-                         key={qTopic}
-                    >
+                    <div onClick={() => this.deleteInterest(qTopic)} className={color} key={qTopic}>
                         {qResponse} &nbsp;<DeleteButton className="delete"/>
                     </div>
                 );
