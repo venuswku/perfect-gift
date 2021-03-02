@@ -62,7 +62,7 @@
   flex-direction: row;
 }
 
-.editUsernameButton {
+.editButton {
   cursor: pointer;
   background-color: transparent;
 }
@@ -100,6 +100,7 @@
 .textBubble {
   display: flex;
   flex-direction: row;
+  align-items: center;
   font-size: 19px;
   font-family: 'Didact Gothic';
   border-radius: 25px; /* rounded edges */
@@ -126,12 +127,10 @@
 
 .delete {
   cursor: pointer;
-  width: 11px;
-  fill: #666363;
 }
 
 .delete:hover {
-  fill: #FF6060;
+  fill: red;
 }
 
 .wishlistWrapper {

@@ -114,7 +114,7 @@ class Profile extends Component {
     renderButton() {
         if (this.state.mode === 'view') {
             return (
-                <EditButton onClick={this.handleEdit} className="editUsernameButton"/>
+                <EditButton onClick={this.handleEdit} className="editButton"/>
             );
         } else {
             return (
@@ -214,8 +214,8 @@ class Profile extends Component {
                     this.setState({ name: userFullName });
                     this.setState({ username: res.data[0].username });
                     this.setState({ newUsername: res.data[0].username });
-                    this.setState({ firstName: res.data[0].firstname });
-                    this.setState({ lastName: res.data[0].lastname });
+                    this.setState({ firstname: res.data[0].firstname });
+                    this.setState({ lastname: res.data[0].lastname });
                     this.setState({ useremail: res.data[0].useremail });
                     
                     // Get user's questionnaire responses and store them in this.state.
@@ -289,10 +289,7 @@ class Profile extends Component {
                     color = 'textBubble sports';
                 }
                 displayQResponses.push(
-                    <div onClick={() => this.deleteInterest(qTopic)}
-                         className={color}
-                         key={qTopic}
-                    >
+                    <div onClick={() => this.deleteInterest(qTopic)} className={color} key={qTopic}>
                         {qResponse} &nbsp;<DeleteButton className="delete"/>
                     </div>
                 );
@@ -336,7 +333,7 @@ class Profile extends Component {
                         <div className="wishlistWrapper">
                             <span className='topicFont'>Wishlist</span>
                             <div className="list">{displaywishlist}</div>
-                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} updateWishlist={this.updateWL}/> : null}
+                            {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} firstname={this.state.firstname} updateWishlist={this.updateWL}/> : null}
                             <span className='addToWishlist' onClick={this.togglePopupWL}><AddButton/>&nbsp;Add to wishlist</span>
                         </div>
                     </div>
