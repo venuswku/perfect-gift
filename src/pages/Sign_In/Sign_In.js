@@ -72,7 +72,7 @@ class Sign_In extends Component {
                       <div className="wrongPassword">{this.state.wrongPassword}</div>
                         <div className="usernamePassword">
                             <label htmlFor='username' className='signInLabel'>Username</label>
-                            <input type='text' name='username' value={username} className='signInTextbox' onChange={this.changeHandler}></input>
+                            <input aria-label="userInput" type='text' name='username' value={username} className='signInTextbox' onChange={this.changeHandler}></input>
                         </div>
                         <div className="usernamePassword">
                             <label htmlFor='userpassword' className='signInLabel'>Password</label>
