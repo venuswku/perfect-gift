@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
+import './DeleteWishlistItem.css';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
-import './DeleteUserInfo.css'
 import axios from 'axios';
 
 class DeleteUserInfo extends React.Component {
