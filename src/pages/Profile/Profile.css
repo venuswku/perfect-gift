@@ -38,7 +38,7 @@
   text-align: center;
 }
 
-.usernameWrapper {
+.userInfoWrapper {
   display: flex;
   flex-direction: row;
 }
@@ -55,7 +55,7 @@
   width: 150px;
 }
 
-.username {
+.profileUserInfo {
   font-size: 19px;
   font-family: 'Didact Gothic';
   display: flex;
