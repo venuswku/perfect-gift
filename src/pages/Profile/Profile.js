@@ -317,9 +317,15 @@ class Profile extends Component {
                         <div className='name'>{this.state.name}</div>
                         <br></br>
                         {/* username */}
-                        <div className="usernameWrapper">
+                        <div className="userInfoWrapper">
                             <span className='topicFont'>Username &nbsp; </span>
-                            <span className="username">{this.renderInputField()} &nbsp; {this.renderButton()}</span>
+                            <span className="userInfo">{this.renderInputField()} &nbsp; {this.renderButton()}</span>
+                        </div>
+                        <br></br>
+                        {/* user's email */}
+                        <div className="userInfoWrapper">
+                            <span className='topicFont'>Email &nbsp; </span>
+                            <div className="userInfo">{this.state.useremail}</div>
                         </div>
                         <br></br>
                         {/* interests/questionnaire responses */}

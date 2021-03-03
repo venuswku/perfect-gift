@@ -254,13 +254,14 @@ exports.checkLogin = async (req, res) => {
         const firstName = userInfo[0]['firstname'];
         const lastName = userInfo[0]['lastname'];
         const userName = userInfo[0]['username'];
+        const userEmail = userInfo[0]['useremail'];
         console.log("bug below")
         console.log(firstName);
         console.log(lastName);
         console.log(userName);
         console.log("bug above")
         console.log(userInfo)
-        res.send([{ username: req.session.user, userpassword: "null", firstname: firstName, lastname: lastName, useremail: "null@null.com", avatar: "null", showavatar: false }])
+        res.send([{ username: req.session.user, userpassword: "null", firstname: firstName, lastname: lastName, useremail: userEmail, avatar: "null", showavatar: false }])
     } else {
         res.send([{ username: "", userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
     }
