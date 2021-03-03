@@ -406,10 +406,10 @@ class Home extends React.Component {
 
     return (
       <div className="Home">
-        {/* <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta> */}
-        <Navbar />
+        <Navbar/>
         <div className="homeContent">
-          {/*The greeting and picture*/}
+          
+          {/* Greeting and Picture */}
           <header className="homeGreeting">
             <p className="hello blue varela flexItem">Hello, {this.state.user}!</p>
             <p className="blue gothic flexItem">What gift are you looking for today?</p>
@@ -419,7 +419,7 @@ class Home extends React.Component {
               className="homePic"
             />
           </header>
-          {/*The searchbar and dropdown*/}
+          {/* Searchbar and Dropdown */}
           <form className="homeSearchbarBackground" onSubmit={this.handleSubmit}>
             <label className="dropDown smallText">
               <select
@@ -450,13 +450,13 @@ class Home extends React.Component {
             {this.state.noSearchbarInput ? <p className="reminder">Don't forget to input what you're searching in the search bar!</p> : null}
           </div>
           {this.state.displayNonExistentUserMessage ? errorMessage_user : null}
-          {/* Searched User's Profile */}
-          {this.state.displayViewProfileButton ? <button className="viewProfile" onClick={this.toggleProfilePopup}>View Profile</button> : null}
+          {/* View Searched User's Profile */}
+          {this.state.displayViewProfileButton ? <button className="viewProfile" onClick={this.toggleProfilePopup}>View {this.state.searchedUsername}&#39;s Profile</button> : null}
           {this.state.displayProfile ? <SearchedUserProfilePopup toggle={this.toggleProfilePopup} searchedUser={this.state.searchedUsername}/> : null}
-          {/* Gift suggestions */}
+          {/* Gift Suggestions */}
           {displayGiftSuggestions}
           {displayWishlistSuggestions}
-          <div className="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
+          <div className="loading">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
         </div>
       </div>
     );

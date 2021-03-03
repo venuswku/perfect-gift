@@ -132,9 +132,9 @@ class SearchedUserProfilePopup extends Component {
             <div className="SearchedUserProfilePopup">
                 <div className="profilePopupBackground" onClick={this.props.toggle}></div>
                 <div className="profilePopupContent">
-                    <span className="close" onClick={this.props.toggle}>&times;</span>
-                    <div className='profileInfo'>
-                        <div className='name'>{this.state.name}</div>
+                    <span className="closeProfilePopup" onClick={this.props.toggle}>&times;</span>
+                    <div className="popupProfileInfo">
+                        <div className="searchedUserName">{this.state.name}</div>
                         <br></br>
                         {/* username */}
                         <div className="userInfoWrapper">
