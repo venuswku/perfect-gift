@@ -9,7 +9,7 @@ import {
 import Landing from "../../pages/Landing/Landing";
 import { MemoryRouter } from "react-router-dom";
 
-// Test for Landing Page
+// Test for Landing Nav Bar
 test("LandingNavBar", () => {
   // Setup Testing Fixture
   render(
@@ -20,5 +20,33 @@ test("LandingNavBar", () => {
 
   // Test that Landing NavBar links to Sign In page
   expect(screen.getByText('Sign In').closest('a')).toHaveAttribute('href', '/sign_in')
+
+});
+
+// Test for Logo Nav Bar
+test("LogoNavBar", () => {
+  // // Setup Testing Fixture
+  // render(
+  //   <MemoryRouter>
+  //     <Landing />
+  //   </MemoryRouter>
+  // );
+
+  // // Test that Landing NavBar links to Sign In page
+  // expect(screen.getByText('Sign In').closest('a')).toHaveAttribute('href', '/sign_in')
+
+});
+
+// Test for Home Nav Bar
+test("HomeNavBar", () => {
+  // Setup Testing Fixture
+  // render(
+  //   <MemoryRouter>
+  //     <Landing />
+  //   </MemoryRouter>
+  // );
+
+  // // Test that Landing NavBar links to Sign In page
+  // expect(screen.getByText('Sign In').closest('a')).toHaveAttribute('href', '/sign_in')
 
 });
