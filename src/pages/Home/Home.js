@@ -2,6 +2,7 @@ import React from "react";
 import axios from 'axios';
 import "./Home.css";
 import Navbar from "../../navigation/HomeNavbar/HomeNavbar";
+import SearchedUserProfilePopup from "./SearchedUserProfilePopup";
 import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
@@ -14,7 +15,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
 
-    // Holds the state of the component Home.js
+    // Holds the state of the component Home.js.
     this.state = {
       value: "Select a way to search", // Value of the dropdown (e.g., gift, user/email)
       placeholderText: "Select a way to search", // Placeholder for search bar
@@ -26,18 +27,22 @@ class Home extends React.Component {
       loading: false, // Determines if the search bar is loading a search request
       noSearchByMethodChosen: false, // Determines whether to show reminder for user to choose a "Search by" method first
       noSearchbarInput: false, // Determines whether to show reminder for user to input something into searchbar
-      displayErrorMessage: false,
+      displayNonExistentUserMessage: false, // Determines whether to tell user that searched username/email doesn't belong to a user on Perfect Gift
+      displayViewProfileButton: false, // Shows button to allow user to open searched user's profile when its value is true
+      displayProfile: false,  // Determines whether to open or close popup for showing searched user's profile
+      searchedUsername: "", // If user searched by username/email, this contains the username of who they searched
     };
 
-    // Binding to make sure functions work
+    // Binding to make sure functions work.
     this.handleChange = this.handleChange.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.toggleProfilePopup = this.toggleProfilePopup.bind(this);
   }
 
   /*When the drop down is changed,
-  the placeholder and dropdown items are changed also */
+  the placeholder and dropdown items are changed also. */
   handleChange(event) {
     this.setState({
       placeholderText: event.target.value,
@@ -45,7 +50,7 @@ class Home extends React.Component {
     });
   }
 
-  // Updates the state (typedInput) everytime a user enters a key in the search bar
+  /* Updates the state (typedInput) everytime a user enters a key in the search bar. */
   handleUserInput(event) {
     console.log("The user has entered (or removed) more keys, updating state")
     this.setState({
@@ -53,11 +58,11 @@ class Home extends React.Component {
     })
   }
 
-  // When the user hits enter, it will send the typed string (typedInput) to the server
+  /* When the user hits enter, it will send the typed string (typedInput) to the server. */
   handleSubmit(event) {
     console.log("Frontend: We are going to submit your search request to the server")
     var { value, typedInput } = this.state
-    this.setState({displayErrorMessage: false});
+    this.setState({displayNonExistentUserMessage: false});
     let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
 
     try {
@@ -81,7 +86,8 @@ class Home extends React.Component {
           gifts: {},
           wishlist: {},
           noSearchByMethodChosen: false,
-          noSearchbarInput: false
+          noSearchbarInput: false,
+          displayViewProfileButton: false,
         });
         console.log(`Frontend: You have entered: "${typedInput}"`);
 
@@ -100,13 +106,19 @@ class Home extends React.Component {
               res => {
                 console.log(res.data.length)
                 if (res.data.length !== 0) {
-                  typedInput = res.data[0]['username']
+                  typedInput = res.data[0]['username'];
+                  this.setState({ searchedUsername: res.data[0]['username'] });
                   this.handleSearch(typedInput);
+                } else {
+                  //no username is found for the email give. stop loading animation and display error message
+                  console.log("couldn't find email. try again")
+                  this.setState({ loading: false, displayNonExistentUserMessage: true });
                 }
               }
             );
           } else {
             // Else search normally by username.
+            this.setState({ searchedUsername: typedInput });
             this.handleSearch(typedInput);
           }
         }
@@ -146,11 +158,11 @@ class Home extends React.Component {
     event.preventDefault();
   }
 
-  // Handles searching by either email or username.
+  /* Handles searching by either email or username. */
   handleSearch(typedInput){
     let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
     let queryString = '/searchusername?'; // Will be used to concatanate more queries and attach to the main string (serverPath)
-    this.setState({displayErrorMessage: false});
+    this.setState({displayNonExistentUserMessage: false});
 
     // GET Request to get the "typed user's" interests.
     axios.get(`http://localhost:3010/v0/getQResponse/${typedInput}`)
@@ -166,26 +178,29 @@ class Home extends React.Component {
         // qResponseTopic is the name of the column of qr table
         if (qResponseInterest !== '' && qResponseTopic !== "username") {
           tempUserInterests.push(qResponseInterest)
-          // This searches the ebay api. Add the qResponseTopic to this search query. DONE
+          // Add the qResponseTopic to this search query for better gift suggestions.
           if (qResponseTopic === 'outdooractivity') {
-            qResponseTopic = 'outdoors';
+            qResponseTopic = ' outdoors';
           }
           else if (qResponseTopic === 'musicgenre') {
-            qResponseTopic = 'music';
+            qResponseTopic = ' music';
           }
           else if (qResponseTopic === 'indooractivity') {
-            qResponseTopic = 'indoors';
+            qResponseTopic = ' indoors';
           }
           else if (qResponseTopic === 'movietvshow') {
-            qResponseTopic = 'television';
+            qResponseTopic = ' entertainment';
           }
           else if (qResponseTopic === 'videogame') {
-            qResponseTopic = 'video game';
+            qResponseTopic = ' video game';
           }
           else if (qResponseTopic === 'sportsteam') {
-            qResponseTopic = 'sports team';
+            qResponseTopic = ' sports team';
           }
-          queryString += `searchTopics[]=${qResponseInterest} ${qResponseTopic}&`
+          else {
+            qResponseTopic = '';
+          }
+          queryString += `searchTopics[]=${qResponseInterest}${qResponseTopic}&`
           // queryString += `searchTopics[]=${qResponseInterest}&`
         }
       }
@@ -194,16 +209,17 @@ class Home extends React.Component {
       queryString = queryString.slice(0, -1);
       console.log(queryString);
       serverPath += queryString;
-      //console.log(serverPath)
+      console.log(serverPath);
 
-      // Calling axios based on the user's select choice (username or gift)
+      // Calling axios based on the user's select choice (username/email or gift)
       console.log(`Frontend: The server we are connecting to is: ${serverPath}`);
       axios.get(serverPath, this.state)
         .then(res => {
-          console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`);
+          console.log(`Frontend: We have received interest gift suggestions for "${typedInput}"`);
           console.log(res);
           // store returned gift suggestions in our state
-          this.setState({ gifts: res.data[0], loading: false });
+          // & display button for allowing user to see the searched user's profile
+          this.setState({ gifts: res.data[0], loading: false, displayViewProfileButton: true });
 
           //The user is searching using the "Search by wishlist" option
           console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist");
@@ -231,19 +247,19 @@ class Home extends React.Component {
               console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
               axios.get(serverPath, this.state)
                 .then(res => {
-                  console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`);
+                  console.log(`Frontend: We have received a wishlist gift suggestion for "${typedInput}"`);
                   console.log(res);
                   // store returned gift suggestions in our state
                   this.setState({ wishlist: res.data[0] });
                   console.log(serverPath);
                 }).catch(res => {
                   console.log(res);
-                  console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE");
+                  console.log("Frontend: There was an error when trying to search the gift");
                 })
             }).catch(res => {
               console.log(res);
               console.log("Frontend: There was an error when trying to search the user you typed.");
-              this.setState({ displayErrorMessage : true, loading: false });
+              this.setState({ displayNonExistentUserMessage : true, loading: false });
             })
 
         }).catch(res => {
@@ -253,9 +269,14 @@ class Home extends React.Component {
     }).catch(res => {
       console.log(res);
       console.log("Frontend: There was an error when trying to search the user you typed.");
-      this.setState({ displayErrorMessage : true, loading: false });
+      this.setState({ displayNonExistentUserMessage : true, loading: false });
     });
   }
+
+  /* Opens or closes popup for showing searched user's profile. */
+  toggleProfilePopup() {
+    this.setState({ displayProfile: !this.state.displayProfile });
+  };
 
   componentDidMount() {
     console.log(this.state)
@@ -282,8 +303,7 @@ class Home extends React.Component {
     console.log(`usernameinterests length is: ${this.state.usernameInterests[0]}`);
     for(var index = 0; index < this.state.usernameInterests.length; index++){
       if ((wishlistItem === undefined) || this.state.usernameInterests[index] === undefined) {
-        alert("Hello User! You are getting this error message because Ebay could not find the wishlist item you are looking for. To fix this, you can either: 1. Check if there is a typo in one of your wishlist items. 2. Make sure the wishlist item or interest is the full name of the item or else Ebay cannot find the item correctly.");
-        this.props.history.push('/profile');
+        alert(`Hello ${this.state.user}! You are getting this error message because eBay could not find gift suggestions for the searched user's interest or wishlist item. eBay cannot find the item correctly because: 1. There is a typo in one of their wishlist items. 2. Their wishlist item or interest is not the full name of the item.`);
         return;
       }
       if (this.state.usernameInterests[index].toUpperCase().includes(wishlistItem.toUpperCase()) || wishlistItem.toUpperCase().includes(this.state.usernameInterests[index].toUpperCase())) {
@@ -316,7 +336,6 @@ class Home extends React.Component {
 
     // display each gift returned by eBay API
     const displayGiftSuggestions = [];
-    if (this.state.gifts.length > 0) { displayGiftSuggestions.push(<div>Gift Suggestions</div>); }
     for (const searchTopic in this.state.gifts) {
       console.log(searchTopic)
       if (searchTopic !== "searchby" && searchTopic !== "typedInput") {
@@ -350,7 +369,6 @@ class Home extends React.Component {
 
     // display each wishlist item returned by eBay API
     const displayWishlistSuggestions = [];
-    if (this.state.wishlist.length > 0) { displayWishlistSuggestions.push(<div>Wishlist Suggestions</div>); }
     for (const gift in this.state.wishlist) {
       console.log(gift);
       if (gift !== "searchby" && gift !== "typedInput") {
@@ -388,10 +406,10 @@ class Home extends React.Component {
 
     return (
       <div className="Home">
-        {/* <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta> */}
-        <Navbar />
+        <Navbar/>
         <div className="homeContent">
-          {/*The greeting and picture*/}
+          
+          {/* Greeting and Picture */}
           <header className="homeGreeting">
             <p className="hello blue varela flexItem">Hello, {this.state.user}!</p>
             <p className="blue gothic flexItem">What gift are you looking for today?</p>
@@ -401,7 +419,7 @@ class Home extends React.Component {
               className="homePic"
             />
           </header>
-          {/*The searchbar and dropdown*/}
+          {/* Searchbar and Dropdown */}
           <form className="homeSearchbarBackground" onSubmit={this.handleSubmit}>
             <label className="dropDown smallText">
               <select
@@ -426,15 +444,19 @@ class Home extends React.Component {
               <div className="searchButton" onClick={this.handleSubmit}><MagnifyGlass className="searchButtonIcon"/></div>
             </div>
           </form>
+          {/* Error Messages */}
           <div className="reminderWrapper">
             {this.state.noSearchByMethodChosen ? <p className="reminder">Please select a way to search in the dropdown menu above.</p> : null}
             {this.state.noSearchbarInput ? <p className="reminder">Don't forget to input what you're searching in the search bar!</p> : null}
           </div>
-          {/*The gift suggestion*/}
-          {this.state.displayErrorMessage ? errorMessage_user : null}
+          {this.state.displayNonExistentUserMessage ? errorMessage_user : null}
+          {/* View Searched User's Profile */}
+          {this.state.displayViewProfileButton ? <button className="viewProfile" onClick={this.toggleProfilePopup}>View {this.state.searchedUsername}&#39;s Profile</button> : null}
+          {this.state.displayProfile ? <SearchedUserProfilePopup toggle={this.toggleProfilePopup} searchedUser={this.state.searchedUsername}/> : null}
+          {/* Gift Suggestions */}
           {displayGiftSuggestions}
           {displayWishlistSuggestions}
-          <div class="lds-roller">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
+          <div className="loading">{this.state.loading ? <><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></>: null}</div>
         </div>
       </div>
     );

@@ -37,15 +37,16 @@ class Sign_In extends Component {
   // This is called when you press the submit button,
   // The react app sends all its data in this.state to the server
   // and the server can process it however it wants to (query, store, etc)
-  submitHandler = (e) => {
+  submitHandler = async (e) => {
     e.preventDefault()
     console.log(this.state)
     console.log("We are submitting a user to either authenticate, or create")
-    axios.post('http://localhost:3010/v0/authenticate', this.state)
+    await axios.post('http://localhost:3010/v0/authenticate', this.state)
     .then(response => {
       if (response.data === ""){
         console.log("Not Logged In")
-        this.setState({wrongPassword: "The password/username combination you entered is incorrect. Try again."})
+        this.setState({ wrongPassword: "The password/username combination you entered is incorrect. Try again." })
+        console.log(this.state)
       }
       else {
         console.log("Logged In")
@@ -72,7 +73,7 @@ class Sign_In extends Component {
                       <div className="wrongPassword">{this.state.wrongPassword}</div>
                         <div className="usernamePassword">
                             <label htmlFor='username' className='signInLabel'>Username</label>
-                            <input type='text' name='username' value={username} className='signInTextbox' onChange={this.changeHandler}></input>
+                            <input aria-label="userInput" type='text' name='username' value={username} className='signInTextbox' onChange={this.changeHandler}></input>
                         </div>
                         <div className="usernamePassword">
                             <label htmlFor='userpassword' className='signInLabel'>Password</label>

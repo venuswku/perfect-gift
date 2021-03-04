@@ -13,10 +13,9 @@
 
 .wishlistItemInputBox {
   font-size: 17px;
+  height: 19px;
   font-family: 'Didact Gothic';
-  padding: 0;
   text-align: center;
-  background: white;
   margin: 1% 0;
 }
 
