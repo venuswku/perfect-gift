@@ -73,7 +73,7 @@ class AddToWishlistPopup extends React.Component {
         <p className="addWishlistItemTitle">What item would you want as a gift?</p>
         <form onSubmit={this.handleSubmit}>
           <span>
-            <input type="text" value ={this.WLGiftToStore} placeholder="Enter wishlist item here" onChange={this.handleChange} className="wishlistItemInputBox"/>
+            <input type="text" value={this.WLGiftToStore} placeholder="Enter wishlist item here" onChange={this.handleChange} className="wishlistItemInputBox"/>
           </span>
         </form>
         <div className="saveUndoButtons">

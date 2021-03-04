@@ -10,12 +10,15 @@ test("the best flavor is grapefruit", () => {
   expect(hello()).toBe(9);
 });
 
-//Login
-//Home -> user
+
+// Home -> user
 // Home-> email
 // Home-> gift
 // Profile-> Changing name
 // Profile -> adding username
 // Profile -> Edit questionnaire
-// Landing -> Button clicks
 // Creating account -> sign in page
+
+//Done
+// Landing -> Button clicks
+// Login

@@ -42,6 +42,7 @@ class Create_Account extends Component {
             sport: '',
             sportsteam: '',
             exercise: '',
+            createdAccount: false,
         }
     }
 
@@ -62,38 +63,38 @@ class Create_Account extends Component {
                 .then(response => {
                     if (response.data.length === 0) {
                         axios.get(('https://backend-perfectgift.com/v0/giftuser?useremail=' + this.state.useremail).replace('@', '%40'))
-                        .then(response => {
-                            if (response.data.length === 0) {
-                                axios.post('https://backend-perfectgift.com/v0/postuser', [this.state])
-                                    .then(response => {
-                                        console.log('Create_Account.js: success for users');
-                                        console.log(response);
-                                        axios.post('https://backend-perfectgift.com/v0/postqresponse', [this.state])
-                                            .then(response => {
-                                                console.log('Create_Account.js: success for qr');
-                                                console.log(response);
-                                                axios.post('https://backend-perfectgift.com/v0/authenticate', this.state)
-                                                    .then(response => {
-                                                        console.log("Logged in after creating account");
-                                                        console.log(response);
-                                                        this.props.history.push('/profile');
-                                                    })
-                                                    .catch(error => {
-                                                        console.log("Create_Account.js: failed signing in for first time");
-                                                        console.log(error);
-                                                    });
-                                            })
-                                            .catch(error => {
-                                                console.log("Create_Account.js: failed for qr");
-                                                console.log(this.state);
-                                                console.log(error);
-                                            });
-                                    })
-                                    .catch(error => {
-                                        console.log("Create_Account.js: failed for users");
-                                        console.log(this.state);
-                                        console.log(error);
-                                    });
+                            .then(response => {
+                                if (response.data.length === 0) {
+                                    axios.post('https://backend-perfectgift.com/v0/postuser', [this.state])
+                                        .then(response => {
+                                            console.log('Create_Account.js: success for users');
+                                            console.log(response);
+                                            axios.post('https://backend-perfectgift.com/v0/postqresponse', [this.state])
+                                                .then(response => {
+                                                    console.log('Create_Account.js: success for qr');
+                                                    console.log(response);
+                                                    axios.post('https://backend-perfectgift.com/v0/authenticate', this.state)
+                                                        .then(response => {
+                                                            console.log("Logged in after creating account");
+                                                            console.log(response);
+                                                            this.props.history.push('/profile');
+                                                        })
+                                                        .catch(error => {
+                                                            console.log("Create_Account.js: failed signing in for first time");
+                                                            console.log(error);
+                                                        });
+                                                })
+                                                .catch(error => {
+                                                    console.log("Create_Account.js: failed for qr");
+                                                    console.log(this.state);
+                                                    console.log(error);
+                                                });
+                                        })
+                                        .catch(error => {
+                                            console.log("Create_Account.js: failed for users");
+                                            console.log(this.state);
+                                            console.log(error);
+                                        });
                                 } else {
                                     window.alert("Email already taken!")
                                 }
@@ -120,7 +121,7 @@ class Create_Account extends Component {
                             <tbody>
                                 <tr>
                                     <td><label htmlFor='firstname' className='blueText'>First Name</label></td>
-                                    <td><input type='text' onChange={this.changeHandler} value={firstname} name='firstname' className='caTextbox' required /></td>
+                                    <td><input aria-label="firstname" type='text' onChange={this.changeHandler} value={firstname} name='firstname' className='caTextbox' required /></td>
                                 </tr>
                                 <tr>
                                     <td><label htmlFor='lastname' className='blueText'>Last Name</label></td>
@@ -283,7 +284,7 @@ class Create_Account extends Component {
                             </tbody>
                         </table>
                         <p className="createAccountInstructions">It's completely okay if you don't have answers for all of them! <br /> Empty fields won't be included in your profile, and you can edit these interests anytime!</p><br />
-                        <input type='submit' value='Continue' className='createAccountSubmit' ></input>
+                        <input aria-label='submitButton' type='submit' value='Continue' className='createAccountSubmit' ></input>
                     </form>
                 </div>
             </div>

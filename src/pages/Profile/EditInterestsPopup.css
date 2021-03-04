@@ -29,6 +29,7 @@
 .close {
     font-size: 50px;
     font-family: "Varela Round";
+    color: #666363;
     cursor: pointer;
     position: fixed;
     top: 8%;
