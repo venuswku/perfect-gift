@@ -175,6 +175,10 @@
   text-decoration: none;
 }
 
+.error {
+  margin-bottom: 5px;
+}
+
 .moreGiftInfo {
   display: flex;
   flex-direction: row;
