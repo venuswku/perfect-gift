@@ -61,7 +61,7 @@ class Home extends React.Component {
   /* When the user hits enter, it will send the typed string (typedInput) to the server. */
   handleSubmit(event) {
     console.log("Frontend: We are going to submit your search request to the server")
-    var { value, typedInput } = this.state
+    var { value, typedInput } = this.state;
     this.setState({displayNonExistentUserMessage: false});
     let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
 
@@ -123,7 +123,7 @@ class Home extends React.Component {
           }
         }
 
-        // If the user is either using the "Search for a gift" or "Search by..." option
+        // If the user is using the "Search for a gift" option
         else if (value === "Search for a gift") {
           console.log(`Frontend: We will search for the gift:"${typedInput}"`);
           serverPath += `/searchgift?searchTopics[]=${typedInput}`;
@@ -138,7 +138,7 @@ class Home extends React.Component {
               this.setState({ gifts: res.data[0], loading: false });
             }).catch(res => {
               console.log(res);
-              console.log("Frontend: There was an error when trying to search the gift: INSERT GIFT HERE");
+              console.log("Frontend: There was an error when trying to search the gift");
             })
         }
       }
@@ -298,12 +298,12 @@ class Home extends React.Component {
   }
 
   // Function to show interest based on wishlist item.
-  showInterest(wishlistItem) {
+  findInterest(wishlistItem) {
     console.log(`usernameinterests are: ${this.state.usernameInterests}`);
     console.log(`usernameinterests length is: ${this.state.usernameInterests[0]}`);
     for(var index = 0; index < this.state.usernameInterests.length; index++){
       if ((wishlistItem === undefined) || this.state.usernameInterests[index] === undefined) {
-        alert(`Hello ${this.state.user}! You are getting this error message because eBay could not find gift suggestions for the searched user's interest or wishlist item. eBay cannot find the item correctly because: 1. There is a typo in one of their wishlist items. 2. Their wishlist item or interest is not the full name of the item.`);
+        alert(`Hello ${this.state.user}! You are getting this error message because eBay could not find gift suggestions for the searched user's wishlist item. eBay cannot find the item correctly because: 1. There is a typo in one of their wishlist items. 2. Their wishlist item is not the full name of the item.`);
         return;
       }
       if (this.state.usernameInterests[index].toUpperCase().includes(wishlistItem.toUpperCase()) || wishlistItem.toUpperCase().includes(this.state.usernameInterests[index].toUpperCase())) {
@@ -314,7 +314,7 @@ class Home extends React.Component {
     return "";
   }
 
-  /*Renders the whole Home page */
+  /* Renders the whole Home page. */
   render() {
     const { placeholderText, typedInput } = this.state;
 
@@ -334,7 +334,7 @@ class Home extends React.Component {
         </div>
       </div>;
 
-    // display each gift returned by eBay API
+    /* If searching by gift or based on a user's interests, display each gift suggestion returned by the eBay API. */
     const displayGiftSuggestions = [];
     for (const searchTopic in this.state.gifts) {
       console.log(searchTopic)
@@ -343,9 +343,7 @@ class Home extends React.Component {
         const giftPic = this.state.gifts[searchTopic][1];
         const picText = `picture of ${giftName}`;
         const giftLink = this.state.gifts[searchTopic][2];
-        const giftItem = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
-        let relatedInterest = "";
-        if (this.state.value === "Search by username/email") { relatedInterest = this.showInterest(giftItem); }
+        const relatedInterest = this.state.gifts[searchTopic][3];   // empty string if user searched by gift
         console.log(`relatedInterest in questionnaire response is: ${relatedInterest}`);
 
         displayGiftSuggestions.push(
@@ -367,7 +365,7 @@ class Home extends React.Component {
       }
     }
 
-    // display each wishlist item returned by eBay API
+    /* Displays each wishlist item's gift suggestion returned by the eBay API. */
     const displayWishlistSuggestions = [];
     for (const gift in this.state.wishlist) {
       console.log(gift);
@@ -377,8 +375,8 @@ class Home extends React.Component {
         const picText = `picture of ${giftName}`;
         const giftLink = this.state.wishlist[gift][2];
         const wishlistItem = this.state.wishlist[gift][3];
-        // call showInterest to figure out if gift suggestion matches an interest (returns a string containing the interest, else empty string if there's no related interest)
-        const relatedInterest = this.showInterest(wishlistItem);
+        // call findInterest to figure out if gift suggestion matches an interest (returns a string containing the interest, else empty string if there's no related interest)
+        const relatedInterest = this.findInterest(wishlistItem);
         console.log(`relatedInterest in wishlists is: ${relatedInterest}`);
 
         displayWishlistSuggestions.push(
