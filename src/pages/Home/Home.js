@@ -6,7 +6,8 @@ import SearchedUserProfilePopup from "./SearchedUserProfilePopup";
 import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
-import NoUser from  "../../images/nouser.png";
+import NoUser from  "../../images/no_user.png";
+import NoGift from "../../images/no_gift.png";
 
 //axios.defaults.withCredentials = true; //Might need this
 class Home extends React.Component {
@@ -63,7 +64,15 @@ class Home extends React.Component {
   handleSearchbarSubmit(event) {
     console.log("Frontend: We are going to submit your search request to the server")
     var { value, typedInput } = this.state;
-    this.setState({ displayNonExistentUserMessage: false, displayBadGiftSearchMessage: false });
+    this.setState({
+      gifts: {},
+      wishlist: {},
+      noSearchByMethodChosen: false,
+      noSearchbarInput: false,
+      displayNonExistentUserMessage: false,
+      displayBadGiftSearchMessage: false,
+      displayViewProfileButton: false,
+    });
     let serverPath = "http://localhost:3010/v0/giftapi"; // Main URL of where we will send our this.state info to
 
     try {
@@ -82,14 +91,7 @@ class Home extends React.Component {
       // Else if the user has typed something and chose a method to search
       else if (value !== "Select a way to search" && typedInput !== "") {
         // Setting the loading state to true (causes the loading animation to show up)
-        this.setState({
-          loading: true,
-          gifts: {},
-          wishlist: {},
-          noSearchByMethodChosen: false,
-          noSearchbarInput: false,
-          displayViewProfileButton: false,
-        });
+        this.setState({ loading: true });
         console.log(`Frontend: You have entered: "${typedInput}"`);
 
         // If the user is searching for a username
@@ -347,7 +349,7 @@ class Home extends React.Component {
     <div className="giftSuggestionWrapper">
       <div className="giftImgBackground">
         <img
-          src={NoUser}
+          src={NoGift}
           alt="no gift suggestion"
           className="homePic"
         />
