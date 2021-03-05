@@ -30,4 +30,4 @@ The FrontEnd (client-side) code is continuosly deployed whenever a commit is pus
 
 The Backend (server) code is manually deployed by uploading the zipped contents of ./perfect-gift/backend/ (do not include the node_modules folder) to AWS Elastic Beanstalk. (<https://aws.amazon.com/elasticbeanstalk/>)
 
-While perfect-gift project is deployed via AWS, it can be reached at <aws-frontend.d3i4pwwftbhh87.amplifyapp.com/>
+While perfect-gift project is deployed via AWS, it can be reached at (<https://aws-frontend.d3i4pwwftbhh87.amplifyapp.com/>)
