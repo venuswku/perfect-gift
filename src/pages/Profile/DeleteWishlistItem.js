@@ -11,12 +11,12 @@ class DeleteUserInfo extends React.Component {
             username: this.props.username,
             item: this.props.info
         };
-        this.DeleteSpecifiedInfo = this.DeleteSpecifiedInfo.bind(this);
-
+        this.deleteSpecifiedInfo = this.deleteSpecifiedInfo.bind(this);
+        
     };
 
     // Generic way to delete from a specified table (Wishlist, Questionnaire, etc)
-    DeleteSpecifiedInfo() {
+    deleteSpecifiedInfo() {
         console.log(this.state)
         let serverPath = `https://backend-perfectgift.com/v0/deleteItem/?item=${this.state.item}`
         console.log(`We are going to delete ${this.props.info}`)
@@ -50,11 +50,10 @@ class DeleteUserInfo extends React.Component {
 
     };
 
-
     render() {
         return (
             <Fragment>
-                <DeleteButton className="shake" onClick={this.DeleteSpecifiedInfo} />
+                <DeleteButton className="shake" onClick ={this.deleteSpecifiedInfo} />
             </Fragment>
         );
     };

@@ -6,7 +6,8 @@ import SearchedUserProfilePopup from "./SearchedUserProfilePopup";
 import HomeImage from "../../images/create_account_image.png";
 import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
-import NoUser from  "../../images/nouser.png";
+import NoUser from  "../../images/no_user.png";
+import NoGift from "../../images/no_gift.png";
 
 //axios.defaults.withCredentials = true; //Might need this
 class Home extends React.Component {
@@ -35,16 +36,16 @@ class Home extends React.Component {
     };
 
     // Binding to make sure functions work.
-    this.handleChange = this.handleChange.bind(this);
-    this.handleUserInput = this.handleUserInput.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
+    this.handleDropdownChange = this.handleDropdownChange.bind(this);
+    this.handleSearchbarInput = this.handleSearchbarInput.bind(this);
+    this.handleSearchbarSubmit = this.handleSearchbarSubmit.bind(this);
+    this.handleUsernameSearch = this.handleUsernameSearch.bind(this);
     this.toggleProfilePopup = this.toggleProfilePopup.bind(this);
   }
 
-  /*When the drop down is changed,
+  /* When the drop down is changed,
   the placeholder and dropdown items are changed also. */
-  handleChange(event) {
+  handleDropdownChange(event) {
     this.setState({
       placeholderText: event.target.value,
       value: event.target.value
@@ -52,7 +53,7 @@ class Home extends React.Component {
   }
 
   /* Updates the state (typedInput) everytime a user enters a key in the search bar. */
-  handleUserInput(event) {
+  handleSearchbarInput(event) {
     console.log("The user has entered (or removed) more keys, updating state")
     this.setState({
       typedInput: event.target.value
@@ -60,10 +61,18 @@ class Home extends React.Component {
   }
 
   /* When the user hits enter, it will send the typed string (typedInput) to the server. */
-  handleSubmit(event) {
+  handleSearchbarSubmit(event) {
     console.log("Frontend: We are going to submit your search request to the server")
     var { value, typedInput } = this.state;
-    this.setState({ displayNonExistentUserMessage: false, displayBadGiftSearchMessage: false });
+    this.setState({
+      gifts: {},
+      wishlist: {},
+      noSearchByMethodChosen: false,
+      noSearchbarInput: false,
+      displayNonExistentUserMessage: false,
+      displayBadGiftSearchMessage: false,
+      displayViewProfileButton: false,
+    });
     let serverPath = "https://backend-perfectgift.com/v0/giftapi"; // Main URL of where we will send our this.state info to
 
     try {
@@ -82,14 +91,7 @@ class Home extends React.Component {
       // Else if the user has typed something and chose a method to search
       else if (value !== "Select a way to search" && typedInput !== "") {
         // Setting the loading state to true (causes the loading animation to show up)
-        this.setState({
-          loading: true,
-          gifts: {},
-          wishlist: {},
-          noSearchByMethodChosen: false,
-          noSearchbarInput: false,
-          displayViewProfileButton: false,
-        });
+        this.setState({ loading: true });
         console.log(`Frontend: You have entered: "${typedInput}"`);
 
         // If the user is searching for a username
@@ -109,7 +111,7 @@ class Home extends React.Component {
                 if (res.data.length !== 0) {
                   typedInput = res.data[0]['username'];
                   this.setState({ searchedUsername: res.data[0]['username'] });
-                  this.handleSearch(typedInput);
+                  this.handleUsernameSearch(typedInput);
                 } else {
                   //no username is found for the email give. stop loading animation and display error message
                   console.log("couldn't find email. try again")
@@ -120,7 +122,7 @@ class Home extends React.Component {
           } else {
             // Else search normally by username.
             this.setState({ searchedUsername: typedInput });
-            this.handleSearch(typedInput);
+            this.handleUsernameSearch(typedInput);
           }
         }
 
@@ -167,7 +169,7 @@ class Home extends React.Component {
   }
 
   /* Handles searching by either email or username. */
-  handleSearch(typedInput){
+  handleUsernameSearch(typedInput){
     let serverPath = "https://backend-perfectgift.com/v0/giftapi"; // Main URL of where we will send our this.state info to
     let queryString = '/searchusername?'; // Will be used to concatanate more queries and attach to the main string (serverPath)
     this.setState({ displayNonExistentUserMessage: false });
@@ -347,7 +349,7 @@ class Home extends React.Component {
     <div className="giftSuggestionWrapper">
       <div className="giftImgBackground">
         <img
-          src={NoUser}
+          src={NoGift}
           alt="no gift suggestion"
           className="homePic"
         />
@@ -444,11 +446,11 @@ class Home extends React.Component {
             />
           </header>
           {/* Searchbar and Dropdown */}
-          <form className="homeSearchbarBackground" onSubmit={this.handleSubmit}>
+          <form className="homeSearchbarBackground" onSubmit={this.handleSearchbarSubmit}>
             <label className="dropDown smallText">
               <select
                 value={this.state.value}
-                onChange={this.handleChange}
+                onChange={this.handleDropdownChange}
                 className="homeSelect varela blue"
               >
                 <option className="homeOption" value="Select a way to search">&nbsp;Search by...</option>
@@ -463,9 +465,9 @@ class Home extends React.Component {
                 placeholder={placeholderText}
                 value={typedInput}
                 name="typedInput"
-                onChange={this.handleUserInput}
+                onChange={this.handleSearchbarInput}
               />
-              <div className="searchButton" onClick={this.handleSubmit}><MagnifyGlass className="searchButtonIcon" /></div>
+              <div className="searchButton" onClick={this.handleSearchbarSubmit}><MagnifyGlass className="searchButtonIcon"/></div>
             </div>
           </form>
           {/* Error Messages */}
