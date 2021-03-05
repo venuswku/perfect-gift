@@ -4,7 +4,7 @@ import './Profile.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
 import EditInterestsPopup from './EditInterestsPopup';
 import AddToWishlistPopup from './AddToWishlistPopup';
-import DeleteUserInfo from './DeleteUserInfo';
+import DeleteWishlistItem from './DeleteWishlistItem';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
@@ -301,7 +301,7 @@ class Profile extends Component {
         const wl_response = this.state.wlresponse;
         const displaywishlist = [];
         for (let i in wl_response) {
-            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}&nbsp;&nbsp;<DeleteUserInfo username={this.state.username} info={wl_response[i]} deleteWLItem={this.deleteWLItem}/></span>);
+            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}&nbsp;&nbsp;<DeleteWishlistItem username={this.state.username} info={wl_response[i]} deleteWLItem={this.deleteWLItem}/></span>);
         }
 
         return (
@@ -317,9 +317,15 @@ class Profile extends Component {
                         <div className='name'>{this.state.name}</div>
                         <br></br>
                         {/* username */}
-                        <div className="usernameWrapper">
+                        <div className="userInfoWrapper">
                             <span className='topicFont'>Username &nbsp; </span>
-                            <span className="username">{this.renderInputField()} &nbsp; {this.renderButton()}</span>
+                            <span className="profileUserInfo">{this.renderInputField()} &nbsp; {this.renderButton()}</span>
+                        </div>
+                        <br></br>
+                        {/* user's email */}
+                        <div className="userInfoWrapper">
+                            <span className='topicFont'>Email &nbsp; </span>
+                            <div className="profileUserInfo">{this.state.useremail}</div>
                         </div>
                         <br></br>
                         {/* interests/questionnaire responses */}

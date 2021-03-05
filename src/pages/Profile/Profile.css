@@ -38,13 +38,14 @@
   text-align: center;
 }
 
-.usernameWrapper {
+.userInfoWrapper {
   display: flex;
   flex-direction: row;
 }
 
 .topicFont {
   font-size: 22px;
+  font-family: 'Varela Round';
   color: rgba(41, 112, 250, 1);
 }
 
@@ -55,7 +56,7 @@
   width: 150px;
 }
 
-.username {
+.profileUserInfo {
   font-size: 19px;
   font-family: 'Didact Gothic';
   display: flex;

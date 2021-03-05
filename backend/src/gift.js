@@ -254,13 +254,14 @@ exports.checkLogin = async (req, res) => {
         const firstName = userInfo[0]['firstname'];
         const lastName = userInfo[0]['lastname'];
         const userName = userInfo[0]['username'];
+        const userEmail = userInfo[0]['useremail'];
         console.log("bug below")
         console.log(firstName);
         console.log(lastName);
         console.log(userName);
         console.log("bug above")
         console.log(userInfo)
-        res.send([{ username: req.session.user, userpassword: "null", firstname: firstName, lastname: lastName, useremail: "null@null.com", avatar: "null", showavatar: false }])
+        res.send([{ username: req.session.user, userpassword: "null", firstname: firstName, lastname: lastName, useremail: userEmail, avatar: "null", showavatar: false }])
     } else {
         res.send([{ username: "", userpassword: "null", firstname: "null", lastname: "null", useremail: "null@null.com", avatar: "null", showavatar: false }])
     }
@@ -354,7 +355,17 @@ exports.giftapi = async (req, res) => {
                         const GIFT_IMAGE_URL = response.data.Item[itemNum].GalleryURL;
                         const GIFT_URL_TO_GIFT = response.data.Item[itemNum].ViewItemURLForNaturalSearch;
                         let RELATED_INTEREST = "";
-                        if (searchMethod === "searchusername") { RELATED_INTEREST = searchTopics[i]; }
+                        if (searchMethod === "searchusername") {
+                            // remove the following additional keywords that we added to the search query (for better gift suggestions) -> seen in handleSearch() in Home.js
+                            // so that RELATED_INTEREST contains exactly what user put for their interests
+                            if ((searchTopics[i]).includes(' outdoors')) { RELATED_INTEREST = (searchTopics[i]).replace(' outdoors', ''); }
+                            else if ((searchTopics[i]).includes(' music')) { RELATED_INTEREST = (searchTopics[i]).replace(' music', ''); }
+                            else if ((searchTopics[i]).includes(' indoors')) { RELATED_INTEREST = (searchTopics[i]).replace(' indoors', ''); }
+                            else if ((searchTopics[i]).includes(' entertainment')) { RELATED_INTEREST = (searchTopics[i]).replace(' entertainment', ''); }
+                            else if ((searchTopics[i]).includes(' video game')) { RELATED_INTEREST = (searchTopics[i]).replace(' video game', ''); }
+                            else if ((searchTopics[i]).includes(' sports team')) { RELATED_INTEREST = (searchTopics[i]).replace(' sports team', ''); }
+                            else { RELATED_INTEREST = searchTopics[i]; }
+                        }
                         console.log(GIFT_NAME);
                         console.log(GIFT_IMAGE_URL);
                         console.log(GIFT_URL_TO_GIFT);
@@ -366,9 +377,9 @@ exports.giftapi = async (req, res) => {
         }
 
         // Sending all the data back to our frontend
-        console.log("Server [SUCCESS]: We have processed all your gift suggestions")
-        giftSuggestions['typedInput'] = "Success"
-        giftSuggestions['searchby'] = "Success"
+        console.log("Server [SUCCESS]: We have processed all your gift suggestions");
+        giftSuggestions['searchby'] = searchMethod;
+        giftSuggestions['typedInput'] = "Success";
         console.log(giftSuggestions);
         res.send([giftSuggestions]);
 
