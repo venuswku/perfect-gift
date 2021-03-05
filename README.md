@@ -24,7 +24,7 @@ followed by:
 
 This starts the backend server for the project.
 
-## AWS
+## Amazon Web Services
 
 The FrontEnd (client-side) code is continuosly deployed whenever a commit is pushed to the AWS-frontend branch via AWS amplify (<https://aws.amazon.com/amplify/>)
 
