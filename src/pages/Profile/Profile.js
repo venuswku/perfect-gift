@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './Profile.css';
 import Navbar from '../../navigation/HomeNavbar/HomeNavbar';
-import EditInterestsPopup from './EditInterestsPopup';
-import AddToWishlistPopup from './AddToWishlistPopup';
-import DeleteWishlistItem from './DeleteWishlistItem';
+import EditInterestsPopup from './EditInterestsPopup/EditInterestsPopup';
+import AddToWishlistPopup from './AddToWishlistPopup/AddToWishlistPopup';
+import DeleteWishlistItem from './DeleteWishlistItem/DeleteWishlistItem';
 import { ReactComponent as EditButton } from '../../images/edit_button.svg';
 import { ReactComponent as DeleteButton } from '../../images/delete_button.svg';
 import { ReactComponent as AddButton } from '../../images/add_button.svg';
@@ -296,12 +296,18 @@ class Profile extends Component {
             }
             return displayQResponses;
         });
+        if (displayQResponses.length === 0) {
+            displayQResponses.push(<div className="profileUserInfo">No interests were added yet! Add your interest(s) by clicking the edit/pencil button above.</div>);
+        }
 
         // Displays wishlist items.
         const wl_response = this.state.wlresponse;
-        const displaywishlist = [];
+        const displayWishlist = [];
         for (let i in wl_response) {
-            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}&nbsp;&nbsp;<DeleteWishlistItem username={this.state.username} info={wl_response[i]} deleteWLItem={this.deleteWLItem}/></span>);
+            displayWishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}&nbsp;&nbsp;<DeleteWishlistItem username={this.state.username} info={wl_response[i]} deleteWLItem={this.deleteWLItem}/></span>);
+        }
+        if (displayWishlist.length === 0) {
+            displayWishlist.push(<div className="profileUserInfo">No wishlist items were added yet!</div>);
         }
 
         return (
@@ -338,7 +344,7 @@ class Profile extends Component {
                         {/* wishlist */}
                         <div className="wishlistWrapper">
                             <span className='topicFont'>Wishlist</span>
-                            <div className="list">{displaywishlist}</div>
+                            <div className="list">{displayWishlist}</div>
                             {this.state.showWishlistPopup ? <AddToWishlistPopup toggle={this.togglePopupWL} username={this.state.username} firstname={this.state.firstname} updateWishlist={this.updateWL}/> : null}
                             <span className='addToWishlist' onClick={this.togglePopupWL}><AddButton/>&nbsp;Add to wishlist</span>
                         </div>

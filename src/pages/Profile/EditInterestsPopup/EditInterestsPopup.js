@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import './EditInterestsPopup.css';
-import '../../pages/Create_Account/Create_Account.css';
+import '../../../pages/Create_Account/Create_Account.css';
 
-import indoors1Image from '../../images/create_account_indoors1.svg';
-import indoors2Image from '../../images/create_account_indoors2.svg';
+import indoors1Image from '../../../images/create_account_indoors1.svg';
+import indoors2Image from '../../../images/create_account_indoors2.svg';
 
-import outdoors1Image from '../../images/create_account_outdoors1.svg';
-import outdoors2Image from '../../images/create_account_outdoors2.svg';
+import outdoors1Image from '../../../images/create_account_outdoors1.svg';
+import outdoors2Image from '../../../images/create_account_outdoors2.svg';
 
-import sports1Image from '../../images/create_account_sports1.svg';
-import sports2Image from '../../images/create_account_sports2.svg';
+import sports1Image from '../../../images/create_account_sports1.svg';
+import sports2Image from '../../../images/create_account_sports2.svg';
 
-import music1Image from '../../images/create_account_music1.svg';
-import music2Image from '../../images/create_account_music2.svg';
+import music1Image from '../../../images/create_account_music1.svg';
+import music2Image from '../../../images/create_account_music2.svg';
 
 class EditQuestionnaireResponsesPopup extends Component {
     
