@@ -118,7 +118,6 @@ class SearchedUserProfilePopup extends Component {
                     <div className={color} key={qTopic}>{qResponse}</div>
                 );
             }
-            
             return displayQResponses;
         });
         if (displayQResponses.length === 0) {
