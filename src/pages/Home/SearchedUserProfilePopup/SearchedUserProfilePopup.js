@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './SearchedUserProfilePopup.css';
-import '../Profile/Profile.css';
-import { ReactComponent as GiftBullet } from '../../images/gift_bullet_point.svg';
+import '../../Profile/Profile.css';
+import { ReactComponent as GiftBullet } from '../../../images/gift_bullet_point.svg';
 
 class SearchedUserProfilePopup extends Component {
     
