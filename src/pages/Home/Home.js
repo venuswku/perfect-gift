@@ -434,7 +434,6 @@ class Home extends React.Component {
       <div className="Home">
         <Navbar/>
         <div className="homeContent">
-          
           {/* Greeting and Picture */}
           <header className="homeGreeting">
             <p className="hello blue varela flexItem">Hello, {this.state.user}!</p>
