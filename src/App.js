@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import Sign_In from "./pages/Sign_In/Sign_In";
 import Profile from "./pages/Profile/Profile";
 import Create_Account from "./pages/Create_Account/Create_Account";
+import { ReactComponent as LogoSticker } from "./images/logo_sticker.svg";
 
 const App = () => (
   <div className="App">
@@ -16,6 +17,11 @@ const App = () => (
       <Route exact path='/profile' component={Profile}></Route>
       <Route exact path='/home' component={Home}></Route>
     </Switch>
+    <div className="deviceMessage">
+      <LogoSticker className="logoSticker"/><br/>
+      Sorry, our current release of Perfect Gift is not compatible with tablets or mobile devices.<br/>
+      Please use a laptop or desktop to access our website!
+    </div>
   </div>
 );
 
