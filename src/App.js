@@ -19,7 +19,7 @@ const App = () => (
     </Switch>
     <div className="deviceMessage">
       <LogoSticker className="logoSticker"/><br/>
-      Sorry, our current release of Perfect Gift is not compatible with tablets or mobile devices.<br/>
+      Sorry, our current release of Perfect Gift is not compatible with tablets, mobile devices, or smaller windows.<br/>
       Please use a laptop or desktop to access our website!
     </div>
   </div>
