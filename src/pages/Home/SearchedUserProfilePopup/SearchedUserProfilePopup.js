@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './SearchedUserProfilePopup.css';
-import '../Profile/Profile.css';
-import { ReactComponent as GiftBullet } from '../../images/gift_bullet_point.svg';
+import '../../Profile/Profile.css';
+import { ReactComponent as GiftBullet } from '../../../images/gift_bullet_point.svg';
 
 class SearchedUserProfilePopup extends Component {
     
@@ -120,12 +120,18 @@ class SearchedUserProfilePopup extends Component {
             }
             return displayQResponses;
         });
+        if (displayQResponses.length === 0) {
+            displayQResponses.push(<div className="profileUserInfo">No interests were indicated.</div>);
+        }
 
         // Displays wishlist items.
         const wl_response = this.state.wlresponse;
-        const displaywishlist = [];
+        const displayWishlist = [];
         for (let i in wl_response) {
-            displaywishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}</span>);
+            displayWishlist.push(<span className="wishlistItem" key={wl_response[i]}><GiftBullet/>&nbsp;&nbsp;{wl_response[i]}</span>);
+        }
+        if (displayWishlist.length === 0) {
+            displayWishlist.push(<div className="profileUserInfo">No items were added to this user's wishlist.</div>);
         }
         
         return (
@@ -157,7 +163,7 @@ class SearchedUserProfilePopup extends Component {
                         {/* wishlist */}
                         <div className="wishlistWrapper">
                             <span className='topicFont'>Wishlist</span>
-                            <div className="list">{displaywishlist}</div>
+                            <div className="list">{displayWishlist}</div>
                         </div>
                     </div>
                 </div>

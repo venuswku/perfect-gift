@@ -1,12 +1,6 @@
-/*Has the background color from Figma */
 .Home {
   min-height: 100vh;
   padding-bottom: 7%; /* 3% from top padding + 3% bottom padding from homeContent class */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-
   background: linear-gradient(
       113.82deg,
       #ffddb5 -4%,
@@ -20,11 +14,12 @@
   position: relative;
   top: 100px;
   width: 800px;
-  text-align: center;
   padding: 3% 0;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 /*Using flexbox to space items in a column */

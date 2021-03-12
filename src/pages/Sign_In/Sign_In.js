@@ -18,7 +18,7 @@ class Sign_In extends Component {
         }
       }
 
-      //Used to make sure text box value is the same as the one in this.state
+  // Used to make sure text box value is the same as the one in this.state
   changeHandler = (e) =>{
     this.setState({[e.target.name]: e.target.value})
   }

@@ -163,8 +163,6 @@ exports.authenticateUser = async (username) => {
     return allUsers;
 };
 
-console.log(`Connected to database '${process.env.POSTGRES_DB}'`);
-
 exports.storeUserWishlistGift = async (username, WLG) => {
     try {
         console.log(username,WLG)

@@ -107,6 +107,7 @@ class Create_Account extends Component {
             window.alert("Passwords do not match!")
         }
     };
+    
     render() {
         // store input values locally into the following values
         const { firstname, lastname, username, useremail, userpassword, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise } = this.state;
