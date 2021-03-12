@@ -151,19 +151,19 @@ exports.putQResponse = async (req, res) => {
         const username = req.params.username;
         console.log("gift.js: putQResponse for", username);
 
-        // get user changes from Edit Interests Popup
-        const outdooractivity = req.body[0].outdooractivity;
-        const place = req.body[0].place;
-        const store = req.body[0].store;
-        const musicgenre = req.body[0].musicgenre;
-        const musician = req.body[0].musician;
-        const band = req.body[0].band;
-        const indooractivity = req.body[0].indooractivity;
-        const movietvshow = req.body[0].movietvshow;
-        const videogame = req.body[0].videogame;
-        const sport = req.body[0].sport;
-        const sportsteam = req.body[0].sportsteam;
-        const exercise = req.body[0].exercise;
+        // get user changes from Edit Interests Popup -> trim() to get rid of any unnecessary whitespace characters
+        const outdooractivity = req.body[0].outdooractivity.trim();
+        const place = req.body[0].place.trim();
+        const store = req.body[0].store.trim();
+        const musicgenre = req.body[0].musicgenre.trim();
+        const musician = req.body[0].musician.trim();
+        const band = req.body[0].band.trim();
+        const indooractivity = req.body[0].indooractivity.trim();
+        const movietvshow = req.body[0].movietvshow.trim();
+        const videogame = req.body[0].videogame.trim();
+        const sport = req.body[0].sport.trim();
+        const sportsteam = req.body[0].sportsteam.trim();
+        const exercise = req.body[0].exercise.trim();
 
         // update questionnaire responses in questionnareresponses table
         const update = await db.updateQResponses(username, outdooractivity, place, store, musicgenre, musician, band, indooractivity, movietvshow, videogame, sport, sportsteam, exercise);
