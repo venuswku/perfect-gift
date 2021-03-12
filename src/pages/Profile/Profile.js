@@ -137,8 +137,7 @@ class Profile extends Component {
 
     /* Updates (in this.state) user's questionnaire responses in Interests section. */
     handleInterestChange = (e) => {
-        var newInterest = (e.target.value).trim();     // get rid of any unnecessary whitespace characters
-        this.setState({ [e.target.name]: newInterest });
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     /* Deletes (empties) questionnaire response from Interests section. */
