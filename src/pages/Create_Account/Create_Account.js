@@ -18,10 +18,10 @@ import music2Image from '../../images/create_account_music2.svg';
 
 class Create_Account extends Component {
 
-    // hold the variables
     constructor(props) {
         super(props)
-        // items that we will be able to send to the server
+
+        /* States that we will send to the server after user finishes creating an account. */
         this.state = {
             firstname: '',
             lastname: '',
@@ -46,13 +46,13 @@ class Create_Account extends Component {
         }
     }
 
-    // if changed, update appropriately
+    /* If an interest is changed, update its corresponding state appropriately. */
     changeHandler = (e) => {
         var interest = (e.target.value).trim();     // get rid of any unnecessary whitespace characters
         this.setState({ [e.target.name]: interest });
     }
 
-    // createAccount is called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend
+    /* Called when user clicks "Continue" at bottom of page -> sends questionnaire responses to backend */
     createAccount = (e) => {
         e.preventDefault()
         console.log('Create_Account.js: createAccount called');
@@ -118,6 +118,7 @@ class Create_Account extends Component {
                     <p className="createAccountTitle">Create an Account</p>
                     <img className='createAccountPic' src={createAccountImage} alt="the gifters" />
                     <form className="userForm" onSubmit={this.createAccount}>
+                        {/* New User's Sign In Info */}
                         <table className="userInfo">
                             <tbody>
                                 <tr>
@@ -151,6 +152,7 @@ class Create_Account extends Component {
                         <table className="questionnaire">
                             <tbody>
                                 <tr>
+                                    {/* Indoor Interests */}
                                     <td>
                                         <div className='interest indoors'>
                                             <p className="blueText interestTopic"><img src={indoors1Image} alt="food" />&nbsp;&nbsp;Indoors&nbsp;&nbsp;<img src={indoors2Image} alt="camera" /></p>
@@ -183,6 +185,7 @@ class Create_Account extends Component {
                                             <br />
                                         </div>
                                     </td>
+                                    {/* Outdoor Interests */}
                                     <td>
                                         <div className='interest outdoors'>
                                             <p className="blueText interestTopic"><img src={outdoors1Image} alt="amusement park" />&nbsp;&nbsp;Outdoors&nbsp;&nbsp;<img src={outdoors2Image} alt="tree" /></p>
@@ -216,6 +219,7 @@ class Create_Account extends Component {
                                         </div>
                                     </td>
                                 </tr>
+                                {/* Sports Interests */}
                                 <tr>
                                     <td>
                                         <div className='interest sports'>
@@ -249,6 +253,7 @@ class Create_Account extends Component {
                                             <br />
                                         </div>
                                     </td>
+                                    {/* Music Interests */}
                                     <td>
                                         <div className='interest music'>
                                             <p className="blueText interestTopic"><img src={music1Image} alt="keyboard" />&nbsp;&nbsp;Music&nbsp;&nbsp;<img src={music2Image} alt="music note" /></p>
