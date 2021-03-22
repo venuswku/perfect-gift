@@ -29,7 +29,7 @@ class EditQuestionnaireResponsesPopup extends Component {
     // closes popup and saves changes to questionnaire responses
     saveChanges = () => {
         this.props.toggle();
-        axios.put('https://backend-perfectgift.com/v0/putqresponse/' + this.props.userInfo.username, [this.props.userInfo])
+        axios.put('https://perfectgift-backend.herokuapp.com/v0/putqresponse/' + this.props.userInfo.username, [this.props.userInfo])
             .then(response => {
                 console.log('EditInterestsPopup.js: success updating qr');
                 console.log(response);

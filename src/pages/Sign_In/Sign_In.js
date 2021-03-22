@@ -25,7 +25,7 @@ class Sign_In extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://backend-perfectgift.com/v0/authenticate', this.state) // port of the server
+    axios.get('https://perfectgift-backend.herokuapp.com/v0/authenticate', this.state) // port of the server
     .then(res => {
         if (res.data[0].username !== ""){
           this.props.history.push('/home')
@@ -41,7 +41,7 @@ class Sign_In extends Component {
     e.preventDefault()
     console.log(this.state)
     console.log("We are submitting a user to either authenticate, or create")
-    await axios.post('https://backend-perfectgift.com/v0/authenticate', this.state)
+    await axios.post('https://perfectgift-backend.herokuapp.com/v0/authenticate', this.state)
     .then(response => {
       if (response.data === ""){
         console.log("Not Logged In")

@@ -5,7 +5,7 @@ info:
   title: Perfect Gift Backend
 
 servers:
-  - url: https://backend-perfectgift.com
+  - url: https://perfectgift-backend.herokuapp.com
 
 paths:
   /v0/deleteItem:

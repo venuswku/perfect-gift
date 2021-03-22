@@ -20,7 +20,7 @@ class AddToWishlistPopup extends React.Component {
     // Only add item to wishlist if it has at least 1 non-whitespace character.
     if (((/\S/.test(this.state.WLGiftToStore))) && (this.state.WLGiftToStore !== "")) {
       // Check if wishlist item is spelled correctly (make sure it's an actual item that can be searched on eBay).
-      axios.get(`https://backend-perfectgift.com/v0/giftapi/searchgift?searchTopics[]=${this.state.WLGiftToStore}`, this.state)
+      axios.get(`https://perfectgift-backend.herokuapp.com/v0/giftapi/searchgift?searchTopics[]=${this.state.WLGiftToStore}`, this.state)
         .then(res => {
           console.log(res);
           if (res.data !== "Failed") {
@@ -28,7 +28,7 @@ class AddToWishlistPopup extends React.Component {
             // Store wishlist item to backend.
             console.log("Frontend: We are going to request to store the wishlist gift.");
               event.preventDefault();
-              axios.post("https://backend-perfectgift.com/v0/storeWLGift", [this.state])
+              axios.post("https://perfectgift-backend.herokuapp.com/v0/storeWLGift", [this.state])
               .then(response => {
                 console.log('===================')
                 console.log("Frontend: We have successfully stored the wishlist gift into our database.")

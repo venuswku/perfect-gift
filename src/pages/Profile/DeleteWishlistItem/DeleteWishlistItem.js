@@ -18,12 +18,12 @@ class DeleteUserInfo extends React.Component {
     // Generic way to delete from a specified table (Wishlist, Questionnaire, etc)
     deleteSpecifiedInfo() {
         console.log(this.state)
-        let serverPath = `https://backend-perfectgift.com/v0/deleteItem/?item=${this.state.item}`
+        let serverPath = `https://perfectgift-backend.herokuapp.com/v0/deleteItem/?item=${this.state.item}`
         console.log(`We are going to delete ${this.props.info}`)
         axios.delete(serverPath, [this.state]).then(res => {
             console.log("Frontend [SUCCESS]: Deleted Wishlist item")
             // call get request to see changes to wishlist items
-            axios.get(`https://backend-perfectgift.com/v0/getwishlist/${this.state.username}`, [this.state])
+            axios.get(`https://perfectgift-backend.herokuapp.com/v0/getwishlist/${this.state.username}`, [this.state])
             .then(res => {
                 console.log('-------------------')
                 console.log("Frontend [SUCCESS][DeleteWLItem]: We have received the user's wishlist")
