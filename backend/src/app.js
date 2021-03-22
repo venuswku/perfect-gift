@@ -13,12 +13,12 @@ const session = require('express-session');
 const proxy = require('http-proxy-middleware');
 const PORT = process.env.PORT || 3010; // use either the host env var port (PORT) provided by Heroku or the local port (3010) on your machine
 
-// start server and listen on specified port
+// Start server and listen on specified port.
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`) // confirm server is running and log port to the console
 }) 
 
-// Used for letting the frontend communicate with the server
+// Used for letting the frontend communicate with the server.
 app.use(cors({
   origin: ["http://localhost:3000"],
   methods: ["GET", "POST", "PUT", "DELETE"],
