@@ -5,7 +5,7 @@ info:
   title: Perfect Gift Backend
 
 servers:
-  - url: http://localhost:3010
+  - url: http://perfectgiftbackend-env-5.eba-qzfmpbfn.us-west-1.elasticbeanstalk.com
 
 paths:
   /v0/deleteItem:

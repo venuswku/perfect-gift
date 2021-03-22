@@ -20,8 +20,10 @@ app.listen(PORT, () => {
 
 // Used for letting the frontend communicate with the server.
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  // 
+  origin: "https://aws-frontend.d3i4pwwftbhh87.amplifyapp.com", 
   methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
   credentials: true,
 }));
 
@@ -33,8 +35,11 @@ app.use(session({
   secret: "hello",
   resave: false,
   saveUninitialized: false,
+  proxy: true,
   cookie : {
-    expires : 1800000 // Found out that this is in miliseconds. Currently rounds about 30 minutes.
+    //expires : 1800000, // Found out that this is in miliseconds. Currently rounds about 30 minutes.
+    sameSite: 'none',
+    secure: true
   }
 }))
 

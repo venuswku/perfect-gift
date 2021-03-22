@@ -1,6 +1,7 @@
 {
   "name": "perfect-gift",
   "version": "0.1.0",
+  "engines": { "node" : "12.16.1" },
   "devDependencies": {
     "docker-compose": "^0.23.5",
     "eslint": "^7.12.1",
@@ -10,6 +11,7 @@
     "supertest": "^6.0.1"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
@@ -27,7 +29,7 @@
   },
   "proxy": "https://open.api.ebay.com",
   "scripts": {
-    "start": "nodemon src/server.js",
+    "start": "node src/server.js",
     "lint": "./node_modules/.bin/eslint . --ext .js"
   }
 }
