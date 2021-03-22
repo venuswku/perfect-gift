@@ -54,9 +54,8 @@ app.use(
   }),
 );
 
-
-app.get('/', function (req, res) {
-  res.send('hello world')
+app.get('/', (req, res) => { // send a get request to root directory ('/' is this file (app.js))
+  res.send("Welcome to Perfect Gift!");
 })
 
 app.get('/v0/giftuser', gift.getUsers);

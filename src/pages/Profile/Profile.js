@@ -18,7 +18,7 @@ class Profile extends Component {
     constructor(props) {
         super(props);
 
-        // Here we initialize our components state
+        /* Initialize Profile component's state. */
         this.state = {
             showForm: false,
             name: '',
@@ -29,6 +29,7 @@ class Profile extends Component {
             useremail: '',
             mode: 'view',
 
+            // order of the following questionnaire topics is how they're ordered on profile page
             showQuestionnairePopup: false,
             indooractivity: '',
             place: '',
@@ -50,8 +51,8 @@ class Profile extends Component {
 
         /* Binding functions allows it to access component attributes (e.g. this.props, this.state). */
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
-        this.handleSave = this.handleSave.bind(this);
+        this.handleUsernameEdit = this.handleUsernameEdit.bind(this);
+        this.handleUsernameSave = this.handleUsernameSave.bind(this);
         this.toggleQuestionnairePopup = this.toggleQuestionnairePopup.bind(this);
         this.handleInterestChange = this.handleInterestChange.bind(this);
         this.deleteInterest = this.deleteInterest.bind(this);
@@ -60,15 +61,18 @@ class Profile extends Component {
         this.deleteWLItem = this.deleteWLItem.bind(this);
     }
 
+    /* Saves new username into our Profile component's state. */
     handleUsernameChange(e) {
         this.setState({ newUsername: e.target.value });
     }
 
-    handleEdit() {
+    /* Changes username from view mode to edit mode. */
+    handleUsernameEdit() {
         this.setState({ mode: 'edit' });
     }
     
-    handleSave() {
+    /* Handles saving a new valid username. */
+    handleUsernameSave() {
         // don't save new username if it's empty or has a space in it (set it back to original username)
         if (this.state.newUsername === "" || this.state.newUsername.split(" ").length !== 1) {
             this.setState({ newUsername: this.state.username, mode: 'view' });
@@ -92,8 +96,8 @@ class Profile extends Component {
         }
     }
 
-    // show/hide textbox to edit username
-    renderInputField() {
+    /* Show/hide textbox to edit username. */
+    renderUsernameInputField() {
         if (this.state.mode === 'view') {
             return this.state.username;
         } else {
@@ -110,19 +114,19 @@ class Profile extends Component {
         }
     }
 
-    // Shows edit or save & undo button for modifying username.
+    /* Shows edit or save&undo button for modifying username. */
     renderButton() {
         if (this.state.mode === 'view') {
             return (
-                <EditButton onClick={this.handleEdit} className="editButton"/>
+                <EditButton onClick={this.handleUsernameEdit} className="editButton"/>
             );
         } else {
             return (
                 <div className="saveUndoButtons">
-                    <button onClick={this.handleSave} className="usernameButton">
+                    <button onClick={this.handleUsernameSave} className="usernameButton">
                         Save
                     </button>
-                    <button onClick={this.handleSave} className="usernameButton">
+                    <button onClick={this.handleUsernameSave} className="usernameButton">
                         Undo
                     </button>
                 </div>
@@ -325,7 +329,7 @@ class Profile extends Component {
                         {/* username */}
                         <div className="userInfoWrapper">
                             <span className='topicFont'>Username &nbsp; </span>
-                            <span className="profileUserInfo">{this.renderInputField()} &nbsp; {this.renderButton()}</span>
+                            <span className="profileUserInfo">{this.renderUsernameInputField()} &nbsp; {this.renderButton()}</span>
                         </div>
                         <br></br>
                         {/* user's email */}
