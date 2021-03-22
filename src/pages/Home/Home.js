@@ -8,8 +8,6 @@ import { ReactComponent as MagnifyGlass } from "../../images/magnify_glass.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
 import NoUser from  "../../images/no_user.png";
 import NoGift from "../../images/no_gift.png";
-
-//axios.defaults.withCredentials = true; //Might need this
 class Home extends React.Component {
 
   // Constructor
@@ -76,8 +74,7 @@ class Home extends React.Component {
     let serverPath = "https://backend-perfectgift.com/v0/giftapi"; // Main URL of where we will send our this.state info to
 
     try {
-      // If the user didn't select a way to search
-      // show reminder to tell user to  choose a way to search.
+      // If the user didn't select a way to search, show reminder to tell user to  choose a way to search.
       if (value === "Select a way to search") {
         this.setState({ loading: false, noSearchByMethodChosen: true });
 

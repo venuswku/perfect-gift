@@ -46,8 +46,6 @@ class DeleteUserInfo extends React.Component {
              console.log("Frontend [ERROR]: Wishlist not deleted.");
              console.log(err)
          })
-
-
     };
 
     render() {
