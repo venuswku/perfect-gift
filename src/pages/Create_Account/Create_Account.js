@@ -59,21 +59,21 @@ class Create_Account extends Component {
         console.log(this.state);
         console.log(e.target.elements.verifypassword.value);
         if (e.target.elements.userpassword.value === e.target.elements.verifypassword.value) {
-            axios.get('https://perfectgift-backend.herokuapp.com/v0/giftuser?username=' + this.state.username)
+            axios.get('https://backend-perfectgift.com/v0/giftuser?username=' + this.state.username)
                 .then(response => {
                     if (response.data.length === 0) {
-                        axios.get(('https://perfectgift-backend.herokuapp.com/v0/giftuser?useremail=' + this.state.useremail).replace('@', '%40'))
+                        axios.get(('https://backend-perfectgift.com/v0/giftuser?useremail=' + this.state.useremail).replace('@', '%40'))
                             .then(response => {
                                 if (response.data.length === 0) {
-                                    axios.post('https://perfectgift-backend.herokuapp.com/v0/postuser', [this.state])
+                                    axios.post('https://backend-perfectgift.com/v0/postuser', [this.state])
                                         .then(response => {
                                             console.log('Create_Account.js: success for users');
                                             console.log(response);
-                                            axios.post('https://perfectgift-backend.herokuapp.com/v0/postqresponse', [this.state])
+                                            axios.post('https://backend-perfectgift.com/v0/postqresponse', [this.state])
                                                 .then(response => {
                                                     console.log('Create_Account.js: success for qr');
                                                     console.log(response);
-                                                    axios.post('https://perfectgift-backend.herokuapp.com/v0/authenticate', this.state)
+                                                    axios.post('https://backend-perfectgift.com/v0/authenticate', this.state)
                                                         .then(response => {
                                                             console.log("Logged in after creating account");
                                                             console.log(response);

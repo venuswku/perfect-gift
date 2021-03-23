@@ -36,7 +36,7 @@ class SearchedUserProfilePopup extends Component {
 
     componentDidMount() { 
         // Get searched user's name and username.
-        axios.get(`https://perfectgift-backend.herokuapp.com/v0/giftuser?username=${this.props.searchedUser}`, this.state)
+        axios.get(`https://backend-perfectgift.com/v0/giftuser?username=${this.props.searchedUser}`, this.state)
             .then(res => {
                 console.log("Got searched user's info");
                 console.log(res.data);
@@ -48,7 +48,7 @@ class SearchedUserProfilePopup extends Component {
                     
                     // Get user's questionnaire responses and store them in this.state.
                     console.log('doing get q response', res.data[0].username);
-                    axios.get(`https://perfectgift-backend.herokuapp.com/v0/getqresponse/${this.state.username}`, [this.state])
+                    axios.get(`https://backend-perfectgift.com/v0/getqresponse/${this.state.username}`, [this.state])
                         .then(res => {
                             console.log('successful get q response');
                             this.setState({ outdooractivity: res.data[0].outdooractivity });
@@ -65,7 +65,7 @@ class SearchedUserProfilePopup extends Component {
                             this.setState({ exercise: res.data[0].exercise });
 
                             // Get user's wishlist items.
-                            axios.get(`https://perfectgift-backend.herokuapp.com/v0/getwishlist/${this.state.username}`, [this.state])
+                            axios.get(`https://backend-perfectgift.com/v0/getwishlist/${this.state.username}`, [this.state])
                             .then(res => {
                                 console.log("Frontend [SUCCESS]: We have received the user's wishlist")
                                 console.log(res.data)

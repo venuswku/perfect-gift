@@ -81,7 +81,7 @@ class Profile extends Component {
         else {
             console.log("USERNAME", this.state.username);
             console.log("NEW USERNAME", this.state.newUsername);
-            axios.put(`https://perfectgift-backend.herokuapp.com/v0/giftuser/${this.state.username}`, [this.state])
+            axios.put(`https://backend-perfectgift.com/v0/giftuser/${this.state.username}`, [this.state])
                 .then(res => {
                     console.log('Frontend: updated username successfully in profile');
                     console.log(res.data);
@@ -147,12 +147,12 @@ class Profile extends Component {
     /* Deletes (empties) questionnaire response from Interests section. */
     deleteInterest(questionnaireTopic) {
         console.log("remove", questionnaireTopic, "for", this.state.username);
-        axios.put(`https://perfectgift-backend.herokuapp.com/v0/removeqresponse/${this.state.username}/${questionnaireTopic}`, [this.state])
+        axios.put(`https://backend-perfectgift.com/v0/removeqresponse/${this.state.username}/${questionnaireTopic}`, [this.state])
             .then(response => {
                 console.log('Profile.js: success deleting qr');
                 console.log(response);
                 // call get request again to see new changes
-                axios.get(`https://perfectgift-backend.herokuapp.com/v0/getqresponse/${this.state.username}`, [this.state])
+                axios.get(`https://backend-perfectgift.com/v0/getqresponse/${this.state.username}`, [this.state])
                     .then(res => {
                         console.log('successful get q response');
                         this.setState({ outdooractivity: res.data[0].outdooractivity });
@@ -207,7 +207,7 @@ class Profile extends Component {
     
     componentDidMount() {
         // Authenticate user when they reach profile page.
-        axios.get('https://perfectgift-backend.herokuapp.com/v0/authenticate', this.state) //The port of the server
+        axios.get('https://backend-perfectgift.com/v0/authenticate', this.state) //The port of the server
             .then(res => {
                 console.log("Got a response with GET")
                 console.log(res.data)
@@ -223,7 +223,7 @@ class Profile extends Component {
 
                     // Get user's questionnaire responses and store them in this.state.
                     console.log('doing get q response', res.data[0].username);
-                    axios.get(`https://perfectgift-backend.herokuapp.com/v0/getqresponse/${this.state.username}`, [this.state])
+                    axios.get(`https://backend-perfectgift.com/v0/getqresponse/${this.state.username}`, [this.state])
                         .then(res => {
                             console.log('successful get q response');
                             this.setState({ outdooractivity: res.data[0].outdooractivity });
@@ -240,7 +240,7 @@ class Profile extends Component {
                             this.setState({ exercise: res.data[0].exercise });
 
                             // Get user's wishlist items.
-                            axios.get(`https://perfectgift-backend.herokuapp.com/v0/getwishlist/${this.state.username}`, [this.state])
+                            axios.get(`https://backend-perfectgift.com/v0/getwishlist/${this.state.username}`, [this.state])
                                 .then(res => {
                                     console.log("Frontend [SUCCESS]: We have received the user's wishlist")
                                     console.log(res.data)
