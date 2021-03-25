@@ -62,6 +62,7 @@ class Home extends React.Component {
   handleSearchbarSubmit(event) {
     console.log("Frontend: We are going to submit your search request to the server")
     var { value, typedInput } = this.state;
+    var searchTopic = typedInput.trim();
     this.setState({
       gifts: {},
       wishlist: {},
@@ -79,36 +80,36 @@ class Home extends React.Component {
         this.setState({ loading: false, noSearchByMethodChosen: true });
 
         // if user didn't search anything in search bar, show reminder to input something in search bar as well
-        if (typedInput === "") {
+        if (searchTopic === "") {
           this.setState({ noSearchbarInput: true });
           throw new Error("No search method or user input");
         }
       }
 
       // Else if the user has typed something and chose a method to search
-      else if (value !== "Select a way to search" && typedInput !== "") {
+      else if (value !== "Select a way to search" && searchTopic !== "") {
         // Setting the loading state to true (causes the loading animation to show up)
         this.setState({ loading: true });
-        console.log(`Frontend: You have entered: "${typedInput}"`);
+        console.log(`Frontend: You have entered: "${searchTopic}"`);
 
         // If the user is searching for a username
         if (value === "Search by username/email") {
-          console.log(`Frontend: We will fetch the interests for the username:"${typedInput}"`);
+          console.log(`Frontend: We will fetch the interests for the username:"${searchTopic}"`);
 
           // Detect if typed input is an email.
           const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          const isEmail = re.test(typedInput);
+          const isEmail = re.test(searchTopic);
 
           // If an email, lookup username before proceeding and set typed_input equal to username.
           if (isEmail) {
             console.log("Hey you entered an email!");
-            axios.get(('https://perfectgift-backend.herokuapp.com/v0/giftuser?useremail=' + typedInput).replace('@', '%40')).then(
+            axios.get(('https://perfectgift-backend.herokuapp.com/v0/giftuser?useremail=' + searchTopic).replace('@', '%40')).then(
               res => {
                 console.log(res.data.length)
                 if (res.data.length !== 0) {
-                  typedInput = res.data[0]['username'];
-                  this.setState({ searchedUsername: res.data[0]['username'] });
-                  this.handleUsernameSearch(typedInput);
+                  const searchedUser = res.data[0]['username'];
+                  this.setState({ searchedUsername: searchedUser });
+                  this.handleUsernameSearch(searchedUser);
                 } else {
                   //no username is found for the email give. stop loading animation and display error message
                   console.log("couldn't find email. try again")
@@ -118,21 +119,21 @@ class Home extends React.Component {
             );
           } else {
             // Else search normally by username.
-            this.setState({ searchedUsername: typedInput });
-            this.handleUsernameSearch(typedInput);
+            this.setState({ searchedUsername: searchTopic });
+            this.handleUsernameSearch(searchTopic);
           }
         }
 
         // If the user is using the "Search for a gift" option
         else if (value === "Search for a gift") {
-          console.log(`Frontend: We will search for the gift:"${typedInput}"`);
-          serverPath += `/searchgift?searchTopics[]=${typedInput}`;
+          console.log(`Frontend: We will search for the gift:"${searchTopic}"`);
+          serverPath += `/searchgift?searchTopics[]=${searchTopic}`;
           console.log(serverPath);
           // Calling axios based on the user's select choice (username or gift)
           console.log(`Frontend: The server we are connecting to is: ${serverPath}`);
           axios.get(serverPath, this.state)
             .then(res => {
-              console.log(`Frontend: We have recevied a gift suggestion for "${typedInput}"`);
+              console.log(`Frontend: We have recevied a gift suggestion for "${searchTopic}"`);
               console.log(res);
               if (res.data === "Failed") {
                 // tell user if the gift they searched for had no results from eBay API
@@ -166,13 +167,13 @@ class Home extends React.Component {
   }
 
   /* Handles searching by either email or username. */
-  handleUsernameSearch(typedInput){
+  handleUsernameSearch(searchTopic){
     let serverPath = "https://perfectgift-backend.herokuapp.com/v0/giftapi"; // Main URL of where we will send our this.state info to
     let queryString = '/searchusername?'; // Will be used to concatanate more queries and attach to the main string (serverPath)
     this.setState({ displayNonExistentUserMessage: false });
 
     // GET Request to get the "typed user's" interests.
-    axios.get(`https://perfectgift-backend.herokuapp.com/v0/getQResponse/${typedInput}`)
+    axios.get(`https://perfectgift-backend.herokuapp.com/v0/getQResponse/${searchTopic}`)
     .then(res => {
 
       // Parsing the response
@@ -222,7 +223,7 @@ class Home extends React.Component {
       console.log(`Frontend: The server we are connecting to is: ${serverPath}`);
       axios.get(serverPath, this.state)
         .then(res => {
-          console.log(`Frontend: We have received interest gift suggestions for "${typedInput}"`);
+          console.log(`Frontend: We have received interest gift suggestions for "${searchTopic}"`);
           console.log(res);
           // store returned gift suggestions in our state
           // & display button for allowing user to see the searched user's profile
@@ -231,9 +232,9 @@ class Home extends React.Component {
           //The user is searching using the "Search by wishlist" option
           console.log("Now that we have gotten the user's questionnaire response, we will Search by wishlist");
           let queryString_WL = '/searchusername?';
-          console.log(`Frontend: We will fetch the wishlist for the username:"${typedInput}"`);
+          console.log(`Frontend: We will fetch the wishlist for the username:"${searchTopic}"`);
           // Getting typed user's interests.
-          axios.get(`https://perfectgift-backend.herokuapp.com/v0/getwishlist/${typedInput}`)
+          axios.get(`https://perfectgift-backend.herokuapp.com/v0/getwishlist/${searchTopic}`)
             .then(res => {
               // Parsing the response
               serverPath = "https://perfectgift-backend.herokuapp.com/v0/giftapi";
@@ -254,7 +255,7 @@ class Home extends React.Component {
               console.log(`Frontend: The server we are connecting to is: ${serverPath}`)
               axios.get(serverPath, this.state)
                 .then(res => {
-                  console.log(`Frontend: We have received a wishlist gift suggestion for "${typedInput}"`);
+                  console.log(`Frontend: We have received a wishlist gift suggestion for "${searchTopic}"`);
                   console.log(res);
                   // store returned gift suggestions in our state
                   this.setState({ wishlist: res.data[0] });
