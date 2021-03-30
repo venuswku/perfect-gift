@@ -36,4 +36,4 @@ While the perfect-gift project is deployed via AWS, it can be reached at (<https
 
 Our platform is also deployed via Heroku at https://theperfectgift.herokuapp.com/!
 
-It might take around 30 seconds to fully load if not many people access it.
+It might take around 30 seconds to fully load if it has not been accessed in a while.
