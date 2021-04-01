@@ -14,7 +14,7 @@ const proxy = require('http-proxy-middleware');
 
 // Used for letting the frontend communicate with the server.
 app.use(cors({
-  origin: "https://theperfectgift.herokuapp.com", 
+  origin: ["https://theperfectgift.herokuapp.com", "https://venuswku.github.io/perfect-gift"], 
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
   credentials: true,
