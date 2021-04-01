@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/perfect-gift/static/css/main.fc9c27ce.chunk.css",
+    "main.js": "/perfect-gift/static/js/main.74501736.chunk.js",
+    "main.js.map": "/perfect-gift/static/js/main.74501736.chunk.js.map",
+    "runtime-main.js": "/perfect-gift/static/js/runtime-main.0445920d.js",
+    "runtime-main.js.map": "/perfect-gift/static/js/runtime-main.0445920d.js.map",
+    "static/js/2.04ea3cc6.chunk.js": "/perfect-gift/static/js/2.04ea3cc6.chunk.js",
+    "static/js/2.04ea3cc6.chunk.js.map": "/perfect-gift/static/js/2.04ea3cc6.chunk.js.map",
+    "index.html": "/perfect-gift/index.html",
+    "static/css/main.fc9c27ce.chunk.css.map": "/perfect-gift/static/css/main.fc9c27ce.chunk.css.map",
+    "static/js/2.04ea3cc6.chunk.js.LICENSE.txt": "/perfect-gift/static/js/2.04ea3cc6.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/perfect-gift/static/media/VarelaRound-Regular.3b7ffe17.ttf",
+    "static/media/add_button.f48745dc.svg": "/perfect-gift/static/media/add_button.f48745dc.svg",
+    "static/media/create_account_image.b16b8c72.png": "/perfect-gift/static/media/create_account_image.b16b8c72.png",
+    "static/media/create_account_indoors1.28c9868c.svg": "/perfect-gift/static/media/create_account_indoors1.28c9868c.svg",
+    "static/media/create_account_indoors2.eac1402b.svg": "/perfect-gift/static/media/create_account_indoors2.eac1402b.svg",
+    "static/media/create_account_music1.963f7929.svg": "/perfect-gift/static/media/create_account_music1.963f7929.svg",
+    "static/media/create_account_music2.c4fb9bbe.svg": "/perfect-gift/static/media/create_account_music2.c4fb9bbe.svg",
+    "static/media/create_account_outdoors1.ac76ced1.svg": "/perfect-gift/static/media/create_account_outdoors1.ac76ced1.svg",
+    "static/media/create_account_outdoors2.41b65c9d.svg": "/perfect-gift/static/media/create_account_outdoors2.41b65c9d.svg",
+    "static/media/create_account_sports1.d742b311.svg": "/perfect-gift/static/media/create_account_sports1.d742b311.svg",
+    "static/media/create_account_sports2.90db430a.svg": "/perfect-gift/static/media/create_account_sports2.90db430a.svg",
+    "static/media/delete_button.6d8d7098.svg": "/perfect-gift/static/media/delete_button.6d8d7098.svg",
+    "static/media/edit_button.7f8b851b.svg": "/perfect-gift/static/media/edit_button.7f8b851b.svg",
+    "static/media/gift_bullet_point.d2a6ea76.svg": "/perfect-gift/static/media/gift_bullet_point.d2a6ea76.svg",
+    "static/media/heart.767862c8.svg": "/perfect-gift/static/media/heart.767862c8.svg",
+    "static/media/landing_image.7402d82b.png": "/perfect-gift/static/media/landing_image.7402d82b.png",
+    "static/media/logo_sticker.c0a9d524.svg": "/perfect-gift/static/media/logo_sticker.c0a9d524.svg",
+    "static/media/magnify_glass.d7f829b5.svg": "/perfect-gift/static/media/magnify_glass.d7f829b5.svg",
+    "static/media/profile_pic.7cfe54ab.svg": "/perfect-gift/static/media/profile_pic.7cfe54ab.svg",
+    "static/media/Profile.css": "/perfect-gift/static/media/profile_pic_background.3dc917bc.png",
+    "static/media/sign_in_image.613cb559.png": "/perfect-gift/static/media/sign_in_image.613cb559.png",
+    "static/media/website_logo.53fc68bb.svg": "/perfect-gift/static/media/website_logo.53fc68bb.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0445920d.js",
+    "static/js/2.04ea3cc6.chunk.js",
+    "static/css/main.fc9c27ce.chunk.css",
+    "static/js/main.74501736.chunk.js"
+  ]
+}
