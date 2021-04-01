@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/perfect-gift/static/css/main.fc9c27ce.chunk.css",
-    "main.js": "/perfect-gift/static/js/main.74501736.chunk.js",
-    "main.js.map": "/perfect-gift/static/js/main.74501736.chunk.js.map",
+    "main.js": "/perfect-gift/static/js/main.5a2be8ed.chunk.js",
+    "main.js.map": "/perfect-gift/static/js/main.5a2be8ed.chunk.js.map",
     "runtime-main.js": "/perfect-gift/static/js/runtime-main.0445920d.js",
     "runtime-main.js.map": "/perfect-gift/static/js/runtime-main.0445920d.js.map",
-    "static/js/2.04ea3cc6.chunk.js": "/perfect-gift/static/js/2.04ea3cc6.chunk.js",
-    "static/js/2.04ea3cc6.chunk.js.map": "/perfect-gift/static/js/2.04ea3cc6.chunk.js.map",
+    "static/js/2.f94e0e6d.chunk.js": "/perfect-gift/static/js/2.f94e0e6d.chunk.js",
+    "static/js/2.f94e0e6d.chunk.js.map": "/perfect-gift/static/js/2.f94e0e6d.chunk.js.map",
     "index.html": "/perfect-gift/index.html",
     "static/css/main.fc9c27ce.chunk.css.map": "/perfect-gift/static/css/main.fc9c27ce.chunk.css.map",
-    "static/js/2.04ea3cc6.chunk.js.LICENSE.txt": "/perfect-gift/static/js/2.04ea3cc6.chunk.js.LICENSE.txt",
+    "static/js/2.f94e0e6d.chunk.js.LICENSE.txt": "/perfect-gift/static/js/2.f94e0e6d.chunk.js.LICENSE.txt",
     "static/media/index.css": "/perfect-gift/static/media/VarelaRound-Regular.3b7ffe17.ttf",
     "static/media/add_button.f48745dc.svg": "/perfect-gift/static/media/add_button.f48745dc.svg",
     "static/media/create_account_image.b16b8c72.png": "/perfect-gift/static/media/create_account_image.b16b8c72.png",
@@ -35,8 +35,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.0445920d.js",
-    "static/js/2.04ea3cc6.chunk.js",
+    "static/js/2.f94e0e6d.chunk.js",
     "static/css/main.fc9c27ce.chunk.css",
-    "static/js/main.74501736.chunk.js"
+    "static/js/main.5a2be8ed.chunk.js"
   ]
 }
