@@ -34,6 +34,8 @@ While the perfect-gift project is deployed via AWS, it can be reached at (<https
 
 ## Heroku
 
-Our platform is also deployed via Heroku at https://theperfectgift.herokuapp.com/!
+Our frontend is also automatically deployed whenever a commit is pushed to our `frontend-heroku` branch via Heroku at https://theperfectgift.herokuapp.com/!
+
+Any commits to the `backend-heroku` branch will automatically deployed to our backend via Heroku at https://perfectgift-backend.herokuapp.com/v0/api-docs/.
 
 It might take around 30 seconds to fully load if it has not been accessed in a while.
