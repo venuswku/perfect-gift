@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+# production
+/build
+
 # files
 package-lock.json
 .vscode/*
